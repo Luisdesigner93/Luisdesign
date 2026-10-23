@@ -10,6 +10,7 @@ Uso (desde la raíz del proyecto):
 En el texto de cada página, {p} se reemplaza por la ruta a la raíz (''/'../'/'/') y {home} por el enlace al inicio.
 """
 import re
+from urllib.parse import quote
 import sys
 from pathlib import Path
 
@@ -115,8 +116,8 @@ CONTACT = '''
         <h2 class="heading" id="contacto-title">{cta_title}</h2>
         <p class="lead">{cta_lead}</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
-          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          <a class="btn btn-primary" href="{wa_href}" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+{contact_email}          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
         </div>
         <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
       </div>
@@ -152,6 +153,9 @@ FOOT = '''  </main>
 
 CTA_TITLE = 'Conversemos sobre <strong>tu proyecto</strong>.'
 CTA_LEAD = 'Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.'
+WA_HREF = 'https://wa.me/56958217041'
+# EDITAR: reactivar la casilla contacto@luisdesign.cl antes de publicar
+EMAIL = 'contacto@luisdesign.cl'
 
 
 def fill(template, values):
@@ -177,13 +181,15 @@ def _title_case(text):
 
 def _card_titles(html):
     rules = [
-        (r'(<span class="svc-card-title">)(.*?)(</span>)', None),
-        (r'(<article class="card step">(?:(?!</article>).)*?<h3 class="title">)(.*?)(</h3>)', None),
+        (r'(<(?:span|h3) class="(?:svc-card-title|card-title)">)(.*?)(</(?:span|h3)>)', None),
+        (r'(<(article|li) class="card step">(?:(?!</\2>).)*?<h3 class="title">)(.*?)(</h3>)', 'step'),
         (r'(<li class="card"><span class="icon-key"[^>]*>.*?</span><div><strong>)(.*?)(</strong>)', None),
         (r'(<ol class="career">.*?</ol>)', 'career'),
     ]
     for pattern, kind in rules:
-        if kind == 'career':
+        if kind == 'step':
+            html = re.sub(pattern, lambda m: m.group(1) + _title_case(m.group(3)) + m.group(4), html, flags=re.S)
+        elif kind == 'career':
             html = re.sub(pattern, lambda m: re.sub(r'(<h3>)([^<]+)( <span class="career-org">)', lambda n: n.group(1) + _title_case(n.group(2)) + n.group(3), m.group(1)), html, flags=re.S)
         else:
             html = re.sub(pattern, lambda m: m.group(1) + _title_case(m.group(2)) + m.group(3), html, flags=re.S)
@@ -191,7 +197,7 @@ def _card_titles(html):
 
 
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
-         noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None):
+         noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None):
     depth = path.count('/')
     if absolute:
         p, home = '/', '/'
@@ -209,6 +215,11 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_privacidad': ' aria-current="page"' if current == 'privacidad' else '',
         'cta_title': cta_title or CTA_TITLE, 'cta_lead': cta_lead or CTA_LEAD,
+        'wa_href': wa_href or WA_HREF,
+        # Correo solo en las landings que lo piden (email_subject='' agrega el botón sin asunto)
+        'contact_email': '' if email_subject is None else
+            f'          <a class="btn btn-outline" href="mailto:{EMAIL}' + (f'?subject={quote(email_subject)}' if email_subject else '') +
+            f'"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-mail"/></svg>{EMAIL}</a>\n',
     }
     html = fill(HEAD, values) + fill(body, values)
     if contact:

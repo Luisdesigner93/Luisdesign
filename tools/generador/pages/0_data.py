@@ -196,8 +196,12 @@ def lorem_case(pr):
     ]) + case_nav(pr)
 
 
-# ---- Piezas del inicio compartidas entre index.html e index-v2.html (origen: referencia Stodio) ----
-_clients = ['Bytequest', 'Studio Dinoi', 'Sustentando', 'Yomecontrolo', 'Cerveza Khronos', 'Fuchi Chao', 'UV Energy', 'Botes Salvavidas', 'Kimsa', 'Waterman']
+# ---- Piezas del inicio (index.html; index-v2.html tiene las suyas en fragmentos/) ----
+from urllib.parse import quote
+
+# WhatsApp con mensaje precargado de la landing Marcas (texto de tools/narrativa/02-landing-marcas.md)
+WA_MARCAS = 'https://wa.me/56958217041?text=' + quote('Hola Luis, tengo un negocio de [rubro] y me interesa [identidad visual / branding estratégico / sitio web]. Mi plazo es [plazo].')
+_clients = ['Fuchi Chao', 'LAB*502', 'Sustentando', 'Uvenergy', 'Bytequest', 'Yomecontrolo', 'Bowraps', 'Botes Salvavidas']
 # Logotipos para la cinta (nombre → (archivo, ancho, alto)); el resto se muestra como texto.
 # EDITAR: idealmente reemplazar por SVG o PNG de mayor resolución (Khronos mide solo 56 × 25 px).
 _client_logos = {'Cerveza Khronos': ('khronos.png', 56, 25), 'Sustentando': ('sustentando.png', 218, 64), 'Yomecontrolo': ('yomecontrolo.png', 156, 38)}
@@ -211,32 +215,20 @@ def _client_item(name):
 
 
 _marquee = ''.join(_client_item(c) for c in _clients)
-HOME_HERO = '''    <!-- HERO -->
+HOME_HERO = f'''    <!-- HERO -->
     <section class="v2-hero-shell" aria-labelledby="v2-title">
       <div class="v2-hero">
         <img class="v2-hero-bg" src="img/marca/hero-fondo.jpg" width="2000" height="1333" alt="" decoding="async" fetchpriority="high">
         <div class="v2-hero-top">
-          <span class="v2-eyebrow"><i aria-hidden="true"></i>Luis Vicencio · Diseñador</span>
-          <h1 class="v2-hero-title" id="v2-title">Ayudo a empresas y pymes a <strong>definir su marca, diseñar su producto</strong> y llevarlo a producción con equipos ágiles.</h1>
-          <p class="v2-hero-lead">Diseño marcas y productos con mirada de negocio.</p>
+          <span class="v2-eyebrow"><i aria-hidden="true"></i>Luis Vicencio · Diseño de marca</span>
+          <h1 class="v2-hero-title" id="v2-title">Marcas para pymes que quieren <strong>dejar huella</strong>.</h1>
+          <p class="v2-hero-lead">Defino el propósito de tu marca y lo convierto en una identidad que invita a tus clientes a ir contigo. Branding estratégico, identidad visual y sitios web para pymes y empresas en Chile.</p>
         </div>
         <div class="v2-hero-bottom">
-          <ul class="v2-hero-meta" aria-label="Especialidades">
-            <li>+ Branding</li>
-            <li>+ Comunicación</li>
-            <li>+ UX/UI</li>
-            <li>+ Product Design</li>
-            <li>+ Scrum</li>
-            <li>+ PO</li>
-            <li>+ Packaging</li>
-            <li>+ Señalización</li>
-            <li>+ IA</li>
-          </ul>
           <div class="v2-hero-cta">
-            <p>Branding, UX/UI y Product Owner para marcas que quieren destacar</p>
             <div class="btn-row">
-              <a class="btn btn-primary v2-btn-light" href="proyectos.html">Ver proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
-              <a class="btn v2-btn-ghost" href="#contacto">Conversemos</a>
+              <a class="btn btn-primary v2-btn-light" href="{WA_MARCAS}" rel="noopener noreferrer" target="_blank">Conversemos sobre tu marca<span class="sr-only"> (WhatsApp, se abre en una pestaña nueva)</span> <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+              <a class="btn v2-btn-ghost" href="proyectos.html">Ver proyectos</a>
             </div>
           </div>
         </div>
@@ -247,7 +239,7 @@ HOME_HERO = '''    <!-- HERO -->
 
 HOME_MARQUEE = '''    <!-- CINTA DE CLIENTES -->
     <section class="v2-marquee" aria-label="Marcas con las que he trabajado">
-      <p class="v2-marquee-lead">Más de 7 años creando marcas y productos digitales</p>
+      <p class="v2-marquee-lead">Han trabajado conmigo</p>
       <div class="v2-marquee-track">
         <ul>{marquee}</ul>
         <ul aria-hidden="true">{marquee}</ul>

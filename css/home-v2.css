@@ -329,3 +329,62 @@
 .more-nav button:active { transform: scale(.94); }
 .more-nav .icon { width: 18px; height: 18px; }
 .more-prev .icon { transform: rotate(180deg); }
+
+/* ===== Landing Marcas (fase 2 de tools/narrativa/00-PLAN-para-claude-code.md) ===== */
+.card-title { font-size: clamp(20px, 2vw, 26px); line-height: 1.15; font-weight: 500; letter-spacing: -0.03em; text-wrap: balance; }
+
+/* Manifiesto: dos párrafos y sin indicadores */
+.ideas-intro { max-width: 34rem; }
+.ideas-foot { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+
+/* ¿Cuándo es momento de trabajar tu marca? */
+.momentos-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+@media (max-width: 72em) { .momentos-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } .momento { grid-column: span 2; } .momento:nth-child(n+4) { grid-column: span 3; } }
+@media (max-width: 40em) { .momentos-grid { grid-template-columns: 1fr; } .momento, .momento:nth-child(n+4) { grid-column: auto; } }
+.momento { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); }
+.momento-num { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+.momento p { color: var(--ink-muted); font-size: 15px; line-height: 24px; }
+.momento .momento-casos { margin-top: auto; padding-top: var(--space-3); border-top: 1px solid var(--line); font-size: 13px; line-height: 20px; }
+.momento-casos a, .svc-casos a { color: var(--ink); text-underline-offset: 3px; }
+.momentos-cierre { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-3); margin-top: var(--space-10); font-size: 18px; text-align: center; }
+
+/* Servicios: dos niveles con imagen y el detalle debajo (opción B; diseño a trabajar después) */
+.svc-levels-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.svc-level { display: flex; flex-direction: column; gap: var(--space-5); }
+.svc-level .svc-card { flex: none; height: clamp(18rem, 28vw, 24rem); }
+.svc-level .svc-card-img { filter: none; transform: none; }
+.svc-level .svc-card::after { box-shadow: none; background: linear-gradient(180deg, rgba(7, 11, 19, .4) 0%, rgba(7, 11, 19, 0) 35%, rgba(7, 11, 19, .78) 100%); }
+.svc-level .svc-tags { opacity: 1; visibility: visible; transform: none; }
+.svc-level .svc-card-desc { max-height: none; opacity: 1; -webkit-line-clamp: unset; font-size: 15px; line-height: 22px; }
+.svc-level .svc-card-title { margin: 0; }
+.svc-level-detail { display: flex; flex-direction: column; gap: var(--space-4); flex: 1; padding-inline: var(--space-2); color: var(--ink-muted); font-size: 15px; line-height: 24px; }
+.svc-level-detail strong { color: var(--ink); font-weight: 600; }
+.svc-level-detail .btn { align-self: flex-start; margin-top: auto; }
+.svc-fit { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: 0; }
+.svc-fit div { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.svc-fit dt, .svc-casos span { font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-subtle); }
+.svc-fit dd { margin: var(--space-1) 0 0; font-size: 14px; line-height: 22px; }
+.svc-casos { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); font-size: 14px; }
+.svc-extra { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-6); margin-top: var(--space-6); padding: clamp(1.5rem, 3vw, 2.5rem); }
+.svc-extra > div { display: grid; gap: var(--space-3); max-width: 44rem; }
+.svc-extra p { color: var(--ink-muted); }
+@media (max-width: 53.75em) { .svc-levels-grid, .svc-fit { grid-template-columns: 1fr; } .svc-levels-grid { gap: var(--space-12); } }
+
+/* Cómo trabajo: cinco pasos */
+.proceso .steps { grid-template-columns: repeat(5, minmax(13.75rem, 1fr)); margin: 0; padding: 0; list-style: none; }
+
+/* Proyectos: caso destacado, línea de cada tarjeta y botón al final */
+.feat-case { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(1.5rem, 4vw, 4rem); margin-top: clamp(2rem, 5vw, 3.5rem); }
+.feat-case img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-2xl); }
+.feat-case-text { display: grid; justify-items: start; gap: var(--space-4); }
+.feat-case-text .card-title { font-size: clamp(32px, 4vw, 56px); line-height: 1; }
+.feat-case-text p { color: var(--ink-muted); font-size: 17px; line-height: 28px; }
+@media (max-width: 53.75em) { .feat-case { grid-template-columns: 1fr; } }
+.more-foot p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: var(--space-1) 0 0; font-size: 12px; line-height: 17px; color: rgba(255, 255, 255, .82); }
+.more-arc > li > .media-ph { display: grid; place-content: center; justify-items: center; gap: var(--space-2); width: 100%; height: 100%; background: var(--surface-sunken); color: var(--ink-subtle); font-size: 12px; }
+.more-arc > li > .media-ph .icon { width: 22px; height: 22px; }
+.more-foot-cta { display: flex; justify-content: center; margin-top: clamp(2rem, 5vw, 3.5rem); }
+
+/* Sobre mí: dos enlaces */
+.about-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
+.about-links .link-arrow { min-height: 44px; text-align: left; }
