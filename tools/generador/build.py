@@ -9,6 +9,7 @@ Uso (desde la raíz del proyecto):
 
 En el texto de cada página, {p} se reemplaza por la ruta a la raíz (''/'../'/'/') y {home} por el enlace al inicio.
 """
+import json
 import re
 from urllib.parse import quote
 import sys
@@ -31,7 +32,12 @@ HEAD = '''<!doctype html>
   <meta property="og:description" content="{desc}">
   <meta property="og:url" content="{url}">
   <meta property="og:locale" content="{og_locale}">
-  <meta name="theme-color" content="#ffffff">
+  <meta property="og:image" content="{og_image}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{og_alt}">
+  <meta name="twitter:card" content="summary_large_image">
+{jsonld}  <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="{p}favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
   <link rel="preload" href="{p}fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
@@ -152,6 +158,8 @@ FOOT = '''  </main>
 CTA_TITLE = 'Conversemos sobre <strong>tu proyecto</strong>.'
 CTA_LEAD = 'Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.'
 WA_HREF = 'https://wa.me/56958217041'
+OG_DEFAULT = 'img/og/general.jpg'
+OG_ALT = 'Luis Vicencio, diseñador y Product Owner'
 # EDITAR: reactivar la casilla contacto@luisdesign.cl antes de publicar
 EMAIL = 'contacto@luisdesign.cl'
 _EXT = ' rel="noopener noreferrer" target="_blank"'
@@ -243,7 +251,7 @@ def _card_titles(html):
 
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
          noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None,
-         email_first=False, email_label=None, lang='es', alternates=None):
+         email_first=False, email_label=None, lang='es', alternates=None, og_image=None, og_alt=None, jsonld=None):
     depth = path.count('/')
     if absolute:
         p, home = '/', '/'
@@ -265,6 +273,9 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'contact_buttons': _contact_buttons(p, wa_href or WA_HREF, email_subject, email_first, email_label),
         'html_lang': 'en' if lang == 'en' else 'es-CL', 'og_locale': 'en_US' if lang == 'en' else 'es_CL',
         # Versiones en otros idiomas: {'es-CL': 'producto-digital.html', 'en': 'en/digital-product.html', 'x-default': ...}
+        # Imagen para compartir (1200 × 630, en img/og/) y datos estructurados (JSON-LD, bloque de datos que la CSP no ejecuta)
+        'og_image': SITE + (og_image or OG_DEFAULT), 'og_alt': og_alt or OG_ALT,
+        'jsonld': ''.join('  <script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace('</', '<\\/') + '</script>\n' for d in (jsonld or [])),
         'alternates': ''.join(f'  <link rel="alternate" hreflang="{h}" href="{SITE}{u}">\n' for h, u in (alternates or {}).items()),
     }
     chrome = [fill(HEAD, values), fill(CONTACT, values) if contact else '', fill(FOOT, values)]
@@ -286,6 +297,6 @@ def fragment(name):
     return (HERE / 'fragmentos' / name).read_text(encoding='utf-8')
 
 
-env = {'page': page, 'fragment': fragment, 'EMAIL': EMAIL, 'quote': quote, '__name__': 'luisdesign_pages'}
+env = {'page': page, 'fragment': fragment, 'EMAIL': EMAIL, 'SITE': SITE, 'quote': quote, '__name__': 'luisdesign_pages'}
 for script in sorted((HERE / 'pages').glob('*.py')):
     exec(compile(script.read_text(encoding='utf-8'), str(script), 'exec'), env)

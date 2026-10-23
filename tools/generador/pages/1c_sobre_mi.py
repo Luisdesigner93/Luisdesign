@@ -15,7 +15,10 @@ _aprendizajes = [
 
 page('sobre-mi.html', 'Sobre mí · Luis Vicencio, diseñador y Product Owner',
      'Luis Vicencio es diseñador y Product Owner en Chile, especializado en branding, diseño web, UX/UI y gestión de productos digitales con Scrum.',
-     current='sobre', extra_css='css/home-v2.css', body=f'''    <section class="hero-shell" aria-labelledby="page-title">
+     current='sobre', extra_css='css/home-v2.css',
+     jsonld=[person_ld(alumniOf=[{'@type': 'CollegeOrUniversity', 'name': n} for n in ('Universidad de Valparaíso', 'Politecnico di Milano', 'Universidad del Desarrollo')],
+                       knowsAbout=['Branding', 'Identidad visual', 'Diseño web', 'UX/UI', 'Product Owner', 'Scrum'])],
+     body=f'''    <section class="hero-shell" aria-labelledby="page-title">
       <div class="shell-body frame-grid page-hero">
         <div class="container">
           <ol class="breadcrumb" aria-label="Ruta"><li><a href="./">Inicio</a></li><li aria-current="page">Sobre mí</li></ol>

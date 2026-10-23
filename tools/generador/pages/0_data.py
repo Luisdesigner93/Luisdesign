@@ -194,6 +194,51 @@ def case_facts(pr, *extra):
     return facts
 
 
+# ---- SEO: imagen para compartir y datos estructurados (schema.org en JSON-LD) ----
+# Frase de identidad de tools/narrativa/01-narrativa-y-casos.md ("Para que la IA te recomiende"), siempre igual.
+IDENTIDAD = 'Luis Vicencio es diseñador y Product Owner en Chile, especializado en branding, diseño web, UX/UI y gestión de productos digitales con Scrum.'
+PERFILES = ['https://www.linkedin.com/in/luisvicenciodesign', 'https://www.behance.net/LuisHVicencio']
+TELEFONO = '+56958217041'
+PERSON_ID = SITE + '#luis'
+
+
+def person_ld(**extra):
+    d = {'@context': 'https://schema.org', '@type': 'Person', '@id': PERSON_ID, 'name': 'Luis Vicencio', 'url': SITE,
+         'jobTitle': 'Diseñador y Product Owner', 'description': IDENTIDAD, 'image': SITE + 'img/marca/luis-vicencio-retrato.png',
+         'email': 'mailto:' + EMAIL, 'telephone': TELEFONO, 'sameAs': PERFILES,
+         'address': {'@type': 'PostalAddress', 'addressCountry': 'CL'}}
+    d.update(extra)
+    return d
+
+
+def service_ld(name, description, url, lang='es'):
+    return {'@context': 'https://schema.org', '@type': 'Service', 'name': name, 'description': description, 'url': SITE + url,
+            'serviceType': name, 'provider': {'@id': PERSON_ID}, 'areaServed': {'@type': 'Country', 'name': 'Chile'}, 'inLanguage': lang}
+
+
+def faq_ld(items, lang='es'):
+    import re as _re
+    return {'@context': 'https://schema.org', '@type': 'FAQPage', 'inLanguage': lang,
+            'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': _re.sub('<[^>]+>', '', a)}} for q, a in items]}
+
+
+def case_og(pr):
+    """Imagen para compartir del caso (img/og/<slug>.jpg si existe; si no, la general)."""
+    return f"img/og/{pr['slug']}.jpg" if pr['images'] else None
+
+
+def case_seo(pr, desc):
+    """og:image y CreativeWork para la página de un caso."""
+    og = case_og(pr)
+    ld = {'@context': 'https://schema.org', '@type': 'CreativeWork', 'name': pr['title'], 'description': desc,
+          'url': SITE + f"proyectos/{pr['slug']}.html", 'dateCreated': pr['year'][:4], 'creator': {'@id': PERSON_ID},
+          'author': {'@type': 'Person', 'name': 'Luis Vicencio', 'url': SITE}, 'keywords': ', '.join(pr['tags']),
+          'image': SITE + (og or 'img/og/general.jpg'), 'inLanguage': 'es'}
+    if pr['client'] != 'Producto propio':
+        ld['sourceOrganization'] = {'@type': 'Organization', 'name': pr['client']}
+    return dict(og_image=og, og_alt=pr['images'][0]['alt'] if pr['images'] else None, jsonld=[ld])
+
+
 def case_landing(pr):
     """Cierre de cada caso: botón a su landing (Marcas o Producto digital)."""
     if pr['landing'] == 'producto':
@@ -214,7 +259,7 @@ def case_landing(pr):
 def case_page(pr, title, desc, summary, statement, sections, facts=None, cta_title=None, cta_lead=None, actions=''):
     """Página de caso con la plantilla: ficha, secciones, botón a su landing y navegación."""
     page(f"proyectos/{pr['slug']}.html", title, desc, current='proyectos', ogtype='article', cta_title=cta_title, cta_lead=cta_lead,
-         body=case_intro(pr, summary, facts or case_facts(pr), actions) + case_detail(statement, sections) + case_landing(pr) + case_nav(pr))
+         **case_seo(pr, desc), body=case_intro(pr, summary, facts or case_facts(pr), actions) + case_detail(statement, sections) + case_landing(pr) + case_nav(pr))
 
 
 # ---- Piezas del inicio (index.html; index-v2.html tiene las suyas en fragmentos/) ----

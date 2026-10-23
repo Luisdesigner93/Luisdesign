@@ -45,6 +45,8 @@ python3 tools/generador/build.py
 - `tools/generador/pages/*.py`: una página o caso por archivo, en orden alfabético.
 - `tools/generador/fragmentos/`: contenido de privacidad, 404 e inicio v2, que se edita directamente ahí.
 
+- `img/og/`: imágenes para compartir (1200 × 630). Cada página indica la suya con `og_image`; los datos estructurados (JSON-LD) se arman en `pages/0_data.py` (`person_ld`, `service_ld`, `faq_ld`, `case_seo`).
+
 Para comprobar un cambio sin tocar el sitio: `python3 tools/generador/build.py /ruta/temporal` y compara con `diff -r`.
 
 ## Vista previa local

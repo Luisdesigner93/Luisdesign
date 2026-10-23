@@ -1,9 +1,9 @@
 _aw = dict(next(pr for pr in PROJECTS if pr['slug'] == 'auditorweb'), placeholders=('Inicio de AuditorWeb con el analizador y la cuenta regresiva a la entrada en vigencia.',
                                       'Informe: puntaje general y resultado por área.',
                                       'Plan de acción priorizado y detalle de cada control.'))
-page('proyectos/auditorweb.html', 'AuditorWeb 21.719 · Caso · Luis Vicencio',
-     'Caso de estudio: AuditorWeb 21.719, un auditor automatizado de cumplimiento con la Ley de Protección de Datos Personales de Chile.',
-     current='proyectos', ogtype='article',
+_aw_desc = 'Caso de estudio: AuditorWeb 21.719, un auditor automatizado de cumplimiento con la Ley de Protección de Datos Personales de Chile.'
+page('proyectos/auditorweb.html', 'AuditorWeb 21.719: auditor de cumplimiento de la Ley 21.719 para sitios web · Luis Vicencio',
+     _aw_desc, current='proyectos', ogtype='article', **case_seo(_aw, _aw_desc),
      cta_title='¿Quieres saber cómo está <strong>tu sitio</strong>?',
      cta_lead='Te ayudo a interpretar el informe y a corregir las brechas, desde la política de privacidad hasta las cabeceras de seguridad.',
      body=case_intro(_aw,

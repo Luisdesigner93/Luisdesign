@@ -343,4 +343,5 @@ for _t, _lang in ((ES, 'es'), (EN, 'en')):
     page(_t['path'], _t['title'], _t['desc'], body=_producto_body(_t, _mailto),
          current='producto', lang=_lang, alternates=_alternates, html_class='home motion v2', extra_css='css/home-v2.css',
          cta_title=_t['cta_title'], cta_lead=_t['cta_lead'],
-         email_subject=_t['subject'], email_first=True, email_label=_t['email_label'])
+         email_subject=_t['subject'], email_first=True, email_label=_t['email_label'],
+         jsonld=[service_ld(name, text, _t['path'] + '#servicios', _lang) for name, text, _inc, _cases in _t['roles']] + [faq_ld(_t['faq'], _lang)])

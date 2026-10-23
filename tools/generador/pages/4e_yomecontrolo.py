@@ -1,9 +1,9 @@
 # Caso Yomecontrolo (2023 – 2024): estrategia, experiencia y expresión de marca, nueva identidad y UX/UI de la web app del MVP.
 # Fuente: documentos de research, Brand Compass, experiencia de marca y visión creativa entregados por Luis.
 _ym = next(pr for pr in PROJECTS if pr['slug'] == 'yomecontrolo')
-page('proyectos/yomecontrolo.html', 'Yomecontrolo · Caso · Luis Vicencio',
-     'Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.',
-     current='proyectos', ogtype='article',
+_ym_desc = 'Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.'
+page('proyectos/yomecontrolo.html', 'Yomecontrolo: estrategia de marca, identidad y UX/UI para una startup de salud · Luis Vicencio',
+     _ym_desc, current='proyectos', ogtype='article', **case_seo(_ym, _ym_desc),
      cta_title='¿Tu producto digital necesita <strong>una marca que conecte</strong>?',
      cta_lead='Conversemos sobre tu proyecto y definamos juntos la estrategia, la identidad y la experiencia.',
      body=case_intro(_ym, _ym['summary'],

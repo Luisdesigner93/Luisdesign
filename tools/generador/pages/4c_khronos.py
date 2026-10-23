@@ -1,9 +1,9 @@
 # Contenido basado en el brandbook publicado en Behance (behance.net/gallery/231002797/Cerveza-Khronos).
 # Rebranding 2023: el nombre lo eligió el cliente; el proyecto le dio sentido desde su raíz y un concepto que guía la marca.
 _kh = next(pr for pr in PROJECTS if pr['slug'] == 'khronos')
-page('proyectos/khronos.html', 'Cerveza Khronos · Caso · Luis Vicencio',
-     'Caso de estudio: rebranding de Cerveza Khronos, una cervecería artesanal de Chile. Concepto de marca, identidad visual y packaging.',
-     current='proyectos', ogtype='article',
+_kh_desc = 'Caso de estudio: rebranding de Cerveza Khronos, una cervecería artesanal de Chile. Concepto de marca, identidad visual y packaging.'
+page('proyectos/khronos.html', 'Cerveza Khronos: propuesta de rebranding, concepto y packaging · Luis Vicencio',
+     _kh_desc, current='proyectos', ogtype='article', **case_seo(_kh, _kh_desc),
      cta_title='¿Tu marca necesita <strong>una idea propia</strong>?',
      cta_lead='Conversemos sobre tu producto y encontremos juntos el concepto que lo distinga.',
      body=case_intro(_kh,
