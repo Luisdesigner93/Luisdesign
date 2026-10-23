@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es-CL" class="motion">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Yomecontrolo · Caso · Luis Vicencio</title>
+  <meta name="description" content="Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.">
+  <link rel="canonical" href="https://luisdesign.cl/proyectos/yomecontrolo.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Yomecontrolo · Caso · Luis Vicencio">
+  <meta property="og:description" content="Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.">
+  <meta property="og:url" content="https://luisdesign.cl/proyectos/yomecontrolo.html">
+  <meta property="og:locale" content="es_CL">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="../favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preload" href="../fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="../js/theme.js"></script>
+  <script src="../js/main.js" defer></script>
+</head>
+<body>
+  <!-- Pantalla de carga: la firma "luis" se escribe con un trazo que revela el logo (solo la primera página de cada visita) -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="loader-logo" viewBox="0 0 500 265" focusable="false">
+      <defs>
+        <mask id="loader-ink" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="265">
+          <path class="loader-stroke" pathLength="1" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"
+            d="M114 30 L104 61 L93 91 L85 121 L80 151 L78 196 C92 160 112 118 130 97 C127 130 122 165 119 197 C132 160 150 118 170 97 C167 130 162 165 159 197 C172 160 190 118 210 97 C207 130 202 165 198 197 C212 160 230 118 251 93 C247 130 241 170 235 206 C231 214 220 214 222 222 C224 230 238 230 244 220 C246 212 243 205 246 198 C256 186 270 172 290 160"/>
+        </mask>
+        <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
+      </defs>
+      <image href="../img/marca/logo-luy-design.png" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="../img/marca/logo-luy-design.png" width="500" height="265" clip-path="url(#loader-word)"/>
+    </svg>
+  </div>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../" aria-label="Luis Design, inicio">
+        <img class="brand-logo" src="../img/marca/logo-luy-design.png" width="500" height="265" alt="">
+        <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Principal">
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
+        <a href="../servicios.html">Servicios</a>
+        <div class="nav-item has-sub">
+          <a href="../proyectos.html" aria-current="page">Proyectos</a>
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="sub-proyectos" aria-label="Categorías de proyectos">
+            <svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-chevron"/></svg>
+          </button>
+          <ul class="nav-sub" id="sub-proyectos">
+            <li><a href="../proyectos.html?cat=branding">Branding</a></li>
+            <li><a href="../proyectos.html?cat=ux-ui">UX/UI</a></li>
+            <li><a href="../proyectos.html?cat=logofolio">Logofolio</a></li>
+          </ul>
+        </div>
+        <a href="../#sobre-mi">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+        <div class="nav-foot">
+          <div class="nav-foot-row">
+            <button class="theme-toggle nav-theme" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+              <svg class="icon i-moon" aria-hidden="true"><use href="../img/icons.svg#i-moon"/></svg>
+              <svg class="icon i-sun" aria-hidden="true"><use href="../img/icons.svg#i-sun"/></svg>
+              <span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>
+            </button>
+            <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-secondary theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+          <svg class="icon i-moon" aria-hidden="true"><use href="../img/icons.svg#i-moon"/></svg>
+          <svg class="icon i-sun" aria-hidden="true"><use href="../img/icons.svg#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary" href="#contacto">Conversemos</a>
+        <button class="btn btn-secondary menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
+          <svg class="icon i-open" aria-hidden="true"><use href="../img/icons.svg#i-menu"/></svg>
+          <svg class="icon i-close" aria-hidden="true"><use href="../img/icons.svg#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="case-intro" aria-labelledby="page-title">
+      <div class="container case-intro-grid">
+        <div class="case-aside">
+          <ol class="breadcrumb" aria-label="Ruta"><li><a href="../">Inicio</a></li><li><a href="../proyectos.html">Proyectos</a></li><li aria-current="page">Yomecontrolo</li></ol>
+          <h1 class="case-title" id="page-title">Yomecontrolo</h1>
+          <dl class="case-meta"><div><dt>Cliente</dt><dd>Yomecontrolo</dd></div><div><dt>Año</dt><dd>2023 – 2024</dd></div><div><dt>Rol</dt><dd>Estrategia de marca, identidad y UX/UI</dd></div></dl>
+          <ul class="case-chips" aria-label="Disciplinas"><li>Branding</li><li>UX/UI</li><li>Producto</li></ul>
+          <p class="case-summary">Estrategia, experiencia y expresión de marca para Yomecontrolo, una startup chilena de salud preventiva. Una marca que deja atrás la carga negativa de ir al médico y acompaña a las personas a cuidar su salud mucho antes de que llegue la enfermedad.</p>
+        </div>
+        <div class="case-media">
+            <figure><img src="../img/proyectos/yomecontrolo/05.jpg" width="1672" height="941" alt="Sitio de Yomecontrolo en un portátil junto a la tarjeta de resultado de la calculadora de edad del corazón." decoding="async"></figure>
+            <figure><img src="../img/proyectos/yomecontrolo/06.jpg" width="1629" height="966" alt="Logotipo de Yomecontrolo con el tagline “vivir más y mejor” sobre fondo celeste." loading="lazy" decoding="async"></figure>
+            <figure><img src="../img/proyectos/yomecontrolo/07.jpg" width="906" height="1736" alt="Teléfono con la pantalla “Controla tus indicadores de salud” de la web app de Yomecontrolo." loading="lazy" decoding="async"></figure>
+            <figure><img src="../img/proyectos/yomecontrolo/08.jpg" width="1122" height="1402" alt="Ícono de Yomecontrolo en la pantalla de inicio de un teléfono." loading="lazy" decoding="async"></figure>
+        </div>
+      </div>
+    </section>
+
+    <article class="case-detail" aria-label="Detalle del caso">
+      <div class="container case-read">
+        <p class="case-statement">Yomecontrolo: cuidar tu salud <strong>hoy, por un mejor mañana</strong>.</p>
+        <section class="case-sec" aria-labelledby="contexto-title">
+          <h2 class="case-sec-title" id="contexto-title"><span class="numtag">01</span>Contexto y <strong>desafío</strong></h2>
+          <div class="case-text"><p class="lead">Yomecontrolo es una startup tecnológica chilena del área de la salud. Ofrece packs de exámenes preventivos, emite órdenes médicas y categoriza a cada paciente según su perfil de riesgo, con una meta clara: ayudar a las personas a vivir más y mejor.</p><p>En Chile la salud es reactiva: las enfermedades se descubren tarde y muchas personas no terminan sus tratamientos. A eso se sumaban dos problemas de marca: el público la confundía con su competencia directa y todavía no lograba conectar con sus usuarios.</p><p>El desafío fue separar la marca del peso negativo de ir al médico y convertir el autocuidado en algo amable y cercano.</p></div>
+        </section>
+        <section class="case-sec" aria-labelledby="metodologia-title">
+          <h2 class="case-sec-title" id="metodologia-title"><span class="numtag">02</span>La <strong>metodología</strong></h2>
+          <div class="case-text"><p class="lead">Un proceso de branding por etapas, del descubrimiento a los puntos de contacto, en el que cada fase alimenta a la siguiente.</p><ol class="case-steps"><li><strong>Research</strong><span>Investigación de escritorio que cruzó marca, categoría, usuarios y tendencias, como la medicina predictiva, la telemedicina y los wearables, para encontrar oportunidades.</span></li><li><strong>Estrategia</strong><span>Brand Compass: propósito, diferencial, personalidad y promesa. El público principal: adultos de 30 a 50 años que gestionan la salud de su familia.</span></li><li><strong>Experiencia de marca</strong><span>Con diseño especulativo y diseño de servicios proyectamos un escenario futuro, la experiencia aspirada y el viaje del usuario por cada punto de contacto.</span></li><li><strong>Visión creativa</strong><span>Concepto, idea central y territorio de marca: la narrativa que guía la expresión antes de diseñar.</span></li><li><strong>Identidad</strong><span>Construcción de la nueva identidad visual a partir de esa narrativa.</span></li><li><strong>Puntos de contacto</strong><span>Diseño UX/UI de la web app del MVP de 2024: solicitud de exámenes en línea y medición del riesgo cardiovascular.</span></li></ol></div>
+        </section>
+        <section class="case-sec" aria-labelledby="solucion-title">
+          <h2 class="case-sec-title" id="solucion-title"><span class="numtag">03</span>La <strong>solución</strong></h2>
+          <div class="case-text"><p class="lead">Una marca que funciona como un asistente clínico: acompaña el cuidado personal y familiar mucho antes de que llegue la enfermedad.</p><p>Su propósito, «superar las barreras de la salud y empoderar a las personas», y una personalidad inteligente, confiable y empática se resumieron en una idea central: «Yo me controlo, hoy por un mejor mañana». A partir de ella diseñé la nueva identidad y la experiencia del MVP.</p><ul><li>Nueva identidad visual, con el tagline «vivir más y mejor».</li><li>Web app para solicitar exámenes preventivos en línea y medir el riesgo cardiovascular con la calculadora de edad del corazón.</li></ul></div>
+        </section>
+      </div>
+    </article>
+    <section class="panel panel-plain section" aria-label="Otros proyectos">
+      <div class="container">
+        <nav class="case-nav" aria-label="Más proyectos">
+          <a class="card" href="sustentando.html"><span>Proyecto anterior</span><strong>Sustentando</strong></a>
+          <a class="card" href="uv-energy.html"><span>Proyecto siguiente</span><strong>UV Energy</strong></a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="panel frame-grid cta-final" id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <span class="icon-tile" aria-hidden="true"><span><svg class="icon"><use href="../img/icons.svg#i-chat"/></svg></span></span>
+        <h2 class="heading" id="contacto-title">¿Tu producto digital necesita <strong>una marca que conecte</strong>?</h2>
+        <p class="lead">Conversemos sobre tu proyecto y definamos juntos la estrategia, la identidad y la experiencia.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        </div>
+        <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="../" aria-label="Luis Design, inicio"><img class="brand-logo" src="../img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <p>Este sitio no usa cookies ni rastreadores de terceros.</p>
+        <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
+      </div>
+      <nav aria-labelledby="f-sitio">
+        <h2 id="f-sitio">Sitio</h2>
+        <ul><li><a href="../servicios.html">Servicios</a></li><li><a href="../proyectos.html">Proyectos</a></li><li><a href="../#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal">Legal</h2>
+        <ul><li><a href="../privacidad.html">Política de privacidad</a></li><li><a href="../privacidad.html#cookies">Cookies</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Luis Vicencio · luisdesign.cl</span>
+      <span>Branding, UX/UI y producto digital · Chile</span>
+    </div>
+  </footer>
+</body>
+</html>

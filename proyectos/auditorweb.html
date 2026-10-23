@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es-CL" class="motion">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AuditorWeb 21.719 · Caso · Luis Vicencio</title>
+  <meta name="description" content="Caso de estudio: AuditorWeb 21.719, un auditor automatizado de cumplimiento con la Ley de Protección de Datos Personales de Chile.">
+  <link rel="canonical" href="https://luisdesign.cl/proyectos/auditorweb.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AuditorWeb 21.719 · Caso · Luis Vicencio">
+  <meta property="og:description" content="Caso de estudio: AuditorWeb 21.719, un auditor automatizado de cumplimiento con la Ley de Protección de Datos Personales de Chile.">
+  <meta property="og:url" content="https://luisdesign.cl/proyectos/auditorweb.html">
+  <meta property="og:locale" content="es_CL">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="../favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preload" href="../fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="../js/theme.js"></script>
+  <script src="../js/main.js" defer></script>
+</head>
+<body>
+  <!-- Pantalla de carga: la firma "luis" se escribe con un trazo que revela el logo (solo la primera página de cada visita) -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="loader-logo" viewBox="0 0 500 265" focusable="false">
+      <defs>
+        <mask id="loader-ink" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="265">
+          <path class="loader-stroke" pathLength="1" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"
+            d="M114 30 L104 61 L93 91 L85 121 L80 151 L78 196 C92 160 112 118 130 97 C127 130 122 165 119 197 C132 160 150 118 170 97 C167 130 162 165 159 197 C172 160 190 118 210 97 C207 130 202 165 198 197 C212 160 230 118 251 93 C247 130 241 170 235 206 C231 214 220 214 222 222 C224 230 238 230 244 220 C246 212 243 205 246 198 C256 186 270 172 290 160"/>
+        </mask>
+        <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
+      </defs>
+      <image href="../img/marca/logo-luy-design.png" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="../img/marca/logo-luy-design.png" width="500" height="265" clip-path="url(#loader-word)"/>
+    </svg>
+  </div>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../" aria-label="Luis Design, inicio">
+        <img class="brand-logo" src="../img/marca/logo-luy-design.png" width="500" height="265" alt="">
+        <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Principal">
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
+        <a href="../servicios.html">Servicios</a>
+        <div class="nav-item has-sub">
+          <a href="../proyectos.html" aria-current="page">Proyectos</a>
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="sub-proyectos" aria-label="Categorías de proyectos">
+            <svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-chevron"/></svg>
+          </button>
+          <ul class="nav-sub" id="sub-proyectos">
+            <li><a href="../proyectos.html?cat=branding">Branding</a></li>
+            <li><a href="../proyectos.html?cat=ux-ui">UX/UI</a></li>
+            <li><a href="../proyectos.html?cat=logofolio">Logofolio</a></li>
+          </ul>
+        </div>
+        <a href="../#sobre-mi">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+        <div class="nav-foot">
+          <div class="nav-foot-row">
+            <button class="theme-toggle nav-theme" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+              <svg class="icon i-moon" aria-hidden="true"><use href="../img/icons.svg#i-moon"/></svg>
+              <svg class="icon i-sun" aria-hidden="true"><use href="../img/icons.svg#i-sun"/></svg>
+              <span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>
+            </button>
+            <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-secondary theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+          <svg class="icon i-moon" aria-hidden="true"><use href="../img/icons.svg#i-moon"/></svg>
+          <svg class="icon i-sun" aria-hidden="true"><use href="../img/icons.svg#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary" href="#contacto">Conversemos</a>
+        <button class="btn btn-secondary menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
+          <svg class="icon i-open" aria-hidden="true"><use href="../img/icons.svg#i-menu"/></svg>
+          <svg class="icon i-close" aria-hidden="true"><use href="../img/icons.svg#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="case-intro" aria-labelledby="page-title">
+      <div class="container case-intro-grid">
+        <div class="case-aside">
+          <ol class="breadcrumb" aria-label="Ruta"><li><a href="../">Inicio</a></li><li><a href="../proyectos.html">Proyectos</a></li><li aria-current="page">AuditorWeb 21.719</li></ol>
+          <h1 class="case-title" id="page-title">AuditorWeb 21.719</h1>
+          <dl class="case-meta"><div><dt>Tipo</dt><dd>Producto propio</dd></div><div><dt>Año</dt><dd>2026</dd></div><div><dt>Rol</dt><dd>Producto, UX/UI y desarrollo asistido con IA</dd></div></dl>
+          <ul class="case-chips" aria-label="Disciplinas"><li>Producto</li><li>UX/UI</li><li>Ley 21.719</li></ul>
+          <p class="case-summary">Una herramienta gratuita que analiza cualquier sitio web y muestra, en segundos, qué tan preparado está para la nueva Ley de Protección de Datos Personales de Chile.</p>
+          <a class="btn btn-primary case-action" href="https://auditorweb.luisdesign.cl" rel="noopener">Probar AuditorWeb <svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-external"/></svg></a>
+        </div>
+        <div class="case-media">
+            <figure class="case-art" aria-hidden="true"><div class="mini-window">
+                <div class="mini-bar"><i></i><i></i><i></i><span></span></div>
+                <div class="mini-report">
+                  <div class="mini-gauge"><span>78</span></div>
+                  <div class="mini-lines"><span class="sk sk-w80"></span><span class="sk sk-w60"></span><span class="sk sk-w40"></span><div class="mini-pills"><span>Cumple</span><span>Art. 14 ter</span></div></div>
+                </div>
+              </div></figure>
+            <figure><div class="media-ph" role="img" aria-label="Imagen pendiente: Inicio de AuditorWeb con el analizador y la cuenta regresiva a la entrada en vigencia."><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-image"/></svg>Inicio de AuditorWeb con el analizador y la cuenta regresiva a la entrada en vigencia.</div></figure>
+            <figure><div class="media-ph" role="img" aria-label="Imagen pendiente: Informe: puntaje general y resultado por área."><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-image"/></svg>Informe: puntaje general y resultado por área.</div></figure>
+            <figure><div class="media-ph" role="img" aria-label="Imagen pendiente: Plan de acción priorizado y detalle de cada control."><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-image"/></svg>Plan de acción priorizado y detalle de cada control.</div></figure>
+        </div>
+      </div>
+    </section>
+
+    <article class="case-detail" aria-label="Detalle del caso">
+      <div class="container case-read">
+        <p class="case-statement">AuditorWeb: <strong>la Ley 21.719</strong> convertida en un informe accionable.</p>
+        <section class="case-sec" aria-labelledby="contexto-title">
+          <h2 class="case-sec-title" id="contexto-title"><span class="numtag">01</span>Contexto y <strong>desafío</strong></h2>
+          <div class="case-text"><p class="lead">La Ley 21.719 rige desde el 1 de diciembre de 2026 y aplica a toda organización que trate datos de personas en Chile. La mayoría de las empresas no sabe por dónde empezar.</p><p>El sitio web suele ser el primer punto de recolección de datos: formularios, cookies, analítica, chat. Revisarlo a mano exige conocer la ley y saber leer cabeceras HTTP, scripts de terceros y políticas de privacidad.</p><p>El desafío fue traducir ese conocimiento en una revisión automática, comprensible para personas no técnicas y útil a la vez para los equipos que deben corregir las brechas.</p></div>
+        </section>
+        <section class="case-sec" aria-labelledby="rol-title">
+          <h2 class="case-sec-title" id="rol-title"><span class="numtag">02</span>Mi <strong>rol</strong></h2>
+          <div class="case-text"><p>Lideré el producto de punta a punta: desde la definición de qué revisar hasta el diseño del informe y la construcción, apoyándome en herramientas de inteligencia artificial para el desarrollo.</p><dl class="case-rows"><div><dt>Producto</dt><dd>Discovery de las obligaciones de la ley y priorización de los controles con mayor impacto.</dd></div><div><dt>UX/UI</dt><dd>Diseño de la experiencia, del informe y de la identidad visual de la herramienta.</dd></div><div><dt>Desarrollo y QA</dt><dd>Construcción asistida con IA, pruebas unitarias y revisión de seguridad.</dd></div></dl></div>
+        </section>
+        <section class="case-sec" aria-labelledby="proceso-title">
+          <h2 class="case-sec-title" id="proceso-title"><span class="numtag">03</span>El <strong>proceso</strong></h2>
+          <div class="case-text"><p class="lead">De un texto legal a 30 controles que una máquina puede verificar.</p><ol class="case-steps"><li><strong>Discovery</strong><span>Análisis de la ley y de las obligaciones que se pueden observar desde el exterior de un sitio.</span></li><li><strong>Definición</strong><span>30 controles en 5 áreas, cada uno con su artículo de referencia, su peso y su recomendación.</span></li><li><strong>Diseño</strong><span>Un informe con puntaje, semáforo por área y plan de acción ordenado por impacto.</span></li><li><strong>Desarrollo y QA</strong><span>Construcción con Node.js, pruebas unitarias y revisión de seguridad antes del lanzamiento.</span></li></ol></div>
+        </section>
+        <section class="case-sec" aria-labelledby="solucion-title">
+          <h2 class="case-sec-title" id="solucion-title"><span class="numtag">04</span>La <strong>solución</strong></h2>
+          <div class="case-text"><p class="lead">Se ingresa una URL y se obtiene un informe con puntaje de 0 a 100, resultado por área y un plan de acción priorizado.</p><p>Cada control muestra la evidencia encontrada y una recomendación concreta, para que tanto la gerencia como el equipo técnico sepan qué hacer. El informe se puede exportar a PDF.</p><ul><li>Descarga segura de los sitios, con protección contra SSRF y límites de tiempo y tamaño.</li><li>Informe construido sin insertar HTML de terceros y con una política de seguridad de contenidos estricta.</li><li>No se registran las URLs analizadas, no se usan cookies de seguimiento y la tipografía es autoalojada.</li></ul></div>
+        </section>
+        <section class="case-sec" aria-labelledby="resultados-title">
+          <h2 class="case-sec-title" id="resultados-title"><span class="numtag">05</span>Resultados y <strong>aprendizajes</strong></h2>
+          <div class="case-text"><p class="lead">Una herramienta que evalúa privacidad y seguridad tenía que ser, ella misma, un buen ejemplo.</p><dl class="case-stats"><div><dt>30</dt><dd>controles automáticos, cada uno vinculado a una obligación de la ley.</dd></div><div><dt>5</dt><dd>áreas: transparencia, derechos, consentimiento y cookies, seguridad y terceros.</dd></div><div><dt>0</dt><dd>cookies de seguimiento. El auditor cumple lo que revisa.</dd></div></dl><blockquote class="case-quote"><p>“La mejor forma de explicar una ley compleja es mostrarle a cada empresa qué le falta a su propio sitio.”</p><cite>Aprendizaje del proyecto</cite></blockquote></div>
+        </section>
+      </div>
+    </article>
+    <section class="panel panel-plain section" aria-label="Otros proyectos">
+      <div class="container">
+        <nav class="case-nav" aria-label="Más proyectos">
+          <a class="card" href="builder-app.html"><span>Proyecto anterior</span><strong>Builder App</strong></a>
+          <a class="card" href="bytequest.html"><span>Proyecto siguiente</span><strong>Bytequest</strong></a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="panel frame-grid cta-final" id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <span class="icon-tile" aria-hidden="true"><span><svg class="icon"><use href="../img/icons.svg#i-chat"/></svg></span></span>
+        <h2 class="heading" id="contacto-title">¿Quieres saber cómo está <strong>tu sitio</strong>?</h2>
+        <p class="lead">Te ayudo a interpretar el informe y a corregir las brechas, desde la política de privacidad hasta las cabeceras de seguridad.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        </div>
+        <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="../" aria-label="Luis Design, inicio"><img class="brand-logo" src="../img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <p>Este sitio no usa cookies ni rastreadores de terceros.</p>
+        <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
+      </div>
+      <nav aria-labelledby="f-sitio">
+        <h2 id="f-sitio">Sitio</h2>
+        <ul><li><a href="../servicios.html">Servicios</a></li><li><a href="../proyectos.html">Proyectos</a></li><li><a href="../#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal">Legal</h2>
+        <ul><li><a href="../privacidad.html">Política de privacidad</a></li><li><a href="../privacidad.html#cookies">Cookies</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Luis Vicencio · luisdesign.cl</span>
+      <span>Branding, UX/UI y producto digital · Chile</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es-CL" class="home motion v2">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Luis Vicencio · Branding, UX/UI y producto digital</title>
+  <meta name="description" content="Luis Vicencio, diseñador y Product Owner con más de 7 años en branding, UX/UI y producto digital. Ayudo a empresas y pymes a definir su marca y llevar sus productos a producción.">
+  <link rel="canonical" href="https://luisdesign.cl/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Luis Vicencio · Branding, UX/UI y producto digital">
+  <meta property="og:description" content="Luis Vicencio, diseñador y Product Owner con más de 7 años en branding, UX/UI y producto digital. Ayudo a empresas y pymes a definir su marca y llevar sus productos a producción.">
+  <meta property="og:url" content="https://luisdesign.cl/">
+  <meta property="og:locale" content="es_CL">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home-v2.css">
+  <script src="js/theme.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Pantalla de carga: la firma "luis" se escribe con un trazo que revela el logo (solo la primera página de cada visita) -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="loader-logo" viewBox="0 0 500 265" focusable="false">
+      <defs>
+        <mask id="loader-ink" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="265">
+          <path class="loader-stroke" pathLength="1" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"
+            d="M114 30 L104 61 L93 91 L85 121 L80 151 L78 196 C92 160 112 118 130 97 C127 130 122 165 119 197 C132 160 150 118 170 97 C167 130 162 165 159 197 C172 160 190 118 210 97 C207 130 202 165 198 197 C212 160 230 118 251 93 C247 130 241 170 235 206 C231 214 220 214 222 222 C224 230 238 230 244 220 C246 212 243 205 246 198 C256 186 270 172 290 160"/>
+        </mask>
+        <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
+      </defs>
+      <image href="img/marca/logo-luy-design.png" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="img/marca/logo-luy-design.png" width="500" height="265" clip-path="url(#loader-word)"/>
+    </svg>
+  </div>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Luis Design, inicio">
+        <img class="brand-logo" src="img/marca/logo-luy-design.png" width="500" height="265" alt="">
+        <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Principal">
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
+        <a href="servicios.html">Servicios</a>
+        <div class="nav-item has-sub">
+          <a href="proyectos.html">Proyectos</a>
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="sub-proyectos" aria-label="Categorías de proyectos">
+            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-chevron"/></svg>
+          </button>
+          <ul class="nav-sub" id="sub-proyectos">
+            <li><a href="proyectos.html?cat=branding">Branding</a></li>
+            <li><a href="proyectos.html?cat=ux-ui">UX/UI</a></li>
+            <li><a href="proyectos.html?cat=logofolio">Logofolio</a></li>
+          </ul>
+        </div>
+        <a href="./#sobre-mi">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+        <div class="nav-foot">
+          <div class="nav-foot-row">
+            <button class="theme-toggle nav-theme" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+              <svg class="icon i-moon" aria-hidden="true"><use href="img/icons.svg#i-moon"/></svg>
+              <svg class="icon i-sun" aria-hidden="true"><use href="img/icons.svg#i-sun"/></svg>
+              <span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>
+            </button>
+            <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-secondary theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+          <svg class="icon i-moon" aria-hidden="true"><use href="img/icons.svg#i-moon"/></svg>
+          <svg class="icon i-sun" aria-hidden="true"><use href="img/icons.svg#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary" href="#contacto">Conversemos</a>
+        <button class="btn btn-secondary menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
+          <svg class="icon i-open" aria-hidden="true"><use href="img/icons.svg#i-menu"/></svg>
+          <svg class="icon i-close" aria-hidden="true"><use href="img/icons.svg#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- HERO -->
+    <section class="v2-hero-shell" aria-labelledby="v2-title">
+      <div class="v2-hero">
+        <img class="v2-hero-bg" src="img/marca/hero-fondo.jpg" width="2000" height="1333" alt="" decoding="async" fetchpriority="high">
+        <div class="v2-hero-top">
+          <span class="v2-eyebrow"><i aria-hidden="true"></i>Luis Vicencio · Diseñador</span>
+          <h1 class="v2-hero-title" id="v2-title">Ayudo a empresas y pymes a <strong>definir su marca, diseñar su producto</strong> y llevarlo a producción con equipos ágiles.</h1>
+          <p class="v2-hero-lead">Diseño marcas y productos con mirada de negocio.</p>
+        </div>
+        <div class="v2-hero-bottom">
+          <ul class="v2-hero-meta" aria-label="Especialidades">
+            <li>+ Branding</li>
+            <li>+ Comunicación</li>
+            <li>+ UX/UI</li>
+            <li>+ Product Design</li>
+            <li>+ Scrum</li>
+            <li>+ PO</li>
+            <li>+ Packaging</li>
+            <li>+ Señalización</li>
+            <li>+ IA</li>
+          </ul>
+          <div class="v2-hero-cta">
+            <p>Branding, UX/UI y Product Owner para marcas que quieren destacar</p>
+            <div class="btn-row">
+              <a class="btn btn-primary v2-btn-light" href="proyectos.html">Ver proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+              <a class="btn v2-btn-ghost" href="#contacto">Conversemos</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CINTA DE CLIENTES -->
+    <section class="v2-marquee" aria-label="Marcas con las que he trabajado">
+      <p class="v2-marquee-lead">Más de 7 años creando marcas y productos digitales</p>
+      <div class="v2-marquee-track">
+        <ul><li>Bytequest</li><li>Studio Dinoi</li><li class="v2-marquee-logo"><img src="img/logos/sustentando.png" width="218" height="64" alt="Sustentando" loading="lazy" decoding="async"></li><li class="v2-marquee-logo"><img src="img/logos/yomecontrolo.png" width="156" height="38" alt="Yomecontrolo" loading="lazy" decoding="async"></li><li class="v2-marquee-logo"><img src="img/logos/khronos.png" width="56" height="25" alt="Cerveza Khronos" loading="lazy" decoding="async"></li><li>Fuchi Chao</li><li>UV Energy</li><li>Botes Salvavidas</li><li>Kimsa</li><li>Waterman</li></ul>
+        <ul aria-hidden="true"><li>Bytequest</li><li>Studio Dinoi</li><li class="v2-marquee-logo"><img src="img/logos/sustentando.png" width="218" height="64" alt="Sustentando" loading="lazy" decoding="async"></li><li class="v2-marquee-logo"><img src="img/logos/yomecontrolo.png" width="156" height="38" alt="Yomecontrolo" loading="lazy" decoding="async"></li><li class="v2-marquee-logo"><img src="img/logos/khronos.png" width="56" height="25" alt="Cerveza Khronos" loading="lazy" decoding="async"></li><li>Fuchi Chao</li><li>UV Energy</li><li>Botes Salvavidas</li><li>Kimsa</li><li>Waterman</li></ul>
+      </div>
+    </section>
+
+
+    <!-- IDEAS: frase gigante con collage de productos diseñados -->
+    <section class="panel panel-plain ideas" aria-labelledby="ideas-title">
+      <div class="ideas-stage">
+        <h2 class="ideas-title" id="ideas-title"><span class="ideas-line"><span>El mundo</span><span class="ideas-gap" aria-hidden="true"></span><span><span class="ideas-w1">de las</span><span class="ideas-split"></span><span class="ideas-w2">ideas</span></span></span><span class="ideas-line"><span><span class="ideas-w1">en</span><span class="ideas-split"></span><span class="ideas-w2">los</span></span><span class="ideas-gap" aria-hidden="true"></span><span>productos</span></span><span class="ideas-line"><span>del día</span><span class="ideas-gap" aria-hidden="true"></span><span>a día</span></span></h2>
+        <div class="ideas-collage" aria-hidden="true">
+          <img class="ideas-item ideas-item-phone" src="img/collage/yomecontrolo-telefono.png" width="514" height="900" alt="" loading="lazy" decoding="async">
+          <img class="ideas-item ideas-item-spray" src="img/collage/fuchi-chao-eliminador.png" width="343" height="1000" alt="" loading="lazy" decoding="async">
+          <img class="ideas-item ideas-item-beer" src="img/collage/khronos-stout.png" width="263" height="900" alt="" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="container ideas-foot">
+        <div class="ideas-intro">
+          <p>Llevo ideas a productos que la gente usa todos los días: marcas, envases y experiencias digitales con un mismo criterio, desde la estrategia hasta la entrega.</p>
+          <a class="btn btn-outline ideas-cta" href="#contacto">Conversemos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+        </div>
+        <a class="ideas-pill" href="proyectos.html">
+          <span class="ideas-pill-btn"><span class="ideas-pill-label">Ver portafolio</span><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></span>
+          <img src="img/proyectos/khronos/02.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+        </a>
+        <!-- EDITAR: reemplazar "9 casos publicados" por la cantidad total de proyectos realizados -->
+        <dl class="ideas-stats">
+          <div><dt>+7</dt><dd>Años de experiencia</dd></div>
+          <div><dt>9</dt><dd>Casos publicados</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- SERVICIOS: tarjetas verticales con imagen; la activa se expande -->
+    <section class="panel section svc-v2" id="servicios" aria-labelledby="servicios-title">
+      <div class="container">
+        <div class="section-head center">
+          <span class="tag tag-eyebrow">Servicios</span>
+          <h2 class="heading" id="servicios-title">Diseño para que te <strong>elijan, te entiendan y te compren</strong>.</h2>
+        </div>
+        <div class="svc-row">
+          <a class="svc-card" href="servicios.html#branding">
+            <img class="svc-card-img" src="img/proyectos/khronos/04.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+            <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Estrategia</li><li>Identidad</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
+            <span class="svc-card-body">
+              <span class="svc-card-title">Branding Estratégico</span>
+              <span class="svc-card-desc">Cuando todos dicen lo mismo, el cliente elige lo más barato. Tu marca es la razón para elegirte a ti.</span>
+            </span>
+          </a>
+          <a class="svc-card" href="servicios.html#ux-ui">
+            <img class="svc-card-img" src="img/proyectos/yomecontrolo/07.jpg" width="906" height="1736" alt="" loading="lazy" decoding="async">
+            <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Research</li><li>Prototipos</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
+            <span class="svc-card-body">
+              <span class="svc-card-title">UX/UI y Diseño de Producto</span>
+              <span class="svc-card-desc">Si tu producto es difícil de usar, tus clientes lo abandonan. Diseño experiencias que se entienden a la primera.</span>
+            </span>
+          </a>
+          <a class="svc-card" href="servicios.html#product-owner">
+            <img class="svc-card-img" src="img/marca/hero-fondo.jpg" width="2000" height="1333" alt="" loading="lazy" decoding="async">
+            <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Scrum</li><li>Backlog</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
+            <span class="svc-card-body">
+              <span class="svc-card-title">Product Owner Para Tu Proyecto</span>
+              <span class="svc-card-desc">Sin prioridades claras, el desarrollo se alarga y se desvía. Ordeno el camino para que construyamos lo que realmente importa.</span>
+            </span>
+          </a>
+          <a class="svc-card" href="servicios.html#web">
+            <img class="svc-card-img" src="img/proyectos/sustentando/04.jpg" width="1600" height="899" alt="" loading="lazy" decoding="async">
+            <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Ecommerce</li><li>Ley 21.719</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
+            <span class="svc-card-body">
+              <span class="svc-card-title">Sitios Web y Ecommerce</span>
+              <span class="svc-card-desc">Un buen sitio guía a la persona hacia la acción: comprar, cotizar, agendar o escribirte. Diseñemos el tuyo.</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PROYECTOS: arco curvo de imágenes movido por el scroll y las flechas -->
+    <section class="section more" id="proyectos" aria-labelledby="more-title">
+      <div class="container more-head">
+        <span class="tag tag-eyebrow">Proyectos</span>
+        <h2 class="heading v2-big" id="more-title">Proyectos destacados <strong>y trabajo creativo</strong></h2>
+        <p class="lead">Marcas, packaging y productos digitales diseñados para crecer.</p>
+        <a class="btn btn-primary" href="proyectos.html">Ver todos los proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+      </div>
+      <div class="more-stage">
+        <!-- Flechas para recorrer el carrusel (main.js las muestra cuando el carrusel está activo) -->
+        <div class="more-nav" hidden>
+          <button class="more-prev" type="button" aria-label="Proyecto anterior"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></button>
+          <button class="more-next" type="button" aria-label="Proyecto siguiente"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></button>
+        </div>
+        <ul class="more-arc" aria-label="Proyectos">
+          <li><img src="img/proyectos/khronos/04.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+            <div class="more-info"><ul class="more-tags"><li>Rebranding</li><li>Estrategia</li><li>Packaging</li></ul><div class="more-foot"><strong>Cerveza Khronos</strong><a class="more-go" href="proyectos/khronos.html" aria-label="Ver proyecto: Cerveza Khronos"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div></div></li>
+          <li><img src="img/proyectos/sustentando/02.jpg" width="1200" height="1200" alt="" loading="lazy" decoding="async">
+            <div class="more-info"><ul class="more-tags"><li>Branding</li><li>Web</li><li>Comunicación</li></ul><div class="more-foot"><strong>Sustentando</strong><a class="more-go" href="proyectos/sustentando.html" aria-label="Ver proyecto: Sustentando"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div></div></li>
+          <li><img src="img/proyectos/yomecontrolo/07.jpg" width="906" height="1736" alt="" loading="lazy" decoding="async">
+            <div class="more-info"><ul class="more-tags"><li>Branding</li><li>UX/UI</li><li>Producto</li></ul><div class="more-foot"><strong>Yomecontrolo</strong><a class="more-go" href="proyectos/yomecontrolo.html" aria-label="Ver proyecto: Yomecontrolo"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div></div></li>
+          <li><img src="img/proyectos/fuchi-chao/01.jpg" width="1397" height="1400" alt="" loading="lazy" decoding="async">
+            <div class="more-info"><ul class="more-tags"><li>Naming</li><li>Branding</li><li>Packaging</li><li>Comunicación</li></ul><div class="more-foot"><strong>Fuchi Chao</strong><a class="more-go" href="proyectos/fuchi-chao.html" aria-label="Ver proyecto: Fuchi Chao"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div></div></li>
+          <li><img src="img/proyectos/botes-salvavidas/01.jpg" width="864" height="1080" alt="" loading="lazy" decoding="async">
+            <div class="more-info"><ul class="more-tags"><li>Redes sociales</li><li>Comunicación</li></ul><div class="more-foot"><strong>Botes Salvavidas de Valparaíso</strong><a class="more-go" href="proyectos/botes-salvavidas.html" aria-label="Ver proyecto: Botes Salvavidas de Valparaíso"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div></div></li>
+          <li><img src="img/proyectos/uv-energy/01.jpg" width="1600" height="899" alt="" loading="lazy" decoding="async">
+            <div class="more-info"><ul class="more-tags"><li>Web</li><li>Contenidos</li></ul><div class="more-foot"><strong>UV Energy</strong><a class="more-go" href="proyectos/uv-energy.html" aria-label="Ver proyecto: UV Energy"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div></div></li>
+        </ul>
+      </div>
+      <ol class="container more-steps"><li><span>+01</span>Estrategia y planificación</li><li><span>+02</span>Diseño y desarrollo</li><li><span>+03</span>Lanzamiento</li><li><span>+04</span>Acompañamiento continuo</li></ol>
+    </section>
+
+
+    <!-- SOBRE MÍ -->
+    <section class="panel panel-plain section about" id="sobre-mi" aria-labelledby="sobre-title">
+      <div class="container">
+        <div class="two-col about-grid">
+          <figure class="portrait">
+            <img src="img/marca/luis-vicencio-retrato.png" width="750" height="900" alt="Retrato de Luis Vicencio" loading="lazy" decoding="async">
+          </figure>
+          <div class="about-text">
+            <span class="tag tag-eyebrow">Sobre mí</span>
+            <h2 class="heading" id="sobre-title">Diseñador con <strong>mirada de producto</strong>.</h2>
+            <p class="lead">Mi aporte es proponer ideas orientadas a la estrategia del negocio, no solo a la ejecución. Aplico esa mirada tanto al definir una identidad de marca como al priorizar un backlog.</p>
+            <p>Soy diseñador de la Universidad de Valparaíso, con estudios de Product Design for Innovation en el Politecnico di Milano y un diplomado en Branding Estratégico. He cofundado una agencia, asesorado a pymes en Chile, Argentina y Alemania, y liderado como Product Owner el desarrollo de productos de software con inteligencia artificial.</p>
+            <div><button class="link-arrow" type="button" data-drawer-open="trayectoria" aria-haspopup="dialog" aria-controls="trayectoria">Ver mi trayectoria <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></button></div>
+          </div>
+        </div>
+        <ul class="feature-list feature-grid" role="list">
+            <li class="card"><span class="icon-key" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-target"/></svg></span><div><strong>Estrategia Primero</strong><span>Cada decisión de diseño responde a un objetivo de negocio concreto.</span></div></li>
+            <li class="card"><span class="icon-key" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-search"/></svg></span><div><strong>Discovery</strong><span>Research con usuarios y negocio para validar antes de invertir en construir.</span></div></li>
+            <li class="card"><span class="icon-key" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-kanban"/></svg></span><div><strong>Agilidad</strong><span>Scrum adaptado al equipo, con prioridades claras y entregas frecuentes.</span></div></li>
+            <li class="card"><span class="icon-key" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-check"/></svg></span><div><strong>Calidad</strong><span>QA de cada entregable e informes de avance transparentes para todos.</span></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TRAYECTORIA: panel lateral que se abre desde "Ver mi trayectoria" -->
+    <dialog class="drawer" id="trayectoria" aria-labelledby="trayectoria-title">
+      <div class="drawer-inner">
+        <header class="drawer-head">
+          <div>
+            <span class="tag tag-eyebrow">Trayectoria</span>
+            <h2 class="heading" id="trayectoria-title">Más de 7 años entre <strong>marca, experiencia y producto</strong>.</h2>
+          </div>
+          <button class="btn btn-secondary drawer-close" type="button" data-drawer-close aria-label="Cerrar trayectoria">
+            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-close"/></svg>
+          </button>
+        </header>
+        <div class="drawer-body">
+            <ol class="career">
+              <li class="card">
+                <div class="career-when"><span>2025 – 2026</span></div>
+                <div>
+                  <h3>Líder de Innovación y Productos <span class="career-org">Brand Manager y Product Owner · Bytequest SpA</span></h3>
+                  <p>Lideré como Product Owner, con Scrum, un módulo de IA para la atención por chatbot de víctimas, con auditoría y observabilidad de un call center, para una institución pública del sector justicia. Coordiné un equipo de 7 personas, realicé QA de los entregables e informes mensuales de avance, e impulsé productos de uso legislativo, gestión de crisis municipal y excelencia operacional.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2022 – 2025</span></div>
+                <div>
+                  <h3>CEO Cofundador <span class="career-org">Studio Dinoi</span></h3>
+                  <p>Cofundé y lideré una agencia que integraba branding, desarrollo web, ecommerce y comunicación corporativa. Asesoré a pymes de rubros como cervecerías, asesorías legales, productos para mascotas, servicios B2B, productos químicos y fundaciones.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2020 – actualidad</span><span class="tag tag-value">Actual</span></div>
+                <div>
+                  <h3>Diseñador Freelance <span class="career-org">luisdesign.cl</span></h3>
+                  <p>Comunicación digital, branding y diseño para pequeñas y medianas empresas de Chile, Argentina y Alemania.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2019 – 2020</span></div>
+                <div>
+                  <h3>Diseñador de Marcas y UX/UI <span class="career-org">Kimsa</span></h3>
+                  <p>Identidad de marca y experiencia de usuario para los clientes de la startup.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2018 – 2019</span></div>
+                <div>
+                  <h3>Diseñador y Encargado de Comunicaciones <span class="career-org">Waterman</span></h3>
+                  <p>Línea comunicacional de la empresa y sistema de diseño para cada proyecto de seguridad acuática: diseño web, motion graphics y diseño gráfico.</p>
+                </div>
+              </li>
+            </ol>
+            <h3 class="drawer-subtitle">Formación académica</h3>
+            <div class="benefits">
+              <div><strong>Diseño</strong><span>Universidad de Valparaíso, titulado en 2017.</span></div>
+              <div><strong>Product Design for Innovation</strong><span>Politecnico di Milano, Italia, intercambio de máster 2015 – 2016.</span></div>
+              <div><strong>Branding Estratégico para la Nueva Economía</strong><span>Diplomado, Universidad del Desarrollo, 2022.</span></div>
+            </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- CONTACTO -->
+    <section class="panel frame-grid cta-final" id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <span class="icon-tile" aria-hidden="true"><span><svg class="icon"><use href="img/icons.svg#i-chat"/></svg></span></span>
+        <h2 class="heading" id="contacto-title">Conversemos sobre <strong>tu proyecto</strong>.</h2>
+        <p class="lead">Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        </div>
+        <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="./" aria-label="Luis Design, inicio"><img class="brand-logo" src="img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <p>Este sitio no usa cookies ni rastreadores de terceros.</p>
+        <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
+      </div>
+      <nav aria-labelledby="f-sitio">
+        <h2 id="f-sitio">Sitio</h2>
+        <ul><li><a href="servicios.html">Servicios</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="./#sobre-mi">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal">Legal</h2>
+        <ul><li><a href="privacidad.html">Política de privacidad</a></li><li><a href="privacidad.html#cookies">Cookies</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Luis Vicencio · luisdesign.cl</span>
+      <span>Branding, UX/UI y producto digital · Chile</span>
+    </div>
+  </footer>
+</body>
+</html>

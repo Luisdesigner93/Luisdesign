@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "luisdesign",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "/Users/byte/Documents/Desarrollos/Luisdesign/tools/serve.mjs",
+        "4173"
+      ],
+      "port": 4173
+    }
+  ]
+}
