@@ -388,3 +388,27 @@
 /* Sobre mí: dos enlaces */
 .about-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
 .about-links .link-arrow { min-height: 44px; text-align: left; }
+
+/* ===== Landing Producto digital (fase 3): reutiliza las piezas de la landing Marcas ===== */
+.pd-lang { align-self: flex-start; font-size: 13px; color: var(--v2-on-dark-muted); text-underline-offset: 3px; }
+.pd-lang:hover { color: var(--v2-on-dark); }
+.pd-signal { color: var(--ink) !important; font-size: 17px !important; line-height: 26px !important; letter-spacing: -0.01em; }
+.pd-roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.pd-role { display: flex; flex-direction: column; gap: var(--space-4); padding: clamp(1.5rem, 2.5vw, 2rem); }
+.pd-role > p { color: var(--ink-muted); font-size: 15px; line-height: 24px; }
+.pd-role .pd-small { font-size: 14px; line-height: 22px; }
+.pd-role .pd-small strong { color: var(--ink); font-weight: 600; }
+.pd-role .svc-casos { margin-top: auto; padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.pd-fit { margin-top: var(--space-4); padding: clamp(1.5rem, 2.5vw, 2rem); }
+.pd-fit dd { color: var(--ink-muted); font-size: 15px; line-height: 24px; }
+.pd-learned { max-width: 44rem; margin: var(--space-10) auto 0; padding: var(--space-6) var(--space-8); border-left: 3px solid var(--accent); }
+.pd-learned figcaption { font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-subtle); }
+.pd-learned blockquote { margin: var(--space-3) 0 0; font-size: 20px; line-height: 30px; letter-spacing: -0.015em; }
+.pd-feat-ph { display: grid; place-content: center; justify-items: center; gap: var(--space-2); aspect-ratio: 1; border-radius: var(--radius-2xl); background: var(--surface-sunken); color: var(--ink-subtle); font-size: 14px; }
+.pd-feat-ph .icon { width: 28px; height: 28px; }
+.pd-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: clamp(2rem, 5vw, 3.5rem) 0 0; padding: 0; list-style: none; }
+.pd-case { display: flex; flex-direction: column; gap: var(--space-4); padding: clamp(1.5rem, 2.5vw, 2rem); }
+.pd-case p { color: var(--ink-muted); font-size: 15px; line-height: 24px; }
+.pd-case .link-arrow { margin-top: auto; }
+.pd-modes { margin-top: 0; }
+@media (max-width: 53.75em) { .pd-roles, .pd-cases, .pd-modes { grid-template-columns: 1fr; } }

@@ -19,18 +19,18 @@ ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE.parent.parent
 SITE = 'https://luisdesign.cl/'
 
 HEAD = '''<!doctype html>
-<html lang="es-CL" class="{html_class}">
+<html lang="{html_lang}" class="{html_class}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{title}</title>
   <meta name="description" content="{desc}">
 {robots}  <link rel="canonical" href="{url}">
-  <meta property="og:type" content="{ogtype}">
+{alternates}  <meta property="og:type" content="{ogtype}">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:url" content="{url}">
-  <meta property="og:locale" content="es_CL">
+  <meta property="og:locale" content="{og_locale}">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="{p}favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
@@ -116,9 +116,7 @@ CONTACT = '''
         <h2 class="heading" id="contacto-title">{cta_title}</h2>
         <p class="lead">{cta_lead}</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="{wa_href}" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
-{contact_email}          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
-        </div>
+{contact_buttons}        </div>
         <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
       </div>
     </section>
@@ -156,6 +154,51 @@ CTA_LEAD = 'Cuéntame en qué etapa está tu marca o tu producto y te respondo c
 WA_HREF = 'https://wa.me/56958217041'
 # EDITAR: reactivar la casilla contacto@luisdesign.cl antes de publicar
 EMAIL = 'contacto@luisdesign.cl'
+_EXT = ' rel="noopener noreferrer" target="_blank"'
+_NEW_TAB = '<span class="sr-only"> (se abre en una pestaña nueva)</span>'
+
+# Textos del menú, el contacto y el pie para las páginas en inglés (pares español → inglés, en orden)
+EN_CHROME = [
+    ('Saltar al contenido', 'Skip to content'),
+    ('aria-label="Luis Design, inicio"', 'aria-label="Luis Design, home"'),
+    ('Branding, UX/UI<br>y Producto', 'Branding, UX/UI<br>and Product'),
+    ('aria-label="Principal"', 'aria-label="Main"'),
+    ('<span>Branding, UX/UI y producto</span>', '<span>Branding, UX/UI and product</span>'),
+    ('>Marcas</a>', '>Brands</a>'),
+    ('>Producto digital</a>', '>Digital product</a>'),
+    ('>Proyectos</a>', '>Projects</a>'),
+    ('aria-label="Categorías de proyectos"', 'aria-label="Project categories"'),
+    ('>Sobre mí</a>', '>About</a>'),
+    ('>Contacto</a>', '>Contact</a>'),
+    ('aria-label="Cambiar a modo oscuro"', 'aria-label="Switch to dark mode"'),
+    ('<span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>', '<span class="t-dark">Dark mode</span><span class="t-light">Light mode</span>'),
+    (' (se abre en una pestaña nueva)', ' (opens in a new tab)'),
+    ('>Conversemos</a>', '>Let’s talk</a>'),
+    ('aria-label="Abrir menú"', 'aria-label="Open menu"'),
+    ('Escríbeme por WhatsApp', 'Message me on WhatsApp'),
+    ('Sin formularios ni cookies', 'No forms or cookies'),
+    ('Respuesta en 1 a 2 días hábiles', 'Reply within 1 to 2 business days'),
+    ('Este sitio no usa cookies ni rastreadores de terceros.', 'This site uses no cookies or third-party trackers.'),
+    ('>Sitio</h2>', '>Site</h2>'),
+    ('>Política de privacidad</a>', '>Privacy policy (Spanish)</a>'),
+    ('Branding, UX/UI y producto digital · Chile', 'Branding, UX/UI and digital product · Chile'),
+]
+
+
+def _contact_buttons(p, wa_href, email_subject, email_first, email_label):
+    wa = (f'<a class="btn {{cls}}" href="{wa_href}"{_EXT}><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-chat"/></svg>'
+          f'Escríbeme por WhatsApp{_NEW_TAB}</a>')
+    linkedin = (f'<a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign"{_EXT}><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-user"/></svg>'
+                f'LinkedIn{_NEW_TAB}</a>')
+    buttons = [wa.replace('{cls}', 'btn-outline' if email_first else 'btn-primary')]
+    # Correo solo en las landings que lo piden (email_subject='' agrega el botón sin asunto)
+    if email_subject is not None:
+        href = f'mailto:{EMAIL}' + (f'?subject={quote(email_subject)}' if email_subject else '')
+        email = (f'<a class="btn {"btn-primary" if email_first else "btn-outline"}" href="{href}"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-mail"/></svg>'
+                 f'{email_label or EMAIL}</a>')
+        buttons.insert(0 if email_first else 1, email)
+    buttons.append(linkedin)
+    return ''.join(f'          {b}\n' for b in buttons)
 
 
 def fill(template, values):
@@ -164,7 +207,8 @@ def fill(template, values):
 
 
 # ---- Mayúscula en cada palabra solo en los títulos de tarjetas (los títulos de sección quedan como oración) ----
-_MINOR = {'y', 'e', 'o', 'u', 'de', 'del', 'a', 'al', 'en', 'el', 'la', 'los', 'las'}
+_MINOR = {'y', 'e', 'o', 'u', 'de', 'del', 'a', 'al', 'en', 'el', 'la', 'los', 'las', 'para', 'con', 'por', 'sin',
+          'and', 'or', 'for', 'of', 'the', 'to', 'an', 'in', 'on', 'with', 'by'}  # también inglés (en/)
 
 
 def _title_case(text):
@@ -197,7 +241,8 @@ def _card_titles(html):
 
 
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
-         noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None):
+         noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None,
+         email_first=False, email_label=None, lang='es', alternates=None):
     depth = path.count('/')
     if absolute:
         p, home = '/', '/'
@@ -215,16 +260,18 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_privacidad': ' aria-current="page"' if current == 'privacidad' else '',
         'cta_title': cta_title or CTA_TITLE, 'cta_lead': cta_lead or CTA_LEAD,
-        'wa_href': wa_href or WA_HREF,
-        # Correo solo en las landings que lo piden (email_subject='' agrega el botón sin asunto)
-        'contact_email': '' if email_subject is None else
-            f'          <a class="btn btn-outline" href="mailto:{EMAIL}' + (f'?subject={quote(email_subject)}' if email_subject else '') +
-            f'"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-mail"/></svg>{EMAIL}</a>\n',
+        'contact_buttons': _contact_buttons(p, wa_href or WA_HREF, email_subject, email_first, email_label),
+        'html_lang': 'en' if lang == 'en' else 'es-CL', 'og_locale': 'en_US' if lang == 'en' else 'es_CL',
+        # Versiones en otros idiomas: {'es-CL': 'producto-digital.html', 'en': 'en/digital-product.html', 'x-default': ...}
+        'alternates': ''.join(f'  <link rel="alternate" hreflang="{h}" href="{SITE}{u}">\n' for h, u in (alternates or {}).items()),
     }
-    html = fill(HEAD, values) + fill(body, values)
-    if contact:
-        html += fill(CONTACT, values)
-    html += fill(FOOT, values)
+    chrome = [fill(HEAD, values), fill(CONTACT, values) if contact else '', fill(FOOT, values)]
+    if lang == 'en':
+        for es, en in EN_CHROME:
+            chrome = [c.replace(es, en) for c in chrome]
+        # En inglés, "Digital product" apunta a la versión en inglés
+        chrome = [c.replace(f'href="{p}producto-digital.html"', 'href="digital-product.html"') for c in chrome]
+    html = chrome[0] + fill(body, values) + chrome[1] + chrome[2]
     html = _card_titles(html)
     out = ROOT / path
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -237,6 +284,6 @@ def fragment(name):
     return (HERE / 'fragmentos' / name).read_text(encoding='utf-8')
 
 
-env = {'page': page, 'fragment': fragment, '__name__': 'luisdesign_pages'}
+env = {'page': page, 'fragment': fragment, 'EMAIL': EMAIL, 'quote': quote, '__name__': 'luisdesign_pages'}
 for script in sorted((HERE / 'pages').glob('*.py')):
     exec(compile(script.read_text(encoding='utf-8'), str(script), 'exec'), env)

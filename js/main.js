@@ -18,7 +18,9 @@
 
   const setOpen = (open) => {
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    // Páginas en inglés (en/): mismas etiquetas traducidas
+    const en = document.documentElement.lang.startsWith('en');
+    toggle.setAttribute('aria-label', open ? (en ? 'Close menu' : 'Cerrar menú') : (en ? 'Open menu' : 'Abrir menú'));
     nav.classList.toggle('is-open', open);
     // La página no se desplaza mientras el menú está abierto.
     document.documentElement.classList.toggle('menu-open', open);

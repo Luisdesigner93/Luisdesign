@@ -17,7 +17,8 @@
     document.querySelectorAll('.theme-toggle').forEach((button) => {
       const dark = theme === 'dark';
       button.setAttribute('aria-pressed', String(dark));
-      button.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+      const en = document.documentElement.lang.startsWith('en');
+      button.setAttribute('aria-label', dark ? (en ? 'Switch to light mode' : 'Cambiar a modo claro') : (en ? 'Switch to dark mode' : 'Cambiar a modo oscuro'));
     });
   }
 
