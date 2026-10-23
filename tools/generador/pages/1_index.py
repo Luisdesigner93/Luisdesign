@@ -120,7 +120,7 @@ HOME_PROCESO = '''    <!-- PROCESO -->
 
 page('index.html', 'Luis Vicencio · Branding, UX/UI y producto digital',
      'Luis Vicencio, diseñador y Product Owner con más de 7 años en branding, UX/UI y producto digital. Ayudo a empresas y pymes a definir su marca y llevar sus productos a producción.',
-     html_class='home motion v2', canonical='', extra_css='css/home-v2.css', body='''''' + HOME_HERO + HOME_MARQUEE + HOME_IDEAS + '''
+     current='marcas', html_class='home motion v2', canonical='', extra_css='css/home-v2.css', body='''''' + HOME_HERO + HOME_MARQUEE + HOME_IDEAS + '''
     <!-- SERVICIOS: tarjetas verticales con imagen; la activa se expande -->
     <section class="panel section svc-v2" id="servicios" aria-labelledby="servicios-title">
       <div class="container">
@@ -129,7 +129,7 @@ page('index.html', 'Luis Vicencio · Branding, UX/UI y producto digital',
           <h2 class="heading" id="servicios-title">Diseño para que te <strong>elijan, te entiendan y te compren</strong>.</h2>
         </div>
         <div class="svc-row">
-          <a class="svc-card" href="servicios.html#branding">
+          <a class="svc-card" href="#servicios">
             <img class="svc-card-img" src="img/proyectos/khronos/04.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
             <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Estrategia</li><li>Identidad</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
             <span class="svc-card-body">
@@ -137,7 +137,7 @@ page('index.html', 'Luis Vicencio · Branding, UX/UI y producto digital',
               <span class="svc-card-desc">Cuando todos dicen lo mismo, el cliente elige lo más barato. Tu marca es la razón para elegirte a ti.</span>
             </span>
           </a>
-          <a class="svc-card" href="servicios.html#ux-ui">
+          <a class="svc-card" href="producto-digital.html">
             <img class="svc-card-img" src="img/proyectos/yomecontrolo/07.jpg" width="906" height="1736" alt="" loading="lazy" decoding="async">
             <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Research</li><li>Prototipos</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
             <span class="svc-card-body">
@@ -145,7 +145,7 @@ page('index.html', 'Luis Vicencio · Branding, UX/UI y producto digital',
               <span class="svc-card-desc">Si tu producto es difícil de usar, tus clientes lo abandonan. Diseño experiencias que se entienden a la primera.</span>
             </span>
           </a>
-          <a class="svc-card" href="servicios.html#product-owner">
+          <a class="svc-card" href="producto-digital.html">
             <img class="svc-card-img" src="img/marca/hero-fondo.jpg" width="2000" height="1333" alt="" loading="lazy" decoding="async">
             <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Scrum</li><li>Backlog</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
             <span class="svc-card-body">
@@ -153,7 +153,7 @@ page('index.html', 'Luis Vicencio · Branding, UX/UI y producto digital',
               <span class="svc-card-desc">Sin prioridades claras, el desarrollo se alarga y se desvía. Ordeno el camino para que construyamos lo que realmente importa.</span>
             </span>
           </a>
-          <a class="svc-card" href="servicios.html#web">
+          <a class="svc-card" href="#servicios">
             <img class="svc-card-img" src="img/proyectos/sustentando/04.jpg" width="1600" height="899" alt="" loading="lazy" decoding="async">
             <span class="svc-card-top"><ul class="svc-tags" aria-hidden="true"><li>Ecommerce</li><li>Ley 21.719</li></ul><span class="svc-arrow" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-arrow"/></svg></span></span>
             <span class="svc-card-body">

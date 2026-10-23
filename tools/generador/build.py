@@ -63,7 +63,8 @@ HEAD = '''<!doctype html>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
-        <a href="{p}servicios.html"{cur_servicios}>Servicios</a>
+        <a href="{home}"{cur_marcas}>Marcas</a>
+        <a href="{p}producto-digital.html"{cur_producto}>Producto digital</a>
         <div class="nav-item has-sub">
           <a href="{p}proyectos.html"{cur_proyectos}>Proyectos</a>
           <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="sub-proyectos" aria-label="Categorías de proyectos">
@@ -133,7 +134,7 @@ FOOT = '''  </main>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{p}servicios.html">Servicios</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{home}#sobre-mi">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{home}">Marcas</a></li><li><a href="{p}producto-digital.html">Producto digital</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{home}#sobre-mi">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -203,7 +204,8 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'robots': '  <meta name="robots" content="noindex">\n' if noindex else '',
         'extra_css': f'  <link rel="stylesheet" href="{p}{extra_css}">\n' if extra_css else '',
         'contact_href': '#contacto' if contact else home + '#contacto',
-        'cur_servicios': ' aria-current="page"' if current == 'servicios' else '',
+        'cur_marcas': ' aria-current="page"' if current == 'marcas' else '',
+        'cur_producto': ' aria-current="page"' if current == 'producto' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_privacidad': ' aria-current="page"' if current == 'privacidad' else '',
         'cta_title': cta_title or CTA_TITLE, 'cta_lead': cta_lead or CTA_LEAD,

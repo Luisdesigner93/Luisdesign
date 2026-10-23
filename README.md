@@ -6,8 +6,9 @@ Sitio de Luis Vicencio, diseñador y Product Owner: branding estratégico, UX/UI
 
 | Archivo | Contenido |
 |---|---|
-| `index.html` | Inicio: hero, servicios, proyectos destacados, proceso, sobre mí, trayectoria y contacto |
-| `servicios.html` | Detalle de los cuatro servicios y preguntas frecuentes |
+| `index.html` | Inicio (landing Marcas): hero, logos, manifiesto, servicios, proyectos, sobre mí y contacto |
+| `producto-digital.html` | Landing Producto digital (pendiente, fase 3 de `tools/narrativa/00-PLAN-para-claude-code.md`) |
+| `index-v2.html` | Versión alternativa del inicio, solo como referencia (`noindex`) |
 | `proyectos.html` | Listado de proyectos |
 | `proyectos/auditorweb.html`, `bytequest.html` | Casos de estudio con contenido real (Bytequest, según el CV) |
 | `proyectos/sustentando.html`, `yomecontrolo.html`, `uv-energy.html`, `botes-salvavidas.html`, `khronos.html`, `fuchi-chao.html`, `builder-app.html` | Casos de estudio con imágenes reales y texto provisorio (lorem ipsum) |
