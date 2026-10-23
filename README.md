@@ -10,6 +10,7 @@ Sitio de Luis Vicencio, diseñador y Product Owner: branding estratégico, UX/UI
 | `producto-digital.html` | Landing Producto digital (empresas de software, startups e innovación) |
 | `en/digital-product.html` | Versión en inglés de Producto digital (traducción pendiente de revisión) |
 | `index-v2.html` | Versión alternativa del inicio, solo como referencia (`noindex`) |
+| `sobre-mi.html` | Historia, aprendizajes, trayectoria y formación (CV pendiente) |
 | `proyectos.html` | Listado de proyectos |
 | `proyectos/*.html` | Casos de estudio (Fuchi Chao, Bytequest, LAB*502, Sustentando, Yomecontrolo, AuditorWeb, Uvenergy, Botes Salvavidas y Khronos) con la plantilla de `tools/narrativa/` |
 | `privacidad.html` | Política de privacidad y cookies (Ley 21.719) |

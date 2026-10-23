@@ -241,12 +241,10 @@ HOME_SOBRE = '''
           <div class="about-text">
             <span class="tag tag-eyebrow">Sobre mí</span>
             <h2 class="heading" id="sobre-title">Llevo el mundo de las ideas <strong>a los productos del día a día</strong>.</h2>
-            <!-- EDITAR: confirmar si se mantiene la mención a Argentina y Alemania -->
-            <p>Soy Luis Vicencio, diseñador de la Universidad de Valparaíso, con estudios de Product Design for Innovation en el Politecnico di Milano y un diplomado en Branding Estratégico. He trabajado con marcas en Chile, Argentina y Alemania.</p>
+            <p>Soy Luis Vicencio, diseñador de la Universidad de Valparaíso, con estudios de Product Design for Innovation en el Politecnico di Milano y un diplomado en Branding Estratégico.</p>
             <p>Cada proyecto me dejó una herramienta nueva: empecé diseñando identidades, sumé la estrategia de marca y hoy también lidero productos digitales. Me mueve ayudar a que las empresas crezcan, que su marca se viva por dentro y por fuera, y hacerlo en colaboración con otros creadores y con los propios clientes.</p>
-            <!-- "Ver mi trayectoria" abre el panel lateral hasta que exista sobre-mi.html (fase 5) -->
             <div class="about-links">
-              <button class="link-arrow" type="button" data-drawer-open="trayectoria" aria-haspopup="dialog" aria-controls="trayectoria">Ver mi trayectoria ''' + _arrow + '''</button>
+              <a class="link-arrow" href="sobre-mi.html">Ver mi trayectoria ''' + _arrow + '''</a>
               <a class="link-arrow" href="producto-digital.html">¿Tienes un producto digital? Conoce cómo trabajo con equipos de software ''' + _arrow + '''</a>
             </div>
           </div>
@@ -282,6 +280,7 @@ HOME_PREGUNTAS = '''
     </section>
 '''
 
+# Trayectoria y formación: se muestran en sobre-mi.html (pages/1c_sobre_mi.py); ya no van en el inicio.
 HOME_TRAYECTORIA = '''
     <!-- TRAYECTORIA: panel lateral que se abre desde "Ver mi trayectoria" -->
     <dialog class="drawer" id="trayectoria" aria-labelledby="trayectoria-title">
@@ -315,7 +314,7 @@ HOME_TRAYECTORIA = '''
                 <div class="career-when"><span>2020 – actualidad</span><span class="tag tag-value">Actual</span></div>
                 <div>
                   <h3>Diseñador freelance <span class="career-org">luisdesign.cl</span></h3>
-                  <p>Comunicación digital, branding y diseño para pequeñas y medianas empresas de Chile, Argentina y Alemania.</p>
+                  <p>Comunicación digital, branding y diseño para pequeñas y medianas empresas.</p>
                 </div>
               </li>
               <li class="card">
@@ -350,4 +349,4 @@ page('index.html', 'Luis Vicencio · Branding e identidad de marca para pymes en
      cta_title='Conversemos sobre <strong>tu marca</strong>.',
      cta_lead='Cuéntame en qué momento está tu negocio y qué sientes que tu marca no está logrando. Te respondo con una propuesta de alcance, plazos y presupuesto.',
      wa_href=WA_MARCAS, email_subject='',
-     body=HOME_HERO + HOME_MARQUEE + HOME_IDEAS + HOME_MOMENTOS + HOME_SERVICIOS + HOME_PROCESO + HOME_MORE + HOME_SOBRE + HOME_TRAYECTORIA + HOME_PREGUNTAS)
+     body=HOME_HERO + HOME_MARQUEE + HOME_IDEAS + HOME_MOMENTOS + HOME_SERVICIOS + HOME_PROCESO + HOME_MORE + HOME_SOBRE + HOME_PREGUNTAS)

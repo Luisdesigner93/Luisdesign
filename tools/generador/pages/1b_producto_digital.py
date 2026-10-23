@@ -66,7 +66,7 @@ ES = dict(
     about=['Soy Luis Vicencio, diseñador de la Universidad de Valparaíso, con estudios de Product Design for Innovation en el Politecnico di Milano y formación en Product Owner y Scrum. Empecé diseñando marcas y, proyecto a proyecto, sumé la estrategia y el liderazgo de producto.',
            'En Yomecontrolo aprendí que una buena estrategia de marca necesita herramientas de producto para llegar a producción. Hoy acompaño las dos etapas: le doy un norte al producto y lo llevo paso a paso, entregable a entregable, hasta que cada entrega cumple lo esperado.'],
     portrait_alt='Retrato de Luis Vicencio',
-    brand_link='¿Buscas una marca para tu pyme?', home='./',
+    brand_link='¿Buscas una marca para tu pyme?', home='./', about_link='Ver mi trayectoria',
     faq_h2='Preguntas <strong>frecuentes</strong>.',
     faq=[('¿Qué hace un Product Owner externo?', 'Representa a tu negocio frente al equipo técnico: define qué se construye, en qué orden y revisa que cada entrega cumpla lo esperado, sin que tengas que contratar a alguien a tiempo completo.'),
          ('¿Trabajas con mi equipo de desarrollo?', 'Sí. Me integro a tu equipo o al de tu cliente, como lo hice coordinando una célula de IA dentro del equipo de un cliente de Bytequest.'),
@@ -144,7 +144,7 @@ EN = dict(
     about=['I’m Luis Vicencio, a designer from Universidad de Valparaíso, with studies in Product Design for Innovation at Politecnico di Milano and training as a Product Owner and in Scrum. I started out designing brands and, project by project, added strategy and product leadership.',
            'At Yomecontrolo I learned that a good brand strategy needs product tools to reach production. Today I support both stages: I give the product a direction and take it step by step, deliverable by deliverable, until every delivery meets expectations.'],
     portrait_alt='Portrait of Luis Vicencio',
-    brand_link='Looking for a brand for your small business? (Spanish)', home='../',
+    brand_link='Looking for a brand for your small business? (Spanish)', home='../', about_link='See my background (Spanish)',
     faq_h2='Frequently asked <strong>questions</strong>.',
     faq=[('What does a fractional Product Owner do?', 'They represent your business in front of the tech team: they define what gets built and in what order, and check that every delivery meets expectations, without you having to hire someone full time.'),
          ('Do you work with my development team?', 'Yes. I join your team or your client’s, as I did coordinating an AI cell inside the team of a Bytequest client.'),
@@ -310,6 +310,7 @@ def _producto_body(t, mailto):
             <!-- EDITAR: sumar el botón "Descargar CV" cuando Luis entregue el PDF -->
             <div class="about-links">
               <a class="link-arrow" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> {t['new_tab']}</span> {arrow}</a>
+              <a class="link-arrow" href="{{p}}sobre-mi.html">{t['about_link']} {arrow}</a>
               <a class="link-arrow" href="{t['home']}">{t['brand_link']} {arrow}</a>
             </div>
           </div>

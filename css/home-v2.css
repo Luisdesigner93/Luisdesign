@@ -412,3 +412,7 @@
 .pd-case .link-arrow { margin-top: auto; }
 .pd-modes { margin-top: 0; }
 @media (max-width: 53.75em) { .pd-roles, .pd-cases, .pd-modes { grid-template-columns: 1fr; } }
+
+/* Sobre mí: subtítulo de formación */
+.about-subtitle { margin: var(--space-12) 0 var(--space-2); }
+#trayectoria .benefits { margin-top: var(--space-4); }

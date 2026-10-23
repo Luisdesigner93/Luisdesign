@@ -77,7 +77,7 @@ HEAD = '''<!doctype html>
             <li><a href="{p}proyectos.html?cat=logofolio">Logofolio</a></li>
           </ul>
         </div>
-        <a href="{home}#sobre-mi">Sobre mí</a>
+        <a href="{p}sobre-mi.html"{cur_sobre}>Sobre mí</a>
         <a href="{contact_href}">Contacto</a>
         <div class="nav-foot">
           <div class="nav-foot-row">
@@ -133,7 +133,7 @@ FOOT = '''  </main>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{home}">Marcas</a></li><li><a href="{p}producto-digital.html">Producto digital</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{home}#sobre-mi">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{home}">Marcas</a></li><li><a href="{p}producto-digital.html">Producto digital</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -169,7 +169,7 @@ EN_CHROME = [
     ('>Marcas</a></li>', '>Brands</a></li>'),
     ('>Proyectos</a>', '>Projects</a>'),
     ('aria-label="Categorías de proyectos"', 'aria-label="Project categories"'),
-    ('>Sobre mí</a>', '>About</a>'),
+    ('>Sobre mí</a>', '>About (Spanish)</a>'),
     ('>Contacto</a>', '>Contact</a>'),
     ('aria-label="Cambiar a modo oscuro"', 'aria-label="Switch to dark mode"'),
     ('<span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>', '<span class="t-dark">Dark mode</span><span class="t-light">Light mode</span>'),
@@ -259,6 +259,7 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'cur_marcas': ' aria-current="page"' if current == 'marcas' else '',
         'cur_producto': ' aria-current="page"' if current == 'producto' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
+        'cur_sobre': ' aria-current="page"' if current == 'sobre' else '',
         'cur_privacidad': ' aria-current="page"' if current == 'privacidad' else '',
         'cta_title': cta_title or CTA_TITLE, 'cta_lead': cta_lead or CTA_LEAD,
         'contact_buttons': _contact_buttons(p, wa_href or WA_HREF, email_subject, email_first, email_label),

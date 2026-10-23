@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es-CL" class="motion">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sobre mí · Luis Vicencio, diseñador y Product Owner</title>
+  <meta name="description" content="Luis Vicencio es diseñador y Product Owner en Chile, especializado en branding, diseño web, UX/UI y gestión de productos digitales con Scrum.">
+  <link rel="canonical" href="https://luisdesign.cl/sobre-mi.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sobre mí · Luis Vicencio, diseñador y Product Owner">
+  <meta property="og:description" content="Luis Vicencio es diseñador y Product Owner en Chile, especializado en branding, diseño web, UX/UI y gestión de productos digitales con Scrum.">
+  <meta property="og:url" content="https://luisdesign.cl/sobre-mi.html">
+  <meta property="og:locale" content="es_CL">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home-v2.css">
+  <script src="js/theme.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Pantalla de carga: la firma "luis" se escribe con un trazo que revela el logo (solo la primera página de cada visita) -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="loader-logo" viewBox="0 0 500 265" focusable="false">
+      <defs>
+        <mask id="loader-ink" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="265">
+          <path class="loader-stroke" pathLength="1" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"
+            d="M114 30 L104 61 L93 91 L85 121 L80 151 L78 196 C92 160 112 118 130 97 C127 130 122 165 119 197 C132 160 150 118 170 97 C167 130 162 165 159 197 C172 160 190 118 210 97 C207 130 202 165 198 197 C212 160 230 118 251 93 C247 130 241 170 235 206 C231 214 220 214 222 222 C224 230 238 230 244 220 C246 212 243 205 246 198 C256 186 270 172 290 160"/>
+        </mask>
+        <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
+      </defs>
+      <image href="img/marca/logo-luy-design.png" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="img/marca/logo-luy-design.png" width="500" height="265" clip-path="url(#loader-word)"/>
+    </svg>
+  </div>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Luis Design, inicio">
+        <img class="brand-logo" src="img/marca/logo-luy-design.png" width="500" height="265" alt="">
+        <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Principal">
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
+        <a href="./">Marcas</a>
+        <a href="producto-digital.html">Producto digital</a>
+        <div class="nav-item has-sub">
+          <a href="proyectos.html">Proyectos</a>
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="sub-proyectos" aria-label="Categorías de proyectos">
+            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-chevron"/></svg>
+          </button>
+          <ul class="nav-sub" id="sub-proyectos">
+            <li><a href="proyectos.html?cat=marcas">Marcas</a></li>
+            <li><a href="proyectos.html?cat=producto">Producto digital</a></li>
+            <li><a href="proyectos.html?cat=logofolio">Logofolio</a></li>
+          </ul>
+        </div>
+        <a href="sobre-mi.html" aria-current="page">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+        <div class="nav-foot">
+          <div class="nav-foot-row">
+            <button class="theme-toggle nav-theme" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+              <svg class="icon i-moon" aria-hidden="true"><use href="img/icons.svg#i-moon"/></svg>
+              <svg class="icon i-sun" aria-hidden="true"><use href="img/icons.svg#i-sun"/></svg>
+              <span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>
+            </button>
+            <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-secondary theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+          <svg class="icon i-moon" aria-hidden="true"><use href="img/icons.svg#i-moon"/></svg>
+          <svg class="icon i-sun" aria-hidden="true"><use href="img/icons.svg#i-sun"/></svg>
+        </button>
+        <a class="btn btn-primary" href="#contacto">Conversemos</a>
+        <button class="btn btn-secondary menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
+          <svg class="icon i-open" aria-hidden="true"><use href="img/icons.svg#i-menu"/></svg>
+          <svg class="icon i-close" aria-hidden="true"><use href="img/icons.svg#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero-shell" aria-labelledby="page-title">
+      <div class="shell-body frame-grid page-hero">
+        <div class="container">
+          <ol class="breadcrumb" aria-label="Ruta"><li><a href="./">Inicio</a></li><li aria-current="page">Sobre mí</li></ol>
+          <span class="tag tag-eyebrow">Sobre mí</span>
+          <h1 class="display" id="page-title">Llevo el mundo de las ideas <strong>a los productos del día a día</strong>.</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORIA -->
+    <section class="panel panel-plain section about" aria-labelledby="historia-title">
+      <div class="container">
+        <div class="two-col about-grid">
+          <!-- EDITAR: reemplazar por un retrato trabajando, no de estudio (opcional: video de 60 segundos) -->
+          <figure class="portrait">
+            <img src="img/marca/luis-vicencio-retrato.png" width="750" height="900" alt="Retrato de Luis Vicencio" loading="lazy" decoding="async">
+          </figure>
+          <div class="about-text">
+            <h2 class="heading" id="historia-title">De la marca al producto, <strong>proyecto a proyecto</strong>.</h2>
+            <p>Soy Luis Vicencio, diseñador de la Universidad de Valparaíso, con estudios de Product Design for Innovation en el Politecnico di Milano, un diplomado en Branding Estratégico y formación en Product Owner y Scrum.</p>
+            <p>Cada proyecto me dejó una herramienta nueva: empecé diseñando identidades, sumé la estrategia de marca y hoy también lidero productos digitales. Me mueve ayudar a que las empresas crezcan, que su marca se viva por dentro y por fuera, y hacerlo en colaboración con otros creadores y con los propios clientes.</p>
+            <p>En Yomecontrolo aprendí que una buena estrategia de marca necesita herramientas de producto para llegar a producción. Hoy acompaño las dos etapas: le doy un norte al producto y lo llevo paso a paso, entregable a entregable, hasta que cada entrega cumple lo esperado.</p>
+            <!-- EDITAR: sumar el botón "Descargar CV" (btn btn-primary con download) cuando Luis entregue el PDF -->
+            <div class="about-links">
+              <a class="link-arrow" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span> <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LO QUE ME LLEVÉ -->
+    <section class="panel section" aria-labelledby="aprendizajes-title">
+      <div class="container">
+        <div class="section-head center">
+          <span class="tag tag-eyebrow">Aprendizajes</span>
+          <h2 class="heading" id="aprendizajes-title">Lo que <strong>me llevé</strong>.</h2>
+        </div>
+        <figure class="pd-learned">
+          <figcaption><a href="proyectos/yomecontrolo.html">Yomecontrolo</a></figcaption>
+          <blockquote><p>Este proyecto me mostró que una buena estrategia de marca necesita herramientas de producto para llegar a producción. Por eso me formé en Product Owner y Scrum, y hoy acompaño las dos etapas.</p></blockquote>
+        </figure>
+        <figure class="pd-learned">
+          <figcaption><a href="proyectos/bytequest.html">Bytequest</a></figcaption>
+          <blockquote><p>Aprendí a reconocer las alertas tempranas de un proyecto: prioridades difusas, decisiones sin responsable claro y expectativas sin acordar. Hoy las reviso desde el primer día.</p></blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- TRAYECTORIA Y FORMACIÓN -->
+    <section class="panel panel-plain section" id="trayectoria" aria-labelledby="trayectoria-title">
+      <div class="container">
+        <div class="narrow">
+          <div class="section-head">
+            <span class="tag tag-eyebrow">Trayectoria</span>
+            <h2 class="heading" id="trayectoria-title">Más de 7 años entre <strong>marca, experiencia y producto</strong>.</h2>
+          </div>
+          <ol class="career">
+              <li class="card">
+                <div class="career-when"><span>2025 – 2026</span></div>
+                <div>
+                  <h3>Líder de Innovación y Productos <span class="career-org">Brand Manager y Product Owner · Bytequest SpA</span></h3>
+                  <p>Lideré como Product Owner, con Scrum, un módulo de IA para la atención por chatbot de víctimas, con auditoría y observabilidad de un call center, para una institución pública del sector justicia. Coordiné un equipo de 7 personas, realicé QA de los entregables e informes mensuales de avance, e impulsé productos de uso legislativo, gestión de crisis municipal y excelencia operacional.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2022 – 2025</span></div>
+                <div>
+                  <h3>CEO Cofundador <span class="career-org">Studio Dinoi</span></h3>
+                  <p>Cofundé y lideré una agencia que integraba branding, desarrollo web, ecommerce y comunicación corporativa. Asesoré a pymes de rubros como cervecerías, asesorías legales, productos para mascotas, servicios B2B, productos químicos y fundaciones.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2020 – actualidad</span><span class="tag tag-value">Actual</span></div>
+                <div>
+                  <h3>Diseñador Freelance <span class="career-org">luisdesign.cl</span></h3>
+                  <p>Comunicación digital, branding y diseño para pequeñas y medianas empresas.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2019 – 2020</span></div>
+                <div>
+                  <h3>Diseñador de Marcas y UX/UI <span class="career-org">Kimsa</span></h3>
+                  <p>Identidad de marca y experiencia de usuario para los clientes de la startup.</p>
+                </div>
+              </li>
+              <li class="card">
+                <div class="career-when"><span>2018 – 2019</span></div>
+                <div>
+                  <h3>Diseñador y Encargado de Comunicaciones <span class="career-org">Waterman</span></h3>
+                  <p>Línea comunicacional de la empresa y sistema de diseño para cada proyecto de seguridad acuática: diseño web, motion graphics y diseño gráfico.</p>
+                </div>
+              </li>
+            </ol>
+          <h2 class="heading about-subtitle" id="formacion-title">Formación</h2>
+          <div class="benefits">
+              <div><strong>Diseño</strong><span>Universidad de Valparaíso, titulado en 2017.</span></div>
+              <div><strong>Product Design for Innovation</strong><span>Politecnico di Milano, Italia, intercambio de máster 2015 – 2016.</span></div>
+              <div><strong>Branding Estratégico para la Nueva Economía</strong><span>Diplomado, Universidad del Desarrollo, 2022.</span></div>
+              <div><strong>Product Owner y Scrum</strong><span>Curso en línea, Coursera.</span></div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOS LANDINGS -->
+    <section class="panel section" aria-labelledby="caminos-title">
+      <div class="container">
+        <div class="section-head center">
+          <h2 class="heading" id="caminos-title">¿Por dónde <strong>empezamos</strong>?</h2>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="./">Marcas para pymes <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+            <a class="btn btn-outline" href="producto-digital.html">Producto digital</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="panel frame-grid cta-final" id="contacto" aria-labelledby="contacto-title">
+      <div class="container">
+        <span class="icon-tile" aria-hidden="true"><span><svg class="icon"><use href="img/icons.svg#i-chat"/></svg></span></span>
+        <h2 class="heading" id="contacto-title">Conversemos sobre <strong>tu proyecto</strong>.</h2>
+        <p class="lead">Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-chat"/></svg>Escríbeme por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-user"/></svg>LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        </div>
+        <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="./" aria-label="Luis Design, inicio"><img class="brand-logo" src="img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <p>Este sitio no usa cookies ni rastreadores de terceros.</p>
+        <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
+      </div>
+      <nav aria-labelledby="f-sitio">
+        <h2 id="f-sitio">Sitio</h2>
+        <ul><li><a href="./">Marcas</a></li><li><a href="producto-digital.html">Producto digital</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="sobre-mi.html">Sobre mí</a></li><li><a href="#contacto">Contacto</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal">Legal</h2>
+        <ul><li><a href="privacidad.html">Política de privacidad</a></li><li><a href="privacidad.html#cookies">Cookies</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Luis Vicencio · luisdesign.cl</span>
+      <span>Branding, UX/UI y producto digital · Chile</span>
+    </div>
+  </footer>
+</body>
+</html>
