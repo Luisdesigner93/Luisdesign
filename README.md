@@ -11,8 +11,7 @@ Sitio de Luis Vicencio, diseñador y Product Owner: branding estratégico, UX/UI
 | `en/digital-product.html` | Versión en inglés de Producto digital (traducción pendiente de revisión) |
 | `index-v2.html` | Versión alternativa del inicio, solo como referencia (`noindex`) |
 | `proyectos.html` | Listado de proyectos |
-| `proyectos/auditorweb.html`, `bytequest.html` | Casos de estudio con contenido real (Bytequest, según el CV) |
-| `proyectos/sustentando.html`, `yomecontrolo.html`, `uv-energy.html`, `botes-salvavidas.html`, `khronos.html`, `fuchi-chao.html`, `builder-app.html` | Casos de estudio con imágenes reales y texto provisorio (lorem ipsum) |
+| `proyectos/*.html` | Casos de estudio (Fuchi Chao, Bytequest, LAB*502, Sustentando, Yomecontrolo, AuditorWeb, Uvenergy, Botes Salvavidas y Khronos) con la plantilla de `tools/narrativa/` |
 | `privacidad.html` | Política de privacidad y cookies (Ley 21.719) |
 | `404.html` | Página de error (usa rutas absolutas porque se sirve desde cualquier URL) |
 
@@ -67,7 +66,7 @@ Abre http://localhost:4173. El servidor local envía la misma CSP que `.htaccess
 
 Busca `EDITAR` en los archivos y completa:
 
-- Textos, año y rol de los casos con lorem ipsum; imágenes de Bytequest y Builder App (marcadores `media-ph` y `ph-mark`).
+- Imágenes de Bytequest, LAB*502, Bowraps y AuditorWeb (marcadores `media-ph` y `ph-mark`); buscar `EDITAR` en `tools/generador/` para el resto.
 - RUT, domicilio y correo de contacto del responsable en `privacidad.html`.
 - Proveedores de hosting y correo, y el país de sus servidores, en `privacidad.html`.
 - URL pública de AuditorWeb en `proyectos/auditorweb.html`.

@@ -1,4 +1,4 @@
-_aw = dict(PROJECTS[0], placeholders=('Inicio de AuditorWeb con el analizador y la cuenta regresiva a la entrada en vigencia.',
+_aw = dict(next(pr for pr in PROJECTS if pr['slug'] == 'auditorweb'), placeholders=('Inicio de AuditorWeb con el analizador y la cuenta regresiva a la entrada en vigencia.',
                                       'Informe: puntaje general y resultado por área.',
                                       'Plan de acción priorizado y detalle de cada control.'))
 page('proyectos/auditorweb.html', 'AuditorWeb 21.719 · Caso · Luis Vicencio',
@@ -39,4 +39,4 @@ page('proyectos/auditorweb.html', 'AuditorWeb 21.719 · Caso · Luis Vicencio',
                        ('5', 'áreas: transparencia, derechos, consentimiento y cookies, seguridad y terceros.'),
                        ('0', 'cookies de seguimiento. El auditor cumple lo que revisa.')])
          + case_quote('La mejor forma de explicar una ley compleja es mostrarle a cada empresa qué le falta a su propio sitio.', 'Aprendizaje del proyecto')),
-     ]) + case_nav(PROJECTS[0]))
+     ]) + case_landing(_aw) + case_nav(_aw))

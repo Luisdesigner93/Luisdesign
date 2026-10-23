@@ -1,58 +1,64 @@
-LOREM_S = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-LOREM_M = 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-LOREM_L = 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.'
-
-# cats: categorías del filtro de Proyectos ('branding', 'ux-ui').
-# Orden de aparición. AuditorWeb y Bytequest tienen contenido real; el resto usa texto provisorio (EDITAR).
+# cats: categorías del filtro de Proyectos ('marcas', 'producto'); landing: a qué landing lleva el botón final del caso.
+# Orden de aparición (por relevancia; Khronos al final por ser propuesta). status: estado del proyecto en la ficha.
 # images: (archivo, ancho, alto, alt, leyenda, encajar). encajar=True muestra la imagen completa (envases, piezas recortadas).
 def img(slug, name, w, h, alt, caption, fit=False):
     return dict(src=f'img/proyectos/{slug}/{name}', w=w, h=h, alt=alt, caption=caption, fit=fit)
 
 PROJECTS = [
-    dict(slug='auditorweb', cats=['ux-ui'], title='AuditorWeb 21.719', mark=None, kind='Producto digital', year='2026', featured=True,
-         summary='Auditor automatizado que revisa 30 controles de cumplimiento de la Ley de Protección de Datos Personales y entrega un plan de acción priorizado.',
-         tags=['Producto', 'UX/UI', 'Ley 21.719'], images=[], role='Producto, UX/UI y desarrollo asistido con IA', client='Producto propio'),
-    dict(slug='bytequest', cats=['branding', 'ux-ui'], title='Bytequest', mark='Bq', kind='Producto e innovación', year='2025 – 2026', featured=False,
-         summary='Liderazgo de producto e innovación: un módulo de IA para atención por chatbot, productos para el ámbito legislativo, municipal y de excelencia operacional, e identidades de marca.',
-         tags=['Product Owner', 'Scrum', 'Branding'], images=[], role='Product Owner y Brand Manager', client='Bytequest SpA'),
-    dict(slug='sustentando', cats=['branding'], title='Sustentando', mark='Su', kind='Consultoría en calidad · Branding y web', year='2022 – 2026', featured=True,
+    dict(slug='fuchi-chao', cats=['marcas'], landing='marcas', title='Fuchi Chao', mark='Fc', kind='Productos para mascotas · Naming, identidad y estrategia', year='2021 y 2023', featured=True,
+         summary='De una fórmula industrial a una marca que los petlovers hacen suya. Naming, identidad y etiquetas en 2021; estrategia de marca en 2023. Hoy está en tiendas veterinarias, plataformas en línea y exposiciones de mascotas.',
+         tags=['Naming', 'Identidad', 'Packaging', 'Estrategia'], role='Naming, identidad, etiquetas y estrategia de marca', client='Citrex', status='Marca en el mercado',
+         images=[img('fuchi-chao', '01.jpg', 1397, 1400, 'Detergente, eliminador de olores y jabón anti olores Fuchi Chao sobre fondo rosado.', 'Línea de productos.'),
+                 img('fuchi-chao', '04.jpg', 2000, 896, 'Construcción del logotipo de Fuchi Chao en tres versiones con su área de resguardo.', 'Construcción del logotipo.'),
+                 img('fuchi-chao', '02.jpg', 2000, 1132, 'Tres teléfonos con el perfil y publicaciones de Instagram de Fuchi Chao.', 'Redes sociales.'),
+                 img('fuchi-chao', '03.jpg', 2000, 1128, 'Envase del jabón anti olores Fuchi Chao junto a su etiqueta extendida con medidas.', 'Etiqueta del jabón anti olores.')]),
+    dict(slug='bytequest', cats=['producto'], landing='producto', title='Bytequest', mark='Bq', kind='Marca y producto · Soluciones con IA', year='2025 – 2026', featured=True,
+         summary='Marca y producto con un mismo criterio: la identidad de Bytequest y tres productos de IA para organizaciones con procesos complejos.',
+         tags=['Product Owner', 'QA', 'Marca'], role='Líder de Innovación y Productos (Brand Manager y Product Owner)', client='Bytequest SpA', status='Prototipos y plataforma en pruebas',
+         placeholders=('Marca de Bytequest.', 'Pantallas de Legisnova.'), images=[]),
+    dict(slug='lab502', cats=['marcas'], landing='marcas', title='LAB*502', mark='L*', kind='Laboratorio fotográfico · Estrategia e identidad', year='2023', featured=True,
+         summary='De una tienda de insumos a un laboratorio creativo con propósito: una marca que le dio al norte una forma de mirarse.',
+         tags=['Estrategia', 'Identidad'], role='Estrategia, experiencia de marca, líneas de negocio, identidad y plantillas para redes', client='LAB*502 (antes Taller 502), Iquique', status='Marca en uso',
+         # EDITAR: imágenes en alta desde Behance (behance.net/gallery/169683847/LAB502)
+         placeholders=('Identidad de LAB*502.', 'Plantillas de redes por línea de negocio.'), images=[]),
+    dict(slug='sustentando', cats=['marcas'], landing='marcas', title='Sustentando', mark='Su', kind='Consultoría en calidad · Branding y web', year='2022 – 2026', featured=True,
          summary='Desde 2022 acompaño a Sustentando como aliado estratégico. Partimos por entender sus necesidades y fuimos escalando el servicio hasta consolidar una comunicación que eleva el valor percibido de su trabajo.',
-         tags=['Branding', 'Web', 'Comunicación'], role='Identidad, web, comunicación B2B y diseño gráfico', client='Sustentando',
+         tags=['Identidad', 'Web', 'Comunicación B2B'], role='Identidad, web, comunicación B2B y diseño gráfico', client='Sustentando', status='Aliado desde 2022',
          images=[img('sustentando', '01.jpg', 1600, 899, 'Piezas de Sustentando con los servicios de implementación, cursos, gestión de proveedores y proyectos de cultura y calidad.', 'Sistema de piezas para los servicios de Sustentando.'),
                  img('sustentando', '02.jpg', 1200, 1200, 'Logotipo de Sustentando sobre piezas gráficas y el sitio web en un teléfono.', 'Identidad y sitio web en móvil.'),
                  img('sustentando', '05.png', 800, 575, 'Llaveros, carpeta y piezas impresas de Sustentando OTEC.', 'Aplicaciones de marca para Sustentando OTEC.', True),
                  img('sustentando', '04.jpg', 1600, 899, 'Página de artículo del sitio web de Sustentando.', 'Página de artículo del sitio web.'),
                  img('sustentando', '03.jpg', 1600, 899, 'Plantillas de redes sociales de Sustentando organizadas por nivel de comunicación.', 'Plantillas de redes sociales por nivel de comunicación.'),
                  img('sustentando', '06.jpg', 1000, 939, 'Publicación de Sustentando en LinkedIn sobre un curso de auditores internos de calidad.', 'Publicación para LinkedIn.')]),
-    dict(slug='yomecontrolo', cats=['branding', 'ux-ui'], title='Yomecontrolo', mark='Ym', kind='Salud preventiva · Branding y UX/UI', year='2023 – 2024', featured=True,
+    dict(slug='yomecontrolo', cats=['producto'], landing='producto', title='Yomecontrolo', mark='Ym', kind='Salud preventiva · Marca y UX/UI', year='2023 – 2024', featured=True,
          summary='Estrategia, experiencia y expresión de marca para Yomecontrolo, una startup chilena de salud preventiva. Una marca que deja atrás la carga negativa de ir al médico y acompaña a las personas a cuidar su salud mucho antes de que llegue la enfermedad.',
-         tags=['Branding', 'UX/UI', 'Producto'], role='Estrategia de marca, identidad y UX/UI', client='Yomecontrolo',
+         tags=['Marca', 'UX/UI', 'Producto'], role='Estrategia de marca, identidad y UX/UI', client='Yomecontrolo', status='Marca en uso · MVP no implementado',
          images=[img('yomecontrolo', '05.jpg', 1672, 941, 'Sitio de Yomecontrolo en un portátil junto a la tarjeta de resultado de la calculadora de edad del corazón.', 'Calculadora de edad del corazón.'),
                  img('yomecontrolo', '06.jpg', 1629, 966, 'Logotipo de Yomecontrolo con el tagline “vivir más y mejor” sobre fondo celeste.', 'Logotipo.'),
                  img('yomecontrolo', '07.jpg', 906, 1736, 'Teléfono con la pantalla “Controla tus indicadores de salud” de la web app de Yomecontrolo.', 'Web app: indicadores de salud.'),
                  img('yomecontrolo', '08.jpg', 1122, 1402, 'Ícono de Yomecontrolo en la pantalla de inicio de un teléfono.', 'Acceso directo en el teléfono.')]),
-    dict(slug='uv-energy', cats=['ux-ui'], title='UV Energy', mark='UV', kind='Energía solar · Sitio web', year='20XX', featured=False, summary=LOREM_S, tags=['Web', 'Contenidos'],
-         images=[img('uv-energy', '01.jpg', 1600, 899, 'Página de artículo del sitio web de UV Energy sobre el mantenimiento de plantas fotovoltaicas.', 'Página de artículo del sitio web.')]),
-    dict(slug='botes-salvavidas', cats=['branding'], title='Botes Salvavidas de Valparaíso', mark='BS', kind='Comunicación digital', year='20XX', featured=False, summary=LOREM_S, tags=['Redes sociales', 'Comunicación'],
+    dict(slug='auditorweb', cats=['producto'], landing='producto', title='AuditorWeb 21.719', mark=None, kind='Producto digital', year='2026', featured=True,
+         summary='Auditor automatizado que revisa 30 controles de cumplimiento de la Ley de Protección de Datos Personales y entrega un plan de acción priorizado.',
+         tags=['Producto', 'UX/UI', 'IA'], images=[], role='Producto, UX/UI y desarrollo asistido con IA', client='Producto propio'),
+    dict(slug='uvenergy', cats=['marcas'], landing='marcas', title='Uvenergy', mark='UV', kind='Energía solar y eólica · Identidad y web', year='2023 y 2025', featured=False,
+         summary='Una marca que acompañó a Uvenergy desde su lanzamiento hasta su consolidación en la ingeniería de energías renovables.',
+         tags=['Identidad', 'Web'], role='Identidad de marca, presentación comercial, sitio web con blog y rediseño', client='Uvenergy', status='Marca en uso',
+         # EDITAR: imágenes de la identidad, la presentación y las dos versiones del sitio
+         images=[img('uvenergy', '01.jpg', 1600, 899, 'Página de artículo del sitio web de Uvenergy sobre el mantenimiento de plantas fotovoltaicas.', 'Página de artículo del sitio web.')]),
+    dict(slug='botes-salvavidas', cats=['marcas'], landing='marcas', title='Botes Salvavidas de Valparaíso', mark='BS', kind='Comunicación · Web y redes', year='2023', featured=False,
+         summary='Una estrategia de comunicación para que Valparaíso reconozca la labor de rescate que los Botes Salvavidas cumplen cada día.',
+         tags=['Comunicación', 'Web', 'Redes'], role='Estrategia de comunicación, sitio web, redes sociales y logo del centenario', client='Botes Salvavidas de Valparaíso',
          images=[img('botes-salvavidas', '01.jpg', 864, 1080, 'Pieza para redes sociales: rescatista en moto de agua con el mensaje “A las emergencias en el mar”.', 'Pieza para redes sociales.'),
                  img('botes-salvavidas', '02.jpg', 864, 1080, 'Pieza para redes sociales con un salvavidas y el mensaje “¡Estar preparados para el rescate!”.', 'Pieza para redes sociales.')]),
-    dict(slug='khronos', cats=['branding'], title='Cerveza Khronos', mark='Kh', kind='Cerveza artesanal · Rebranding y packaging', year='2023', featured=True,
+    dict(slug='khronos', cats=['marcas'], landing='marcas', title='Cerveza Khronos', mark='Kh', kind='Cerveza artesanal · Rebranding y packaging', year='2023', featured=True,
          summary='Rebranding para una cervecería artesanal nacida en las bierfest. Buscamos el sentido de su nombre en su raíz griega, khronos, tiempo, y lo convertimos en el concepto que guía la marca: tómate el tiempo.',
-         tags=['Rebranding', 'Estrategia', 'Packaging'], role='Estrategia, concepto, identidad y packaging', client='Cervecería Khronos',
+         tags=['Propuesta', 'Estrategia', 'Packaging'], role='Estrategia, concepto, identidad y packaging', client='Cervecería Khronos', status='Propuesta de rebranding, no implementada', proposal=True,
          # EDITAR: sumar las nuevas imágenes del proyecto a medida que estén listas
          images=[img('khronos', '05.jpg', 1672, 941, 'Logotipo de Cerveza Khronos con el tagline “Tómate el tiempo” en blanco sobre un muro naranja.', 'Logotipo.'),
                  img('khronos', '01.jpg', 1672, 941, 'Cuatro botellas de Cerveza Khronos flotando: American Pale Ale, Stout, IPA y Golden Ale.', 'Línea de cervezas.'),
                  img('khronos', '02.jpg', 1254, 1254, 'Fila de botellas Khronos con etiquetas de colores para cada variedad.', 'Un color por variedad.'),
                  img('khronos', '03.jpg', 1254, 1254, 'Botella de Cerveza Khronos Stout sobre un bloque de piedra.', 'Etiqueta Stout.'),
                  img('khronos', '04.jpg', 1254, 1254, 'Botella de Cerveza Khronos American Pale Ale con el tagline “Tómate el tiempo” sobre fondo naranja.', 'Etiqueta American Pale Ale.')]),
-    dict(slug='fuchi-chao', cats=['branding'], title='Fuchi Chao', mark='Fc', kind='Productos para mascotas · Naming y packaging', year='2021', featured=False,
-         summary='Naming, identidad y packaging para Citrex, emprendedoras locales que llevaron su experiencia en eliminación de olores al mundo de las mascotas. Una marca para quienes ven a su mascota como uno más del hogar, pero sin la parte fuchi.',
-         tags=['Naming', 'Branding', 'Packaging', 'Comunicación'], role='Naming, identidad, packaging y comunicación', client='Citrex',
-         images=[img('fuchi-chao', '01.jpg', 1397, 1400, 'Detergente, eliminador de olores y jabón anti olores Fuchi Chao sobre fondo rosado.', 'Línea de productos.'),
-                 img('fuchi-chao', '04.jpg', 2000, 896, 'Construcción del logotipo de Fuchi Chao en tres versiones con su área de resguardo.', 'Construcción del logotipo.'),
-                 img('fuchi-chao', '02.jpg', 2000, 1132, 'Tres teléfonos con el perfil y publicaciones de Instagram de Fuchi Chao.', 'Redes sociales.'),
-                 img('fuchi-chao', '03.jpg', 2000, 1128, 'Envase del jabón anti olores Fuchi Chao junto a su etiqueta extendida con medidas.', 'Etiqueta del jabón anti olores.')]),
-    dict(slug='builder-app', cats=['ux-ui'], title='Builder App', mark='Ba', kind='Lorem ipsum', year='20XX', featured=False, summary=LOREM_S, tags=['Lorem', 'Ipsum'], images=[]),
 ]
 
 AUDITOR_ART = '''<div class="mini-window">
@@ -100,7 +106,7 @@ def project_card(pr, heading='h3'):
 
 
 def case_nav(pr):
-    i = PROJECTS.index(pr)
+    i = [x['slug'] for x in PROJECTS].index(pr['slug'])
     prev, nxt = PROJECTS[i - 1], PROJECTS[(i + 1) % len(PROJECTS)]
     return f'''    <section class="panel panel-plain section" aria-label="Otros proyectos">
       <div class="container">
@@ -180,20 +186,35 @@ def case_detail(statement, sections):
 '''
 
 
-def lorem_case(pr):
-    """Caso de estudio detallado con texto provisorio."""
-    return '    <!-- EDITAR: contenido provisorio (lorem ipsum) -->\n' + case_intro(
-        pr, LOREM_S,
-        [('Cliente', pr.get('client', 'Lorem ipsum')), ('Año', pr['year']), ('Rol', pr.get('role', 'Lorem ipsum'))]
-    ) + case_detail(f'{pr["title"]}: <strong>lorem ipsum</strong> dolor sit amet.', [
-        ('contexto', 'Contexto y <strong>desafío</strong>', f'<p class="lead">{LOREM_S}</p><p>{LOREM_M}</p><p>{LOREM_L}</p>'),
-        ('rol', 'Mi <strong>rol</strong>', f'<p>{LOREM_M}</p>' + case_rows([('Lorem ipsum', LOREM_S), ('Dolor sit amet', LOREM_S), ('Consectetur', LOREM_S)])),
-        ('proceso', 'El <strong>proceso</strong>', f'<p class="lead">{LOREM_S}</p>' + case_steps([('Discovery', LOREM_S), ('Estrategia', LOREM_S), ('Diseño', LOREM_S), ('Implementación', LOREM_S)])),
-        ('solucion', 'La <strong>solución</strong>', f'<p class="lead">{LOREM_S}</p><p>{LOREM_M}</p><ul><li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li><li>Sed do eiusmod tempor incididunt ut labore et dolore.</li><li>Ut enim ad minim veniam, quis nostrud exercitation.</li></ul>'),
-        ('resultados', 'Resultados y <strong>aprendizajes</strong>', f'<p class="lead">{LOREM_S}</p>'
-         + case_stats([('00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'), ('00', 'Sed do eiusmod tempor incididunt ut labore et dolore.'), ('00', 'Ut enim ad minim veniam, quis nostrud exercitation.')])
-         + case_quote('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.', 'Lorem ipsum, cargo · Empresa')),
-    ]) + case_nav(pr)
+def case_facts(pr, *extra):
+    """Ficha del caso: cliente, año, rol y estado (si lo tiene), más filas extra opcionales."""
+    facts = [('Cliente', pr['client']), ('Año', pr['year']), ('Rol', pr['role'])] + list(extra)
+    if pr.get('status'):
+        facts.append(('Estado', pr['status']))
+    return facts
+
+
+def case_landing(pr):
+    """Cierre de cada caso: botón a su landing (Marcas o Producto digital)."""
+    if pr['landing'] == 'producto':
+        q, href = '¿Tu producto necesita <strong>un norte</strong>?', '{p}producto-digital.html'
+    else:
+        q, href = '¿Tu marca está en <strong>un momento parecido</strong>?', '{home}'
+    return f'''    <section class="panel section" aria-labelledby="landing-title">
+      <div class="container">
+        <div class="section-head center">
+          <h2 class="heading" id="landing-title">{q}</h2>
+          <a class="btn btn-primary" href="{href}">Conoce cómo trabajo <svg class="icon" aria-hidden="true"><use href="{{p}}img/icons.svg#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+'''
+
+
+def case_page(pr, title, desc, summary, statement, sections, facts=None, cta_title=None, cta_lead=None, actions=''):
+    """Página de caso con la plantilla: ficha, secciones, botón a su landing y navegación."""
+    page(f"proyectos/{pr['slug']}.html", title, desc, current='proyectos', ogtype='article', cta_title=cta_title, cta_lead=cta_lead,
+         body=case_intro(pr, summary, facts or case_facts(pr), actions) + case_detail(statement, sections) + case_landing(pr) + case_nav(pr))
 
 
 # ---- Piezas del inicio (index.html; index-v2.html tiene las suyas en fragmentos/) ----

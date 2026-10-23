@@ -263,11 +263,11 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   });
 })();
 
-// Proyectos: filtro por categoría (?cat=branding | ux-ui | logofolio). Sin JavaScript se ven todos.
+// Proyectos: filtro por categoría (?cat=marcas | producto | logofolio). Sin JavaScript se ven todos.
 (function initProjectFilter() {
   const tabs = document.querySelector('.filter-tabs');
   if (!tabs) return;
-  const valid = ['branding', 'ux-ui', 'logofolio'];
+  const valid = ['marcas', 'producto', 'logofolio'];
   const param = new URLSearchParams(window.location.search).get('cat');
   const cat = valid.includes(param) ? param : 'todos';
 
@@ -279,9 +279,9 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   const showcase = document.querySelector('.showcase');
   const logofolio = document.getElementById('logofolio');
   if (showcase) showcase.hidden = cat === 'logofolio';
-  if (logofolio) logofolio.hidden = cat === 'branding' || cat === 'ux-ui';
+  document.querySelectorAll('#logofolio, .logofolio-extra').forEach((node) => { node.hidden = cat === 'marcas' || cat === 'producto'; });
 
-  if (cat === 'branding' || cat === 'ux-ui') {
+  if (cat === 'marcas' || cat === 'producto') {
     document.querySelectorAll('.showcase-item[data-cats], .showcase-index li[data-cats]').forEach((node) => {
       node.hidden = !node.dataset.cats.split(' ').includes(cat);
     });

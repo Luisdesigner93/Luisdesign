@@ -72,8 +72,8 @@ HEAD = '''<!doctype html>
             <svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-chevron"/></svg>
           </button>
           <ul class="nav-sub" id="sub-proyectos">
-            <li><a href="{p}proyectos.html?cat=branding">Branding</a></li>
-            <li><a href="{p}proyectos.html?cat=ux-ui">UX/UI</a></li>
+            <li><a href="{p}proyectos.html?cat=marcas">Marcas</a></li>
+            <li><a href="{p}proyectos.html?cat=producto">Producto digital</a></li>
             <li><a href="{p}proyectos.html?cat=logofolio">Logofolio</a></li>
           </ul>
         </div>
@@ -166,6 +166,7 @@ EN_CHROME = [
     ('<span>Branding, UX/UI y producto</span>', '<span>Branding, UX/UI and product</span>'),
     ('>Marcas</a>', '>Brands</a>'),
     ('>Producto digital</a>', '>Digital product</a>'),
+    ('>Marcas</a></li>', '>Brands</a></li>'),
     ('>Proyectos</a>', '>Projects</a>'),
     ('aria-label="Categorías de proyectos"', 'aria-label="Project categories"'),
     ('>Sobre mí</a>', '>About</a>'),

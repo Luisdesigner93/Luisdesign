@@ -3,7 +3,7 @@
 _more_cases = [
     ('proyectos/lab502.html', 'LAB*502', 'De una tienda de insumos a un laboratorio fotográfico con propósito, que ganó un fondo cultural con su estrategia.', ['Estrategia', 'Identidad'], None),
     ('proyectos/sustentando.html', 'Sustentando', 'Cuatro años como aliado: de un logotipo a una consultora que consigue clientes por LinkedIn.', ['Identidad', 'Web', 'Comunicación B2B'], ('sustentando/02.jpg', 1200, 1200)),
-    ('proyectos/uv-energy.html', 'Uvenergy', 'Una pyme de energía renovable que nació con marca en 2023 y la hizo crecer en 2025.', ['Identidad', 'Web'], ('uv-energy/01.jpg', 1600, 899)),
+    ('proyectos/uvenergy.html', 'Uvenergy', 'Una pyme de energía renovable que nació con marca en 2023 y la hizo crecer en 2025.', ['Identidad', 'Web'], ('uvenergy/01.jpg', 1600, 899)),
     ('proyectos/botes-salvavidas.html', 'Botes Salvavidas de Valparaíso', 'Una comunicación que pone al centro su labor de rescate.', ['Comunicación', 'Web', 'Redes'], ('botes-salvavidas/01.jpg', 864, 1080)),
     ('proyectos.html#logofolio', 'Bowraps', 'Naming e identidad visual para una marca de wraps y bowls que sigue vigente en Viña del Mar.', ['Naming', 'Identidad visual'], None),
     ('proyectos/khronos.html', 'Cerveza Khronos', 'Propuesta de rebranding: un nombre que encontró su sentido en "Tómate el tiempo".', ['Propuesta', 'Estrategia', 'Packaging'], ('khronos/04.jpg', 1254, 1254)),
@@ -108,7 +108,7 @@ _ext = ' rel="noopener noreferrer" target="_blank"'
 _wa_sr = '<span class="sr-only"> (WhatsApp, se abre en una pestaña nueva)</span>'
 # Enlaces de casos (LAB*502 se crea en la fase 4; Bowraps vive en Logofolio)
 _case = {
-    'Uvenergy': 'proyectos/uv-energy.html', 'Uvenergy (2023)': 'proyectos/uv-energy.html', 'Uvenergy (2025)': 'proyectos/uv-energy.html',
+    'Uvenergy': 'proyectos/uvenergy.html', 'Uvenergy (2023)': 'proyectos/uvenergy.html', 'Uvenergy (2025)': 'proyectos/uvenergy.html',
     'Fuchi Chao (2021)': 'proyectos/fuchi-chao.html', 'Fuchi Chao (2023)': 'proyectos/fuchi-chao.html',
     'Sustentando': 'proyectos/sustentando.html', 'Khronos (propuesta)': 'proyectos/khronos.html', 'LAB*502': 'proyectos/lab502.html',
     'Botes Salvavidas de Valparaíso': 'proyectos/botes-salvavidas.html', 'Bowraps': 'proyectos.html#logofolio',

@@ -895,3 +895,11 @@ html.has-drawer { overflow: hidden; }
   .card { box-shadow: none; }
   a { color: inherit; }
 }
+
+/* Logofolio: ficha corta de una identidad (Bowraps) bajo el mosaico */
+.logo-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: clamp(1.5rem, 4vw, 3rem); max-width: 54rem; margin-inline: auto; padding: var(--space-4); }
+.logo-feature .media-ph { display: grid; place-content: center; justify-items: center; gap: var(--space-2); aspect-ratio: 4 / 3; border-radius: var(--radius-lg); background: var(--surface-sunken); color: var(--ink-subtle); font-size: 13px; }
+.logo-feature-text { display: grid; gap: var(--space-3); padding: var(--space-4); }
+.logo-feature-text p:not(.eyebrow-text) { color: var(--ink-muted); }
+.logo-feature .card-title { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.1; font-weight: 500; letter-spacing: -0.03em; }
+@media (max-width: 45em) { .logo-feature { grid-template-columns: 1fr; } }

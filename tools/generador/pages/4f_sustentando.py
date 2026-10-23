@@ -7,7 +7,7 @@ page('proyectos/sustentando.html', 'Sustentando · Caso · Luis Vicencio',
      cta_title='¿Buscas un aliado para <strong>hacer crecer tu marca</strong>?',
      cta_lead='Conversemos sobre la etapa en que está tu empresa y veamos juntos por dónde partir.',
      body=case_intro(_su, _su['summary'],
-        [('Cliente', _su['client']), ('Año', _su['year']), ('Rol', _su['role'])])
+        case_facts(_su))
      + case_detail('Sustentando: de un logotipo a una empresa <strong>consolidada en su comunicación</strong>.', [
         ('necesidades', 'Entender las <strong>necesidades</strong>',
          '<p class="lead">Todo partió por entender qué necesitaba Sustentando en ese momento, no por lo que podía ofrecerle.</p>'
@@ -19,5 +19,7 @@ page('proyectos/sustentando.html', 'Sustentando · Caso · Luis Vicencio',
          '<p>Hoy rediseñamos su sitio web y diseñé su stand para Inofood 2026.</p>'),
         ('aliado', 'Un aliado <strong>dentro del equipo</strong>',
          '<p class="lead">La confianza de sus clientes la gana Sustentando con su servicio; mi trabajo es que ese servicio se vea y se perciba con la calidad que tiene.</p>'
-         '<p>Para lograrlo me involucro como un integrante más del equipo: detecto sus necesidades y carencias, y las resuelvo con diseño y comunicación. El resultado es una empresa consolidada comunicacionalmente, con un valor percibido relevante para sus clientes.</p>'),
-     ]) + case_nav(_su))
+         '<p>Para lograrlo me involucro como un integrante más del equipo: detecto sus necesidades y carencias, y las resuelvo con diseño y comunicación. El resultado es una empresa consolidada comunicacionalmente, con un valor percibido relevante para sus clientes.</p>'
+         '<p>En una consultoría B2B, el cliente decide por la percepción que tiene de un proveedor que todavía no conoce. La comunicación en LinkedIn le ha traído a Sustentando nuevos clientes, y su equipo sigue confiando en mí como alguien que resuelve lo que necesitan en cada etapa.</p>'),
+         # EDITAR: pedir a Sustentando una frase corta sobre el trabajo (testimonio)
+     ]) + case_landing(_su) + case_nav(_su))

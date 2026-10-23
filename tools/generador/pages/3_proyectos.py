@@ -9,10 +9,12 @@ def showcase_item(n, pr):
     else:
         # EDITAR: reemplazar por la imagen del proyecto
         fig = '<figure><div class="media-ph" role="img" aria-label="Imagen pendiente"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-image"/></svg>Imagen pendiente</div></figure>'
+    proposal = '<span class="tag tag-value">Propuesta</span>' if pr.get('proposal') else ''
+    status = f'<div><dt>Estado</dt><dd>{pr["status"]}</dd></div>' if pr.get('status') else ''
     return f'''
         <article class="showcase-item" id="p-{pr['slug']}" data-cats="{' '.join(pr['cats'])}" aria-labelledby="t-{pr['slug']}">
           <div class="showcase-info">
-            <p class="showcase-meta"><span class="numtag">{num}</span><span>{pr['kind']}</span><span>{pr['year']}</span><span>{' · '.join(pr['tags'])}</span></p>
+            <p class="showcase-meta"><span class="numtag">{num}</span>{proposal}<span>{pr['kind']}</span><span>{pr['year']}</span><span>{' · '.join(t for t in pr['tags'] if t != 'Propuesta')}</span></p>
             <h2 class="showcase-title" id="t-{pr['slug']}">{pr['title']}</h2>
             <div class="showcase-body">
               <div class="showcase-text">
@@ -20,9 +22,9 @@ def showcase_item(n, pr):
               </div>
             </div>
             <dl class="showcase-facts">
-              <div><dt>Rol</dt><dd>{pr.get('role', 'Lorem ipsum')}</dd></div>
-              <div><dt>Cliente</dt><dd>{pr.get('client', 'Lorem ipsum')}</dd></div>
-              <div><dt>Año</dt><dd>{pr['year']}</dd></div>
+              <div><dt>Rol</dt><dd>{pr['role']}</dd></div>
+              <div><dt>Cliente</dt><dd>{pr['client']}</dd></div>
+              <div><dt>Año</dt><dd>{pr['year']}</dd></div>{status}
             </dl>
             <a class="link-arrow showcase-link" href="proyectos/{pr['slug']}.html">Ver caso completo<span class="sr-only">: {pr['title']}</span> <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
           </div>
@@ -38,7 +40,7 @@ _index = ''.join(f'''
                  for i, pr in enumerate(PROJECTS, 1))
 
 # Logofolio: misma estructura de mosaicos que la sección "Metodología" de AuditorWeb.
-_logos = [('luy design', 'img/marca/logo-luy-cuadrado.png')] + [(None, None)] * 8
+_logos = [('luy design', 'img/marca/logo-luy-cuadrado.png'), ('Bowraps', None)] + [(None, None)] * 7
 
 
 def _logo_cell(name, src):
@@ -46,8 +48,8 @@ def _logo_cell(name, src):
         return f'''
         <li class="logo-cell"><img src="{src}" width="560" height="560" alt="Logotipo {name}" loading="lazy" decoding="async"><span>{name}</span></li>'''
     # EDITAR: reemplazar por el logo (idealmente SVG o PNG con fondo transparente) y su nombre
-    return '''
-        <li class="logo-cell is-pending"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-image"/></svg><span>Logo pendiente</span></li>'''
+    return f'''
+        <li class="logo-cell is-pending"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-image"/></svg><span>{name + ' · ' if name else ''}Logo pendiente</span></li>'''
 
 
 # Portada "PORTAFOLIO": palabra gigante detrás del retrato y su contorno por delante (referencia: portada de portafolio editorial).
@@ -77,6 +79,19 @@ _logofolio = '''
       <ul class="logo-grid" role="list" aria-label="Logotipos">''' + ''.join(_logo_cell(n, s) for n, s in _logos) + '''
       </ul>
     </section>
+    <section class="panel panel-plain section logofolio-extra" aria-label="Fichas de Logofolio">
+      <div class="container">
+        <!-- EDITAR: 3 o 4 imágenes de Bowraps en alta desde Behance (behance.net/gallery/142375157/Bowraps-Identidad-de-Marca) -->
+        <article class="card logo-feature" id="bowraps" aria-labelledby="bowraps-title">
+          <div class="media-ph" role="img" aria-label="Imagen pendiente: identidad de Bowraps"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-image"/></svg>Imagen pendiente</div>
+          <div class="logo-feature-text">
+            <p class="eyebrow-text">2022 · Naming e identidad visual</p>
+            <h3 class="card-title" id="bowraps-title">Bowraps</h3>
+            <p>Naming e identidad visual para una marca de wraps y bowls frescos, hoy en funcionamiento en Viña del Mar. Propuse un nombre que une sus dos productos y un símbolo que los integra en una sola forma. Fue uno de mis primeros proyectos liderando a otro diseñador. Diseño gráfico en colaboración con Claudio Almeyda Godoy.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 '''
 
 page('proyectos.html', 'Proyectos · Luis Vicencio',
@@ -92,8 +107,8 @@ page('proyectos.html', 'Proyectos · Luis Vicencio',
           <p class="lead">Branding, packaging, experiencias digitales y productos de software. Recorre cada proyecto o entra al caso completo para ver el proceso y los resultados.</p>
           <nav class="filter-tabs" aria-label="Filtrar proyectos por categoría">
             <a href="proyectos.html" data-cat="todos">Todos</a>
-            <a href="proyectos.html?cat=branding" data-cat="branding">Branding</a>
-            <a href="proyectos.html?cat=ux-ui" data-cat="ux-ui">UX/UI</a>
+            <a href="proyectos.html?cat=marcas" data-cat="marcas">Marcas</a>
+            <a href="proyectos.html?cat=producto" data-cat="producto">Producto digital</a>
             <a href="proyectos.html?cat=logofolio" data-cat="logofolio">Logofolio</a>
           </nav>
         </div>
@@ -115,10 +130,3 @@ page('proyectos.html', 'Proyectos · Luis Vicencio',
 ''' + ''.join(showcase_item(i, pr) for i, pr in enumerate(PROJECTS, 1)) + '''      </div>
     </div>
 ''' + _logofolio)
-
-# Casos con texto provisorio (los que tienen contenido real tienen su propio script en pages/)
-for pr in PROJECTS:
-    if pr['slug'] in ('auditorweb', 'bytequest', 'sustentando', 'khronos', 'fuchi-chao', 'yomecontrolo'):
-        continue
-    page(f"proyectos/{pr['slug']}.html", f"{pr['title']} · Caso · Luis Vicencio",
-         f"Caso de estudio: {pr['title']}.", current='proyectos', ogtype='article', body=lorem_case(pr))
