@@ -314,7 +314,7 @@
 .more-tags li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #ffffff; }
 .more-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-3); translate: 0 .5rem; transition: translate .35s var(--ease); }
 .more-info strong { font-size: clamp(15px, 1.3vw, 19px); line-height: 1.2; font-weight: 600; }
-.more-go { flex-shrink: 0; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #ffffff; color: #0b1220; transition: transform .3s var(--ease); }
+.more-go { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #ffffff; color: #0b1220; transition: transform .3s var(--ease); }
 .more-go .icon { width: 18px; height: 18px; }
 .more-go:hover { transform: translateX(3px); }
 .more-arc > li:hover .more-info, .more-arc > li:focus-within .more-info { opacity: 1; pointer-events: auto; }

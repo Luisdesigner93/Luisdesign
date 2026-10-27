@@ -64,7 +64,7 @@ HEAD = '''<!doctype html>
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="{home}" aria-label="Luis Design, inicio">
+      <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio">
         <img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt="">
         <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
       </a>
@@ -133,7 +133,7 @@ FOOT = '''  </main>
   <footer class="site-footer container">
     <div class="footer-grid">
       <div>
-        <a class="brand" href="{home}" aria-label="Luis Design, inicio"><img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio"><img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
         <p>Este sitio no usa cookies ni rastreadores de terceros.</p>
         <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
       </div>
@@ -168,7 +168,7 @@ _NEW_TAB = '<span class="sr-only"> (se abre en una pestaña nueva)</span>'
 # Textos del menú, el contacto y el pie para las páginas en inglés (pares español → inglés, en orden)
 EN_CHROME = [
     ('Saltar al contenido', 'Skip to content'),
-    ('aria-label="Luis Design, inicio"', 'aria-label="Luis Design, home"'),
+    ('aria-label="Luis Vicencio, inicio"', 'aria-label="Luis Vicencio, home"'),
     ('Branding, UX/UI<br>y Producto', 'Branding, UX/UI<br>and Product'),
     ('aria-label="Principal"', 'aria-label="Main"'),
     ('<span>Branding, UX/UI y producto</span>', '<span>Branding, UX/UI and product</span>'),
@@ -249,6 +249,28 @@ def _card_titles(html):
     return html
 
 
+# ---- Imágenes WebP con srcset (las genera tools/generador/webp.py en img/webp/; los JPG/PNG quedan como fuente) ----
+SRC_ROOT = HERE.parent.parent
+_IMG = re.compile(r'<img\b([^>]*?)\ssrc="((?:\.\./)*|/)?img/((?:proyectos|marca|collage)/[^"]+)\.(?:jpe?g|png)"([^>]*)>')
+# Ancho con que se muestra cada imagen según su clase (el resto: media pantalla en escritorio, ancho completo en móvil)
+_SIZES = [('v2-hero-bg', '100vw'), ('ideas-item', '(max-width: 40em) 45vw, 22vw'), ('brand-logo', '120px'),
+          ('svc-card-img', '(max-width: 53.75em) 92vw, 46vw'), ('folio-photo', '(max-width: 40em) 150vw, 50vw')]
+_SIZES_DEFAULT = '(max-width: 53.75em) 92vw, 46vw'
+
+
+def _webp(html):
+    def swap(m):
+        before, prefix, rel, after = m.group(1), m.group(2) or '', m.group(3), m.group(4)
+        files = sorted(SRC_ROOT.glob(f'img/webp/{rel}-*.webp'), key=lambda f: int(f.stem.rsplit('-', 1)[1]))
+        if not files:
+            return m.group(0)  # sin WebP generado: se deja el original
+        attrs = before + after
+        sizes = next((v for k, v in _SIZES if k in attrs), _SIZES_DEFAULT)
+        srcset = ', '.join(f'{prefix}img/webp/{rel}-{f.stem.rsplit("-", 1)[1]}.webp {f.stem.rsplit("-", 1)[1]}w' for f in files)
+        return f'<img{before} src="{prefix}img/webp/{rel}-{files[-1].stem.rsplit("-", 1)[1]}.webp" srcset="{srcset}" sizes="{sizes}"{after}>'
+    return _IMG.sub(swap, html)
+
+
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
          noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None,
          email_first=False, email_label=None, lang='es', alternates=None, og_image=None, og_alt=None, jsonld=None):
@@ -285,7 +307,7 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         # En inglés, "Digital product" apunta a la versión en inglés
         chrome = [c.replace(f'href="{p}producto-digital.html"', 'href="digital-product.html"') for c in chrome]
     html = chrome[0] + fill(body, values) + chrome[1] + chrome[2]
-    html = _card_titles(html)
+    html = _webp(_card_titles(html))
     out = ROOT / path
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding='utf-8')
