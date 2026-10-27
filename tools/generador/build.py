@@ -70,7 +70,6 @@ HEAD = '''<!doctype html>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
-        <a href="{home}"{cur_marcas}>Marcas</a>
         <a href="{p}producto-digital.html"{cur_producto}>Producto digital</a>
         <div class="nav-item has-sub">
           <a href="{p}proyectos.html"{cur_proyectos}>Proyectos</a>
@@ -139,7 +138,7 @@ FOOT = '''  </main>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{home}">Marcas</a></li><li><a href="{p}producto-digital.html">Producto digital</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{p}producto-digital.html">Producto digital</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -253,7 +252,7 @@ def _card_titles(html):
 SRC_ROOT = HERE.parent.parent
 _IMG = re.compile(r'<img\b([^>]*?)\ssrc="((?:\.\./)*|/)?img/((?:proyectos|marca|collage)/[^"]+)\.(?:jpe?g|png)"([^>]*)>')
 # Ancho con que se muestra cada imagen según su clase (el resto: media pantalla en escritorio, ancho completo en móvil)
-_SIZES = [('v2-hero-bg', '100vw'), ('ideas-item', '(max-width: 40em) 45vw, 22vw'), ('brand-logo', '120px'),
+_SIZES = [('v2-hero-bg', '100vw'), ('pl-hero-bg', '100vw'), ('ideas-item', '(max-width: 40em) 45vw, 22vw'), ('brand-logo', '120px'),
           ('svc-card-img', '(max-width: 53.75em) 92vw, 46vw'), ('folio-photo', '(max-width: 40em) 150vw, 50vw')]
 _SIZES_DEFAULT = '(max-width: 53.75em) 92vw, 46vw'
 
@@ -290,7 +289,6 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         # Una hoja extra o varias (lista), en orden
         'extra_css': ''.join(f'  <link rel="stylesheet" href="{p}{c}">\n' for c in ([extra_css] if isinstance(extra_css, str) else extra_css or [])),
         'contact_href': '#contacto' if contact else home + '#contacto',
-        'cur_marcas': ' aria-current="page"' if current == 'marcas' else '',
         'cur_producto': ' aria-current="page"' if current == 'producto' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_sobre': ' aria-current="page"' if current == 'sobre' else '',

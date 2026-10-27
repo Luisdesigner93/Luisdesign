@@ -343,20 +343,6 @@ HOME_TRAYECTORIA = '''
     </dialog>
 '''
 
-page('index.html', 'Luis Vicencio · Branding e identidad de marca para pymes en Chile',
-     'Diseño marcas para pymes y empresas: estrategia, identidad visual, packaging y sitios web. Más de 7 años creando marcas que la gente quiere seguir.',
-     current='marcas', html_class='home motion v2', canonical='', extra_css='css/home-v2.css',
-     cta_title='Conversemos sobre <strong>tu marca</strong>.',
-     cta_lead='Cuéntame en qué momento está tu negocio y qué sientes que tu marca no está logrando. Te respondo con una propuesta de alcance, plazos y presupuesto.',
-     wa_href=WA_MARCAS, email_subject='',
-     og_image='img/og/inicio.jpg', og_alt='Línea de productos Fuchi Chao: detergente, eliminador de olores y jabón anti olores',
-     jsonld=[person_ld(),
-             {'@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE + '#servicio', 'name': 'Luis Vicencio · Diseño de marca',
-              'url': SITE, 'description': 'Diseño marcas para pymes y empresas: estrategia, identidad visual, packaging y sitios web.',
-              'image': SITE + 'img/og/inicio.jpg', 'telephone': TELEFONO, 'email': 'mailto:' + EMAIL, 'sameAs': PERFILES,
-              'founder': {'@id': PERSON_ID}, 'areaServed': {'@type': 'Country', 'name': 'Chile'},
-              'address': {'@type': 'PostalAddress', 'addressCountry': 'CL'}}]
-            + [service_ld(sv['t'], sv['para'], '#servicios') for sv in _servicios]
-            + [service_ld('Sitios web y ecommerce', 'Diseño sitios y tiendas en línea que guían a tus clientes a escribirte o comprarte, e incluyo un diagnóstico de cumplimiento de la Ley 21.719 con AuditorWeb.', '#servicios'),
-               faq_ld(_preguntas)],
-     body=HOME_HERO + HOME_MARQUEE + HOME_IDEAS + HOME_MOMENTOS + HOME_SERVICIOS + HOME_PROCESO + HOME_MORE + HOME_SOBRE + HOME_PREGUNTAS)
+# La página de inicio se genera en pages/1a_inicio.py (identidad con la línea continua).
+# Las secciones de la landing Marcas anterior (HOME_HERO, HOME_MOMENTOS, HOME_SERVICIOS, HOME_PROCESO, HOME_MORE, HOME_SOBRE)
+# quedan definidas aquí por si se quieren recuperar; HOME_IDEAS, HOME_PREGUNTAS y _more_arc se reutilizan en el inicio.

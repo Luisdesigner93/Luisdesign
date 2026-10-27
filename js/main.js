@@ -351,35 +351,341 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   setTimeout(finish, 6000); // respaldo si la carga se demora
 })();
 
-// Piloto: en el hero la línea se dibuja con el scroll y una punta redondeada marca el avance.
-// Sin JavaScript o con "reducir movimiento", la línea se ve completa y sin punta.
-(function initPilotThread() {
+// Inicio: una sola línea recorre la página. En el hero se dibuja sola al entrar (después de la pantalla de carga);
+// desde ahí avanza con el scroll hasta una línea de lectura (60 % del alto de la ventana) y una punta redondeada marca
+// siempre el extremo dibujado, pasando de una sección a la siguiente sin saltos.
+// Sin JavaScript o con "reducir movimiento", cada tramo usa su animación CSS (o se ve completo) y no hay punta.
+(function initHomeThread() {
   const hero = document.querySelector('.pl-hero');
   if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = document.documentElement;
   const head = hero.querySelector('.pl-head');
-  const START = 0.06; // tramo visible antes de empezar a bajar
-  let ticking = false;
+  if (head) document.body.append(head); // fija en la ventana, sobre todas las secciones
+  const DURATION = 2600; // ms que tarda en dibujarse la línea del hero
+  const SCAN = 0.6; // línea de lectura, como fracción del alto de la ventana
+  let heroP = 0;
+  let heroSeg = null; // tramo del hero (para seguir con el scroll)
+  let heroStop = 1; // fracción hasta donde se dibuja sola al cargar
+  let autoDone = false;
+  let chain = []; // tramos de las secciones siguientes, en orden
 
-  // Tramo visible según el ancho (escritorio o móvil): capa trasera y delantera
-  const layers = () => [...hero.querySelectorAll('.pl-thread')].filter((svg) => svg.getBoundingClientRect().width > 0);
+  const visible = (scope) => [...scope.querySelectorAll('.pl-thread')].filter((svg) => svg.getBoundingClientRect().width > 0);
 
-  function draw() {
-    ticking = false;
-    const p = START + (1 - START) * Math.min(1, Math.max(0, window.scrollY / (hero.offsetHeight * 0.85)));
-    const visible = layers();
-    visible.forEach((svg) => svg.querySelectorAll('path').forEach((path) => { path.style.strokeDashoffset = String(1 - p); }));
-    const path = visible[0] && visible[0].querySelector('path');
-    if (!path || !head) return;
+  // Las líneas vienen estiradas (viewBox fijo). Se reescalan al tamaño real de su sección para que el avance del trazo
+  // y la posición de la punta se midan en la misma escala. mapY permite mover alturas (el subrayado del hero).
+  function fitSvg(svg, w, h, mapY) {
+    if (!svg.dataset.view) svg.dataset.view = svg.getAttribute('viewBox');
+    const [, , vw, vh] = svg.dataset.view.split(' ').map(Number);
+    const my = mapY || ((y) => (y * h) / vh);
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.querySelectorAll('path').forEach((path) => {
+      if (!path.dataset.d) path.dataset.d = path.getAttribute('d');
+      let i = 0;
+      path.setAttribute('d', path.dataset.d.replace(/-?\d+(?:\.\d+)?/g, (n) => (i++ % 2 === 0 ? (n * w) / vw : my(+n)).toFixed(1)));
+    });
+  }
+
+  // Línea del hero construida sobre el titular (boceto de Luis): baja con una curva amplia, pasa por dentro de la O de
+  // "DISEÑO", sale por arriba y da la vuelta, subraya "DESEAN" con una recta limpia bajo su línea base, hace un lazo
+  // abajo a la derecha y sale por abajo hacia la sección siguiente. Se suaviza (smooth) y se recalcula si el titular se mueve.
+  // Al cargar se dibuja sola hasta unos 10vh antes del final del hero; el resto lo completa el scroll.
+  const EXIT = { desk: 0.69, mob: 0.5 }; // salida por abajo, como fracción del ancho (donde empieza la línea siguiente)
+  const STEP = 18; // px entre puntos al suavizar (como _suave en el generador)
+
+  // Suaviza y simplifica un trazado: lo recorre en puntos equidistantes y lo vuelve a trazar como B-spline cúbica
+  // (sin quiebres ni saltos de curvatura). Usa `probe` (un <path>) para medir.
+  function smooth(d, probe) {
+    probe.setAttribute('d', d);
+    const L = probe.getTotalLength();
+    const n = Math.max(2, Math.round(L / STEP));
+    const pts = [];
+    for (let i = 0; i <= n; i += 1) { const p = probe.getPointAtLength((L * i) / n); pts.push([p.x, p.y]); }
+    const cp = [pts[0], pts[0], ...pts, pts[n], pts[n]];
+    const f = (v) => v.toFixed(1);
+    let out = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+    for (let i = 0; i < cp.length - 3; i += 1) {
+      const [, p1, p2, p3] = cp.slice(i, i + 4);
+      out += ` C${f((2 * p1[0] + p2[0]) / 3)} ${f((2 * p1[1] + p2[1]) / 3)} ${f((p1[0] + 2 * p2[0]) / 3)} ${f((p1[1] + 2 * p2[1]) / 3)} ${f((p1[0] + 4 * p2[0] + p3[0]) / 6)} ${f((p1[1] + 4 * p2[1] + p3[1]) / 6)}`;
+    }
+    return out;
+  }
+  function heroPath() {
+    const box = hero.getBoundingClientRect();
+    const w = box.width; const h = box.height;
+    const oEl = hero.querySelector('.pl-o'); const uEl = hero.querySelector('.pl-u'); const bEl = hero.querySelector('.pl-base');
+    if (!oEl || !uEl || !bEl) return;
+    const or = oEl.getBoundingClientRect(); const ur = uEl.getBoundingClientRect(); const br = bEl.getBoundingClientRect();
+    const fs = parseFloat(getComputedStyle(uEl).fontSize);
+    const o = or.height * 0.62; // alto de la O (la caja incluye espacio sobre y bajo las mayúsculas)
+    const ox = or.left + or.width / 2 - box.left;
+    const oy = br.top - box.top - (ur.bottom - or.bottom) - o * 0.5; // centro de la O: su línea base menos media letra
+    const uy = br.top - box.top + fs * 0.1; // subrayado, justo bajo la línea base de "desean"
+    const dl = ur.left - box.left; const dr = ur.right - box.left;
+    const mob = window.matchMedia('(max-width: 40em)').matches;
+    const xe = w * (mob ? EXIT.mob : EXIT.desk);
+    const x0 = Math.max(16, ox - 2.6 * o);
+    // El lazo inferior se corre a la izquierda si no cabe en la pantalla
+    const shift = Math.min(0, w - 14 - (dr + 1.44 * fs));
+    const L = (x, y) => `${(x).toFixed(1)} ${(y).toFixed(1)}`;
+    const R = (k) => dr + k * fs + shift;
+    const d = [
+      `M${L(x0, 0)}`,
+      `C${L(x0 + 0.05 * o, oy * 0.45)} ${L(ox - 1.8 * o, oy - 0.9 * o)} ${L(ox - 0.9 * o, oy - 0.45 * o)}`,
+      `C${L(ox - 0.45 * o, oy - 0.2 * o)} ${L(ox - 0.15 * o, oy)} ${L(ox + 0.1 * o, oy - 0.05 * o)}`,
+      `C${L(ox + 0.6 * o, oy - 0.1 * o)} ${L(ox + 0.85 * o, oy - 0.7 * o)} ${L(ox + 0.7 * o, oy - 1.05 * o)}`,
+      `C${L(ox + 0.55 * o, oy - 1.35 * o)} ${L(ox + 0.1 * o, oy - 1.45 * o)} ${L(ox - 0.25 * o, oy - 1.3 * o)}`,
+      `C${L(ox - 0.9 * o, oy - 1.05 * o)} ${L(ox - 2.0 * o, oy - 0.4 * o)} ${L(ox - 2.25 * o, oy + 0.45 * o)}`,
+      `C${L(ox - 2.45 * o, uy - 0.2 * fs)} ${L(dl - 0.9 * fs, uy)} ${L(dl - 0.35 * fs, uy)}`,
+      // Subrayado recto de "desean"
+      `C${L(dl + 0.2 * fs, uy)} ${L(dr + 0.1 * fs, uy)} ${L(Math.max(dr + 0.15 * fs, R(0.67)), uy)}`,
+      // Bajada y lazo inferior derecho
+      `C${L(R(1.0), uy)} ${L(R(1.28), uy + 0.45 * fs)} ${L(R(1.22), uy + 0.85 * fs)}`,
+      `C${L(R(1.16), uy + 1.2 * fs)} ${L(R(0.85), uy + 1.25 * fs)} ${L(R(0.6), uy + 1.2 * fs)}`,
+      `C${L(R(0.25), uy + 1.14 * fs)} ${L(R(0.0), uy + 0.95 * fs)} ${L(R(0.08), uy + 0.78 * fs)}`,
+      `C${L(R(0.18), uy + 0.6 * fs)} ${L(R(0.7), uy + 0.62 * fs)} ${L(R(1.0), uy + 0.9 * fs)}`,
+      `C${L(R(1.25), uy + 1.12 * fs)} ${L(R(1.42), uy + 1.4 * fs)} ${L(R(1.44), uy + 1.7 * fs)}`,
+      `C${L(R(1.46), uy + 1.7 * fs + (h - uy - 1.7 * fs) * 0.45)} ${L(xe, h - (h - uy - 1.7 * fs) * 0.4)} ${L(xe, h)}`,
+    ].join(' ');
+    const probe = hero.querySelector('.pl-thread path');
+    const ds = probe ? smooth(d, probe) : d;
+    // Capa delantera: solo el tramo que entra a la O por su borde superior izquierdo (ahí la línea pasa por encima)
+    const clip = `inset(${(oy - 0.75 * o).toFixed(1)}px ${(w - ox).toFixed(1)}px ${(h - (oy + 0.15 * o)).toFixed(1)}px ${(or.left - box.left - 0.35 * o).toFixed(1)}px)`;
+    hero.querySelectorAll('.pl-thread').forEach((svg) => {
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      svg.querySelectorAll('path').forEach((path) => path.setAttribute('d', ds));
+      if (svg.classList.contains('pl-thread-front')) svg.style.clipPath = clip;
+    });
+  }
+
+  // El mundo de las ideas: la línea baja y se enrolla en espiral en la botella central (boceto de Luis): cruza por delante,
+  // da la vuelta por la derecha, vuelve por detrás y cruza otra vez por delante en diagonal antes de salir hacia abajo.
+  // Se mide el atomizador en cada cuadro (crece con el scroll); la capa delantera se recorta a los dos cruces por delante.
+  function ideasPath(seg) {
+    const { sec, back, front } = seg.spiral;
+    const bottle = sec.querySelector('.ideas-item-spray');
+    if (!bottle) return;
+    const box = sec.getBoundingClientRect(); const r = bottle.getBoundingClientRect();
+    const w = box.width; const h = box.height;
+    const mob = window.matchMedia('(max-width: 40em)').matches;
+    const xs = w * (mob ? EXIT.mob : EXIT.desk); // entra donde terminó la línea del hero
+    const xe = w * 0.5; // sale al centro, donde empieza la línea de Sistemas
+    // Cuerpo de la botella (sin el gatillo)
+    const bt = r.top - box.top + r.height * 0.36; const bb = r.bottom - box.top - r.height * 0.04; const bh = bb - bt;
+    const cx = r.left - box.left + r.width / 2; const bw = r.width * 0.78;
+    const L0 = cx - bw / 2; const R0 = cx + bw / 2; const m = bw * 0.22; const k = bh * 0.1;
+    const y1 = bt + bh * 0.12; const y2 = bt + bh * 0.4; const s = bh * 0.1;
+    const y3 = bt + bh * 0.6; const y4 = bt + bh * 0.86;
+    const P = (x, y) => `${x.toFixed(1)} ${y.toFixed(1)}`;
+    const d = [
+      `M${P(xs, 0)}`,
+      `C${P(xs, y1 * 0.4)} ${P(L0 - m * 2.2, y1 - bh * 0.5)} ${P(L0 - m, y1)}`, // baja por detrás hasta el lado izquierdo
+      `C${P(L0 + bw * 0.3, y1 + s * 0.6 + k)} ${P(R0 - bw * 0.3, y1 + s * 0.6 + k)} ${P(R0 + m, y1 + s)}`, // cruce por delante
+      `C${P(R0 + m * 2, y1 + s + bh * 0.08)} ${P(R0 + m * 2, y2 - bh * 0.06)} ${P(R0 + m, y2)}`, // vuelta por la derecha
+      `C${P(R0 - bw * 0.3, y2 - k)} ${P(L0 + bw * 0.3, y2 + s - k)} ${P(L0 - m, y2 + s)}`, // cruce por detrás
+      `C${P(L0 - m * 2, y2 + s + bh * 0.05)} ${P(L0 - m * 1.6, y3 - bh * 0.06)} ${P(L0 - m * 0.6, y3)}`, // vuelta por la izquierda
+      `C${P(L0 + bw * 0.3, y3 + k)} ${P(R0 - bw * 0.3, y4 - k * 0.5)} ${P(R0 + m, y4)}`, // cruce por delante en diagonal
+      `C${P(R0 + m * 2.2, y4 + bh * 0.12)} ${P(xe, h - (h - bb) * 0.45)} ${P(xe, h)}`, // sale hacia abajo
+    ].join(' ');
+    const ds = smooth(d, seg.path);
+    [back, front].forEach((svg) => {
+      if (!svg) return;
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      svg.querySelectorAll('path').forEach((path) => path.setAttribute('d', ds));
+    });
+    seg.t = table(seg.path);
+    // Capa delantera: todo menos la silueta de la botella central (cuello y cuerpo); dentro de ella solo
+    // se ven el primer cruce y el cruce en diagonal. Las demás piezas del collage quedan por detrás de la línea.
+    if (front) {
+      const f = (v) => v.toFixed(1);
+      const top = r.top - box.top; const nx0 = cx - r.width * 0.25; const nx1 = cx + r.width * 0.25;
+      const silueta = `M${f(nx0)} ${f(top)} H${f(nx1)} V${f(bt)} H${f(R0)} V${f(bb)} H${f(L0)} V${f(bt)} H${f(nx0)} Z`;
+      const franja = (y0, y1b) => `M${f(L0 + 1)} ${f(y0)} H${f(R0 - 1)} V${f(y1b)} H${f(L0 + 1)} Z`;
+      front.style.clipPath = `path(evenodd, 'M0 0 H${f(w)} V${f(h)} H0 Z ${silueta} ${franja(y1 - k, y1 + s + k * 1.2)} ${franja(y3 - k * 0.5, Math.min(bb - 1, y4 + k * 1.2))}')`;
+    }
+  }
+
+  // Tabla de cada tramo: largo recorrido y altura máxima alcanzada hasta ese punto (para dibujar hasta la línea de lectura)
+  function table(path) {
+    const L = path.getTotalLength();
+    const n = Math.max(60, Math.min(500, Math.round(L / 6)));
+    const lens = []; const maxY = []; const pts = [];
+    let top = -Infinity;
+    for (let i = 0; i <= n; i += 1) {
+      const pt = path.getPointAtLength((L * i) / n);
+      top = Math.max(top, pt.y);
+      lens.push((L * i) / n); maxY.push(top); pts.push(pt);
+    }
+    return { L, lens, maxY, pts };
+  }
+
+  function build() {
+    heroPath();
+    heroStopAt();
+    chain = [];
+    document.querySelectorAll('.pl-sec:not(.pl-hero)').forEach((sec) => {
+      const box = sec.getBoundingClientRect();
+      const svgs = visible(sec);
+      svgs.forEach((svg) => fitSvg(svg, box.width, box.height));
+      if (!svgs.length) return;
+      const back = svgs.find((svg) => !svg.classList.contains('pl-thread-front')) || svgs[0];
+      const front = svgs.find((svg) => svg.classList.contains('pl-thread-front'));
+      const paths = [...back.querySelectorAll('path')];
+      const firma = sec.querySelector('.pl-firma path');
+      // En la firma, la línea entra, escribe "luis" y sale; en Sistemas, el segundo tramo es la otra mitad del óvalo
+      const ordered = firma ? [paths[0], firma, ...paths.slice(1)] : paths;
+      // data-thread="fit": la línea se completa cuando la sección queda centrada (para ver su dibujo entero, p. ej. las flechas)
+      const fit = sec.dataset.thread === 'fit' ? sec : null;
+      const segs = ordered.map((path, i) => ({ path, fit, main: !(sec.classList.contains('pl-caps') && i === 1), t: table(path), marks: [],
+        twin: front ? front.querySelectorAll('path')[i] : null, spiral: sec.classList.contains('pl-ideas') ? { sec, back, front } : null }));
+      chain.push(...segs);
+      // Elementos que aparecen cuando la línea pasa por ellos (Sistemas: disciplinas por su punto; el título, al entrar al óvalo)
+      const items = [...sec.querySelectorAll('.pl-cap .pl-dot')].map((dot) => [dot.closest('.pl-cap'), dot.getBoundingClientRect()]);
+      const title = sec.querySelector('.pl-caps-title');
+      if (title) { const r = title.getBoundingClientRect(); items.push([title, { left: r.left + r.width / 2, top: r.top, width: 0, height: 0 }]); }
+      items.forEach(([el, r]) => {
+        let best = null;
+        segs.forEach((seg) => {
+          const m = seg.path.getScreenCTM();
+          if (!m) return;
+          const inv = m.inverse();
+          const x = r.left + r.width / 2; const y = r.top + r.height / 2;
+          const ux = inv.a * x + inv.c * y + inv.e; const uy = inv.b * x + inv.d * y + inv.f;
+          seg.t.pts.forEach((pt, k) => {
+            const dd = (pt.x - ux) ** 2 + (pt.y - uy) ** 2;
+            if (!best || dd < best.dd) best = { dd, seg, at: seg.t.lens[k] / seg.t.L };
+          });
+        });
+        if (best) best.seg.marks.push({ el, at: best.at });
+      });
+    });
+  }
+
+  function progressOf(seg) {
+    if (seg.fit) {
+      const r = seg.fit.getBoundingClientRect();
+      const startTop = window.innerHeight * SCAN; // empieza cuando la sección llega a la línea de lectura
+      const endTop = Math.max(0, (window.innerHeight - r.height) / 2); // termina con la sección centrada
+      return Math.min(1, Math.max(0, (startTop - r.top) / Math.max(1, startTop - endTop)));
+    }
+    const m = seg.path.getScreenCTM();
+    if (!m || !m.d) return 0;
+    const y = (window.innerHeight * SCAN - m.f) / m.d; // línea de lectura en coordenadas del tramo
+    const { lens, maxY, L } = seg.t;
+    if (y <= maxY[0]) return 0;
+    if (y >= maxY[maxY.length - 1]) return 1;
+    let lo = 0; let hi = maxY.length - 1;
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (maxY[mid] <= y) lo = mid; else hi = mid; }
+    return lens[lo] / L;
+  }
+
+  function place(path, p) {
+    if (!head || !path) return;
     const pt = path.getPointAtLength(path.getTotalLength() * p);
     const m = path.getScreenCTM();
-    const box = hero.getBoundingClientRect();
-    head.style.setProperty('--x', `${pt.x * m.a + pt.y * m.c + m.e - box.left}px`);
-    head.style.setProperty('--y', `${pt.x * m.b + pt.y * m.d + m.f - box.top}px`);
+    head.style.setProperty('--x', `${pt.x * m.a + pt.y * m.c + m.e}px`);
+    head.style.setProperty('--y', `${pt.x * m.b + pt.y * m.d + m.f}px`);
   }
-  const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } };
 
+  // Dónde se detiene el dibujo automático: unos 10vh antes del borde inferior del hero
+  function heroStopAt() {
+    const path = visible(hero)[0] && visible(hero)[0].querySelector('path');
+    if (!path) return;
+    heroSeg = { path, t: table(path) };
+    const limit = hero.getBoundingClientRect().height - window.innerHeight * 0.1;
+    const { lens, maxY, L } = heroSeg.t;
+    let k = 0;
+    while (k < maxY.length - 1 && maxY[k + 1] <= limit) k += 1;
+    heroStop = lens[k] / L;
+  }
+
+  function draw() {
+    const heroSvgs = visible(hero);
+    if (autoDone && heroSeg) heroP = Math.max(heroStop, progressOf(heroSeg));
+    heroSvgs.forEach((svg) => svg.querySelectorAll('path').forEach((path) => { path.style.strokeDashoffset = String(1 - heroP); }));
+    let front = heroSvgs[0] ? { path: heroSvgs[0].querySelector('path'), p: heroP } : null;
+    chain.forEach((seg) => {
+      if (seg.spiral) ideasPath(seg);
+      const p = heroP < 1 ? 0 : progressOf(seg); // las secciones esperan a que el hero esté completo
+      seg.path.style.strokeDashoffset = String(1 - p);
+      if (seg.twin) seg.twin.style.strokeDashoffset = String(1 - p);
+      seg.marks.forEach((mk) => mk.el.classList.toggle('is-on', p >= mk.at - 0.01));
+      if (seg.main && p > 0) front = { path: seg.path, p };
+    });
+    if (front) place(front.path, front.p);
+  }
+
+  // Dibujo automático del hero con aceleración suave; espera a que se retire la pantalla de carga
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+  let start = null;
+  function tick(now) {
+    if (root.classList.contains('is-loading')) { requestAnimationFrame(tick); return; }
+    if (start === null) start = now;
+    const t = Math.min(1, (now - start) / DURATION);
+    heroPath();
+    heroStopAt();
+    heroP = ease(t) * heroStop;
+    if (t >= 1) autoDone = true;
+    draw();
+    if (t < 1) requestAnimationFrame(tick);
+  }
+
+  let pending = false;
+  const request = () => { if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; draw(); }); } };
+
+  root.classList.add('thread-js');
   hero.classList.add('is-live');
+  build();
   draw();
+  requestAnimationFrame(tick);
   window.addEventListener('scroll', request, { passive: true });
-  window.addEventListener('resize', request);
+  window.addEventListener('resize', () => { build(); request(); });
+  window.addEventListener('load', () => { build(); request(); }); // las imágenes cambian el alto de las secciones
+  window.addEventListener('pl:title-move', () => { heroPath(); heroStopAt(); request(); }); // el titular se desplaza con el scroll
+})();
+
+// Inicio: el cursor es un círculo del color destacado que sigue al puntero y crece sobre enlaces y botones.
+// Solo con mouse o trackpad; en pantallas táctiles se mantiene el comportamiento normal.
+(function initHomeCursor() {
+  if (!document.querySelector('.pl-hero') || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const dot = document.createElement('span');
+  dot.className = 'pl-cursor';
+  dot.setAttribute('aria-hidden', 'true');
+  document.body.append(dot);
+  document.documentElement.classList.add('has-cursor');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let x = -100; let y = -100; let cx = x; let cy = y; let running = false;
+  function frame() {
+    cx += (x - cx) * (still ? 1 : 0.28);
+    cy += (y - cy) * (still ? 1 : 0.28);
+    dot.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+    running = Math.abs(x - cx) > 0.1 || Math.abs(y - cy) > 0.1;
+    if (running) requestAnimationFrame(frame);
+  }
+  window.addEventListener('mousemove', (e) => {
+    x = e.clientX; y = e.clientY;
+    if (!dot.classList.contains('is-visible')) { cx = x; cy = y; dot.classList.add('is-visible'); }
+    dot.classList.toggle('is-hover', !!e.target.closest('a, button, summary, [role="button"], label'));
+    if (!running) { running = true; requestAnimationFrame(frame); }
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => dot.classList.remove('is-visible'));
+})();
+
+// Inicio: las líneas del titular se desplazan en horizontal con el scroll, siguiéndolo con suavidad
+// (la primera y la tercera hacia la izquierda; la marcada con data-dir="1", hacia la derecha).
+(function initHomeTitle() {
+  const lines = [...document.querySelectorAll('.pl-hero-title .pl-line-in')];
+  if (!lines.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const SPEED = 0.07; // px de desplazamiento por px de scroll
+  let current = 0;
+  let running = false;
+  function frame() {
+    const target = Math.min(window.scrollY, window.innerHeight * 1.5) * SPEED;
+    current += (target - current) * 0.12;
+    if (Math.abs(target - current) < 0.05) current = target;
+    lines.forEach((line) => { line.style.transform = `translate3d(${(line.dataset.dir === '1' ? 1 : -1) * current}px, 0, 0)`; });
+    window.dispatchEvent(new Event('pl:title-move'));
+    running = current !== target;
+    if (running) requestAnimationFrame(frame);
+  }
+  window.addEventListener('scroll', () => { if (!running) { running = true; requestAnimationFrame(frame); } }, { passive: true });
 })();

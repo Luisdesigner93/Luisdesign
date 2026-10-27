@@ -1,0 +1,186 @@
+/* ===== Inicio: identidad con una línea continua que recorre la página =====
+   Referencia: dakshgajjar.com. Se usa en index.html (tools/generador/pages/1a_inicio.py). */
+.inicio { --pl-dark: #07090d; --pl-on-dark: #f1eee6; --pl-on-dark-muted: rgba(241, 238, 230, .7); --pl-stroke: 4px;
+  /* Color de la línea: verde amarillo de destacador (flúor) */
+  --pl-line: #d4ff3f; }
+
+/* Secciones: claras sin fondo propio; oscuras como panel redondeado. Sin margen vertical para que la línea no se corte */
+.pl-sec { position: relative; isolation: isolate; margin-block: 0; }
+.pl-light { color: var(--ink); }
+.pl-dark { margin-inline: var(--shell-pad); border-radius: var(--shell-inner-radius); background: var(--pl-dark); color: var(--pl-on-dark); overflow: hidden; overflow: clip; }
+/* Los títulos globales usan --ink: en las secciones oscuras se fuerza el color claro, en ambos temas */
+.pl-dark h1, .pl-dark h2, .pl-dark h3 { color: var(--pl-on-dark); }
+.pl-inner { position: relative; z-index: 1; width: var(--content-width); margin-inline: auto; }
+.pl-center { display: grid; justify-items: center; text-align: center; gap: var(--space-6); }
+
+/* Tipografía */
+/* Titulares: Plus Jakarta Sans 800, ancha y apretada */
+.pl-display { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 8.6vw, 148px); line-height: .9; letter-spacing: -0.055em; word-spacing: .1em; text-wrap: balance; }
+.pl-title { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(30px, 4.4vw, 68px); line-height: .95; letter-spacing: -0.045em; word-spacing: .08em; text-wrap: balance; }
+.pl-lead { max-width: 34rem; margin-top: var(--space-6); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; color: var(--ink-muted); }
+.pl-dark .pl-lead { color: var(--pl-on-dark-muted); }
+.pl-mono { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+.pl-dark .pl-mono { color: var(--pl-on-dark-muted); }
+
+/* ---- La línea ---- */
+.pl-thread { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; fill: none; stroke: var(--pl-line); stroke-width: var(--pl-stroke); stroke-linecap: round; stroke-linejoin: round; }
+.pl-thread path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+.pl-thread-mob { display: none; }
+@media (max-width: 40em) { .pl-thread-desk { display: none; } .pl-thread-mob { display: block; } }
+/* Firma: mismo grosor que la línea (--pl-stroke), fijo en pantalla */
+.pl-firma { fill: none; stroke: var(--pl-line); stroke-width: var(--pl-stroke); stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.pl-firma path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+
+/* Se dibuja con el scroll (navegadores compatibles y sin "reducir movimiento"); si no, se ve completa */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .pl-sec:not(.pl-hero) .pl-thread path, .pl-sign .pl-firma path { stroke-dashoffset: 1; animation: pl-draw linear both; animation-timeline: view(); animation-range: entry 10% cover 55%; }
+  }
+}
+/* El hero se dibuja solo al entrar (js/main.js): la punta redondeada marca el avance */
+.pl-head { display: none; position: fixed; z-index: 45; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--pl-line);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--pl-line) 22%, transparent); transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%)); pointer-events: none; }
+.pl-hero.is-live .pl-head { display: block; }
+@keyframes pl-draw { to { stroke-dashoffset: 0; } }
+
+/* 1. Hero: la línea pasa por detrás y por delante del titular (la capa delantera solo se ve en franjas) */
+/* Fondo del hero anterior (home-v2.css): degradado oscuro, fotografía en monocromo y cuadrícula que se desvanecen.
+   Marca y producto repite el degradado y la cuadrícula, sin la fotografía. */
+.pl-hero, .pl-producto { background: radial-gradient(60% 70% at 78% 100%, #17233a, transparent), linear-gradient(160deg, #0b1220, #070b13); }
+.pl-hero::after, .pl-producto::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px); background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); }
+.pl-hero-bg { position: absolute; z-index: -2; left: 80%; top: 50%; width: auto; height: 100%; max-width: none; transform: translate(-50%, -50%); filter: grayscale(1) contrast(1.05); opacity: .55; pointer-events: none;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); }
+@media (max-width: 53.75em) { .pl-hero-bg { opacity: .4; } }
+.pl-hero { display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(100svh - var(--header-h, 4.5rem) - var(--shell-pad)); padding-block: clamp(8rem, 22vh, 14rem) clamp(3rem, 8vh, 5rem); }
+/* La línea pasa por detrás del titular, salvo al entrar a la O: ahí cruza por encima de su anillo (capa delantera,
+   recortada por js/main.js a ese cruce). Sin JavaScript, la capa delantera no se ve. */
+.pl-hero .pl-thread-front { z-index: 2; clip-path: inset(100% 0 0 0); }
+.pl-hero .pl-display { max-width: 10em; }
+/* Titular por líneas: entran desde abajo una tras otra (pausadas mientras está la pantalla de carga) */
+.pl-line { display: block; }
+/* Marca de la línea base de "desean" (js/main.js la usa para el subrayado) */
+.pl-base { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
+.pl-line-in { display: inline-block; will-change: transform; }
+@media (prefers-reduced-motion: no-preference) {
+  .pl-hero-title .pl-line { animation: pl-line-in .9s cubic-bezier(.2, .7, .2, 1) both; }
+  .pl-hero-title .pl-line:nth-child(1) { animation-delay: .15s; }
+  .pl-hero-title .pl-line:nth-child(2) { animation-delay: .3s; }
+  .pl-hero-title .pl-line:nth-child(3) { animation-delay: .45s; }
+  html.is-loading .pl-hero-title .pl-line { animation-play-state: paused; }
+}
+@keyframes pl-line-in { from { opacity: 0; transform: translateY(.22em); } to { opacity: 1; transform: none; } }
+
+/* 2. El mundo de las ideas: la línea queda detrás del collage, salvo los cruces por delante de la botella central
+   (capa delantera, recortada por js/main.js; sin JavaScript no se ve) */
+.pl-ideas .pl-thread-front { z-index: 3; clip-path: inset(100% 0 0 0); }
+.pl-ideas .pl-thread { color: var(--ink); }
+
+/* 3. Sistemas: óvalo con un punto por disciplina; en móvil, dos columnas */
+.pl-caps { min-height: 760px; }
+.pl-caps-title { position: absolute; z-index: 1; left: 50%; top: 50%; width: min(30rem, 50%); transform: translate(-50%, -50%); text-align: center; font-size: clamp(26px, 2.6vw, 40px); }
+.pl-caps-list { margin: 0; padding: 0; list-style: none; }
+.pl-cap { position: absolute; z-index: 1; display: flex; flex-direction: column; gap: 4px; width: clamp(9rem, 15vw, 14rem); font-family: var(--mono); font-size: 13px; letter-spacing: .04em; }
+.pl-cap-name { font-weight: 400; line-height: 20px; color: var(--ink); white-space: nowrap; }
+.pl-cap-desc { font-size: 12px; line-height: 1.55; color: var(--ink-muted); }
+.pl-dot { position: absolute; top: 10px; width: 16px; height: 16px; border: 4px solid var(--pl-line); border-radius: 50%; background: var(--frame); }
+.pl-cap-1 { left: 28.4%; top: 26.7%; } .pl-cap-2 { left: 19.4%; top: 50%; } .pl-cap-3 { left: 28.4%; top: 73.3%; }
+.pl-cap-4 { left: 71.6%; top: 26.7%; } .pl-cap-5 { left: 80.6%; top: 50%; } .pl-cap-6 { left: 71.6%; top: 73.3%; }
+/* Izquierda: texto a la izquierda del punto; derecha: a la derecha */
+.pl-cap-1, .pl-cap-2, .pl-cap-3 { transform: translate(calc(-100% - 26px), -10px); text-align: right; }
+.pl-cap-1 .pl-dot, .pl-cap-2 .pl-dot, .pl-cap-3 .pl-dot { right: -30px; transform: translate(0, -50%); }
+.pl-cap-4, .pl-cap-5, .pl-cap-6 { transform: translate(26px, -10px); }
+.pl-cap-4 .pl-dot, .pl-cap-5 .pl-dot, .pl-cap-6 .pl-dot { left: -30px; transform: translate(0, -50%); }
+/* Arriba del óvalo la línea se abre hacia afuera bajo el punto: la descripción va encima del nombre */
+.pl-cap-1, .pl-cap-4 { flex-direction: column-reverse; }
+.pl-cap-1 { transform: translate(calc(-100% - 26px), calc(-100% + 10px)); }
+.pl-cap-4 { transform: translate(26px, calc(-100% + 10px)); }
+.pl-cap-1 .pl-dot, .pl-cap-4 .pl-dot { top: auto; bottom: 10px; transform: translate(0, 50%); }
+.pl-caps { overflow-x: clip; }
+@media (max-width: 40em) {
+  .pl-cap-1, .pl-cap-4 { flex-direction: column; }
+  .pl-cap-1 .pl-dot, .pl-cap-4 .pl-dot { top: 10px; bottom: auto; transform: translate(0, -50%); }
+  .pl-caps { min-height: 1040px; padding-top: var(--space-12); }
+  .pl-caps-title { position: relative; left: auto; top: auto; width: var(--content-width); margin-inline: auto; transform: none; font-size: 30px; background: var(--frame); }
+  .pl-cap { width: calc(44% - 42px); font-size: 12px; }
+  .pl-cap-name { white-space: normal; }
+  .pl-cap-desc { font-size: 11px; }
+  .pl-cap-1, .pl-cap-2, .pl-cap-3 { left: 44%; transform: translate(calc(-100% - 26px), -10px); text-align: right; }
+  .pl-cap-1 .pl-dot, .pl-cap-2 .pl-dot, .pl-cap-3 .pl-dot { left: auto; right: -30px; }
+  .pl-cap-4, .pl-cap-5, .pl-cap-6 { left: 56%; transform: translate(26px, -10px); text-align: left; }
+  .pl-cap-4 .pl-dot, .pl-cap-5 .pl-dot, .pl-cap-6 .pl-dot { left: -30px; right: auto; }
+  .pl-cap-1, .pl-cap-4 { top: 52%; } .pl-cap-2, .pl-cap-5 { top: 67%; } .pl-cap-3, .pl-cap-6 { top: 82%; }
+}
+
+/* 4. Portafolio: el carrusel tapa la línea */
+.pl-folio { padding-block: clamp(4rem, 9vw, 7rem); }
+.pl-folio-title { position: relative; z-index: 1; text-align: center; }
+.pl-folio .more-stage { position: relative; z-index: 1; }
+.pl-folio .pl-inner { margin-top: clamp(2rem, 5vw, 3.5rem); }
+
+/* 5. Marca y producto: texto a la izquierda, la línea ortogonal a la derecha */
+.pl-producto { min-height: 640px; display: flex; align-items: center; padding-block: clamp(6rem, 14vw, 10rem); }
+.pl-producto .pl-inner { padding-right: 45%; }
+/* Firma de la sección: nombre y bajada bajo el texto, separados por una línea fina */
+.pl-signature { display: grid; gap: var(--space-2); max-width: 34rem; margin-top: var(--space-10); padding-top: var(--space-6); border-top: 1px solid rgba(241, 238, 230, .18); }
+.pl-signature strong { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; font-size: clamp(20px, 1.8vw, 26px); line-height: 1; color: var(--pl-on-dark); }
+/* Las puntas de las flechas van en ángulo */
+.pl-producto .pl-thread { stroke-linejoin: miter; stroke-miterlimit: 8; }
+@media (max-width: 40em) { .pl-producto .pl-inner { padding-right: 18%; } }
+
+/* 6. Firma */
+.pl-sign { padding-block: clamp(6rem, 12vw, 9rem); }
+.pl-firma-grande { position: relative; z-index: 1; display: block; width: clamp(240px, 40vw, 560px); margin: 0 auto var(--space-8); }
+
+/* 7. Contacto: la línea llega caminando (huellas) hasta el titular */
+.pl-contact { min-height: 720px; padding: 360px 0 clamp(4rem, 9vw, 6rem); }
+.pl-contact .pl-display { font-size: clamp(44px, 7vw, 120px); max-width: 12em; }
+@media (max-width: 40em) { .pl-contact { min-height: 640px; padding-top: 300px; } }
+
+/* 8. Blog */
+.pl-blog { padding-block: clamp(5rem, 10vw, 8rem); }
+.pl-blog-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: var(--space-10) 0 0; padding: 0; list-style: none; }
+.pl-post { display: grid; gap: var(--space-3); min-height: 12rem; align-content: end; padding: var(--space-6); border-style: dashed; box-shadow: none; }
+.pl-post-title { font-size: 20px; line-height: 1.2; font-weight: 600; }
+@media (max-width: 53.75em) { .pl-blog-list { grid-template-columns: 1fr; } }
+
+/* ===== Textos que no son títulos: mismo estilo que "Sigue la línea" (monoespaciada, espaciada y atenuada), sin forzar mayúsculas ===== */
+.inicio .pl-lead, .inicio .ideas-intro p, .inicio .pl-mono, .inicio .pl-cap, .inicio .pl-post .pl-mono,
+.inicio .faq summary, .inicio .faq details p, .inicio .more-tags li, .inicio .more-foot p {
+  font-family: var(--mono); font-weight: 400; letter-spacing: .08em; text-transform: none; }
+/* Párrafos: algo más grandes que las etiquetas para que se lean cómodos */
+.inicio .pl-lead, .inicio .ideas-intro p, .inicio .faq details p { font-size: 14px; line-height: 1.75; color: var(--ink-muted); }
+.inicio .pl-dark .pl-lead { color: var(--pl-on-dark-muted); }
+.inicio .faq summary { font-size: 14px; line-height: 1.6; }
+.inicio .pl-cap, .inicio .pl-mono { font-size: 12px; }
+
+
+/* Con JavaScript, el avance de la línea en todas las secciones lo maneja js/main.js (línea de lectura y punta continua) */
+.thread-js .pl-sec .pl-thread path, .thread-js .pl-sign .pl-firma path { animation: none; }
+.thread-js .pl-head { display: block; }
+
+/* En modo oscuro el hero y Marca y producto se invierten a blanco (como el hero de la home anterior) */
+:root[data-theme="dark"] .pl-hero, :root[data-theme="dark"] .pl-producto { --pl-on-dark: #0b1220; --pl-on-dark-muted: #556070; color: #0b1220;
+  background: radial-gradient(60% 70% at 78% 100%, #c9d6ea, transparent), linear-gradient(180deg, #f4f6fa, #e4eaf2); }
+:root[data-theme="dark"] .pl-hero::after, :root[data-theme="dark"] .pl-producto::after { background-image: linear-gradient(rgba(11, 18, 32, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(11, 18, 32, .06) 1px, transparent 1px); }
+:root[data-theme="dark"] .pl-hero .pl-hero-bg { opacity: .32; mix-blend-mode: multiply; }
+:root[data-theme="dark"] .pl-hero h1, :root[data-theme="dark"] .pl-producto h2 { color: #0b1220; }
+:root[data-theme="dark"] .pl-producto .pl-signature { border-top-color: rgba(11, 18, 32, .14); }
+
+/* Cursor: un anillo del color destacado, solo el borde (solo con mouse o trackpad; js/main.js) */
+html.has-cursor, html.has-cursor * { cursor: none !important; }
+.pl-cursor { position: fixed; z-index: 1000; left: 0; top: 0; width: 22px; height: 22px; margin: -11px 0 0 -11px; border: 2px solid var(--pl-line); border-radius: 50%; background: transparent;
+  pointer-events: none; opacity: 0; transition: opacity .2s, width .25s var(--ease), height .25s var(--ease), margin .25s var(--ease); }
+.pl-cursor.is-visible { opacity: 1; }
+.pl-cursor.is-hover { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+
+/* Sistemas: con JavaScript, el título y las disciplinas aparecen cuando la línea pasa por ellos */
+.thread-js .pl-caps-title, .thread-js .pl-cap { opacity: 0; translate: 0 10px; filter: blur(4px); transition: opacity .6s var(--ease), translate .6s var(--ease), filter .6s var(--ease); }
+.thread-js .pl-caps-title.is-on, .thread-js .pl-cap.is-on { opacity: 1; translate: 0 0; filter: none; }
+
+/* Hero: flecha que invita a bajar (del tamaño del texto de apoyo), con un leve movimiento hacia abajo */
+.pl-scroll { position: absolute; z-index: 3; right: var(--gutter); bottom: var(--space-4); display: grid; place-items: center; width: 44px; height: 44px; color: var(--pl-line); }
+.pl-scroll .icon { width: 14px; height: 14px; transform: rotate(90deg); }
+@media (prefers-reduced-motion: no-preference) { .pl-scroll .icon { animation: pl-scroll-hint 1.6s var(--ease) infinite; } }
+@keyframes pl-scroll-hint { 0%, 100% { translate: 0 -3px; } 50% { translate: 0 5px; } }

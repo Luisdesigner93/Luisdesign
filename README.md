@@ -6,7 +6,7 @@ Sitio de Luis Vicencio, diseñador y Product Owner: branding estratégico, UX/UI
 
 | Archivo | Contenido |
 |---|---|
-| `index.html` | Inicio (landing Marcas): hero, logos, manifiesto, servicios, proyectos, sobre mí y contacto |
+| `index.html` | Inicio: una línea continua recorre la página (hero, ideas, sistemas, portafolio, marca y producto, firma, contacto, blog y preguntas). Se genera en `pages/1a_inicio.py` con `css/inicio.css` |
 | `producto-digital.html` | Landing Producto digital (empresas de software, startups e innovación) |
 | `en/digital-product.html` | Versión en inglés de Producto digital (traducción pendiente de revisión) |
 | `index-v2.html` | Versión alternativa del inicio, solo como referencia (`noindex`) |
