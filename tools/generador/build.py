@@ -261,7 +261,10 @@ _SIZES_DEFAULT = '(max-width: 53.75em) 92vw, 46vw'
 def _webp(html):
     def swap(m):
         before, prefix, rel, after = m.group(1), m.group(2) or '', m.group(3), m.group(4)
-        files = sorted(SRC_ROOT.glob(f'img/webp/{rel}-*.webp'), key=lambda f: int(f.stem.rsplit('-', 1)[1]))
+        # Solo <nombre>-<ancho>.webp (evita tomar las de otra imagen cuyo nombre empieza igual, p. ej. luis-vicencio-hombros)
+        name = rel.rsplit('/', 1)[-1]
+        files = sorted((f for f in SRC_ROOT.glob(f'img/webp/{rel}-*.webp') if re.fullmatch(re.escape(name) + r'-\d+', f.stem)),
+                       key=lambda f: int(f.stem.rsplit('-', 1)[1]))
         if not files:
             return m.group(0)  # sin WebP generado: se deja el original
         attrs = before + after
