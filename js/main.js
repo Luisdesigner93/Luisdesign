@@ -350,3 +350,36 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   else window.addEventListener('load', whenReady, { once: true });
   setTimeout(finish, 6000); // respaldo si la carga se demora
 })();
+
+// Piloto: en el hero la línea se dibuja con el scroll y una punta redondeada marca el avance.
+// Sin JavaScript o con "reducir movimiento", la línea se ve completa y sin punta.
+(function initPilotThread() {
+  const hero = document.querySelector('.pl-hero');
+  if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const head = hero.querySelector('.pl-head');
+  const START = 0.06; // tramo visible antes de empezar a bajar
+  let ticking = false;
+
+  // Tramo visible según el ancho (escritorio o móvil): capa trasera y delantera
+  const layers = () => [...hero.querySelectorAll('.pl-thread')].filter((svg) => svg.getBoundingClientRect().width > 0);
+
+  function draw() {
+    ticking = false;
+    const p = START + (1 - START) * Math.min(1, Math.max(0, window.scrollY / (hero.offsetHeight * 0.85)));
+    const visible = layers();
+    visible.forEach((svg) => svg.querySelectorAll('path').forEach((path) => { path.style.strokeDashoffset = String(1 - p); }));
+    const path = visible[0] && visible[0].querySelector('path');
+    if (!path || !head) return;
+    const pt = path.getPointAtLength(path.getTotalLength() * p);
+    const m = path.getScreenCTM();
+    const box = hero.getBoundingClientRect();
+    head.style.setProperty('--x', `${pt.x * m.a + pt.y * m.c + m.e - box.left}px`);
+    head.style.setProperty('--y', `${pt.x * m.b + pt.y * m.d + m.f - box.top}px`);
+  }
+  const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } };
+
+  hero.classList.add('is-live');
+  draw();
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request);
+})();

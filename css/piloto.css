@@ -1,0 +1,108 @@
+/* ===== Piloto: identidad con una línea continua (firma "luis") que recorre la página =====
+   Referencia: dakshgajjar.com. Solo se usa en piloto.html (tools/generador/pages/9_piloto.py). */
+.piloto { --pl-dark: #07090d; --pl-on-dark: #f1eee6; --pl-on-dark-muted: rgba(241, 238, 230, .7); --pl-stroke: 4px;
+  /* Color de la línea: verde amarillo de destacador (flúor) */
+  --pl-line: #d4ff3f; }
+
+/* Secciones: claras sin fondo propio; oscuras como panel redondeado. Sin margen vertical para que la línea no se corte */
+.pl-sec { position: relative; isolation: isolate; margin-block: 0; }
+.pl-light { color: var(--ink); }
+.pl-dark { margin-inline: var(--shell-pad); border-radius: var(--shell-inner-radius); background: var(--pl-dark); color: var(--pl-on-dark); overflow: hidden; overflow: clip; }
+/* Los títulos globales usan --ink: en las secciones oscuras se fuerza el color claro, en ambos temas */
+.pl-dark h1, .pl-dark h2, .pl-dark h3 { color: var(--pl-on-dark); }
+.pl-inner { position: relative; z-index: 1; width: var(--content-width); margin-inline: auto; }
+.pl-center { display: grid; justify-items: center; text-align: center; gap: var(--space-6); }
+
+/* Tipografía */
+/* Titulares: Plus Jakarta Sans 800, ancha y apretada */
+.pl-display { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 8.6vw, 148px); line-height: .9; letter-spacing: -0.055em; word-spacing: .1em; text-wrap: balance; }
+.pl-title { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(30px, 4.4vw, 68px); line-height: .95; letter-spacing: -0.045em; word-spacing: .08em; text-wrap: balance; }
+.pl-lead { max-width: 34rem; margin-top: var(--space-6); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; color: var(--ink-muted); }
+.pl-dark .pl-lead { color: var(--pl-on-dark-muted); }
+.pl-mono { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+.pl-dark .pl-mono, .pl-hint { color: var(--pl-on-dark-muted); }
+
+/* ---- La línea ---- */
+.pl-thread { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; fill: none; stroke: var(--pl-line); stroke-width: var(--pl-stroke); stroke-linecap: round; stroke-linejoin: round; }
+.pl-thread path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+.pl-thread-mob { display: none; }
+@media (max-width: 40em) { .pl-thread-desk { display: none; } .pl-thread-mob { display: block; } }
+/* Firma: mismo grosor que la línea (--pl-stroke), fijo en pantalla */
+.pl-firma { fill: none; stroke: var(--pl-line); stroke-width: var(--pl-stroke); stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.pl-firma path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+
+/* Se dibuja con el scroll (navegadores compatibles y sin "reducir movimiento"); si no, se ve completa */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .pl-sec:not(.pl-hero) .pl-thread path, .pl-sign .pl-firma path { stroke-dashoffset: 1; animation: pl-draw linear both; animation-timeline: view(); animation-range: entry 10% cover 55%; }
+  }
+}
+/* El hero se dibuja con el scroll (js/main.js): la punta redondeada marca el avance */
+.pl-head { display: none; position: absolute; z-index: 3; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--pl-line);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--pl-line) 22%, transparent); transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%)); pointer-events: none; }
+.pl-hero.is-live .pl-head { display: block; }
+@keyframes pl-draw { to { stroke-dashoffset: 0; } }
+
+/* 1. Hero: la línea pasa por detrás y por delante del titular (la capa delantera solo se ve en franjas) */
+.pl-hero { display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(100svh - var(--header-h, 4.5rem) - var(--shell-pad)); padding-block: clamp(8rem, 22vh, 14rem) clamp(3rem, 8vh, 5rem); }
+.pl-hero .pl-thread-front { z-index: 2; -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 9%, transparent 9% 20%); mask-image: repeating-linear-gradient(180deg, #000 0 9%, transparent 9% 20%); }
+.pl-hero .pl-display { max-width: 10em; }
+.pl-hint { position: absolute; z-index: 1; right: var(--gutter); bottom: var(--space-6); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+
+/* 2. El mundo de las ideas: la línea queda detrás del collage */
+.pl-ideas .pl-thread { color: var(--ink); }
+
+/* 3. Sistemas: óvalo con un punto por disciplina; en móvil, dos columnas */
+.pl-caps { min-height: 760px; }
+.pl-caps-title { position: absolute; z-index: 1; left: 50%; top: 50%; width: min(30rem, 50%); transform: translate(-50%, -50%); text-align: center; font-size: clamp(26px, 2.6vw, 40px); }
+.pl-caps-list { margin: 0; padding: 0; list-style: none; }
+.pl-cap { position: absolute; z-index: 1; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+.pl-dot { position: absolute; top: 50%; width: 16px; height: 16px; border: 4px solid var(--pl-line); border-radius: 50%; background: var(--frame); }
+.pl-cap-1 { left: 28.4%; top: 26.7%; } .pl-cap-2 { left: 19.4%; top: 50%; } .pl-cap-3 { left: 28.4%; top: 73.3%; }
+.pl-cap-4 { left: 71.6%; top: 26.7%; } .pl-cap-5 { left: 80.6%; top: 50%; } .pl-cap-6 { left: 71.6%; top: 73.3%; }
+/* Izquierda: texto a la izquierda del punto; derecha: a la derecha */
+.pl-cap-1, .pl-cap-2, .pl-cap-3 { transform: translate(calc(-100% - 26px), -50%); }
+.pl-cap-1 .pl-dot, .pl-cap-2 .pl-dot, .pl-cap-3 .pl-dot { right: -30px; transform: translate(0, -50%); }
+.pl-cap-4, .pl-cap-5, .pl-cap-6 { transform: translate(26px, -50%); }
+.pl-cap-4 .pl-dot, .pl-cap-5 .pl-dot, .pl-cap-6 .pl-dot { left: -30px; transform: translate(0, -50%); }
+@media (max-width: 40em) {
+  .pl-caps { min-height: 900px; padding-top: var(--space-12); }
+  .pl-caps-title { position: relative; left: auto; top: auto; width: var(--content-width); margin-inline: auto; transform: none; font-size: 30px; background: var(--frame); }
+  .pl-cap { white-space: normal; width: 34%; font-size: 12px; }
+  .pl-cap-1, .pl-cap-2, .pl-cap-3 { left: 14.7%; transform: translate(26px, -50%); }
+  .pl-cap-1 .pl-dot, .pl-cap-2 .pl-dot, .pl-cap-3 .pl-dot { left: -30px; right: auto; }
+  .pl-cap-4, .pl-cap-5, .pl-cap-6 { left: 85.3%; transform: translate(calc(-100% - 26px), -50%); text-align: right; }
+  .pl-cap-4 .pl-dot, .pl-cap-5 .pl-dot, .pl-cap-6 .pl-dot { left: auto; right: -30px; }
+  .pl-cap-1, .pl-cap-4 { top: 52%; } .pl-cap-2, .pl-cap-5 { top: 67%; } .pl-cap-3, .pl-cap-6 { top: 82%; }
+}
+
+/* 4. Portafolio: el carrusel tapa la línea */
+.pl-folio { padding-block: clamp(4rem, 9vw, 7rem); }
+.pl-folio-title { position: relative; z-index: 1; text-align: center; }
+.pl-folio .more-stage { position: relative; z-index: 1; }
+.pl-folio .pl-inner { margin-top: clamp(2rem, 5vw, 3.5rem); }
+
+/* 5. Marca y producto: texto a la izquierda, la línea ortogonal a la derecha */
+.pl-producto { min-height: 640px; display: flex; align-items: center; padding-block: clamp(6rem, 14vw, 10rem); }
+.pl-producto .pl-inner { padding-right: 32%; }
+@media (max-width: 40em) { .pl-producto .pl-inner { padding-right: 18%; } }
+
+/* 6. Firma */
+.pl-sign { padding-block: clamp(6rem, 12vw, 9rem); }
+.pl-firma-grande { position: relative; z-index: 1; display: block; width: clamp(240px, 40vw, 560px); margin: 0 auto var(--space-8); }
+
+/* 7. Contacto: la línea llega y se convierte en una onda que no se detiene */
+.pl-contact { min-height: 720px; padding: 302px 0 clamp(4rem, 9vw, 6rem); }
+.pl-wave { position: relative; z-index: 1; height: 80px; margin-bottom: var(--space-10); overflow: hidden; }
+.pl-wave svg { width: 200%; max-width: none; height: 100%; fill: none; stroke: var(--pl-line); stroke-width: var(--pl-stroke); }
+@media (prefers-reduced-motion: no-preference) { .pl-wave svg { animation: pl-wave 9s linear infinite; } }
+@keyframes pl-wave { to { transform: translateX(-50%); } }
+.pl-contact .pl-display { font-size: clamp(44px, 7vw, 120px); max-width: 12em; }
+@media (max-width: 40em) { .pl-contact { min-height: 640px; padding-top: 243px; } }
+
+/* 8. Blog */
+.pl-blog { padding-block: clamp(5rem, 10vw, 8rem); }
+.pl-blog-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: var(--space-10) 0 0; padding: 0; list-style: none; }
+.pl-post { display: grid; gap: var(--space-3); min-height: 12rem; align-content: end; padding: var(--space-6); border-style: dashed; box-shadow: none; }
+.pl-post-title { font-size: 20px; line-height: 1.2; font-weight: 600; }
+@media (max-width: 53.75em) { .pl-blog-list { grid-template-columns: 1fr; } }

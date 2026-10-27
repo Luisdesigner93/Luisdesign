@@ -287,7 +287,8 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
     values = {
         'html_class': html_class, 'title': title, 'desc': desc, 'url': url, 'ogtype': ogtype, 'p': p, 'home': home,
         'robots': '  <meta name="robots" content="noindex">\n' if noindex else '',
-        'extra_css': f'  <link rel="stylesheet" href="{p}{extra_css}">\n' if extra_css else '',
+        # Una hoja extra o varias (lista), en orden
+        'extra_css': ''.join(f'  <link rel="stylesheet" href="{p}{c}">\n' for c in ([extra_css] if isinstance(extra_css, str) else extra_css or [])),
         'contact_href': '#contacto' if contact else home + '#contacto',
         'cur_marcas': ' aria-current="page"' if current == 'marcas' else '',
         'cur_producto': ' aria-current="page"' if current == 'producto' else '',
