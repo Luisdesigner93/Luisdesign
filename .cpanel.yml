@@ -1,0 +1,8 @@
+---
+# Despliegue desde cPanel (Git™ Version Control): copia solo los archivos del sitio a public_html.
+# No copia tools/, README.md, index-v2.html ni alternativa-portafolio.html.
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/public_html/
+    - /bin/cp -R css js img fonts en contacto noticias proyectos $DEPLOYPATH
+    - /bin/cp .htaccess index.html 404.html privacidad.html sobre-mi.html robots.txt sitemap.xml favicon.png favicon.svg apple-touch-icon.png $DEPLOYPATH
