@@ -9,5 +9,11 @@ return [
     'secreto' => 'CADENA_ALEATORIA_DE_MAS_DE_32_CARACTERES', // se usa para hashear la IP
     'origen' => 'https://luisdesign.cl',
     'copia_email' => 'contacto@luisdesign.cl', // vacío para no enviar copia por correo
-    'remitente' => 'no-responder@luisdesign.cl', // debe ser una dirección del dominio, para que el correo no caiga en spam
+    'remitente' => 'contacto@luisdesign.cl', // debe ser la casilla autenticada en SMTP (Titan)
+    'smtp' => [
+        'host' => 'smtp.titan.email',
+        'puerto' => 465, // SSL directo
+        'usuario' => 'contacto@luisdesign.cl',
+        'clave' => 'CLAVE_DE_LA_CASILLA',
+    ],
 ];
