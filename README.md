@@ -80,3 +80,11 @@ Busca `EDITAR` en los archivos y completa:
 - Sin cookies, sin rastreadores, sin formularios y sin recursos de terceros.
 - CSP estricta: `script-src 'self'` y `style-src 'self'`, sin `unsafe-inline`. No uses atributos `style` ni `<script>` en línea.
 - Si en el futuro agregas analítica o un formulario, actualiza la política de privacidad y, si usa cookies no esenciales, agrega consentimiento previo.
+
+## Formulario de contacto y cookies
+
+- `contacto/guardar.php`: recibe el formulario de Conversemos (POST), valida en el servidor y guarda el mensaje en MySQL. Sin cookies.
+- Configuración real: `/home/<usuario>/luisdesign-config.php` (fuera de `public_html`). Plantilla en `tools/config/luisdesign-config.example.php`. Nunca subir el archivo real al repositorio.
+- Base de datos: aplicar `tools/db/001_consultas.sql` una vez en phpMyAdmin. Purga mensual de 12 meses: `tools/db/purga_12_meses.sql`.
+- Cookies: `js/consent.js` muestra el banner. Google Tag Manager solo se carga si la persona acepta. El ID del contenedor está en `GTM_ID` de `tools/generador/build.py` (EDITAR; mientras diga `XXXX`, no se carga nada de Google).
+- La CSP de `.htaccess` permite los dominios de Google para que la analítica funcione cuando se active.

@@ -10,6 +10,7 @@ Uso (desde la raíz del proyecto):
 En el texto de cada página, {p} se reemplaza por la ruta a la raíz (''/'../'/'/') y {home} por el enlace al inicio.
 """
 import json
+import posixpath
 import re
 from urllib.parse import quote
 import sys
@@ -42,7 +43,7 @@ HEAD = '''<!doctype html>
   <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
   <link rel="preload" href="{p}fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{p}css/styles.css">
-{extra_css}  <script src="{p}js/theme.js"></script>
+{extra_css}  <script src="{p}js/intro.js"></script>
   <script src="{p}js/main.js" defer></script>
 </head>
 <body>
@@ -70,37 +71,20 @@ HEAD = '''<!doctype html>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
-        <a href="{p}producto-digital.html"{cur_producto}>Producto digital</a>
-        <div class="nav-item has-sub">
-          <a href="{p}proyectos.html"{cur_proyectos}>Proyectos</a>
-          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="sub-proyectos" aria-label="Categorías de proyectos">
-            <svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-chevron"/></svg>
-          </button>
-          <ul class="nav-sub" id="sub-proyectos">
-            <li><a href="{p}proyectos.html?cat=marcas">Marcas</a></li>
-            <li><a href="{p}proyectos.html?cat=producto">Producto digital</a></li>
-            <li><a href="{p}proyectos.html?cat=logofolio">Logofolio</a></li>
-          </ul>
-        </div>
+        <a href="{home}#proyectos"{cur_proyectos}>Proyectos</a>
+        <a href="{home}#blog"{cur_noticias}>Noticias</a>
         <a href="{p}sobre-mi.html"{cur_sobre}>Sobre mí</a>
         <a href="{contact_href}">Contacto</a>
         <div class="nav-foot">
           <div class="nav-foot-row">
-            <button class="theme-toggle nav-theme" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
-              <svg class="icon i-moon" aria-hidden="true"><use href="{p}img/icons.svg#i-moon"/></svg>
-              <svg class="icon i-sun" aria-hidden="true"><use href="{p}img/icons.svg#i-sun"/></svg>
-              <span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>
-            </button>
+            {lang_switch}
             <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
             <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
           </div>
         </div>
       </nav>
       <div class="header-actions">
-        <button class="btn btn-secondary theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
-          <svg class="icon i-moon" aria-hidden="true"><use href="{p}img/icons.svg#i-moon"/></svg>
-          <svg class="icon i-sun" aria-hidden="true"><use href="{p}img/icons.svg#i-sun"/></svg>
-        </button>
+        {lang_switch}
         <a class="btn btn-primary" href="{contact_href}">Conversemos</a>
         <button class="btn btn-secondary menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
           <svg class="icon i-open" aria-hidden="true"><use href="{p}img/icons.svg#i-menu"/></svg>
@@ -122,7 +106,7 @@ CONTACT = '''
         <p class="lead">{cta_lead}</p>
         <div class="btn-row">
 {contact_buttons}        </div>
-        <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Sin formularios ni cookies</span><span>Respuesta en 1 a 2 días hábiles</span></p>
+        <p class="section-cta-note"><span>+56 9 5821 7041</span><span>Analítica solo con tu permiso</span><span>Respuesta en 1 a 2 días hábiles</span></p>
       </div>
     </section>
 '''
@@ -133,12 +117,12 @@ FOOT = '''  </main>
     <div class="footer-grid">
       <div>
         <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio"><img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
-        <p>Este sitio no usa cookies ni rastreadores de terceros.</p>
+        <p>Analítica solo con tu permiso.</p>
         <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{p}producto-digital.html">Producto digital</a></li><li><a href="{p}proyectos.html">Proyectos</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{home}#proyectos">Proyectos</a></li><li><a href="{home}#blog">Noticias</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -150,6 +134,18 @@ FOOT = '''  </main>
       <span>Branding, UX/UI y producto digital · Chile</span>
     </div>
   </footer>
+
+  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" aria-labelledby="cookie-title" hidden>
+    <div class="cookie-banner-text">
+      <h2 id="cookie-title">Cookies y analítica</h2>
+      <p>Uso Google Tag Manager y Google Analytics solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="{p}privacidad.html#cookies">Más información</a>.</p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button class="btn btn-secondary" type="button" data-consent="rechazado">Rechazar</button>
+      <button class="btn btn-primary" type="button" data-consent="aceptado">Aceptar</button>
+    </div>
+  </section>
+  <script src="{p}js/consent.js" defer></script>
 </body>
 </html>
 '''
@@ -161,6 +157,8 @@ OG_DEFAULT = 'img/og/general.jpg'
 OG_ALT = 'Luis Vicencio, diseñador y Product Owner'
 # EDITAR: reactivar la casilla contacto@luisdesign.cl antes de publicar
 EMAIL = 'contacto@luisdesign.cl'
+# EDITAR: ID del contenedor de Google Tag Manager (formato GTM-XXXXXXX). Mientras diga XXXX, no se carga nada de Google.
+GTM_ID = 'GTM-XXXXXXX'
 _EXT = ' rel="noopener noreferrer" target="_blank"'
 _NEW_TAB = '<span class="sr-only"> (se abre en una pestaña nueva)</span>'
 
@@ -172,24 +170,28 @@ EN_CHROME = [
     ('aria-label="Principal"', 'aria-label="Main"'),
     ('<span>Branding, UX/UI y producto</span>', '<span>Branding, UX/UI and product</span>'),
     ('>Marcas</a>', '>Brands</a>'),
-    ('>Producto digital</a>', '>Digital product</a>'),
+    ('>Noticias</a>', '>News</a>'),
     ('>Marcas</a></li>', '>Brands</a></li>'),
     ('>Proyectos</a>', '>Projects</a>'),
     ('aria-label="Categorías de proyectos"', 'aria-label="Project categories"'),
     ('>Sobre mí</a>', '>About (Spanish)</a>'),
     ('>Contacto</a>', '>Contact</a>'),
-    ('aria-label="Cambiar a modo oscuro"', 'aria-label="Switch to dark mode"'),
-    ('<span class="t-dark">Modo oscuro</span><span class="t-light">Modo claro</span>', '<span class="t-dark">Dark mode</span><span class="t-light">Light mode</span>'),
     (' (se abre en una pestaña nueva)', ' (opens in a new tab)'),
     ('>Conversemos</a>', '>Let’s talk</a>'),
     ('aria-label="Abrir menú"', 'aria-label="Open menu"'),
     ('Escríbeme por WhatsApp', 'Message me on WhatsApp'),
-    ('Sin formularios ni cookies', 'No forms or cookies'),
     ('Respuesta en 1 a 2 días hábiles', 'Reply within 1 to 2 business days'),
-    ('Este sitio no usa cookies ni rastreadores de terceros.', 'This site uses no cookies or third-party trackers.'),
+    ('<p>Analítica solo con tu permiso.</p>', '<p>Analytics only with your permission.</p>'),
+    ('<span>Analítica solo con tu permiso</span>', '<span>Analytics only with your permission</span>'),
     ('>Sitio</h2>', '>Site</h2>'),
     ('>Política de privacidad</a>', '>Privacy policy (Spanish)</a>'),
     ('Branding, UX/UI y producto digital · Chile', 'Branding, UX/UI and digital product · Chile'),
+    ('Cookies y analítica', 'Cookies and analytics'),
+    ('Uso Google Tag Manager y Google Analytics solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica.',
+     'I use Google Tag Manager and Google Analytics only if you accept. If not, no analytics cookies are loaded or stored. Your choice is saved in a technical cookie.'),
+    ('>Más información</a>', '>More information</a>'),
+    ('data-consent="rechazado">Rechazar<', 'data-consent="rechazado">Decline<'),
+    ('data-consent="aceptado">Aceptar<', 'data-consent="aceptado">Accept<'),
 ]
 
 
@@ -273,6 +275,23 @@ def _webp(html):
     return _IMG.sub(swap, html)
 
 
+EN_PAGES = ('index.html', 'noticias/')
+
+
+def _lang_switch(path, lang):
+    """Selector ES / EN del encabezado. La versión en inglés existe para el inicio y las noticias; el resto enlaza al inicio en inglés."""
+    es_path = path[3:] if path.startswith('en/') else path
+    en_path = 'en/' + es_path if es_path == 'index.html' or es_path.startswith('noticias/') else 'en/index.html'
+    carpeta = posixpath.dirname(path) or '.'
+    es_href = posixpath.relpath(es_path, carpeta)
+    en_href = posixpath.relpath(en_path, carpeta)
+    es_act = ' aria-current="true"' if lang != 'en' else ''
+    en_act = ' aria-current="true"' if lang == 'en' else ''
+    return (f'<nav class="lang-switch" aria-label="Idioma / Language">'
+            f'<a href="{es_href}" lang="es" hreflang="es"{es_act}>ES</a><span aria-hidden="true">/</span>'
+            f'<a href="{en_href}" lang="en" hreflang="en"{en_act}>EN</a></nav>')
+
+
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
          noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None,
          email_first=False, email_label=None, lang='es', alternates=None, og_image=None, og_alt=None, jsonld=None):
@@ -289,14 +308,16 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         # Una hoja extra o varias (lista), en orden
         'extra_css': ''.join(f'  <link rel="stylesheet" href="{p}{c}">\n' for c in ([extra_css] if isinstance(extra_css, str) else extra_css or [])),
         'contact_href': '#contacto' if contact else home + '#contacto',
-        'cur_producto': ' aria-current="page"' if current == 'producto' else '',
+        'gtm_id': GTM_ID,
+        'lang_switch': _lang_switch(path, lang),
+        'cur_noticias': ' aria-current="page"' if current == 'noticias' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_sobre': ' aria-current="page"' if current == 'sobre' else '',
         'cur_privacidad': ' aria-current="page"' if current == 'privacidad' else '',
         'cta_title': cta_title or CTA_TITLE, 'cta_lead': cta_lead or CTA_LEAD,
         'contact_buttons': _contact_buttons(p, wa_href or WA_HREF, email_subject, email_first, email_label),
         'html_lang': 'en' if lang == 'en' else 'es-CL', 'og_locale': 'en_US' if lang == 'en' else 'es_CL',
-        # Versiones en otros idiomas: {'es-CL': 'producto-digital.html', 'en': 'en/digital-product.html', 'x-default': ...}
+        # Versiones en otros idiomas (las páginas de producto y proyectos se eliminaron; ver noticias)
         # Imagen para compartir (1200 × 630, en img/og/) y datos estructurados (JSON-LD, bloque de datos que la CSP no ejecuta)
         'og_image': SITE + (og_image or OG_DEFAULT), 'og_alt': og_alt or OG_ALT,
         'jsonld': ''.join('  <script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace('</', '<\\/') + '</script>\n' for d in (jsonld or [])),
@@ -307,7 +328,6 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         for es, en in EN_CHROME:
             chrome = [c.replace(es, en) for c in chrome]
         # En inglés, "Digital product" apunta a la versión en inglés
-        chrome = [c.replace(f'href="{p}producto-digital.html"', 'href="digital-product.html"') for c in chrome]
     html = chrome[0] + fill(body, values) + chrome[1] + chrome[2]
     html = _webp(_card_titles(html))
     out = ROOT / path

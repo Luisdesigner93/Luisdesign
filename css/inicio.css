@@ -39,7 +39,7 @@
 }
 /* El hero se dibuja solo al entrar (js/main.js): la punta redondeada marca el avance */
 .pl-head { display: none; position: fixed; z-index: 45; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--pl-line);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--pl-line) 22%, transparent); transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%)); pointer-events: none; }
+  box-shadow: 0 0 0 6px rgba(212, 255, 63, .22); box-shadow: 0 0 0 6px color-mix(in srgb, var(--pl-line) 22%, transparent); transform: translate(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%)); pointer-events: none; }
 .pl-hero.is-live .pl-head { display: block; }
 @keyframes pl-draw { to { stroke-dashoffset: 0; } }
 
@@ -69,6 +69,11 @@
   .pl-hero-title .pl-line:nth-child(2) { animation-delay: .3s; }
   .pl-hero-title .pl-line:nth-child(3) { animation-delay: .45s; }
   html.is-loading .pl-hero-title .pl-line { animation-play-state: paused; }
+  /* Los demás titulares animados (contacto) entran igual, al aparecer en pantalla (js/main.js agrega .is-in) */
+  .pl-reveal .pl-line { opacity: 0; }
+  .pl-reveal.is-in .pl-line { opacity: 1; animation: pl-line-in .9s cubic-bezier(.2, .7, .2, 1) both; }
+  .pl-reveal.is-in .pl-line:nth-child(2) { animation-delay: .15s; }
+  .pl-reveal.is-in .pl-line:nth-child(3) { animation-delay: .3s; }
 }
 @keyframes pl-line-in { from { opacity: 0; transform: translateY(.22em); } to { opacity: 1; transform: none; } }
 
@@ -77,40 +82,30 @@
 .pl-ideas .pl-thread-front { z-index: 3; clip-path: inset(100% 0 0 0); }
 .pl-ideas .pl-thread { color: var(--ink); }
 
-/* 3. Sistemas: óvalo con un punto por disciplina; en móvil, dos columnas */
-.pl-caps { min-height: 760px; }
-.pl-caps-title { position: absolute; z-index: 1; left: 50%; top: 50%; width: min(30rem, 50%); transform: translate(-50%, -50%); text-align: center; font-size: clamp(26px, 2.6vw, 40px); }
+/* 3. Sistemas: título arriba a la izquierda (a un lado de la línea) y, debajo, el óvalo con un punto por disciplina;
+   en móvil, dos columnas. El óvalo se dibuja dentro de .pl-stage (js/main.js ajusta la línea a ese bloque). */
+.pl-caps { padding-top: clamp(5rem, 10vw, 8rem); }
+/* Ideas: el titular usa la misma familia que el resto del sitio (Plus Jakarta Sans 800), no Anton de la home anterior */
+.inicio .ideas-title { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; letter-spacing: -0.055em; word-spacing: .08em; }
+/* Ceja encima del título de Ideas */
+.inicio .ideas-eyebrow { margin: 0 0 clamp(.75rem, 2svh, 1.25rem); }
+/* Plus Jakarta Sans es más ancha que Anton: en escritorio el titular se achica para que no se corte en los bordes */
+@media (min-width: 53.75em) { .inicio .ideas-stage { --ideas-fs: clamp(26px, min(5.1vw, 8.4svh), 100px); } }
+@media (max-width: 53.75em) { .inicio .ideas-stage { --ideas-fs: min(12.4vw, 8svh); } }
+.pl-caps-title { max-width: min(17em, 80%); }
+/* Palabras destacadas del título: subrayado ancho de destacador, del color de la línea (el texto sigue oscuro, legible) */
+.pl-mark { color: inherit; background: linear-gradient(transparent 58%, var(--pl-line) 58%, var(--pl-line) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; padding-inline: .06em; }
 .pl-caps-list { margin: 0; padding: 0; list-style: none; }
-.pl-cap { position: absolute; z-index: 1; display: flex; flex-direction: column; gap: 4px; width: clamp(9rem, 15vw, 14rem); font-family: var(--mono); font-size: 13px; letter-spacing: .04em; }
-.pl-cap-name { font-weight: 400; line-height: 20px; color: var(--ink); white-space: nowrap; }
+/* Nombre de cada disciplina: título de la jerarquía (la descripción queda como texto de apoyo) */
+.inicio .pl-cap-name { display: block; font-family: "Plus Jakarta Sans", sans-serif; font-size: clamp(18px, 1.7vw, 24px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
 .pl-cap-desc { font-size: 12px; line-height: 1.55; color: var(--ink-muted); }
-.pl-dot { position: absolute; top: 10px; width: 16px; height: 16px; border: 4px solid var(--pl-line); border-radius: 50%; background: var(--frame); }
-.pl-cap-1 { left: 28.4%; top: 26.7%; } .pl-cap-2 { left: 19.4%; top: 50%; } .pl-cap-3 { left: 28.4%; top: 73.3%; }
-.pl-cap-4 { left: 71.6%; top: 26.7%; } .pl-cap-5 { left: 80.6%; top: 50%; } .pl-cap-6 { left: 71.6%; top: 73.3%; }
-/* Izquierda: texto a la izquierda del punto; derecha: a la derecha */
-.pl-cap-1, .pl-cap-2, .pl-cap-3 { transform: translate(calc(-100% - 26px), -10px); text-align: right; }
-.pl-cap-1 .pl-dot, .pl-cap-2 .pl-dot, .pl-cap-3 .pl-dot { right: -30px; transform: translate(0, -50%); }
-.pl-cap-4, .pl-cap-5, .pl-cap-6 { transform: translate(26px, -10px); }
-.pl-cap-4 .pl-dot, .pl-cap-5 .pl-dot, .pl-cap-6 .pl-dot { left: -30px; transform: translate(0, -50%); }
-/* Arriba del óvalo la línea se abre hacia afuera bajo el punto: la descripción va encima del nombre */
-.pl-cap-1, .pl-cap-4 { flex-direction: column-reverse; }
-.pl-cap-1 { transform: translate(calc(-100% - 26px), calc(-100% + 10px)); }
-.pl-cap-4 { transform: translate(26px, calc(-100% + 10px)); }
-.pl-cap-1 .pl-dot, .pl-cap-4 .pl-dot { top: auto; bottom: 10px; transform: translate(0, 50%); }
 .pl-caps { overflow-x: clip; }
 @media (max-width: 40em) {
-  .pl-cap-1, .pl-cap-4 { flex-direction: column; }
-  .pl-cap-1 .pl-dot, .pl-cap-4 .pl-dot { top: 10px; bottom: auto; transform: translate(0, -50%); }
-  .pl-caps { min-height: 1040px; padding-top: var(--space-12); }
-  .pl-caps-title { position: relative; left: auto; top: auto; width: var(--content-width); margin-inline: auto; transform: none; font-size: 30px; background: var(--frame); }
-  .pl-cap { width: calc(44% - 42px); font-size: 12px; }
-  .pl-cap-name { white-space: normal; }
+  .pl-caps { padding-top: var(--space-12); }
+  .pl-caps-title { max-width: none; font-size: 30px; background: var(--frame); }
+  .inicio .pl-cap-name { white-space: normal; font-size: clamp(16px, 4.6vw, 20px); }
   .pl-cap-desc { font-size: 11px; }
-  .pl-cap-1, .pl-cap-2, .pl-cap-3 { left: 44%; transform: translate(calc(-100% - 26px), -10px); text-align: right; }
-  .pl-cap-1 .pl-dot, .pl-cap-2 .pl-dot, .pl-cap-3 .pl-dot { left: auto; right: -30px; }
-  .pl-cap-4, .pl-cap-5, .pl-cap-6 { left: 56%; transform: translate(26px, -10px); text-align: left; }
-  .pl-cap-4 .pl-dot, .pl-cap-5 .pl-dot, .pl-cap-6 .pl-dot { left: -30px; right: auto; }
-  .pl-cap-1, .pl-cap-4 { top: 52%; } .pl-cap-2, .pl-cap-5 { top: 67%; } .pl-cap-3, .pl-cap-6 { top: 82%; }
 }
 
 /* 4. Portafolio: el carrusel tapa la línea */
@@ -134,9 +129,44 @@
 .pl-firma-grande { position: relative; z-index: 1; display: block; width: clamp(240px, 40vw, 560px); margin: 0 auto var(--space-8); }
 
 /* 7. Contacto: la línea llega caminando (huellas) hasta el titular */
-.pl-contact { min-height: 720px; padding: 360px 0 clamp(4rem, 9vw, 6rem); }
+.pl-contact { min-height: 720px; padding: 260px 0 clamp(4rem, 9vw, 6rem); }
+/* Formulario de contacto (popup de Conversemos): abre el correo de la persona con el mensaje; no envía datos al servidor */
+.pl-dialog { width: min(52rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); padding: 0; overflow: auto; border: 0; border-radius: var(--radius-lg); background: var(--frame); color: var(--ink); box-shadow: 0 24px 60px rgba(11, 18, 32, .28); }
+.pl-dialog-grid { display: grid; }
+.pl-dialog { position: relative; }
+.pl-dialog-head { position: absolute; top: var(--space-4); right: var(--space-4); z-index: 1; }
+.pl-dialog-lead { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: var(--space-6); background: var(--surface-sunken); }
+.pl-dialog-lead .pl-dialog-title { font-size: clamp(36px, 4.6vw, 58px); line-height: .98; text-transform: uppercase; }
+/* "Hablemos" con el destacador flúor; sobre el fondo oscuro, el texto de la marca va en oscuro */
+.pl-dialog-title .pl-mark { display: inline-block; line-height: 1.12; color: #0b0d12; background: #d4ff3f; padding: .02em .1em .04em; border-radius: .06em; }
+.pl-dialog-lead-text { margin: var(--space-4) 0 0; max-width: 24rem; font-family: var(--mono); font-size: 13px; line-height: 1.7; letter-spacing: .02em; color: rgba(241, 238, 230, .7); }
+.pl-dialog-body { display: grid; align-content: start; gap: var(--space-5); padding: var(--space-6); }
+@media (min-width: 40em) {
+  .pl-dialog-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+  .pl-dialog-lead { padding: var(--space-8); }
+  .pl-dialog-body { padding: var(--space-8); }
+}
+.pl-dialog::backdrop { background: rgba(7, 9, 13, .55); }
+.pl-dialog[open] { animation: pl-dialog-in .25s var(--ease) both; }
+@keyframes pl-dialog-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.pl-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.pl-dialog-title { margin: 0; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: clamp(26px, 3vw, 36px); letter-spacing: -0.04em; line-height: 1; }
+.pl-dialog-close { width: 44px; height: 44px; border: 1px solid var(--line-control); border-radius: 50%; background: transparent; color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; }
+.pl-dialog-close:focus-visible { outline: 2px solid var(--pl-line); outline-offset: 2px; }
+.pl-form { position: relative; display: grid; gap: var(--space-4); margin: 0; text-align: left; }
+/* Campos con la etiqueta dentro de la caja: al escribir (o al enfocar) sube y queda sobre el borde superior */
+.pl-field { position: relative; }
+.pl-field input, .pl-field textarea { display: block; width: 100%; font: inherit; font-size: 16px; padding: var(--space-4) 0; border-radius: 0; border: 0; border-bottom: 1px solid var(--line-control); background: transparent; color: var(--ink); }
+.pl-field label { position: absolute; left: var(--space-4); top: 50%; transform: translateY(-50%); padding-inline: 0; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--ink-muted); pointer-events: none; transition: top .2s var(--ease), font-size .2s var(--ease), color .2s var(--ease); background: transparent; }
+.pl-field input:focus + label, .pl-field input:not(:placeholder-shown) + label, .pl-field textarea:focus + label, .pl-field textarea:not(:placeholder-shown) + label { top: 0; font-size: 11px; padding-inline: 0; background: transparent; }
+.pl-field input:focus, .pl-field textarea:focus { border-bottom-color: var(--pl-line); box-shadow: 0 1px 0 0 var(--pl-line); outline: 0; }
+.pl-field input:focus-visible, .pl-field textarea:focus-visible { outline: 0; }
+.pl-field textarea { resize: vertical; min-height: 7rem; padding-top: var(--space-5); }
+.pl-field textarea:not(:placeholder-shown) + label, .pl-field textarea:focus + label { top: 0; }
+.pl-form .btn { justify-self: end; }
+.pl-form-note { margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.6; color: var(--ink-muted); }
 .pl-contact .pl-display { font-size: clamp(44px, 7vw, 120px); max-width: 12em; }
-@media (max-width: 40em) { .pl-contact { min-height: 640px; padding-top: 300px; } }
+@media (max-width: 40em) { .pl-contact { min-height: 640px; padding-top: 380px; } }
 
 /* 8. Blog */
 .pl-blog { padding-block: clamp(5rem, 10vw, 8rem); }
@@ -154,6 +184,13 @@
 .inicio .pl-dark .pl-lead { color: var(--pl-on-dark-muted); }
 .inicio .faq summary { font-size: 14px; line-height: 1.6; }
 .inicio .pl-cap, .inicio .pl-mono { font-size: 12px; }
+/* Título del hero en móvil: "Diseño" y "marcas" van en líneas separadas (cuatro líneas en cualquier ancho) */
+.pl-br-m { display: none; }
+@media (max-width: 40em) { .pl-br-m { display: block; } }
+/* Hero: menos separación entre letras para que la bajada ocupe menos espacio (cuatro líneas en móvil, con todo el ancho) */
+.inicio .pl-hero .pl-lead { letter-spacing: .02em; }
+/* En móvil, la bajada ocupa el mismo ancho que la línea "que desean" del título (262px con el título a 44px) */
+@media (max-width: 40em) { .inicio .pl-hero .pl-lead { max-width: 262px; letter-spacing: 0; } }
 
 
 /* Con JavaScript, el avance de la línea en todas las secciones lo maneja js/main.js (línea de lectura y punta continua) */
@@ -161,12 +198,6 @@
 .thread-js .pl-head { display: block; }
 
 /* En modo oscuro el hero y Marca y producto se invierten a blanco (como el hero de la home anterior) */
-:root[data-theme="dark"] .pl-hero, :root[data-theme="dark"] .pl-producto { --pl-on-dark: #0b1220; --pl-on-dark-muted: #556070; color: #0b1220;
-  background: radial-gradient(60% 70% at 78% 100%, #c9d6ea, transparent), linear-gradient(180deg, #f4f6fa, #e4eaf2); }
-:root[data-theme="dark"] .pl-hero::after, :root[data-theme="dark"] .pl-producto::after { background-image: linear-gradient(rgba(11, 18, 32, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(11, 18, 32, .06) 1px, transparent 1px); }
-:root[data-theme="dark"] .pl-hero .pl-hero-bg { opacity: .32; mix-blend-mode: multiply; }
-:root[data-theme="dark"] .pl-hero h1, :root[data-theme="dark"] .pl-producto h2 { color: #0b1220; }
-:root[data-theme="dark"] .pl-producto .pl-signature { border-top-color: rgba(11, 18, 32, .14); }
 
 /* Cursor: un anillo del color destacado, solo el borde (solo con mouse o trackpad; js/main.js) */
 html.has-cursor, html.has-cursor * { cursor: none !important; }
@@ -184,3 +215,182 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .pl-scroll .icon { width: 14px; height: 14px; transform: rotate(90deg); }
 @media (prefers-reduced-motion: no-preference) { .pl-scroll .icon { animation: pl-scroll-hint 1.6s var(--ease) infinite; } }
 @keyframes pl-scroll-hint { 0%, 100% { translate: 0 -3px; } 50% { translate: 0 5px; } }
+
+/* Popup de Conversemos con el mismo lenguaje oscuro del hero: fondo, degradado y textos claros */
+.pl-dialog { background: radial-gradient(60% 70% at 78% 100%, #17233a, transparent), linear-gradient(160deg, #0b1220, #070b13); color: #f1eee6; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.pl-dialog-lead, .pl-dialog-body { background: transparent; }
+.pl-dialog-lead .pl-dialog-title, .pl-dialog-title { color: #f1eee6; }
+.pl-dialog-close { border-color: rgba(241, 238, 230, .35); color: #f1eee6; }
+.pl-field label { color: rgba(241, 238, 230, .6); }
+.pl-field input, .pl-field textarea { color: #f1eee6; border-bottom-color: rgba(241, 238, 230, .35); }
+.pl-field input:focus, .pl-field textarea:focus { border-bottom-color: var(--pl-line); }
+.pl-dialog .btn-primary { background: #f1eee6; color: #0b0d12; }
+.pl-dialog .btn-primary:hover, .pl-dialog .btn-primary:focus-visible { background: #d4ff3f; color: #0b0d12; }
+.pl-form-note { color: rgba(241, 238, 230, .6); }
+.pl-form-note:empty { display: none; }
+.pl-check { color: rgba(241, 238, 230, .75); }
+.pl-check a { color: #f1eee6; }
+.pl-check input { accent-color: #d4ff3f; }
+/* El campo activo se marca solo con el subrayado flúor (sin contorno de caja) */
+.pl-dialog .pl-field input:focus, .pl-dialog .pl-field textarea:focus { outline: 0; border-bottom: 2px solid #d4ff3f; }
+
+/* Títulos de sección de la home: mismo movimiento que el hero (js/main.js, initSectionTitles) */
+.pl-w { display: inline-block; transform: translate3d(calc(var(--shift, 0px) * var(--dir, 1)), 0, 0); will-change: transform; }
+.pl-w-mark { background: linear-gradient(transparent 58%, var(--pl-line) 58%, var(--pl-line) 92%, transparent 92%); }
+.pl-mark-split { background: none; }
+.pl-split:not(.is-in) .pl-w { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .pl-split.is-in .pl-w { animation: pl-w-in .9s var(--ease) backwards; animation-delay: calc(var(--line, 0) * .12s); }
+}
+@keyframes pl-w-in { from { opacity: 0; transform: translate3d(0, .22em, 0); } }
+
+/* Títulos de ideas: las líneas aparecen una tras otra al entrar en pantalla (js/main.js, initIdeasReveal).
+   Antes de que el título llegue al centro la composición queda cerrada; después el scroll abre las palabras y crece el producto */
+@media (prefers-reduced-motion: no-preference) {
+  .inicio .ideas-title .ideas-line { opacity: 0; transition: opacity .7s var(--ease) calc(var(--i, 0) * .2s); }
+  .inicio .ideas-title.is-on .ideas-line { opacity: 1; }
+}
+
+/* Ideas: la sección se fija en pantalla mientras el scroll abre las palabras y crece el producto; después la página sigue
+   bajando. Las animaciones avanzan con el progreso de la fijación (js/main.js, scrubIdeas), no con la línea de tiempo del scroll */
+.inicio .ideas { display: block; height: 200svh; min-height: 0; }
+.inicio .ideas-pin { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(1rem, 3svh, 2.5rem); overflow: hidden; overflow: clip; }
+/* Escritorio: el contenido de la home usa el mismo ancho que el encabezado (sin tope de 75 rem), para que el hero y Ideas
+   se alineen con el logo y el menú en pantallas grandes */
+@media (min-width: 53.75em) {
+  .inicio { --content-width: calc(100% - 2 * var(--header-pad)); }
+  .inicio .ideas-foot { position: relative; top: -30px; }
+}
+.inicio .ideas-line > span, .inicio .ideas-w1, .inicio .ideas-w2, .inicio .ideas-item { animation-timeline: auto !important; animation-play-state: paused !important; animation-duration: 1000ms !important; animation-timing-function: linear !important; animation-fill-mode: both !important; }
+
+/* Sistemas: la misma cuadrícula de fondo del hero, en versión clara (líneas oscuras y suaves, desvanecidas) */
+.inicio .pl-caps::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(11, 18, 32, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(11, 18, 32, .06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); }
+
+/* Disciplinas de Sistemas: la bajada ocupa como máximo dos líneas (texto más apretado, sin salirse del punto) */
+.inicio .pl-cap-desc { font-size: 11px; line-height: 1.5; letter-spacing: -0.03em; }
+
+/* Sistemas: círculo de radio fijo. El punto de cada disciplina queda sobre la línea (ancla del elemento) y el texto
+   va separado del punto por un desplazamiento constante, siempre hacia afuera del círculo */
+.inicio .pl-stage { position: relative; aspect-ratio: 1440 / 1000; min-height: 0; }
+.pl-cap { position: absolute; z-index: 1; width: 0; height: 0; }
+.pl-cap .pl-dot { position: absolute; left: 0; top: 0; width: 16px; height: 16px; box-sizing: border-box; transform: translate(-50%, -50%); border: 4px solid var(--pl-line); border-radius: 50%; background: var(--frame); }
+.pl-cap-txt { position: absolute; top: 0; width: clamp(12rem, 23vw, 20rem); display: flex; flex-direction: column; gap: 4px; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; transform: translateY(-50%); }
+.pl-cap-l .pl-cap-txt { right: 30px; text-align: right; }
+.pl-cap-r .pl-cap-txt { left: 30px; text-align: left; }
+.pl-cap-1 { left: 38.05%; top: 25.43%; }
+.pl-cap-2 { left: 30.42%; top: 39.74%; }
+.pl-cap-3 { left: 30.42%; top: 60.26%; }
+.pl-cap-4 { left: 38.05%; top: 74.57%; }
+.pl-cap-5 { left: 60.42%; top: 24.02%; }
+.pl-cap-6 { left: 68.04%; top: 35.00%; }
+.pl-cap-7 { left: 70.83%; top: 50.00%; }
+.pl-cap-8 { left: 68.04%; top: 65.00%; }
+.pl-cap-9 { left: 60.42%; top: 75.98%; }
+@media (max-width: 40em) {
+  .inicio .pl-stage { aspect-ratio: auto; min-height: 1000px; }
+  .pl-cap-l { left: 44%; }
+  .pl-cap-r { left: 56%; }
+  .pl-cap-1 { top: 20%; } .pl-cap-2 { top: 40%; } .pl-cap-3 { top: 60%; } .pl-cap-4 { top: 80%; }
+  .pl-cap-5 { top: 14%; } .pl-cap-6 { top: 30%; } .pl-cap-7 { top: 46%; } .pl-cap-8 { top: 62%; } .pl-cap-9 { top: 78%; }
+  .pl-cap-txt { width: calc(44% - 42px); font-size: 12px; }
+  .pl-cap-l .pl-cap-txt, .pl-cap-r .pl-cap-txt { width: calc(44% - 42px); }
+}
+
+/* Sistemas: cada texto se separa del aro hacia afuera, en la dirección de su punto, con una distancia fija
+   (~40 px del aro, fuera del círculo de referencia). --ux/--uy son el vector unitario del punto; --k escala la distancia con el aro */
+.pl-stage { container-type: inline-size; }
+.pl-cap-txt { --k: calc(60 / 1440 * 100vw); --k: calc(60 / 1440 * 100cqw); left: 0; right: auto; }
+.pl-cap-l .pl-cap-txt { text-align: right; transform: translate(calc(-100% - 10px + var(--ux, 0) * var(--k)), calc(-50% + var(--uy, 0) * var(--k))); }
+.pl-cap-r .pl-cap-txt { text-align: left; transform: translate(calc(10px + var(--ux, 0) * var(--k)), calc(-50% + var(--uy, 0) * var(--k))); }
+.pl-cap-1 { --ux: -0.574; --uy: -0.819; } .pl-cap-2 { --ux: -0.940; --uy: -0.342; }
+.pl-cap-3 { --ux: -0.940; --uy: 0.342; } .pl-cap-4 { --ux: -0.574; --uy: 0.819; }
+.pl-cap-5 { --ux: 0.5; --uy: -0.866; } .pl-cap-6 { --ux: 0.866; --uy: -0.5; }
+.pl-cap-7 { --ux: 1; --uy: 0; } .pl-cap-8 { --ux: 0.866; --uy: 0.5; } .pl-cap-9 { --ux: 0.5; --uy: 0.866; }
+@media (max-width: 40em) {
+  .pl-cap-l .pl-cap-txt { transform: translate(calc(-100% - 26px), -50%); }
+  .pl-cap-r .pl-cap-txt { transform: translate(26px, -50%); }
+}
+
+/* Sistemas: ocho puntos sobre el aro (cuatro a cada lado), con la misma separación vertical (16.67 %) */
+.pl-cap-1 { left: 38.50%; top: 25.00%; --ux: -0.500; --uy: -0.866; }
+.pl-cap-2 { left: 30.00%; top: 41.67%; --ux: -0.866; --uy: -0.500; }
+.pl-cap-3 { left: 30.00%; top: 58.33%; --ux: -1.000; --uy: 0.000; }
+.pl-cap-4 { left: 38.50%; top: 75.00%; --ux: -0.866; --uy: 0.500; }
+.pl-cap-5 { left: 39.58%; top: 75.98%; --ux: -0.500; --uy: 0.866; }
+.pl-cap-6 { left: 61.50%; top: 25.00%; --ux: 0.500; --uy: -0.866; }
+.pl-cap-7 { left: 70.00%; top: 41.67%; --ux: 0.866; --uy: -0.500; }
+.pl-cap-8 { left: 70.00%; top: 58.33%; --ux: 1.000; --uy: 0.000; }
+.pl-cap-9 { left: 61.50%; top: 75.00%; --ux: 0.866; --uy: 0.500; }
+.pl-cap-10 { left: 60.42%; top: 75.98%; --ux: 0.500; --uy: 0.866; }
+@media (max-width: 40em) {
+  .pl-cap-1 { top: 14%; }
+  .pl-cap-2 { top: 30%; }
+  .pl-cap-3 { top: 46%; }
+  .pl-cap-4 { top: 62%; }
+  .pl-cap-5 { top: 78%; }
+  .pl-cap-6 { top: 14%; }
+  .pl-cap-7 { top: 30%; }
+  .pl-cap-8 { top: 46%; }
+  .pl-cap-9 { top: 62%; }
+  .pl-cap-10 { top: 78%; }
+}
+
+/* Continuidad de la línea entre secciones: cada sección empieza y termina exactamente donde termina la anterior */
+.inicio .ideas { padding-top: 0; padding-bottom: 0; }
+.inicio .pl-caps { margin-top: 0; }
+
+/* Portafolio de la home: cubos isométricos sobre un escenario de 1000 px, con la línea flúor que lo recorre */
+.inicio .alt-folio { padding: 0; min-height: 0; }
+.inicio .alt-stage { height: 1000px; width: 100%; max-width: none; margin: 0; }
+.inicio .alt-bg { top: 50%; }
+@media (max-width: 40em) {
+  .inicio .alt-stage { height: auto; }
+}
+
+/* Marca y producto: flechas de señalética (solo contorno flúor, sin fondo) con el nombre del servicio dentro (posiciones en % de la sección) */
+.pl-signs { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pl-cartel { position: absolute; left: 76.4%; width: 20%; height: 13%; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 600; font-size: clamp(18px, 1.9vw, 26px); letter-spacing: -0.02em; color: #f1eee6; white-space: nowrap; }
+.pl-icono { position: absolute; left: 66.9%; width: 4.86%; height: 7%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #d4ff3f; }
+.pl-icono .icon { width: 50%; height: 50%; fill: none; stroke: currentColor; }
+.pl-icono-1 { top: 31.3%; }
+.pl-icono-2 { top: 49.3%; }
+.pl-icono-3 { top: 67.3%; }
+.pl-cartel-1 { top: 28.3%; }
+.pl-cartel-2 { top: 46.3%; }
+.pl-cartel-3 { top: 64.3%; }
+@media (max-width: 40em) {
+  /* En móvil las flechas van sobre el título (mismas proporciones que el trazo móvil, 375 × 1000) */
+  .pl-producto { padding-top: 370px; min-height: 0; }
+  .pl-producto .pl-inner { padding-right: 22px; }
+  .pl-signs { display: block; }
+  .pl-icono { position: absolute; left: calc(24% - 20px); width: 40px; height: 40px; }
+  .pl-cartel { position: absolute; left: 45.3%; width: 42.7%; height: 9%; transform: none; font-size: 18px; justify-content: flex-start; padding-right: 0; }
+  .pl-icono.pl-icono-1 { top: calc(6% + (9% - 40px) / 2); }
+  .pl-icono.pl-icono-2 { top: calc(19% + (9% - 40px) / 2); }
+  .pl-icono.pl-icono-3 { top: calc(32% + (9% - 40px) / 2); }
+  .pl-cartel.pl-cartel-1 { top: 6%; }
+  .pl-cartel.pl-cartel-2 { top: 19%; }
+  .pl-cartel.pl-cartel-3 { top: 32%; }
+}
+
+/* Marca y producto: el icono y el nombre de cada flecha aparecen con suavidad cuando la línea la recorre (js/main.js, marcas de la sección) */
+.pl-cartel, .pl-icono { opacity: 0; transition: opacity .7s ease, transform .7s cubic-bezier(.2, .8, .2, 1); }
+.pl-cartel { transform: translateX(-14px); }
+.pl-icono { transform: scale(.85); }
+.pl-cartel.is-on, .pl-icono.is-on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .pl-cartel, .pl-icono { opacity: 1; transform: none; transition: none; } }
+
+/* Sistemas en móvil: la línea baja por el centro (50 %) y cada punto cae sobre ella; los textos van a cada lado, con ancho fijo */
+@media (max-width: 40em) {
+  .inicio .pl-stage { aspect-ratio: auto; min-height: 1000px; }
+  .pl-cap { width: 0; height: 0; }
+  .pl-cap-1, .pl-cap-2, .pl-cap-3, .pl-cap-4, .pl-cap-5, .pl-cap-6, .pl-cap-7, .pl-cap-8, .pl-cap-9, .pl-cap-10 { left: 50%; }
+  .pl-cap-l .pl-cap-txt, .pl-cap-r .pl-cap-txt { width: 140px; --ux: 0; --uy: 0; font-size: 12px; }
+  .pl-cap-l .pl-cap-txt { left: 0; right: auto; transform: translate(calc(-100% - 18px), -50%); text-align: right; }
+  .pl-cap-r .pl-cap-txt { left: 0; right: auto; transform: translate(18px, -50%); text-align: left; }
+  .pl-cap-name { white-space: normal; font-size: 15px; }
+  .pl-cap-desc { font-size: 11px; }
+}

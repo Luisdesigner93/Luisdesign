@@ -2,7 +2,6 @@
    Solo la usa index-v2.html; reutiliza los tokens de styles.css. */
 
 .v2 { --v2-dark: #0b1220; --v2-dark-2: #17233a; --v2-on-dark: #ffffff; --v2-on-dark-muted: rgba(255, 255, 255, .68); }
-:root[data-theme="dark"].v2 { --v2-dark: #131b29; --v2-dark-2: #1c2a42; }
 
 .v2-eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); padding: 5px var(--space-3); border-radius: var(--radius-pill); background: rgba(255, 255, 255, .1); font-size: 11px; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--v2-on-dark); }
 .v2-eyebrow i { width: 8px; height: 8px; border-radius: 2px; background: var(--accent-mist); }
@@ -18,7 +17,6 @@
   /* El degradado llega a transparente justo en el borde de la imagen: sin cortes visibles */
   -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%);
   mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); }
-:root[data-theme="dark"] .v2-hero-bg { opacity: .32; mix-blend-mode: multiply; }
 @media (max-width: 53.75em) { .v2-hero-bg { opacity: .4; } }
 .v2-hero-top { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(1rem, 2.4svh, 1.75rem); }
 /* El título escala con el ancho y la altura de la pantalla; su ancho en em mantiene siempre los mismos saltos de línea */
@@ -46,14 +44,6 @@
 }
 
 /* En modo oscuro el hero se invierte a su contraparte clara (paleta clara de Frost Glass) */
-:root[data-theme="dark"] .v2-hero { --v2-on-dark: #0b1220; --v2-on-dark-muted: #556070; background: radial-gradient(60% 70% at 78% 100%, #c9d6ea, transparent), linear-gradient(180deg, #eef1f6, #dde5f0); }
-:root[data-theme="dark"] .v2-hero::after { background-image: linear-gradient(rgba(11, 18, 32, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(11, 18, 32, .06) 1px, transparent 1px); }
-:root[data-theme="dark"] .v2-hero .v2-eyebrow { background: rgba(11, 18, 32, .06); }
-:root[data-theme="dark"] .v2-hero .v2-eyebrow i { background: #3f64a8; }
-:root[data-theme="dark"] .v2-hero-cta { background: rgba(255, 255, 255, .6); border-color: rgba(11, 18, 32, .1); box-shadow: 0 8px 24px rgba(63, 100, 168, .14); }
-:root[data-theme="dark"].v2 .v2-hero .v2-btn-light { background: #0d1421; color: #ffffff; box-shadow: var(--shadow-float); }
-:root[data-theme="dark"] .v2-hero .v2-btn-ghost { border-color: rgba(11, 18, 32, .3); }
-:root[data-theme="dark"] .v2-hero .v2-btn-ghost:hover { background: rgba(11, 18, 32, .05); }
 
 /* ---------- Cinta de clientes ---------- */
 .v2-marquee { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--space-8); margin: var(--shell-pad); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); border: 1px solid var(--line); }
@@ -63,7 +53,6 @@
 .v2-marquee-track ul { align-items: center; }
 /* Logotipos de clientes en monocromo gris (silueta del logo a media opacidad), en ambos temas */
 .v2-marquee-logo img { display: block; width: auto; height: clamp(30px, 3vw, 40px); filter: brightness(0); opacity: .5; }
-:root[data-theme="dark"] .v2-marquee-logo img { filter: brightness(0) invert(1); opacity: .55; }
 @media (prefers-reduced-motion: no-preference) { .v2-marquee-track ul { animation: v2-scroll 38s linear infinite; } }
 @media (max-width: 45em) { .v2-marquee { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); } }
 @keyframes v2-scroll { to { transform: translateX(-100%); } }
@@ -233,13 +222,13 @@
     /* Cada línea se abre junto con el producto que nace de su hueco */
     /* Empieza cuando la frase ya está a la vista. Las palabras se abren solo durante la primera mitad del
        crecimiento de su producto; después quedan quietas y el producto sigue creciendo hasta taparlas */
-    .ideas-line:nth-child(1) > span { animation-range: cover 22% cover 31%; }
-    .ideas-line:nth-child(2) > span { animation-range: cover 26% cover 34.5%; }
-    .ideas-line:nth-child(3) > span { animation-range: cover 29.5% cover 38%; }
+    .ideas-line:nth-child(1) > span { animation-range: cover 52% cover 60%; }
+    .ideas-line:nth-child(2) > span { animation-range: cover 55% cover 64%; }
+    .ideas-line:nth-child(3) > span { animation-range: cover 58% cover 68%; }
     .ideas-item { animation: ideas-item-in linear both; animation-timeline: --ideas; }
-    .ideas-item-phone { animation-range: cover 22% cover 40%; }
-    .ideas-item-beer { animation-range: cover 26% cover 43%; }
-    .ideas-item-spray { animation-range: cover 29.5% cover 46%; }
+    .ideas-item-phone { animation-range: cover 60% cover 76%; }
+    .ideas-item-beer { animation-range: cover 63% cover 80%; }
+    .ideas-item-spray { animation-range: cover 66% cover 84%; }
   }
   /* En móvil la frase no tiene huecos que abrir: las palabras quedan quietas y solo crecen los productos */
   @media (prefers-reduced-motion: no-preference) and (max-width: 53.75em) {
@@ -248,9 +237,9 @@
     .ideas-w1, .ideas-line:nth-child(3) > span:first-child { animation: ideas-push-left linear both; animation-timeline: --ideas; }
     .ideas-w2, .ideas-line:nth-child(3) > span:last-child { animation: ideas-push-right linear both; animation-timeline: --ideas; }
     /* Cada par de palabras se aparta durante la primera mitad del crecimiento de su producto */
-    .ideas-line:nth-child(1) .ideas-w1, .ideas-line:nth-child(1) .ideas-w2 { animation-range: cover 22% cover 31%; }
-    .ideas-line:nth-child(2) .ideas-w1, .ideas-line:nth-child(2) .ideas-w2 { animation-range: cover 26% cover 34.5%; }
-    .ideas-line:nth-child(3) > span:first-child, .ideas-line:nth-child(3) > span:last-child { animation-range: cover 29.5% cover 38%; }
+    .ideas-line:nth-child(1) .ideas-w1, .ideas-line:nth-child(1) .ideas-w2 { animation-range: cover 30% cover 39%; }
+    .ideas-line:nth-child(2) .ideas-w1, .ideas-line:nth-child(2) .ideas-w2 { animation-range: cover 34% cover 43%; }
+    .ideas-line:nth-child(3) > span:first-child, .ideas-line:nth-child(3) > span:last-child { animation-range: cover 38% cover 46%; }
   }
 }
 /* Al inicio el hueco de cada línea mide lo justo para que su producto quepa entre las palabras (~0,8em) */

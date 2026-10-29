@@ -1,3 +1,4 @@
+import math
 # Inicio (index.html): identidad con una línea continua que recorre la página (referencia: dakshgajjar.com).
 # Nació como piloto; textos entregados por Luis el 2026-10-27, con correcciones de forma.
 # Cada sección tiene su tramo de línea: un SVG que ocupa la sección (viewBox de escritorio y de móvil, estirado sin
@@ -88,42 +89,48 @@ def _hilo(desk, mob, cls='', extra='', paso=18):
     return svg('0 0 1440 1000', desk, 'desk') + svg('0 0 375 1000', mob, 'mob')
 
 
-# Huellas (contacto): la línea camina. Avanza por un eje y en cada paso dibuja el contorno de una pisada,
-# alternando pie izquierdo y derecho. Cada pisada cuelga del eje por el arco interno del pie, así la línea no cruza
-# ninguna huella. Medidas para un pie de largo 1 (a: hacia afuera del eje; v: hacia adelante).
-_PLANTA_IN = [(-.12, .45), (-.15, .58), (-.16, .7), (-.13, .78)]                       # arco → bola del pie (lado interno)
-_PUNTA = [(-.1, .88), (-.03, .95), (.05, .97), (.13, .93), (.19, .84)]                  # punta redondeada
-_PLANTA_EX = [(.21, .66), (.19, .52), (.15, .38), (.15, .22), (.11, .06), (0, 0), (-.1, .04), (-.13, .18),
-              (-.12, .32), (-.12, .45)]                                                 # lado externo → talón → arco
+# Huellas (contacto): la línea baja caminando. En cada paso dibuja el contorno de una pisada (sin dedos), alternando
+# pie derecho e izquierdo, y entre una y otra se mece en una curva amplia, sin tramos rectos. Cada pisada empieza y
+# termina en el talón, entrando por su lado externo; así la línea nunca cruza una huella.
+# Contorno de un pie de largo 1 (a: hacia afuera del eje; v: hacia adelante), desde el talón por el lado interno.
+_PIE = [(0, 0), (-.1, .04), (-.13, .18), (-.12, .32), (-.12, .45), (-.15, .58), (-.16, .7), (-.13, .8),
+        (-.1, .88), (-.03, .95), (.05, .97), (.13, .93), (.19, .84), (.21, .66), (.19, .52), (.15, .38),
+        (.15, .22), (.11, .06), (0, 0)]
 
 
-def _pie():
-    """Contorno del pie como lista de puntos (a, v): sube por el lado interno, rodea la punta y baja por el lado
-    externo hasta el talón."""
-    pts = list(_PLANTA_IN) + _PUNTA
-    return pts + _PLANTA_EX
+def _huellas(inicio, eje_x, y0, y1, fin, pasos, largo, sep, ky):
+    """Trazado de `inicio` a `fin` con `pasos` pisadas que bajan por la vertical `eje_x`, entre `y0` y `y1`.
+    `ky` compensa el estiramiento vertical del SVG (preserveAspectRatio="none") para no deformar las huellas.
+    Se calcula en un espacio sin estirar (y / ky) y se devuelve en las unidades del viewBox."""
+    paso_v = (y1 - y0) / ky / pasos
+    pts = []
 
+    def curva(p0, p1, p2, p3, n=24):
+        for k in range(1, n + 1):
+            t = k / n; u = 1 - t
+            pts.append((u**3 * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t**3 * p3[0],
+                        u**3 * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t**3 * p3[1]))
 
-def _huellas(inicio, a, b, fin, pasos, largo, sep, ky):
-    """Trazado de `inicio` a `fin` con `pasos` pisadas sobre el eje a→b. `ky` compensa el estiramiento vertical
-    del SVG (preserveAspectRatio="none") para que las huellas no se vean deformadas."""
-    (ax, ay), (bx, by) = a, b
-    dx, dy = bx - ax, (by - ay) / ky
-    n = (dx * dx + dy * dy) ** .5
-    fx, fy = dx / n, dy / n          # hacia adelante (en espacio sin estirar)
-    nx, ny = -fy, fx                 # lateral
-    pie = _pie()
-    pts = [inicio]
+    talones = []
     for i in range(pasos):
-        t = (i + .5) / pasos
-        cx, cy = ax + dx * t - fx * largo * .5, ay / ky + dy * t - fy * largo * .5   # talón de la pisada
-        lado = 1 if i % 2 == 0 else -1
-        for pa, pv in pie:
-            u = lado * (sep + pa * largo)
-            pts.append((cx + fx * pv * largo + nx * u, (cy + fy * pv * largo + ny * u) * ky))
-    pts.append(fin)
+        lado = 1 if i % 2 == 0 else -1          # 1: a la derecha del eje
+        talones.append(((eje_x + lado * sep, y0 / ky + paso_v * i), lado))
+    ini = (inicio[0], inicio[1] / ky); fn = (fin[0], fin[1] / ky)
+    pts.append(ini)
+    c = sep * 2.2
+    (hx, hy), lado = talones[0]
+    curva(ini, (ini[0], ini[1] + paso_v * .6), (hx + lado * c, hy), (hx, hy))   # llega al primer talón por fuera
+    for i, ((hx, hy), lado) in enumerate(talones):
+        for pa, pv in _PIE[1:]:
+            pts.append((hx + lado * pa * largo * 1.3, hy + pv * largo))
+        if i + 1 < len(talones):
+            (nx, ny), _ = talones[i + 1]
+            # sale hacia el eje y se mece hasta entrar al talón siguiente por su lado externo
+            curva((hx, hy), (hx - lado * c, hy), (nx - lado * c, ny), (nx, ny))
+        else:
+            curva((hx, hy), (hx - lado * c, hy), (fn[0], fn[1] - paso_v * .6), fn)
     f = lambda v: f'{v:.1f}'
-    return 'M' + ' L'.join(f'{f(x)} {f(y)}' for x, y in pts)
+    return 'M' + ' L'.join(f'{f(x)} {f(y * ky)}' for x, y in pts)
 
 _arrow = '<svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg>'
 
@@ -149,8 +156,8 @@ INICIO_HERO = f'''
       <img class="pl-hero-bg" src="img/marca/hero-fondo.jpg" width="2000" height="1333" alt="" decoding="async" fetchpriority="high">
       {_hilo([_hero_desk], [_hero_mob], 'pl-thread-back')}
       <div class="pl-inner">
-        <h1 class="pl-display pl-hero-title" id="pl-hero-title"><span class="pl-line"><span class="pl-line-in">Diseñ<span class="pl-o">o</span> marcas </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">que <span class="pl-u">desean<span class="pl-base" aria-hidden="true"></span></span> </span></span><span class="pl-line"><span class="pl-line-in">moverse</span></span></h1>
-        <p class="pl-lead">Soy un diseñador de productos digitales construyendo estrategias, identidad y experiencias en torno a tu servicio.</p>
+        <h1 class="pl-display pl-hero-title" id="pl-hero-title"><span class="pl-line"><span class="pl-line-in">Diseñ<span class="pl-o">o</span> <span class="pl-br-m"></span>marcas </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">que <span class="pl-u">desean<span class="pl-base" aria-hidden="true"></span></span> </span></span><span class="pl-line"><span class="pl-line-in">moverse</span></span></h1>
+        <p class="pl-lead">Soy Luis, diseñador especializado en marcas y productos digitales. Trabajo contigo para entender hacia dónde quieres llevar tu negocio y transformar esa dirección en marcas, experiencias y productos que conecten con las personas.</p>
       </div>
       {_hilo([_hero_desk], [_hero_mob], 'pl-thread-front')}
       <span class="pl-head" aria-hidden="true"></span>
@@ -161,9 +168,16 @@ INICIO_HERO = f'''
 # 2. EL MUNDO DE LAS IDEAS (claro): el collage actual; la línea pasa por detrás de los productos
 _ideas = HOME_IDEAS
 _ini = _ideas.index('          <p>Una idea vale'); _fin = _ideas.index('          <a class="btn btn-outline ideas-cta"')
-_ideas = _ideas[:_ini] + '          <p>Se trata de conectar tu marca con sus usuarios y su entorno para definir tendencias.</p>\n' + _ideas[_fin:]
+_ideas = _ideas[:_ini] + '          <p>Por eso, me involucro desde las primeras preguntas hasta la implementación: ayudo a definir qué vale la pena construir, diseño posibles soluciones, valido las decisiones y acompaño el desarrollo para que esa idea se convierta en algo concreto y útil.</p>\n' + _ideas[_fin:]
+# Ceja encima del título: la primera frase del texto de Ideas (el resto del texto queda debajo).
+# Ceja y título van en un mismo bloque, para que la cuadrícula de .ideas-stage los trate como una sola pieza.
+_ideas = _ideas.replace('        <h2 class="ideas-title"', '        <div class="ideas-head">\n        <p class="ideas-eyebrow pl-mono">Conecto lo conceptual con lo práctico.</p>\n        <h2 class="ideas-title"', 1)
+_ideas = _ideas.replace('</h2>\n', '</h2>\n        </div>\n', 1)
 # Sin la píldora "Ver portafolio" (el portafolio está más abajo en la misma página)
 _ini = _ideas.index('        <a class="ideas-pill"'); _fin = _ideas.index('</a>', _ini) + len('</a>\n')
+_ideas = _ideas[:_ini] + _ideas[_fin:]
+# Sin el botón "Conversemos" de la sección Ideas (el contacto sigue disponible desde el encabezado y más abajo)
+_ini = _ideas.index('          <a class="btn btn-outline ideas-cta"'); _fin = _ideas.index('</a>', _ini) + len('</a>\n')
 _ideas = _ideas[:_ini] + _ideas[_fin:]
 _ideas = _ideas.replace('<section class="panel panel-plain ideas"', '<section class="panel panel-plain ideas pl-sec pl-ideas" id="ideas"', 1)
 # La línea baja y se enrolla en espiral en la botella central (pasa por delante, por detrás y otra vez por delante).
@@ -173,51 +187,160 @@ _ideas_mob = ['M187.5 0 C187.5 140 120 220 150 380 C180 540 260 600 220 760 C200
 _ideas = _ideas.replace('      <div class="ideas-stage">', '      ' + _hilo(_ideas_desk, _ideas_mob) + '\n      <div class="ideas-stage">', 1)
 # Capa delantera (sobre los productos), recortada por js/main.js a los cruces por delante de la botella
 _ideas = _ideas.replace('      <div class="container ideas-foot">', '      ' + _hilo(_ideas_desk, _ideas_mob, 'pl-thread-front') + '\n      <div class="container ideas-foot">', 1)
+# Fijación: el contenido de la sección queda quieto mientras el scroll abre las palabras y crece el producto (css/inicio.css)
+_ideas = _ideas.replace('pl-sec pl-ideas" id="ideas" aria-labelledby="ideas-title">', 'pl-sec pl-ideas" id="ideas" aria-labelledby="ideas-title">\n      <div class="ideas-pin">', 1)
+_ideas = _ideas.rstrip()
+assert _ideas.endswith('</section>')
+_ideas = _ideas[:-len('</section>')] + '      </div>\n    </section>\n'
 INICIO_IDEAS = _ideas
 
 # 3. SISTEMAS (claro): la línea se abre en un óvalo con un punto por disciplina (en móvil, dos columnas).
 #    Con JavaScript, el título y cada disciplina aparecen cuando la línea pasa por ellos (js/main.js).
 # Disciplinas del óvalo con una descripción breve (EDITAR: textos propuestos por Claude, revisar con Luis)
-_disciplinas = [('Branding', 'Estrategia y propósito que ordenan cómo se presenta tu marca.'),
-                ('Identidad', 'Logotipo, color, tipografía y aplicaciones que hacen reconocible tu marca.'),
-                ('UX Research', 'Entrevistas y pruebas con usuarios para decidir con evidencia.'),
-                ('Productos digitales', 'Sitios, apps y plataformas diseñados y prototipados, listos para construir.'),
-                ('AI workflow', 'Flujos de trabajo con IA para prototipar y producir más rápido.'),
-                ('Colaboración', 'Trabajo integrado con tu equipo, desarrolladores y otros creadores.')]
-# Óvalo (centro 720 500, radios 440 × 330) en cuartos de elipse con curvas, para poder reescalarlo en js/main.js
-_caps_desk = ['M720 0 V170 C963 170 1160 318 1160 500 C1160 682 963 830 720 830 V1000', 'M720 170 C477 170 280 318 280 500 C280 682 477 830 720 830']
-# En móvil, dos paralelas juntas al centro; las disciplinas quedan por fuera de ellas
-_caps_mob = ['M187.5 0 V330 C187.5 360 210 355 210 385 V880 C210 910 187.5 905 187.5 935 V1000',
-             'M187.5 330 C187.5 360 165 355 165 385 V880 C165 910 187.5 905 187.5 935']
+_disciplinas = [('Branding estratégico', 'Investigo el negocio, su contexto y su público para definir hacia dónde va tu marca y por qué deberían elegirla.'),
+                ('Identidad', 'Transformo esa estrategia en un lenguaje visual que hace tu marca reconocible y coherente en cada punto de contacto.'),
+                ('UX Research', 'Investigo qué necesitan las personas, cómo se comportan y qué esperan para diseñar experiencias que tengan sentido para ellas.'),
+                ('Design Systems', 'Creo componentes y reglas compartidas que mantienen la coherencia del producto y permiten que evolucione junto al equipo de desarrollo.'),
+                ('Productos digitales', 'Defino, prototipo y planifico soluciones digitales, desde las primeras ideas hasta su implementación.'),
+                ('Desarrollo web', 'Diseño y coordino sitios web que comunican el valor de tu marca, generan oportunidades y ayudan a vender.'),
+                ('AI Workflow', 'Diseño flujos de trabajo asistidos por inteligencia artificial para abordar desarrollos complejos. La IA ejecuta; yo hago las preguntas correctas, tomo las decisiones y superviso el resultado.'),
+                ('Colaboración', 'Me integro a tu equipo o coordino diseñadores, desarrolladores y proveedores, manteniendo una dirección clara desde la idea inicial hasta la entrega.')]
+# Las cuatro primeras van a la izquierda del óvalo y las cinco siguientes a la derecha; la primera de cada lado, arriba
+_cap_slot = [1, 2, 3, 4, 6, 7, 8, 9]  # posiciones del óvalo en CSS (inicio.css): izquierda 1-4, derecha 6-9
+_cap_cls = lambda slot: 'pl-cap-l' if slot <= 4 else 'pl-cap-r'
+# Óvalo (centro 720 500, radios 330 × 270) en cuartos de elipse con curvas, para poder reescalarlo en js/main.js.
+# El viewBox se ajusta al bloque del óvalo (.pl-stage): y de 0 a 1000. Las y negativas (de -500 a 0) corresponden al
+# tramo del título, encima del bloque: la línea entra al centro, se abre por el costado derecho del título y vuelve al óvalo.
+# La línea entra desde arriba, rodea el título por la derecha (sin pasar por detrás del texto), vuelve por debajo y entra al aro por arriba
+# Ruta ortogonal con esquinas redondeadas: entra desde arriba, rodea el título por la derecha y vuelve por debajo hasta el aro
+_caps_desk = ['M1080 -500 L1080.0 -371.0 Q1080 -316 1135.0 -316.0 L1275.0 -316.0 Q1330 -316 1330.0 -261.0 L1330.0 -43.0 Q1330 12 1275.0 12.0 L151.5 12.0 Q115 12 115.0 48.5 L115.0 48.5 Q115 85 151.5 85.0 L665.0 85.0 Q720 85 720.0 140.0 L720 200 C885.7 200 1020 338.6 1020 500 C1020 661.4 885.7 800 720 800 V1000', 'M720 200 C554.3 200 420 338.6 420 500 C420 661.4 554.3 800 720 800']
+# En móvil, una sola línea recta por el centro exacto (50 % de 375); los puntos caen sobre ella y los textos quedan a cada lado
+_caps_mob = ['M187.5 -500 V1000']
 INICIO_SISTEMAS = f'''
     <!-- INICIO · SISTEMAS -->
     <section class="pl-sec pl-light pl-caps" aria-labelledby="pl-caps-title">
       {_hilo(_caps_desk, _caps_mob)}
-      <h2 class="pl-title pl-caps-title" id="pl-caps-title">Diseño sistemas que identifican y reducen la brecha que separa a tu negocio de tu público.</h2>
+      <div class="pl-inner">
+        <h2 class="pl-title pl-caps-title" id="pl-caps-title">Encuentro la brecha entre tu negocio y tu público, y <mark class="pl-mark">diseño el camino</mark> para cerrarla.</h2>
+      </div>
+      <div class="pl-stage">
       <ul class="pl-caps-list" role="list">''' + ''.join(f'''
-        <li class="pl-cap pl-cap-{i}"><span class="pl-dot" aria-hidden="true"></span><strong class="pl-cap-name">{d}</strong><span class="pl-cap-desc">{x}</span></li>''' for i, (d, x) in enumerate(_disciplinas, 1)) + '''
+        <li class="pl-cap pl-cap-{_cap_slot[i - 1]} {_cap_cls(_cap_slot[i - 1])}"><span class="pl-dot" aria-hidden="true"></span><span class="pl-cap-txt"><strong class="pl-cap-name">{d}</strong><span class="pl-cap-desc">{x}</span></span></li>''' for i, (d, x) in enumerate(_disciplinas, 1)) + '''
       </ul>
+      </div>
     </section>
 '''
 
-# 4. PORTAFOLIO (claro): el carrusel actual; la línea baja por el costado y vuelve al centro
-INICIO_PORTAFOLIO = f'''
-    <!-- INICIO · PORTAFOLIO -->
-    <section class="pl-sec pl-light more pl-folio" id="proyectos" aria-labelledby="pl-folio-title">
-      {_hilo(['M720 0 C720 90 1290 60 1290 220 C1290 420 980 560 980 760 C980 900 720 880 720 1000'],
-             ['M187.5 0 C187.5 60 345 60 345 160 V820 C345 920 187.5 900 187.5 1000'])}
-      <h2 class="pl-display pl-folio-title" id="pl-folio-title">Portafolio</h2>
-      <div class="more-stage">
-        <div class="more-nav" hidden>
-          <button class="more-prev" type="button" aria-label="Proyecto anterior">{_arrow}</button>
-          <button class="more-next" type="button" aria-label="Proyecto siguiente">{_arrow}</button>
-        </div>
-        <ul class="more-arc" aria-label="Proyectos">{_more_arc}
-        </ul>
-      </div>
-      <div class="pl-inner pl-center"><a class="btn btn-primary" href="proyectos.html">Ver todos los proyectos {_arrow}</a></div>
+# 4. PORTAFOLIO (claro): proyectos como cubos isométricos repartidos alrededor del título (el mismo diseño de tools/generador/pages/1e_portafolio_alternativa.py).
+#    La línea flúor sigue un recorrido ortogonal con esquinas redondeadas que rodea el título y los cubos.
+def _redondeada(pts, radio=55):
+    """Polilínea con esquinas redondeadas (Q): en cada giro corta el radio sin pasar de la mitad de cada tramo."""
+    out = [f'M{pts[0][0]} {pts[0][1]}']
+    for i in range(1, len(pts) - 1):
+        (px, py), (cx, cy), (nx, ny) = pts[i - 1], pts[i], pts[i + 1]
+        l1 = math.hypot(cx - px, cy - py); l2 = math.hypot(nx - cx, ny - cy)
+        r = min(radio, l1 / 2, l2 / 2)
+        out.append(f'L{cx + (px - cx) * r / l1:.1f} {cy + (py - cy) * r / l1:.1f} Q{cx} {cy} {cx + (nx - cx) * r / l2:.1f} {cy + (ny - cy) * r / l2:.1f}')
+    out.append(f'L{pts[-1][0]} {pts[-1][1]}')
+    return ' '.join(out)
+
+# Recorrido (unidades 1440 × 1000, desde el borde superior de la sección): entra al centro, rodea el título y los cubos, y sale al centro
+_ruta_portafolio = [(720, 0), (719, 233), (211, 432), (353, 503), (975, 288), (1245, 456), (527, 787), (720, 870), (1190, 870), (1190, 1000)]
+_ruta_desk = _redondeada(_ruta_portafolio, 55)
+_ruta_mob = 'M187.5 0 V1000'
+
+# Cubos isométricos (x %, y %, escala) y proyectos enlazados
+_pf_cubos = [
+    ('Fuchi Chao', 'proyectos/fuchi-chao.html', 14.8, 26.8, 1.0),
+    ('Khronos', 'proyectos/khronos.html', 33.8, 17.7, 0.9),
+    ('Sustentando', 'proyectos/sustentando.html', 51.0, 38.2, 1.1),
+    ('Uvenergy', 'proyectos/uvenergy.html', 67.4, 21.0, 1.0),
+    ('Yomecontrolo', 'proyectos/yomecontrolo.html', 25.9, 40.8, 1.2),
+    ('Botes Salvavidas', 'proyectos/botes-salvavidas.html', 38.7, 57.0, 0.9),
+    ('Bowraps', None, 68.1, 58.7, 1.0),
+    ('Proyecto 8', None, 86.0, 41.0, 0.9),
+]
+_pf_cubo_html = '<span class="alt-cubo" aria-hidden="true"><span class="alt-cara alt-tapa"></span><span class="alt-cara alt-izq"></span><span class="alt-cara alt-der"></span></span>'
+# Mockups definitivos (img/portafolio): se reparten en orden entre las posiciones
+_pf_mockups = [('mockup-cerveza', 800, 667), ('mockup-telefono', 700, 738), ('mockup-laptop', 800, 534), ('mockup-pin', 800, 534)]
+_pf_items = ''
+for i, (nombre, enlace, x, y, k) in enumerate(_pf_cubos):
+    archivo, ancho, alto = _pf_mockups[i % len(_pf_mockups)]
+    mockup = f'<span class="alt-mock"><img src="img/portafolio/{archivo}.webp" width="{ancho}" height="{alto}" alt="" loading="lazy" decoding="async"></span>'
+    if enlace:
+        contenido = f'<a class="alt-link" href="{enlace}" aria-label="{nombre}: ver el proyecto completo">{mockup}<span class="alt-tag">{nombre}</span><span class="alt-hint">Haz clic para ver el proyecto completo</span></a>'
+    else:
+        contenido = f'<span class="alt-link alt-link-off">{mockup}<span class="alt-tag">{nombre}</span></span>'
+    _pf_items += f'\n          <li class="alt-item alt-pf{i}">{contenido}</li>'
+_pf_pos = ''.join(f'.alt-pf{i} {{ left: {x}%; top: {y}%; --k: {k}; }}\n' for i, (_n, _e, x, y, k) in enumerate(_pf_cubos))
+_pf_mock_css = (
+    '.alt-mock { display: block; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }\n'
+    '.alt-mock img { display: block; width: auto; height: calc(clamp(150px, 17vw, 230px) * var(--k, 1)); max-width: none; }\n'
+    '.alt-link:hover .alt-mock, .alt-link:focus-visible .alt-mock { transform: translateY(-14px); }\n'
+    # El texto de fondo "PORTAFOLIO" mide ~6.1 veces su tamaño: se ajusta para que no supere el ancho de la pantalla (con margen de 16px)
+    '.alt-folio .alt-bg { font-size: clamp(56px, calc((100vw - 2rem) / 6.1), 300px); }\n'
+    # Cada elemento se centra en su posición (sobre las diagonales); en móvil vuelve a la cuadrícula
+    '.alt-folio .alt-item { transform: translate(-50%, -50%); }\n'
+    '@media (max-width: 40em) { .alt-folio .alt-item { transform: none; } }\n'
+)
+open('css/portafolio-home.css', 'w', encoding='utf-8').write(_pf_pos + _pf_mock_css)
+
+INICIO_PORTAFOLIO = f"""
+    <!-- INICIO · PORTAFOLIO (cubos isométricos enlazados a sus proyectos) -->
+    <section class="pl-sec pl-light alt-folio" id="proyectos" aria-labelledby="pl-folio-title">
+      {_hilo([_a_curvas(_ruta_desk)], [_a_curvas(_ruta_mob)])}
+      <p class="alt-bg" aria-hidden="true">PORTAFOLIO</p>
+      <h2 class="sr-only" id="pl-folio-title">Portafolio</h2>
+      <ul class="alt-stage" role="list">{_pf_items}
+      </ul>
     </section>
-'''
+"""
+
+
+# Poste de señalética (Marca y producto): la línea entra desde arriba, recorre el contorno de cada cartel
+# (caja 190 × 73 con 10 de margen, separación 36, centro en x = 1190) y sale hacia abajo.
+# Poste de señalética: la línea entra desde arriba, recorre el contorno de cada flecha (cuerpo de 420 × 130 con punta de 44,
+# separación de 22, x0 = 940) y sale hacia abajo.
+_SIG_X0, _SIG_X1, _SIG_TIP, _SIG_H, _SIG_GAP, _SIG_TOP, _SIG_D = 940, 1360, 44, 130, 50, 283, 10
+_SIG_XP = (_SIG_X0 + _SIG_X1 - _SIG_TIP) / 2  # centro del cuerpo: por aquí baja el poste
+_sig_tops = [_SIG_TOP + i * (_SIG_H + _SIG_GAP) for i in range(3)]
+def _sig_loop(top):
+    """Contorno de una flecha (con margen _SIG_D) desde el centro superior del cuerpo, dando la vuelta hasta volver ahí."""
+    t, b = top - _SIG_D, top + _SIG_H + _SIG_D
+    mid = top + _SIG_H / 2
+    x0 = _SIG_X0 - _SIG_D
+    return [(_SIG_X1 - _SIG_TIP + _SIG_D * 0.6, t), (_SIG_X1 + _SIG_D * 1.6, mid), (_SIG_X1 - _SIG_TIP + _SIG_D * 0.6, b),
+            (x0, b), (x0, t), (_SIG_XP, t)]
+# Según el boceto: cada flecha se recorre por su contorno (entra arriba, punta, base y lado izquierdo) y desde
+# arriba-izquierda baja por dentro hasta la siguiente. El primer tramo entra por el centro; los demás, por x = _SIG_XQ.
+_SIG_XQ = 1057
+def _sig_loop(top, entrada_x):
+    t, b, mid = top - _SIG_D, top + _SIG_H + _SIG_D, top + _SIG_H / 2
+    x0 = _SIG_X0 - _SIG_D
+    return [(entrada_x, t), (_SIG_X1 - _SIG_TIP + _SIG_D * 0.6, t), (_SIG_X1 + _SIG_D * 1.6, mid),
+            (_SIG_X1 - _SIG_TIP + _SIG_D * 0.6, b), (x0, b), (x0, t), (_SIG_XQ, t), (_SIG_XQ, b)]
+_sig_puntos = [(720, 0), (720, 160), (_SIG_XQ, 160)]
+_sig_puntos += _sig_loop(_sig_tops[0], _SIG_XQ)
+_sig_puntos += _sig_loop(_sig_tops[1], _SIG_XQ)
+_sig_puntos += _sig_loop(_sig_tops[2], _SIG_XQ)
+# La salida vuelve al centro (x=720) para entrar al portafolio, que arranca ahí
+_sig_puntos += [(_SIG_XQ, 950), (720, 950), (720, 1000)]
+_sig_desk = _a_curvas(_redondeada(_sig_puntos, 20))
+
+# Versión móvil (375 × 1000): las flechas van arriba, sobre el título, con la misma lógica (entrada, contorno, bajada)
+_M_X0, _M_X1, _M_TIP, _M_H, _M_GAP, _M_TOP, _M_D, _M_XQ = 30, 345, 36, 90, 40, 60, 8, 150
+_m_tops = [_M_TOP + i * (_M_H + _M_GAP) for i in range(3)]
+def _m_loop(top, ex):
+    t, b, mid = top - _M_D, top + _M_H + _M_D, top + _M_H / 2
+    x0 = _M_X0 - _M_D
+    return [(ex, t), (_M_X1 - _M_TIP + _M_D * 0.6, t), (_M_X1 + _M_D * 1.6, mid),
+            (_M_X1 - _M_TIP + _M_D * 0.6, b), (x0, b), (x0, t), (_M_XQ, t), (_M_XQ, b)]
+# Tras la última flecha, la línea baja, rodea el texto por la derecha (por fuera, nunca por detrás) y vuelve al centro bajo la firma
+_M_RX, _M_GIRO, _M_FIN = 358, 440, 930
+# Entra por el centro (187.5), igual que la sección anterior, y baja hasta el poste de las flechas
+_m_puntos = [(187.5, 0), (_M_XQ, 0)] + _m_loop(_m_tops[0], _M_XQ) + _m_loop(_m_tops[1], _M_XQ) + _m_loop(_m_tops[2], _M_XQ) + [(_M_XQ, _M_GIRO), (_M_RX, _M_GIRO), (_M_RX, _M_FIN), (_M_XQ, _M_FIN), (187.5, _M_FIN), (187.5, 1000)]
+_sig_mob = _a_curvas(_redondeada(_m_puntos, 12))
+
 
 # 5. MARCA Y PRODUCTO (oscuro): la línea entra con una curva, forma una flecha hacia la derecha, un zigzag con esquinas
 #    redondeadas y una flecha hacia la izquierda, y sale hacia abajo (boceto de Luis). Las puntas de las flechas son en ángulo.
@@ -227,13 +350,14 @@ _flechas = ('M720 0 C722 80 745 140 821 144 L1174 144 Q1214 144 1214 104 L1214 3
 INICIO_PRODUCTO = f'''
     <!-- INICIO · MARCA Y PRODUCTO -->
     <section class="pl-sec pl-dark pl-producto" data-thread="fit" aria-labelledby="pl-producto-title">
-      {_hilo([_flechas],
-             ['M187.5 0 V60 Q187.5 90 217.5 90 H325 Q355 90 355 120 V880 Q355 910 325 910 H217.5 Q187.5 910 187.5 940 V1000'])}
+      {_hilo([_sig_desk], [_sig_mob])}
+      <!-- Poste de señalética: tres carteles sobre el trazo que recorre su contorno -->
+      <div class="pl-signs" aria-hidden="true"><span class="pl-icono pl-icono-1"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-pen"/></svg></span><span class="pl-icono pl-icono-2"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-code"/></svg></span><span class="pl-icono pl-icono-3"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-layers"/></svg></span><span class="pl-cartel pl-cartel-1">Branding</span><span class="pl-cartel pl-cartel-2">Websites</span><span class="pl-cartel pl-cartel-3">Producto</span></div>
       <div class="pl-inner">
-        <h2 class="pl-title" id="pl-producto-title">Marca y producto en la misma dirección</h2>
-        <p class="pl-lead">Product Owner y estratega de marca para pymes y startups. Me sumo a tu equipo para que lo que construyes tenga un norte claro, prioridades ordenadas y entregas que cumplan lo esperado.</p>
+        <h2 class="pl-title" id="pl-producto-title">Construyamos en la misma dirección.</h2>
+        <p class="pl-lead">Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.</p>
         <!-- Firma de la sección -->
-        <p class="pl-signature"><strong>Luis Vicencio</strong><span class="pl-mono">Diseñador digital.</span></p>
+        <p class="pl-signature"><strong>Luis Vicencio</strong><span class="pl-mono">Brand &amp; Product Designer.</span></p>
       </div>
     </section>
 '''
@@ -252,29 +376,60 @@ INICIO_FIRMA = f'''
     </section>
 '''
 
-# 7. CONTACTO (claro): la línea llega caminando, dejando huellas, hasta el titular
+# 7. CONTACTO (claro): la línea llega desde arriba, sin pisadas, hasta el titular
 INICIO_CONTACTO = f'''
     <!-- INICIO · CONTACTO -->
     <section class="pl-sec pl-light pl-contact" id="contacto" aria-labelledby="pl-contact-title">
-      {_hilo([_a_curvas(_huellas((1190, 0), (1220, 50), (770, 320), (720, 420), 3, 175, 52, 1.12))],
-             [_a_curvas(_huellas((187.5, 0), (187.5, 10), (187.5, 340), (187.5, 380), 3, 95, 30, 1.5))], paso=5)}
+      {_hilo(['M1190 0 C1190 190 720 190 720 360'], ['M187.5 0 V460'], paso=5)}
       <div class="pl-inner pl-center">
-        <h2 class="pl-display" id="pl-contact-title">¿Quieres que tu marca se mueva dejando huella?</h2>
+        <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">¿Qué hacemos </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">avanzar </span></span><span class="pl-line"><span class="pl-line-in">juntos?</span></span></h2>
+        <p class="pl-lead pl-contact-lead">Si tienes una idea, una marca o un producto entre manos, conversemos.</p>
+
         <a class="btn btn-primary" href="{WA_MARCAS}" rel="noopener noreferrer" target="_blank">Hablemos<span class="sr-only"> (WhatsApp, se abre en una pestaña nueva)</span> {_arrow}</a>
+        
       </div>
+      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Hablemos</mark> de tu proyecto!</h2>
+            <p class="pl-dialog-lead-text">Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
+            </div>
+            <form class="pl-form" id="pl-form" method="dialog" aria-describedby="pl-form-note">
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" "><label for="pl-name">Nombre</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="privacidad.html">política de privacidad</a>.</span></label>
+              <button class="btn btn-primary" type="submit">Enviar</button>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </section>
 '''
 
-# 8. BLOG (claro): EDITAR: artículos pendientes
+# 8. BLOG (claro): cada tema es una noticia con su propia página (noticias/, tools/generador/pages/1d_noticias.py)
+_noticias_inicio = [
+    ('noticias/cuando-trabajar-tu-marca.html', 'Marca', '¿Cuándo es momento de trabajar tu marca?'),
+    ('noticias/un-buen-equipo-no-basta.html', 'Producto digital', 'Un buen equipo técnico no basta si nadie ordena el camino'),
+    ('noticias/tres-roles-de-producto.html', 'Servicios', 'Tres roles que normalmente contratas por separado'),
+    ('noticias/metodo-scrum.html', 'Método', 'Scrum, con los pies en el negocio'),
+    ('noticias/productos-con-ia.html', 'Casos', 'Productos con IA para organizaciones exigentes'),
+    ('noticias/modalidad-de-trabajo.html', 'Modalidad', 'Cómo trabajamos juntos'),
+]
 INICIO_BLOG = '''
-    <!-- INICIO · BLOG -->
+    <!-- INICIO · BLOG (NOTICIAS) -->
     <section class="pl-sec pl-light pl-blog" id="blog" aria-labelledby="pl-blog-title">
       <div class="pl-inner">
         <h2 class="pl-title" id="pl-blog-title">Blog</h2>
         <p class="pl-lead">Información que puede ser de utilidad para tu negocio o para que me conozcas.</p>
-        <!-- EDITAR: reemplazar por los artículos reales (título, bajada, fecha y enlace) -->
-        <ul class="pl-blog-list" role="list">''' + ''.join('''
-          <li class="card pl-post"><p class="pl-mono">Próximamente</p><p class="pl-post-title">Artículo pendiente</p></li>''' for _ in range(3)) + '''
+        <ul class="pl-blog-list" role="list">''' + ''.join(f'''
+          <li class="card pl-post"><p class="pl-mono">{etiqueta}</p><p class="pl-post-title"><a href="{href}">{titulo}</a></p></li>''' for href, etiqueta, titulo in _noticias_inicio) + '''
         </ul>
       </div>
     </section>
@@ -282,7 +437,7 @@ INICIO_BLOG = '''
 
 page('index.html', 'Luis Vicencio · Diseño de marcas, productos digitales y estrategia',
      'Diseño marcas que desean moverse: estrategia, identidad y experiencias para tu servicio. Branding, UX Research y productos digitales para pymes y startups en Chile.',
-     contact=False, canonical='', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css'],
+     contact=False, canonical='', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css', 'css/portafolio-alt.css', 'css/portafolio-home.css'],
      og_image='img/og/inicio.jpg', og_alt='Línea de productos Fuchi Chao: detergente, eliminador de olores y jabón anti olores',
      jsonld=[person_ld(),
              {'@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE + '#servicio', 'name': 'Luis Vicencio · Diseño de marcas y productos digitales',
@@ -291,5 +446,153 @@ page('index.html', 'Luis Vicencio · Diseño de marcas, productos digitales y es
               'founder': {'@id': PERSON_ID}, 'areaServed': {'@type': 'Country', 'name': 'Chile'},
               'address': {'@type': 'PostalAddress', 'addressCountry': 'CL'}},
              faq_ld(_preguntas)],
-     body=INICIO_HERO + INICIO_IDEAS + INICIO_SISTEMAS + INICIO_PORTAFOLIO + INICIO_PRODUCTO
-     + INICIO_CONTACTO + INICIO_BLOG + HOME_PREGUNTAS)
+     body=INICIO_HERO + INICIO_IDEAS + INICIO_SISTEMAS + INICIO_PRODUCTO + INICIO_PORTAFOLIO
+     + INICIO_CONTACTO + INICIO_BLOG + HOME_PREGUNTAS,
+     alternates={'es-CL': '', 'en': 'en/', 'x-default': ''})
+
+
+# ---------- Versión en inglés del inicio (en/index.html) ----------
+import re
+# Los bloques con clases que usa js/main.js (título del hero, espiral de ideas, título de Sistemas) se reemplazan completos,
+# conservando sus clases. El resto se traduce por texto exacto. Traducción en revisión: pendiente de revisión de Luis.
+_EN_BLOQUES = [
+    (r'<h1 class="pl-display pl-hero-title".*?</h1>',
+     '<h1 class="pl-display pl-hero-title" id="pl-hero-title"><span class="pl-line"><span class="pl-line-in"><span class="pl-o">O</span>ur brands </span></span>'
+     '<span class="pl-line"><span class="pl-line-in" data-dir="1">that <span class="pl-u">want<span class="pl-base" aria-hidden="true"></span></span> </span></span>'
+     '<span class="pl-line"><span class="pl-line-in">to move</span></span></h1>'),
+    (r'<h2 class="ideas-title" id="ideas-title">.*?</h2>',
+     '<h2 class="ideas-title" id="ideas-title"><span class="ideas-line"><span>The world</span><span class="ideas-gap" aria-hidden="true"></span>'
+     '<span><span class="ideas-w1">of</span><span class="ideas-split"></span><span class="ideas-w2">ideas</span></span></span>'
+     '<span class="ideas-line"><span><span class="ideas-w1">in</span><span class="ideas-split"></span><span class="ideas-w2">our</span></span>'
+     '<span class="ideas-gap" aria-hidden="true"></span><span>products</span></span>'
+     '<span class="ideas-line"><span>for everyday</span><span class="ideas-gap" aria-hidden="true"></span><span>life</span></span></h2>'),
+    (r'<h2 class="pl-title pl-caps-title" id="pl-caps-title">.*?</h2>',
+     '<h2 class="pl-title pl-caps-title" id="pl-caps-title">I find the gap between your business and your audience, and <mark class="pl-mark">design the path</mark> to close it.</h2>'),
+    (r'<h2 class="pl-display pl-anim-title" id="pl-contact-title">.*?</h2>',
+     '<h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">What shall we </span></span>'
+     '<span class="pl-line"><span class="pl-line-in" data-dir="1">move forward </span></span><span class="pl-line"><span class="pl-line-in">together?</span></span></h2>'),
+    ('Si tienes una idea, una marca o un producto entre manos, conversemos.', "If you have an idea, a brand or a product in hand, let's talk."),
+]
+
+_EN_TEXTOS = [
+    # Hero, ideas y sistemas
+    ('Soy Luis, diseñador especializado en marcas y productos digitales. Trabajo contigo para entender hacia dónde quieres llevar tu negocio y transformar esa dirección en marcas, experiencias y productos que conecten con las personas.',
+     "Hi, I'm Luis, a designer specialized in brands and digital products. I work with you to understand where you want to take your business and turn that direction into brands, experiences and products that connect with people."),
+    ('Conecto lo conceptual con lo práctico.', 'I connect the conceptual with the practical.'),
+    ('Por eso, me involucro desde las primeras preguntas hasta la implementación: ayudo a definir qué vale la pena construir, diseño posibles soluciones, valido las decisiones y acompaño el desarrollo para que esa idea se convierta en algo concreto y útil.',
+     "That's why I get involved from the first questions through implementation: I help define what is worth building, design possible solutions, validate decisions and support development so the idea becomes something concrete and useful."),
+    ('Conversemos</a>', 'Let’s talk</a>'), ('>Conversemos <svg', '>Let’s talk <svg'),
+    # Disciplinas
+    ('Investigo el negocio, su contexto y su público para definir hacia dónde va tu marca y por qué deberían elegirla.', 'I research the business, its context and its audience to define where your brand is going and why they should choose it.'),
+    ('Transformo esa estrategia en un lenguaje visual que hace tu marca reconocible y coherente en cada punto de contacto.', 'I turn that strategy into a visual language that makes your brand recognizable and consistent at every touchpoint.'),
+    ('Investigo qué necesitan las personas, cómo se comportan y qué esperan para diseñar experiencias que tengan sentido para ellas.', 'I research what people need, how they behave and what they expect, to design experiences that make sense to them.'),
+    ('Creo componentes y reglas compartidas que mantienen la coherencia del producto y permiten que evolucione junto al equipo de desarrollo.', 'I create shared components and rules that keep the product coherent and let it evolve alongside the development team.'),
+    ('Defino, prototipo y planifico soluciones digitales, desde las primeras ideas hasta su implementación.', 'I define, prototype and plan digital solutions, from the first ideas to their implementation.'),
+    ('Diseño y coordino sitios web que comunican el valor de tu marca, generan oportunidades y ayudan a vender.', 'I design and coordinate websites that communicate your brand\'s value, generate opportunities and help sell.'),
+    ('Diseño flujos de trabajo asistidos por inteligencia artificial para abordar desarrollos complejos. La IA ejecuta; yo hago las preguntas correctas, tomo las decisiones y superviso el resultado.', 'I design AI-assisted workflows to tackle complex developments. AI executes; I ask the right questions, make the decisions and supervise the result.'),
+    ('Me integro a tu equipo o coordino diseñadores, desarrolladores y proveedores, manteniendo una dirección clara desde la idea inicial hasta la entrega.', 'I join your team or coordinate designers, developers and suppliers, keeping a clear direction from the initial idea to delivery.'),
+    ('>Identidad</strong>', '>Identity</strong>'), ('>Branding estratégico</strong>', '>Strategic branding</strong>'),
+    ('>Prototipado</strong>', '>Prototyping</strong>'), ('>Productos digitales</strong>', '>Digital products</strong>'),
+    ('>Desarrollo web</strong>', '>Web development</strong>'), ('>Colaboración</strong>', '>Collaboration</strong>'),
+    ('>Design Systems</strong>', '>Design Systems</strong>'),
+    # Portafolio
+    ('>Portafolio</h2>', '>Portfolio</h2>'), ('Imagen pendiente', 'Image pending'), ('aria-label="Ver proyecto: ', 'aria-label="View project: '),
+    ('>Estrategia</span>', '>Strategy</span>'), ('>Identidad</span>', '>Identity</span>'), ('>Comunicación B2B</span>', '>B2B communication</span>'),
+    ('>Comunicación</span>', '>Communication</span>'), ('>Redes</span>', '>Social media</span>'), ('>Propuesta</span>', '>Proposal</span>'),
+    ('De una tienda de insumos a un laboratorio fotográfico con propósito, que ganó un fondo cultural con su estrategia.',
+     'From a supplies shop to a purposeful photo lab that won a cultural grant with its strategy.'),
+    ('Cuatro años como aliado: de un logotipo a una consultora que consigue clientes por LinkedIn.',
+     'Four years as a partner: from a logo to a consultancy that wins clients through LinkedIn.'),
+    ('Una pyme de energía renovable que nació con marca en 2023 y la hizo crecer en 2025.',
+     'A renewable energy SME that launched its brand in 2023 and grew it in 2025.'),
+    ('Una comunicación que pone al centro su labor de rescate.', 'Communication that puts their rescue work at the center.'),
+    ('Propuesta de rebranding: un nombre que encontró su sentido en "Tómate el tiempo".',
+     'Rebranding proposal: a name that found its meaning in "Tómate el tiempo".'),
+    ('Propuesta de rebranding: un nombre que encontró su sentido en &quot;Tómate el tiempo&quot;.',
+     'Rebranding proposal: a name that found its meaning in "Tómate el tiempo".'),
+    ('>Cerveza Khronos</h3>', '>Khronos beer</h3>'),
+    # Marca y producto
+    ('Construyamos en la misma dirección.', "Let's build in the same direction."),
+    ('Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.',
+     'Every project starts from a different need. We can work on your brand, your web presence or a digital product, depending on what you have in hand and what you need to solve.'),
+    ('>Diseñador digital.<', '>Digital designer.<'),
+    # Contacto y diálogo
+    ('Hablemos (WhatsApp, se abre en una pestaña nueva)', 'Let’s talk (WhatsApp, opens in a new tab)'),
+    ('(WhatsApp, se abre en una pestaña nueva)', '(WhatsApp, opens in a new tab)'),
+    ('(se abre en una pestaña nueva)', '(opens in a new tab)'),
+    ('>Hablemos<span', '>Let’s talk<span'),
+    ('<mark class="pl-mark">Hablemos</mark> de tu proyecto!</h2>', '<mark class="pl-mark">Let’s talk</mark> about your project!</h2>'),
+    ('Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.', 'Tell me what stage your brand or product is at, and I will reply with a proposal for scope, timelines and budget.'),
+    ('>Nombre</label>', '>Name</label>'), ('>Correo</label>', '>Email</label>'), ('>Mensaje</label>', '>Message</label>'),
+    ('No completes este campo', 'Leave this field empty'),
+    ('Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="privacidad.html">política de privacidad</a>.',
+     'I agree that my name, email and message are stored so I can reply. See the <a href="privacidad.html">privacy policy</a>.'),
+    ('>Enviar</button>', '>Send</button>'),
+    ('aria-label="Cerrar"', 'aria-label="Close"'),
+    # Blog
+    ('>Blog</h2>', '>Blog</h2>'),
+    ('Información que puede ser de utilidad para tu negocio o para que me conozcas.',
+     'Information that may be useful for your business, or to get to know me.'),
+    ('>Marca</p>', '>Brand</p>'), ('>Producto digital</p><p class="pl-post-title">', '>Digital product</p><p class="pl-post-title">'),
+    ('>Servicios</p>', '>Services</p>'), ('>Método</p>', '>Method</p>'), ('>Casos</p>', '>Cases</p>'), ('>Modalidad</p>', '>Format</p>'),
+    ('>¿Cuándo es momento de trabajar tu marca?</a>', '>When is it time to work on your brand?</a>'),
+    ('>Un buen equipo técnico no basta si nadie ordena el camino</a>', '>A good tech team is not enough if no one sets the course</a>'),
+    ('>Tres roles que normalmente contratas por separado</a>', '>Three roles you usually hire separately</a>'),
+    ('>Scrum, con los pies en el negocio</a>', '>Scrum, grounded in the business</a>'),
+    ('>Productos con IA para organizaciones exigentes</a>', '>AI products for demanding organizations</a>'),
+    ('>Cómo trabajamos juntos</a>', '>How we work together</a>'),
+    # Preguntas frecuentes
+    ('Preguntas <strong>frecuentes</strong>.', 'Frequently asked <strong>questions</strong>.'),
+]
+
+_EN_PREGUNTAS = [
+    ('¿Cuándo es momento de trabajar mi marca?', 'When is it time to work on my brand?',
+     'When your business is born, when it grows, when you are compared only on price, when your direction changes or when people do not quite know what you do. If you see yourself in any of these, it is a good time.'),
+    ('¿Puedo partir solo con la identidad visual?', 'Can I start with visual identity only?',
+     'Yes. Many brands start with identity and add strategy as the business grows, like Fuchi Chao.'),
+    ('¿Qué es un Brand Compass?', 'What is a Brand Compass?',
+     'A tool to define your brand’s purpose, differentiator, personality and promise. It is the north that guides everything else.'),
+    ('¿Cuánto cuesta?', 'How much does it cost?',
+     'It depends on level and scope. After a first conversation I send you a proposal with scope, timelines and a fixed value.'),
+    ('¿Cuánto demora?', 'How long does it take?',
+     'A visual identity or a corporate site usually takes four to eight weeks, depending on content and review rounds. A strategic branding project takes longer, depending on its scope; we define it in the proposal.'),
+    ('¿Trabajas con otros creadores?', 'Do you work with other creators?',
+     'Yes. When the project calls for it, I bring in photographers, filmmakers or designers and coordinate the work.'),
+    ('¿Qué hace un Product Owner externo?', 'What does an external Product Owner do?',
+     'They represent your business in front of the tech team: they define what gets built and in what order, and check that every delivery meets expectations, without you having to hire someone full time.'),
+    ('¿Trabajas con mi equipo de desarrollo?', 'Do you work with my development team?',
+     'Yes. I integrate with your team or your client’s team, as I did when coordinating an AI cell inside a Bytequest client’s team.'),
+    ('¿Programas?', 'Do you code?',
+     'I design and build functional prototypes with AI-assisted development to validate ideas fast. Production development is done by your team.'),
+    ('¿Tienes experiencia con IA?', 'Do you have experience with AI?',
+     'Yes: I have led products with multi-agent assistants, automatic call analysis, AI summaries and automations. I also work with spec-driven development: I write clear specifications so your team and AI tools build exactly what was agreed.'),
+    ('¿Firmas acuerdos de confidencialidad?', 'Do you sign confidentiality agreements?',
+     'Yes. That is why some cases are shown without the client’s name.'),
+]
+
+
+def _en_home(html):
+    for patron, nuevo in _EN_BLOQUES:
+        html, n = re.subn(patron, nuevo, html, count=1, flags=re.S)
+        assert n == 1, patron[:40]
+    for es, en in _EN_TEXTOS:
+        html = html.replace(es, en)
+    for es, en, resp in _EN_PREGUNTAS:
+        assert html.count(f'<summary>{es}</summary>') == 1, es
+        html = html.replace(f'<summary>{es}</summary>', f'<summary>{en}</summary>')
+        assert html.count(f'<p>{_ES_RESP[es]}</p>') == 1, es
+        html = html.replace(f'<p>{_ES_RESP[es]}</p>', f'<p>{resp}</p>')
+    # La versión en inglés vive en en/: sus rutas a recursos y a páginas de la raíz suben un nivel (noticias/ queda en en/)
+    html = re.sub(r'(?<=["\s,])(img/|privacidad\.html|sobre-mi\.html|css/|js/|proyectos/)', r'../\1', html)
+    return html
+
+
+_ES_RESP = {q: a for q, a in _preguntas}
+_EN_BODY = _en_home(INICIO_HERO + INICIO_IDEAS + INICIO_SISTEMAS + INICIO_PRODUCTO + INICIO_PORTAFOLIO
+                    + INICIO_CONTACTO + INICIO_BLOG + HOME_PREGUNTAS)
+page('en/index.html', 'Luis Vicencio · Brand and digital product strategy',
+     'Brands that want to move: strategy, identity and experiences for your business. Branding, UX Research and digital products for SMEs and startups in Chile.',
+     contact=False, canonical='en/', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css', 'css/portafolio-alt.css', 'css/portafolio-home.css'],
+     og_image='img/og/inicio.jpg', og_alt='Fuchi Chao product line: detergent, odor eliminator and anti-odor soap',
+     jsonld=[person_ld(), faq_ld([(en, resp) for _es, en, resp in _EN_PREGUNTAS])],
+     body=_EN_BODY, lang='en', alternates={'es-CL': '', 'en': 'en/', 'x-default': ''})

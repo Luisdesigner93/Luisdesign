@@ -18,3 +18,6 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Configuración real del formulario de contacto (vive en el servidor, fuera de public_html)
+luisdesign-config.php

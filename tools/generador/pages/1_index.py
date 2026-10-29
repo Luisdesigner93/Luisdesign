@@ -5,7 +5,6 @@ _more_cases = [
     ('proyectos/sustentando.html', 'Sustentando', 'Cuatro años como aliado: de un logotipo a una consultora que consigue clientes por LinkedIn.', ['Identidad', 'Web', 'Comunicación B2B'], ('sustentando/02.jpg', 1200, 1200)),
     ('proyectos/uvenergy.html', 'Uvenergy', 'Una pyme de energía renovable que nació con marca en 2023 y la hizo crecer en 2025.', ['Identidad', 'Web'], ('uvenergy/01.jpg', 1600, 899)),
     ('proyectos/botes-salvavidas.html', 'Botes Salvavidas de Valparaíso', 'Una comunicación que pone al centro su labor de rescate.', ['Comunicación', 'Web', 'Redes'], ('botes-salvavidas/01.jpg', 864, 1080)),
-    ('proyectos.html#logofolio', 'Bowraps', 'Naming e identidad visual para una marca de wraps y bowls que sigue vigente en Viña del Mar.', ['Naming', 'Identidad visual'], None),
     ('proyectos/khronos.html', 'Cerveza Khronos', 'Propuesta de rebranding: un nombre que encontró su sentido en "Tómate el tiempo".', ['Propuesta', 'Estrategia', 'Packaging'], ('khronos/04.jpg', 1254, 1254)),
 ]
 
@@ -49,7 +48,7 @@ HOME_MORE = f'''
         </ul>
       </div>
       <div class="container more-foot-cta">
-        <a class="btn btn-primary" href="proyectos.html">Ver todos los proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+        <a class="btn btn-primary" href="#proyectos">Ver todos los proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
       </div>
     </section>
 '''
@@ -93,7 +92,7 @@ HOME_IDEAS = f'''
           <p>Una marca con propósito no le dice a la gente "cómprame". Le dice "voy hacia allá, ¿vienes conmigo?". Cuando ese norte está claro, los clientes dejan de compararte por precio y empiezan a elegirte porque creen en lo mismo que tú.</p>
           <a class="btn btn-outline ideas-cta" href="#contacto">Conversemos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
         </div>
-        <a class="ideas-pill" href="proyectos.html">
+        <a class="ideas-pill" href="#proyectos">
           <span class="ideas-pill-btn"><span class="ideas-pill-label">Ver portafolio</span><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></span>
           <img src="img/proyectos/khronos/02.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
         </a>
@@ -111,12 +110,13 @@ _case = {
     'Uvenergy': 'proyectos/uvenergy.html', 'Uvenergy (2023)': 'proyectos/uvenergy.html', 'Uvenergy (2025)': 'proyectos/uvenergy.html',
     'Fuchi Chao (2021)': 'proyectos/fuchi-chao.html', 'Fuchi Chao (2023)': 'proyectos/fuchi-chao.html',
     'Sustentando': 'proyectos/sustentando.html', 'Khronos (propuesta)': 'proyectos/khronos.html', 'LAB*502': 'proyectos/lab502.html',
-    'Botes Salvavidas de Valparaíso': 'proyectos/botes-salvavidas.html', 'Bowraps': 'proyectos.html#logofolio',
+    'Botes Salvavidas de Valparaíso': 'proyectos/botes-salvavidas.html',
 }
 
 
 def _cases(names):
-    return ' · '.join(f'<a href="{_case[n]}">{n}</a>' for n in names)
+    # Sin página propia (p. ej. Bowraps), el caso va como texto
+    return ' · '.join(f'<a href="{_case[n]}">{n}</a>' if n in _case else n for n in names)
 
 
 # 3. ¿Cuándo es momento de trabajar tu marca?
@@ -245,7 +245,7 @@ HOME_SOBRE = '''
             <p>Cada proyecto me dejó una herramienta nueva: empecé diseñando identidades, sumé la estrategia de marca y hoy también lidero productos digitales. Me mueve ayudar a que las empresas crezcan, que su marca se viva por dentro y por fuera, y hacerlo en colaboración con otros creadores y con los propios clientes.</p>
             <div class="about-links">
               <a class="link-arrow" href="sobre-mi.html">Ver mi trayectoria ''' + _arrow + '''</a>
-              <a class="link-arrow" href="producto-digital.html">¿Tienes un producto digital? Conoce cómo trabajo con equipos de software ''' + _arrow + '''</a>
+              <a class="link-arrow" href="#blog">¿Tienes un producto digital? Conoce cómo trabajo con equipos de software ''' + _arrow + '''</a>
             </div>
           </div>
         </div>
@@ -260,6 +260,11 @@ _preguntas = [
     ('¿Cuánto cuesta?', 'Depende del nivel y del alcance. Después de una primera conversación te envío una propuesta con alcance, plazos y valor cerrado.'),
     ('¿Cuánto demora?', 'Una identidad visual o un sitio corporativo suele tomar entre cuatro y ocho semanas, según los contenidos y las rondas de revisión. Un proyecto de branding estratégico toma más tiempo, según su alcance; lo definimos en la propuesta.'),
     ('¿Trabajas con otros creadores?', 'Sí. Cuando el proyecto lo pide, sumo fotógrafos, realizadores o diseñadores, y coordino el trabajo.'),
+    ('¿Qué hace un Product Owner externo?', 'Representa a tu negocio frente al equipo técnico: define qué se construye, en qué orden y revisa que cada entrega cumpla lo esperado, sin que tengas que contratar a alguien a tiempo completo.'),
+    ('¿Trabajas con mi equipo de desarrollo?', 'Sí. Me integro a tu equipo o al de tu cliente, como lo hice coordinando una célula de IA dentro del equipo de un cliente de Bytequest.'),
+    ('¿Programas?', 'Diseño y construyo prototipos funcionales con desarrollo asistido por IA para validar ideas rápido. El desarrollo para producción lo hace tu equipo.'),
+    ('¿Tienes experiencia con IA?', 'Sí: lideré productos con asistentes multiagente, análisis automático de llamadas, resúmenes con IA y automatizaciones. Además trabajo con desarrollo guiado por especificaciones (spec-driven): escribo especificaciones claras para que tu equipo y las herramientas de IA construyan exactamente lo acordado.'),
+    ('¿Firmas acuerdos de confidencialidad?', 'Sí. Por eso algunos casos se muestran sin el nombre del cliente.'),
 ]
 HOME_PREGUNTAS = '''
     <!-- PREGUNTAS FRECUENTES -->

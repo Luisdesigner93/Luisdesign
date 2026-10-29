@@ -1,0 +1,14 @@
+.alt-pf0 { left: 14.8%; top: 26.8%; --k: 1.0; }
+.alt-pf1 { left: 33.8%; top: 17.7%; --k: 0.9; }
+.alt-pf2 { left: 51.0%; top: 38.2%; --k: 1.1; }
+.alt-pf3 { left: 67.4%; top: 21.0%; --k: 1.0; }
+.alt-pf4 { left: 25.9%; top: 40.8%; --k: 1.2; }
+.alt-pf5 { left: 38.7%; top: 57.0%; --k: 0.9; }
+.alt-pf6 { left: 68.1%; top: 58.7%; --k: 1.0; }
+.alt-pf7 { left: 86.0%; top: 41.0%; --k: 0.9; }
+.alt-mock { display: block; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
+.alt-mock img { display: block; width: auto; height: calc(clamp(150px, 17vw, 230px) * var(--k, 1)); max-width: none; }
+.alt-link:hover .alt-mock, .alt-link:focus-visible .alt-mock { transform: translateY(-14px); }
+.alt-folio .alt-bg { font-size: clamp(56px, calc((100vw - 2rem) / 6.1), 300px); }
+.alt-folio .alt-item { transform: translate(-50%, -50%); }
+@media (max-width: 40em) { .alt-folio .alt-item { transform: none; } }

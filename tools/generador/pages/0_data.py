@@ -140,7 +140,7 @@ def case_intro(pr, summary, facts, actions=''):
     return f'''    <section class="case-intro" aria-labelledby="page-title">
       <div class="container case-intro-grid">
         <div class="case-aside">
-          <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos.html">Proyectos</a></li><li aria-current="page">{pr['title']}</li></ol>
+          <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{home}}#proyectos">Proyectos</a></li><li aria-current="page">{pr['title']}</li></ol>
           <h1 class="case-title" id="page-title">{pr['title']}</h1>
           <dl class="case-meta">{rows}</dl>
           <ul class="case-chips" aria-label="Disciplinas">{chips}</ul>
@@ -242,7 +242,7 @@ def case_seo(pr, desc):
 def case_landing(pr):
     """Cierre de cada caso: botón a su landing (Marcas o Producto digital)."""
     if pr['landing'] == 'producto':
-        q, href = '¿Tu producto necesita <strong>un norte</strong>?', '{p}producto-digital.html'
+        q, href = '¿Tu producto necesita <strong>un norte</strong>?', '{p}#contacto'
     else:
         q, href = '¿Tu marca está en <strong>un momento parecido</strong>?', '{home}'
     return f'''    <section class="panel section" aria-labelledby="landing-title">
@@ -294,7 +294,7 @@ HOME_HERO = f'''    <!-- HERO -->
           <div class="v2-hero-cta">
             <div class="btn-row">
               <a class="btn btn-primary v2-btn-light" href="{WA_MARCAS}" rel="noopener noreferrer" target="_blank">Conversemos sobre tu marca<span class="sr-only"> (WhatsApp, se abre en una pestaña nueva)</span> <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
-              <a class="btn v2-btn-ghost" href="proyectos.html">Ver proyectos</a>
+              <a class="btn v2-btn-ghost" href="{{home}}#proyectos">Ver proyectos</a>
             </div>
           </div>
         </div>

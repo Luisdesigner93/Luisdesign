@@ -373,7 +373,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
 
   // Las líneas vienen estiradas (viewBox fijo). Se reescalan al tamaño real de su sección para que el avance del trazo
   // y la posición de la punta se midan en la misma escala. mapY permite mover alturas (el subrayado del hero).
-  function fitSvg(svg, w, h, mapY) {
+  function fitSvg(svg, w, h, mapY, dx = 0) {
     if (!svg.dataset.view) svg.dataset.view = svg.getAttribute('viewBox');
     const [, , vw, vh] = svg.dataset.view.split(' ').map(Number);
     const my = mapY || ((y) => (y * h) / vh);
@@ -381,7 +381,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     svg.querySelectorAll('path').forEach((path) => {
       if (!path.dataset.d) path.dataset.d = path.getAttribute('d');
       let i = 0;
-      path.setAttribute('d', path.dataset.d.replace(/-?\d+(?:\.\d+)?/g, (n) => (i++ % 2 === 0 ? (n * w) / vw : my(+n)).toFixed(1)));
+      path.setAttribute('d', path.dataset.d.replace(/-?\d+(?:\.\d+)?/g, (n) => (i++ % 2 === 0 ? (n * w) / vw + dx : my(+n)).toFixed(1)));
     });
   }
 
@@ -460,47 +460,114 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   // El mundo de las ideas: la línea baja y se enrolla en espiral en la botella central (boceto de Luis): cruza por delante,
   // da la vuelta por la derecha, vuelve por detrás y cruza otra vez por delante en diagonal antes de salir hacia abajo.
   // Se mide el atomizador en cada cuadro (crece con el scroll); la capa delantera se recorta a los dos cruces por delante.
+  // Espiral alrededor de la botella central: un resorte de dos vueltas, visto con una leve inclinación para que cada vuelta
+  // sea una elipse ordenada. Por detrás de la botella va todo el trazado (la botella lo tapa); por delante, solo los tramos
+  // de frente (seno > 0), que se muestran con una máscara sobre el mismo trazado (así la animación sigue en sincronía).
+  function bezier(p0, p1, p2, p3, n) {
+    const puntos = [];
+    for (let k = 0; k <= n; k += 1) {
+      const t = k / n; const u = 1 - t;
+      puntos.push([u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0],
+        u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1]]);
+    }
+    return puntos;
+  }
+
   function ideasPath(seg) {
     const { sec, back, front } = seg.spiral;
     const bottle = sec.querySelector('.ideas-item-spray');
     if (!bottle) return;
-    const box = sec.getBoundingClientRect(); const r = bottle.getBoundingClientRect();
+    const box = (sec.querySelector('.ideas-pin') || sec).getBoundingClientRect();
     const w = box.width; const h = box.height;
+    // La espiral se calcula solo cuando cambia el tamaño de la pantalla; con la botella a tamaño final, para que su largo no cambie
+    const clave = `${Math.round(w)}x${Math.round(h)}`;
+    if (seg.clave === clave) return;
+    seg.clave = clave;
+    const guardado = bottle.style.animationDelay;
+    bottle.style.animationDelay = '-1000ms';
+    const r = bottle.getBoundingClientRect();
+    bottle.style.animationDelay = guardado;
     const mob = window.matchMedia('(max-width: 40em)').matches;
-    const xs = w * (mob ? EXIT.mob : EXIT.desk); // entra donde terminó la línea del hero
-    const xe = w * 0.5; // sale al centro, donde empieza la línea de Sistemas
-    // Cuerpo de la botella (sin el gatillo)
+    // Entra exactamente donde termina la línea del hero (misma coordenada en pantalla), para que no haya quiebre
+    let xs = w * (mob ? EXIT.mob : EXIT.desk);
+    if (heroSeg) {
+      const hp = heroSeg.path; const fin = hp.getPointAtLength(hp.getTotalLength()); const m = hp.getScreenCTM();
+      if (m) { const xPantalla = m.a * fin.x + m.c * fin.y + m.e; if (xPantalla > box.left && xPantalla < box.right) xs = xPantalla - box.left; }
+    }
+    const xr = w * (mob ? 0.82 : 0.75); // la salida baja por la derecha (lejos del texto) y vuelve al centro al final
     const bt = r.top - box.top + r.height * 0.36; const bb = r.bottom - box.top - r.height * 0.04; const bh = bb - bt;
     const cx = r.left - box.left + r.width / 2; const bw = r.width * 0.78;
-    const L0 = cx - bw / 2; const R0 = cx + bw / 2; const m = bw * 0.22; const k = bh * 0.1;
-    const y1 = bt + bh * 0.12; const y2 = bt + bh * 0.4; const s = bh * 0.1;
-    const y3 = bt + bh * 0.6; const y4 = bt + bh * 0.86;
-    const P = (x, y) => `${x.toFixed(1)} ${y.toFixed(1)}`;
-    const d = [
-      `M${P(xs, 0)}`,
-      `C${P(xs, y1 * 0.4)} ${P(L0 - m * 2.2, y1 - bh * 0.5)} ${P(L0 - m, y1)}`, // baja por detrás hasta el lado izquierdo
-      `C${P(L0 + bw * 0.3, y1 + s * 0.6 + k)} ${P(R0 - bw * 0.3, y1 + s * 0.6 + k)} ${P(R0 + m, y1 + s)}`, // cruce por delante
-      `C${P(R0 + m * 2, y1 + s + bh * 0.08)} ${P(R0 + m * 2, y2 - bh * 0.06)} ${P(R0 + m, y2)}`, // vuelta por la derecha
-      `C${P(R0 - bw * 0.3, y2 - k)} ${P(L0 + bw * 0.3, y2 + s - k)} ${P(L0 - m, y2 + s)}`, // cruce por detrás
-      `C${P(L0 - m * 2, y2 + s + bh * 0.05)} ${P(L0 - m * 1.6, y3 - bh * 0.06)} ${P(L0 - m * 0.6, y3)}`, // vuelta por la izquierda
-      `C${P(L0 + bw * 0.3, y3 + k)} ${P(R0 - bw * 0.3, y4 - k * 0.5)} ${P(R0 + m, y4)}`, // cruce por delante en diagonal
-      `C${P(R0 + m * 2.2, y4 + bh * 0.12)} ${P(xe, h - (h - bb) * 0.45)} ${P(xe, h)}`, // sale hacia abajo
-    ].join(' ');
-    const ds = smooth(d, seg.path);
+    const R = r.width * 0.95; // radio horizontal del resorte: cada vuelta sobresale a ambos lados de la botella
+    const y1 = bt + bh * 0.1; const y2 = bb - bh * 0.02; // altura de la primera y de la última vuelta
+    const e = bh * 0.05; // inclinación de la vista: cada vuelta se ve como una elipse
+    const VUELTAS = 3;
+    const th0 = Math.PI; const th1 = th0 + 2 * Math.PI * VUELTAS;
+    const punto = (th) => {
+      const f = (th - th0) / (th1 - th0);
+      return [cx + R * Math.cos(th), y1 + (y2 - y1) * f + e * Math.sin(th)];
+    };
+    const P0 = punto(th0); const P1 = punto(th1);
+    const entrada = bezier([xs, 0], [xs, y1 * 0.5], [P0[0], P0[1] - bh * 0.12], P0, 30);
+    // Desde la última vuelta, la salida va directo a la derecha y baja por ese lado, sin volver al centro
+    const salida = bezier(P1, [(P1[0] + xr) / 2, P1[1]], [xr, P1[1]], [xr, P1[1] + (h - P1[1]) * 0.3], 30)
+      .concat(bezier([xr, P1[1] + (h - P1[1]) * 0.3], [xr, P1[1] + (h - P1[1]) * 0.65], [xr, h * 0.9], [xr, h], 30).slice(1));
+    const N = 80 * VUELTAS;
+    const resorte = [];
+    for (let i = 0; i <= N; i += 1) {
+      const th = th0 + ((th1 - th0) * i) / N;
+      resorte.push({ p: punto(th), frente: Math.sin(th) > 0 });
+    }
+    // Muestreo denso (decenas de puntos por vuelta): el trazo es fluido sin suavizado adicional
+    const aTrazo = (puntos) => 'M' + puntos.map((q) => `${q[0].toFixed(1)} ${q[1].toFixed(1)}`).join(' L ');
+    const completo = aTrazo([...entrada, ...resorte.map((x) => x.p), ...salida.slice(1)]);
+    // Fracción del trazo que corresponde a la entrada (desde el hero): se dibuja al llegar a la sección
+    const largo = (pts) => pts.reduce((acc, q, i) => (i ? acc + Math.hypot(q[0] - pts[i - 1][0], q[1] - pts[i - 1][1]) : 0), 0);
+    seg.entrada = largo(entrada) / Math.max(1, largo([...entrada, ...resorte.map((x) => x.p), ...salida.slice(1)]));
     [back, front].forEach((svg) => {
       if (!svg) return;
       svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-      svg.querySelectorAll('path').forEach((path) => path.setAttribute('d', ds));
+      svg.querySelectorAll('path').forEach((path) => path.setAttribute('d', completo));
     });
     seg.t = table(seg.path);
-    // Capa delantera: todo menos la silueta de la botella central (cuello y cuerpo); dentro de ella solo
-    // se ven el primer cruce y el cruce en diagonal. Las demás piezas del collage quedan por detrás de la línea.
+
+    // Tramos de frente: se agrupan las muestras consecutivas de seno positivo (con un punto de margen a cada lado)
     if (front) {
-      const f = (v) => v.toFixed(1);
-      const top = r.top - box.top; const nx0 = cx - r.width * 0.25; const nx1 = cx + r.width * 0.25;
-      const silueta = `M${f(nx0)} ${f(top)} H${f(nx1)} V${f(bt)} H${f(R0)} V${f(bb)} H${f(L0)} V${f(bt)} H${f(nx0)} Z`;
-      const franja = (y0, y1b) => `M${f(L0 + 1)} ${f(y0)} H${f(R0 - 1)} V${f(y1b)} H${f(L0 + 1)} Z`;
-      front.style.clipPath = `path(evenodd, 'M0 0 H${f(w)} V${f(h)} H0 Z ${silueta} ${franja(y1 - k, y1 + s + k * 1.2)} ${franja(y3 - k * 0.5, Math.min(bb - 1, y4 + k * 1.2))}')`;
+      const tramos = [];
+      let actual = null;
+      resorte.forEach((x, i) => {
+        if (x.frente) {
+          if (!actual) { actual = []; if (i > 0) actual.push(resorte[i - 1].p); }
+          actual.push(x.p);
+        } else if (actual) {
+          actual.push(x.p); tramos.push(actual); actual = null;
+        }
+      });
+      if (actual) tramos.push(actual);
+      const svgNS = 'http://www.w3.org/2000/svg';
+      if (!front._mascara) {
+        const defs = document.createElementNS(svgNS, 'defs');
+        const mascara = document.createElementNS(svgNS, 'mask');
+        mascara.setAttribute('id', 'ideas-frente');
+        mascara.setAttribute('maskUnits', 'userSpaceOnUse');
+        mascara.setAttribute('x', '0'); mascara.setAttribute('y', '0');
+        defs.append(mascara);
+        front.prepend(defs);
+        front.querySelectorAll('path').forEach((path) => path.setAttribute('mask', 'url(#ideas-frente)'));
+        front._mascara = mascara;
+        front.style.clipPath = 'none';
+      }
+      front._mascara.setAttribute('width', w);
+      front._mascara.setAttribute('height', h);
+      front._mascara.replaceChildren(...tramos.map((puntos) => {
+        const trazo = document.createElementNS(svgNS, 'path');
+        trazo.setAttribute('d', aTrazo(puntos));
+        trazo.setAttribute('fill', 'none');
+        trazo.setAttribute('stroke', '#fff');
+        trazo.setAttribute('stroke-width', '14');
+        trazo.setAttribute('stroke-linecap', 'round');
+        trazo.setAttribute('vector-effect', 'non-scaling-stroke');
+        return trazo;
+      }));
     }
   }
 
@@ -522,11 +589,31 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     heroPath();
     heroStopAt();
     chain = [];
+    let finAnteriorX = null; // x en pantalla del punto final del trazo de la sección anterior
     document.querySelectorAll('.pl-sec:not(.pl-hero)').forEach((sec) => {
-      const box = sec.getBoundingClientRect();
+      const box = (sec.querySelector('.ideas-pin') || sec).getBoundingClientRect();
       const svgs = visible(sec);
-      svgs.forEach((svg) => fitSvg(svg, box.width, box.height));
+      // Con .pl-stage, el dibujo (y entre 0 y 1000 del viewBox) se ajusta a ese bloque; las y negativas (de -500 a 0)
+      // ocupan lo que hay encima de él (el título) y y = 1000 queda en el borde inferior de la sección
+      const stage = sec.querySelector('.pl-stage');
+      let mapY;
+      if (stage) {
+        const r = stage.getBoundingClientRect(); const top = r.top - box.top;
+        mapY = (y) => (y < 0 ? Math.max(0, top * (1 + y / 500)) : y >= 1000 ? box.height : top + (y / 1000) * r.height);
+      }
+      svgs.forEach((svg) => fitSvg(svg, box.width, box.height, mapY));
       if (!svgs.length) return;
+      // Continuidad: la entrada de la sección se alinea con el punto final de la sección anterior (en pantalla)
+      const trazoBack = (svgs.find((svg) => !svg.classList.contains('pl-thread-front')) || svgs[0]).querySelector('path');
+      const mBack = trazoBack.getScreenCTM();
+      if (mBack && finAnteriorX !== null) {
+        const ini = trazoBack.getPointAtLength(0);
+        const delta = finAnteriorX - (mBack.a * ini.x + mBack.c * ini.y + mBack.e);
+        if (Math.abs(delta) > 0.5 && Math.abs(delta) < 20) svgs.forEach((svg) => fitSvg(svg, box.width, box.height, mapY, delta));
+      }
+      const trazoFin = (svgs.find((svg) => !svg.classList.contains('pl-thread-front')) || svgs[0]).querySelector('path');
+      const fin = trazoFin.getPointAtLength(trazoFin.getTotalLength()); const mFin = trazoFin.getScreenCTM();
+      if (mFin) finAnteriorX = mFin.a * fin.x + mFin.c * fin.y + mFin.e;
       const back = svgs.find((svg) => !svg.classList.contains('pl-thread-front')) || svgs[0];
       const front = svgs.find((svg) => svg.classList.contains('pl-thread-front'));
       const paths = [...back.querySelectorAll('path')];
@@ -540,6 +627,8 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       chain.push(...segs);
       // Elementos que aparecen cuando la línea pasa por ellos (Sistemas: disciplinas por su punto; el título, al entrar al óvalo)
       const items = [...sec.querySelectorAll('.pl-cap .pl-dot')].map((dot) => [dot.closest('.pl-cap'), dot.getBoundingClientRect()]);
+      // Marca práctica (Marca y producto): cada cartel y su icono aparecen cuando la línea pasa por su flecha
+      sec.querySelectorAll('.pl-cartel, .pl-icono').forEach((el) => items.push([el, el.getBoundingClientRect()]));
       const title = sec.querySelector('.pl-caps-title');
       if (title) { const r = title.getBoundingClientRect(); items.push([title, { left: r.left + r.width / 2, top: r.top, width: 0, height: 0 }]); }
       items.forEach(([el, r]) => {
@@ -564,7 +653,9 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     if (seg.fit) {
       const r = seg.fit.getBoundingClientRect();
       const startTop = window.innerHeight * SCAN; // empieza cuando la sección llega a la línea de lectura
-      const endTop = Math.max(0, (window.innerHeight - r.height) / 2); // termina con la sección centrada
+      // En móvil la sección es más alta que la pantalla: termina antes (a un cuarto de alto) para que la línea no se sienta lenta
+      const movil = window.matchMedia('(max-width: 40em)').matches;
+      const endTop = movil ? window.innerHeight * 0.25 : Math.max(0, (window.innerHeight - r.height) / 2); // termina con la sección centrada
       return Math.min(1, Math.max(0, (startTop - r.top) / Math.max(1, startTop - endTop)));
     }
     const m = seg.path.getScreenCTM();
@@ -598,14 +689,52 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     heroStop = lens[k] / L;
   }
 
+  // Fijación de la sección de ideas: 0 cuando la sección llega arriba, 1 cuando termina (y la página puede seguir bajando)
+  function ideasP() {
+    const sec = document.getElementById('ideas');
+    if (!sec) return 0;
+    const recorrido = Math.max(1, sec.offsetHeight - window.innerHeight);
+    return Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / recorrido));
+  }
+  // Espiral: la entrada se dibuja al llegar a la sección; durante la fijación, el resto del trazo avanza con ella
+  function ideasProgress(seg) {
+    const f = seg.entrada || 0;
+    const fijacion = ideasP();
+    return fijacion > 0 ? f + (1 - f) * fijacion : Math.min(progressOf(seg), f);
+  }
+  // Rango de cada línea y de cada producto dentro de la fijación (0 a 1)
+  // Cada línea se abre al mismo ritmo que el producto que está en su hueco (teléfono, cerveza y espray): el producto empuja el texto
+  const IDEAS_LINEAS = [[0.25, 0.6], [0.4, 0.75], [0.55, 0.9]];
+  const IDEAS_ITEMS = { 'ideas-item-phone': [0.25, 0.6], 'ideas-item-beer': [0.4, 0.75], 'ideas-item-spray': [0.55, 0.9] };
+  // Ajusta el retraso negativo de cada animación (duración 1 s) para que avance con el progreso
+  function scrubIdeas() {
+    const sec = document.getElementById('ideas');
+    if (!sec) return;
+    const p = ideasP();
+    const ajustar = (el, [a, b]) => {
+      const q = Math.min(1, Math.max(0, (p - a) / (b - a)));
+      el.style.animationDelay = `${-q * 1000}ms`;
+    };
+    sec.querySelectorAll('.ideas-line').forEach((linea, i) => {
+      if (!IDEAS_LINEAS[i]) return;
+      linea.querySelectorAll(':scope > span:first-child, :scope > span:last-child, .ideas-w1, .ideas-w2')
+        .forEach((el) => ajustar(el, IDEAS_LINEAS[i]));
+    });
+    Object.entries(IDEAS_ITEMS).forEach(([clase, rango]) => {
+      const el = sec.querySelector(`.${clase}`);
+      if (el) ajustar(el, rango);
+    });
+  }
+
   function draw() {
+    scrubIdeas();
     const heroSvgs = visible(hero);
     if (autoDone && heroSeg) heroP = Math.max(heroStop, progressOf(heroSeg));
     heroSvgs.forEach((svg) => svg.querySelectorAll('path').forEach((path) => { path.style.strokeDashoffset = String(1 - heroP); }));
     let front = heroSvgs[0] ? { path: heroSvgs[0].querySelector('path'), p: heroP } : null;
     chain.forEach((seg) => {
       if (seg.spiral) ideasPath(seg);
-      const p = heroP < 1 ? 0 : progressOf(seg); // las secciones esperan a que el hero esté completo
+      const p = heroP < 1 ? 0 : (seg.spiral ? ideasProgress(seg) : progressOf(seg)); // las secciones esperan a que el hero esté completo
       seg.path.style.strokeDashoffset = String(1 - p);
       if (seg.twin) seg.twin.style.strokeDashoffset = String(1 - p);
       seg.marks.forEach((mk) => mk.el.classList.toggle('is-on', p >= mk.at - 0.01));
@@ -670,22 +799,174 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   document.addEventListener('mouseleave', () => dot.classList.remove('is-visible'));
 })();
 
-// Inicio: las líneas del titular se desplazan en horizontal con el scroll, siguiéndolo con suavidad
-// (la primera y la tercera hacia la izquierda; la marcada con data-dir="1", hacia la derecha).
+// Inicio: las líneas de los titulares animados (hero y contacto) se desplazan en horizontal con el scroll, siguiéndolo
+// con suavidad (la primera y la tercera hacia la izquierda; la marcada con data-dir="1", hacia la derecha).
+// El del hero se mueve desde el inicio de la página; los demás desde que entran en pantalla, y aparecen línea a línea.
 (function initHomeTitle() {
-  const lines = [...document.querySelectorAll('.pl-hero-title .pl-line-in')];
-  if (!lines.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const titles = [...document.querySelectorAll('.pl-hero-title, .pl-anim-title')];
+  if (!titles.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const SPEED = 0.07; // px de desplazamiento por px de scroll
-  let current = 0;
+  const groups = titles.map((el) => ({ el, hero: el.classList.contains('pl-hero-title'), lines: [...el.querySelectorAll('.pl-line-in')], current: 0 }));
+  // Entrada línea a línea al aparecer en pantalla (el hero ya entra al cargar, por CSS)
+  const later = groups.filter((g) => !g.hero).map((g) => g.el);
+  if (later.length && 'IntersectionObserver' in window) {
+    later.forEach((el) => el.classList.add('pl-reveal'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.35 });
+    later.forEach((el) => io.observe(el));
+  }
   let running = false;
   function frame() {
-    const target = Math.min(window.scrollY, window.innerHeight * 1.5) * SPEED;
-    current += (target - current) * 0.12;
-    if (Math.abs(target - current) < 0.05) current = target;
-    lines.forEach((line) => { line.style.transform = `translate3d(${(line.dataset.dir === '1' ? 1 : -1) * current}px, 0, 0)`; });
+    let moving = false;
+    groups.forEach((g) => {
+      const scrolled = g.hero ? window.scrollY : window.innerHeight - g.el.getBoundingClientRect().top;
+      const target = Math.max(0, Math.min(scrolled, window.innerHeight * 1.5)) * SPEED;
+      g.current += (target - g.current) * 0.12;
+      if (Math.abs(target - g.current) < 0.05) g.current = target;
+      else moving = true;
+      g.lines.forEach((line) => { line.style.transform = `translate3d(${(line.dataset.dir === '1' ? 1 : -1) * g.current}px, 0, 0)`; });
+    });
     window.dispatchEvent(new Event('pl:title-move'));
-    running = current !== target;
+    running = moving;
     if (running) requestAnimationFrame(frame);
   }
   window.addEventListener('scroll', () => { if (!running) { running = true; requestAnimationFrame(frame); } }, { passive: true });
+})();
+
+// Inicio: Conversemos (encabezado y tarjeta de ideas) abre un popup con el formulario. El envío va a contacto/guardar.php,
+// que valida y guarda el mensaje en el servidor. Sin JavaScript, el enlace lleva a #contacto.
+(function initContactForm() {
+  const dialog = document.getElementById('pl-conversemos');
+  const form = document.getElementById('pl-form');
+  if (!dialog || !form || !dialog.showModal) return;
+  const note = document.getElementById('pl-form-note');
+  const submit = form.querySelector('button[type="submit"]');
+  // Con el popup abierto se usa el cursor del sistema (el anillo queda detrás del popup)
+  const abrir = () => {
+    document.documentElement.classList.remove('has-cursor');
+    dialog.showModal();
+    form.querySelector('input').focus();
+  };
+  dialog.addEventListener('close', () => document.documentElement.classList.add('has-cursor'));
+  document.querySelectorAll('.header-actions a[href$="#contacto"], .ideas-cta').forEach((link) => {
+    link.addEventListener('click', (event) => { event.preventDefault(); abrir(); });
+  });
+  dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+  // Cierra al hacer clic fuera del popup (no al hacer clic en su contenido ni en su barra de desplazamiento)
+  dialog.addEventListener('click', (event) => {
+    const r = dialog.getBoundingClientRect();
+    const fuera = event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom;
+    if (fuera) dialog.close();
+  });
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    submit.disabled = true;
+    note.textContent = 'Enviando…';
+    try {
+      const respuesta = await fetch('contacto/guardar.php', { method: 'POST', body: new FormData(form), credentials: 'omit' });
+      const datos = await respuesta.json();
+      note.textContent = datos.mensaje;
+      if (datos.ok) form.reset();
+    } catch (error) {
+      note.textContent = 'No pude enviar tu mensaje. Escríbeme a contacto@luisdesign.cl.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+})();
+
+// Inicio: los títulos de sección se mueven como el del hero. Cada palabra se separa en su propio elemento; las palabras
+// se agrupan por línea y cada línea entra desde abajo y se desplaza en horizontal con el scroll (una a la izquierda y la
+// siguiente a la derecha). Solo en la home (html.inicio); el hero y el titular de contacto tienen su propio código.
+(function initSectionTitles() {
+  if (!document.documentElement.classList.contains('inicio') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const titulos = [...document.querySelectorAll('main h2[id]')]
+    .filter((h) => !h.classList.contains('pl-anim-title') && !h.classList.contains('ideas-title') && !h.closest('dialog'));
+  if (!titulos.length) return;
+  const SPEED = 0.035; // menos desplazamiento que el hero: los títulos de sección son más anchos
+  const MAX = 48; // px, máximo desplazamiento de cada línea
+
+  // Separa el texto en palabras, conservando los elementos (p. ej. <mark> o <strong>)
+  function separar(el) {
+    const recorrido = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodos = [];
+    while (recorrido.nextNode()) nodos.push(recorrido.currentNode);
+    nodos.forEach((nodo) => {
+      if (!nodo.nodeValue.trim()) return;
+      const enMarca = !!nodo.parentElement.closest('mark');
+      const fragmento = document.createDocumentFragment();
+      nodo.nodeValue.split(/(\s+)/).forEach((parte) => {
+        if (!parte) return;
+        if (/^\s+$/.test(parte)) { fragmento.append(parte); return; }
+        const palabra = document.createElement('span');
+        palabra.className = enMarca ? 'pl-w pl-w-mark' : 'pl-w';
+        palabra.textContent = parte;
+        fragmento.append(palabra);
+      });
+      nodo.replaceWith(fragmento);
+    });
+    el.querySelectorAll('mark.pl-mark').forEach((marca) => marca.classList.add('pl-mark-split'));
+    el.classList.add('pl-split');
+    return [...el.querySelectorAll('.pl-w')];
+  }
+
+  // Agrupa las palabras por línea: dirección alterna (izquierda, derecha...) y entrada escalonada por línea
+  function agrupar(palabras) {
+    let linea = -1;
+    let ultimoTop = null;
+    palabras.forEach((palabra) => {
+      const top = Math.round(palabra.getBoundingClientRect().top);
+      if (ultimoTop === null || Math.abs(top - ultimoTop) > 4) { linea += 1; ultimoTop = top; }
+      palabra.style.setProperty('--dir', linea % 2 === 0 ? -1 : 1);
+      palabra.style.setProperty('--line', linea);
+    });
+  }
+
+  const estados = titulos.map((el) => ({ el, palabras: separar(el), actual: 0 }));
+  const regrupar = () => estados.forEach((e) => agrupar(e.palabras));
+  regrupar();
+  document.fonts?.ready.then(regrupar);
+  let espera = null;
+  window.addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(regrupar, 150); });
+
+  // Entrada: cada título aparece al entrar en pantalla
+  if ('IntersectionObserver' in window) {
+    const observador = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); observador.unobserve(e.target); } });
+    }, { threshold: 0.35 });
+    estados.forEach((e) => observador.observe(e.el));
+  } else {
+    estados.forEach((e) => e.el.classList.add('is-in'));
+  }
+
+  // Desplazamiento: el mismo movimiento que el titular del hero (SPEED), suavizado; se detiene al llegar a su destino
+  let corriendo = false;
+  function frame() {
+    let movimiento = false;
+    estados.forEach((e) => {
+      const r = e.el.getBoundingClientRect();
+      const avance = Math.max(0, Math.min(window.innerHeight - r.top, window.innerHeight * 1.5));
+      const destino = Math.min(avance * SPEED, MAX);
+      e.actual += (destino - e.actual) * 0.12;
+      if (Math.abs(destino - e.actual) < 0.05) e.actual = destino; else movimiento = true;
+      e.el.style.setProperty('--shift', `${e.actual.toFixed(2)}px`);
+    });
+    corriendo = movimiento;
+    if (corriendo) requestAnimationFrame(frame);
+  }
+  window.addEventListener('scroll', () => { if (!corriendo) { corriendo = true; requestAnimationFrame(frame); } }, { passive: true });
+  frame();
+})();
+
+// Inicio: las líneas del título de ideas aparecen en secuencia al entrar en pantalla (antes de que el scroll las abra)
+(function initIdeasReveal() {
+  const titulo = document.getElementById('ideas-title');
+  if (!titulo || !document.documentElement.classList.contains('inicio') || !('IntersectionObserver' in window)) return;
+  titulo.querySelectorAll('.ideas-line').forEach((linea, i) => linea.style.setProperty('--i', i));
+  const observador = new IntersectionObserver((entradas) => {
+    if (entradas.some((e) => e.isIntersecting)) { titulo.classList.add('is-on'); observador.disconnect(); }
+  }, { threshold: 0.25 });
+  observador.observe(titulo);
 })();
