@@ -56,6 +56,8 @@
   -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); }
 @media (max-width: 53.75em) { .pl-hero-bg { opacity: .4; } }
 .pl-hero { display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(100svh - var(--header-h, 4.5rem) - var(--shell-pad)); padding-block: clamp(8rem, 22vh, 14rem) clamp(3rem, 8vh, 5rem); }
+/* Escritorio: hero más bajo (menos aire arriba), para que "Ideas" entre con menos scroll */
+@media (min-width: 40em) { .pl-hero { min-height: calc(100svh - var(--header-h, 4.5rem) - var(--shell-pad) - 200px); padding-top: clamp(8rem, 15vh, 14rem); } }
 /* La línea pasa por detrás del titular, salvo al entrar a la O: ahí cruza por encima de su anillo (capa delantera,
    recortada por js/main.js a ese cruce). Sin JavaScript, la capa delantera no se ve. */
 .pl-hero .pl-thread-front { z-index: 2; clip-path: inset(100% 0 0 0); }
@@ -94,7 +96,7 @@
 /* Plus Jakarta Sans es más ancha que Anton: en escritorio el titular se achica para que no se corte en los bordes */
 @media (min-width: 53.75em) { .inicio .ideas-stage { --ideas-fs: clamp(26px, min(5.1vw, 8.4svh), 100px); } }
 @media (max-width: 53.75em) { .inicio .ideas-stage { --ideas-fs: min(12.4vw, 8svh); } }
-.pl-caps-title { max-width: min(17em, 80%); }
+.pl-caps-title { max-width: min(17em, 80%); margin-inline: auto; text-align: center; }
 /* Palabras destacadas del título: subrayado ancho de destacador, del color de la línea (el texto sigue oscuro, legible) */
 .pl-mark { color: inherit; background: linear-gradient(transparent 58%, var(--pl-line) 58%, var(--pl-line) 92%, transparent 92%);
   -webkit-box-decoration-break: clone; box-decoration-break: clone; padding-inline: .06em; }
@@ -232,6 +234,8 @@
 .inicio .pl-hero .pl-lead { letter-spacing: .02em; }
 /* En móvil, la bajada ocupa el mismo ancho que la línea "que desean" del título (262px con el título a 44px) */
 @media (max-width: 40em) { .inicio .pl-hero .pl-lead { max-width: 262px; letter-spacing: 0; } }
+/* Producto en móvil: la última oración del lead se oculta para un texto más corto */
+@media (max-width: 40em) { .inicio .pl-lead-extra { display: none; } }
 
 
 /* Con JavaScript, el avance de la línea en todas las secciones lo maneja js/main.js (línea de lectura y punta continua) */
@@ -294,7 +298,9 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* Ideas: la sección se fija en pantalla mientras el scroll abre las palabras y crece el producto; después la página sigue
    bajando. Las animaciones avanzan con el progreso de la fijación (js/main.js, scrubIdeas), no con la línea de tiempo del scroll */
-.inicio .ideas { display: block; height: 200svh; min-height: 0; }
+.inicio .ideas { display: block; height: calc(100svh + 500px); min-height: 0; }
+/* Móvil: el recorrido fijado es más corto (unos 4 giros de rueda) */
+@media (max-width: 40em) { .inicio .ideas { height: calc(100svh + 400px); } }
 .inicio .ideas-pin { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(1rem, 3svh, 2.5rem); overflow: hidden; overflow: clip; }
 /* Escritorio: el contenido de la home usa el mismo ancho que el encabezado (sin tope de 75 rem), para que el hero y Ideas
    se alineen con el logo y el menú en pantallas grandes */
@@ -437,9 +443,26 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .pl-cap-l .pl-cap-txt { left: 0; right: auto; transform: translate(calc(-100% - 18px), -50%); text-align: right; }
   .pl-cap-r .pl-cap-txt { left: 0; right: auto; transform: translate(18px, -50%); text-align: left; }
   .pl-cap-name { white-space: normal; font-size: 15px; }
-  .pl-cap-desc { font-size: 11px; }
+  .pl-cap-desc { display: none; }
 }
 
 /* Preguntas frecuentes: fondo blanco con la grilla cuadrille, sin el degradado ni el resplandor del panel */
 .inicio #preguntas { background: #fff; }
 .inicio #preguntas::before { display: none; }
+
+/* Footer en la portada: ancho completo, con el mismo fondo oscuro de las secciones; el contenido se alinea con el contenedor y el logo se invierte para leerse */
+.inicio .site-footer { width: auto; margin-inline: 0; background: var(--pl-dark); border-radius: 0; padding-inline: max(16px, calc((100% - var(--content-width)) / 2)); color: var(--pl-on-dark-muted); }
+.inicio .site-footer .brand-logo { filter: invert(1); }
+@media (max-width: 40em) { .inicio .site-footer .brand-logo { height: 4.5rem; } }
+.inicio .site-footer .brand-tagline { color: var(--pl-on-dark-muted); border-left-color: rgba(241, 238, 230, .25); }
+.inicio .site-footer .footer-grid { border-bottom-color: rgba(241, 238, 230, .14); }
+.inicio .site-footer .footer-grid h2 { color: var(--pl-on-dark-muted); }
+.inicio .site-footer .footer-grid a { color: var(--pl-on-dark); }
+.inicio .site-footer .footer-grid a:hover { color: var(--pl-line); }
+
+/* Sobre mí: separación entre secciones (la portada resuelve su espaciado en cada bloque) */
+.pl-sobre { padding-block: clamp(3rem, 8vw, 6rem); }
+.pl-sobre.pl-intro { padding-block: clamp(3.5rem, 10vw, 8rem) clamp(2rem, 5vw, 4rem); }
+.inicio .pl-dark .pl-title, .inicio .pl-dark .pl-title strong { color: var(--pl-on-dark); }
+/* Sobre mí: el contacto no está fijado en un bloque de scroll, así que no necesita la altura de la portada */
+.pl-sobre.pl-contact { height: auto; min-height: 0; padding: clamp(3rem, 8vw, 6rem) 0; }

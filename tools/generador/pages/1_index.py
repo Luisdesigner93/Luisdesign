@@ -82,8 +82,8 @@ HOME_IDEAS = f'''
         <h2 class="ideas-title" id="ideas-title">{_ideas_title}</h2>
         <div class="ideas-collage" aria-hidden="true">
           <img class="ideas-item ideas-item-phone" src="img/collage/yomecontrolo-telefono.png" width="514" height="900" alt="" loading="lazy" decoding="async">
-          <img class="ideas-item ideas-item-spray" src="img/collage/fuchi-chao-eliminador.png" width="343" height="1000" alt="" loading="lazy" decoding="async">
-          <img class="ideas-item ideas-item-beer" src="img/collage/khronos-stout.png" width="263" height="900" alt="" loading="lazy" decoding="async">
+          <img class="ideas-item ideas-item-spray" src="img/collage/fuchi-chao-eliminador.png" width="1024" height="1536" alt="" loading="lazy" decoding="async">
+          <img class="ideas-item ideas-item-beer" src="img/collage/khronos-stout.png" width="1024" height="1536" alt="" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="container ideas-foot">

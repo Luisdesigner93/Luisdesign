@@ -461,8 +461,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   // da la vuelta por la derecha, vuelve por detrás y cruza otra vez por delante en diagonal antes de salir hacia abajo.
   // Se mide el atomizador en cada cuadro (crece con el scroll); la capa delantera se recorta a los dos cruces por delante.
   // Espiral alrededor de la botella central: un resorte de dos vueltas, visto con una leve inclinación para que cada vuelta
-  // sea una elipse ordenada. Por detrás de la botella va todo el trazado (la botella lo tapa); por delante, solo los tramos
-  // de frente (seno > 0), que se muestran con una máscara sobre el mismo trazado (así la animación sigue en sincronía).
+  // sea una elipse ordenada. Va todo en una sola capa, por detrás de la botella (la botella lo tapa).
   function bezier(p0, p1, p2, p3, n) {
     const puntos = [];
     for (let k = 0; k <= n; k += 1) {
@@ -474,7 +473,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   }
 
   function ideasPath(seg) {
-    const { sec, back, front } = seg.spiral;
+    const { sec, back } = seg.spiral;
     const bottle = sec.querySelector('.ideas-item-spray');
     if (!bottle) return;
     const box = (sec.querySelector('.ideas-pin') || sec).getBoundingClientRect();
@@ -500,7 +499,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     const R = r.width * 0.95; // radio horizontal del resorte: cada vuelta sobresale a ambos lados de la botella
     const y1 = bt + bh * 0.1; const y2 = bb - bh * 0.02; // altura de la primera y de la última vuelta
     const e = bh * 0.05; // inclinación de la vista: cada vuelta se ve como una elipse
-    const VUELTAS = 3;
+    const VUELTAS = 2; // dos vueltas alrededor de la botella: el espiral se lee más limpio
     const th0 = Math.PI; const th1 = th0 + 2 * Math.PI * VUELTAS;
     const punto = (th) => {
       const f = (th - th0) / (th1 - th0);
@@ -515,7 +514,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     const resorte = [];
     for (let i = 0; i <= N; i += 1) {
       const th = th0 + ((th1 - th0) * i) / N;
-      resorte.push({ p: punto(th), frente: Math.sin(th) > 0 });
+      resorte.push({ p: punto(th) });
     }
     // Muestreo denso (decenas de puntos por vuelta): el trazo es fluido sin suavizado adicional
     const aTrazo = (puntos) => 'M' + puntos.map((q) => `${q[0].toFixed(1)} ${q[1].toFixed(1)}`).join(' L ');
@@ -523,52 +522,9 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     // Fracción del trazo que corresponde a la entrada (desde el hero): se dibuja al llegar a la sección
     const largo = (pts) => pts.reduce((acc, q, i) => (i ? acc + Math.hypot(q[0] - pts[i - 1][0], q[1] - pts[i - 1][1]) : 0), 0);
     seg.entrada = largo(entrada) / Math.max(1, largo([...entrada, ...resorte.map((x) => x.p), ...salida.slice(1)]));
-    [back, front].forEach((svg) => {
-      if (!svg) return;
-      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-      svg.querySelectorAll('path').forEach((path) => path.setAttribute('d', completo));
-    });
+    back.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    back.querySelectorAll('path').forEach((path) => path.setAttribute('d', completo));
     seg.t = table(seg.path);
-
-    // Tramos de frente: se agrupan las muestras consecutivas de seno positivo (con un punto de margen a cada lado)
-    if (front) {
-      const tramos = [];
-      let actual = null;
-      resorte.forEach((x, i) => {
-        if (x.frente) {
-          if (!actual) { actual = []; if (i > 0) actual.push(resorte[i - 1].p); }
-          actual.push(x.p);
-        } else if (actual) {
-          actual.push(x.p); tramos.push(actual); actual = null;
-        }
-      });
-      if (actual) tramos.push(actual);
-      const svgNS = 'http://www.w3.org/2000/svg';
-      if (!front._mascara) {
-        const defs = document.createElementNS(svgNS, 'defs');
-        const mascara = document.createElementNS(svgNS, 'mask');
-        mascara.setAttribute('id', 'ideas-frente');
-        mascara.setAttribute('maskUnits', 'userSpaceOnUse');
-        mascara.setAttribute('x', '0'); mascara.setAttribute('y', '0');
-        defs.append(mascara);
-        front.prepend(defs);
-        front.querySelectorAll('path').forEach((path) => path.setAttribute('mask', 'url(#ideas-frente)'));
-        front._mascara = mascara;
-        front.style.clipPath = 'none';
-      }
-      front._mascara.setAttribute('width', w);
-      front._mascara.setAttribute('height', h);
-      front._mascara.replaceChildren(...tramos.map((puntos) => {
-        const trazo = document.createElementNS(svgNS, 'path');
-        trazo.setAttribute('d', aTrazo(puntos));
-        trazo.setAttribute('fill', 'none');
-        trazo.setAttribute('stroke', '#fff');
-        trazo.setAttribute('stroke-width', '14');
-        trazo.setAttribute('stroke-linecap', 'round');
-        trazo.setAttribute('vector-effect', 'non-scaling-stroke');
-        return trazo;
-      }));
-    }
   }
 
   // Tabla de cada tramo: largo recorrido y altura máxima alcanzada hasta ese punto (para dibujar hasta la línea de lectura)
@@ -625,7 +581,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       // data-thread="fit": la línea se completa cuando la sección queda centrada (para ver su dibujo entero, p. ej. las flechas)
       const fit = sec.dataset.thread === 'fit' ? sec : null;
       const segs = ordered.map((path, i) => ({ path, fit, main: !(sec.classList.contains('pl-caps') && i === 1), t: table(path), marks: [],
-        twin: front ? front.querySelectorAll('path')[i] : null, spiral: sec.classList.contains('pl-ideas') ? { sec, back, front } : null, contacto: sec.id === 'contacto' }));
+        twin: front ? front.querySelectorAll('path')[i] : null, spiral: sec.classList.contains('pl-ideas') ? { sec, back } : null, contacto: sec.id === 'contacto' }));
       chain.push(...segs);
       // Elementos que aparecen cuando la línea pasa por ellos (Sistemas: disciplinas por su punto; el título, al entrar al óvalo)
       const items = [...sec.querySelectorAll('.pl-cap .pl-dot')].map((dot) => [dot.closest('.pl-cap'), dot.getBoundingClientRect()]);

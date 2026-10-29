@@ -6,6 +6,8 @@
   if (!banner) return;
   const gtmId = banner.dataset.gtm || '';
   const gtmListo = /^GTM-[A-Z0-9]{6,}$/.test(gtmId) && !gtmId.includes('XXXX');
+  const gaId = banner.dataset.ga || '';
+  const gaListo = /^G-[A-Z0-9]{6,}$/.test(gaId);
 
   // Consent Mode: todo denegado antes de cualquier etiqueta de Google
   window.dataLayer = window.dataLayer || [];
@@ -22,8 +24,17 @@
   }
 
   function cargarGoogle() {
-    if (!gtmListo) return;
+    if (!gtmListo && !gaListo) return;
     window.gtag('consent', 'update', { analytics_storage: 'granted' });
+    if (gaListo) {
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;
+      document.head.appendChild(gaScript);
+      window.gtag('js', new Date());
+      window.gtag('config', gaId);
+    }
+    if (!gtmListo) return;
     window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
     const script = document.createElement('script');
     script.async = true;

@@ -14,6 +14,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 CARPETAS = ('proyectos', 'marca', 'collage')
 ANCHOS = (480, 960, 1600)
+# Las imágenes de la sección Ideas (collage) se muestran pequeñas: solo se genera el tamaño que necesita la pantalla
+ANCHOS_COLLAGE = (480,)
+# Calidad menor para imágenes de fondo o producto donde la compresión extra no se nota (clave: ruta sin extensión, relativa a img/)
+CALIDAD = {'marca/hero-fondo': 65, 'collage/fuchi-chao-eliminador': 70, 'collage/khronos-stout': 70, 'collage/yomecontrolo-telefono': 70}
 
 
 def ancho_original(path):
@@ -21,8 +25,8 @@ def ancho_original(path):
     return int(out.strip().split()[-1])
 
 
-def anchos(w):
-    return sorted({min(a, w) for a in ANCHOS if a <= w} | ({w} if w < ANCHOS[-1] else set()))
+def anchos(w, lista=ANCHOS):
+    return sorted({min(a, w) for a in lista if a <= w} | ({w} if w < lista[-1] else set()))
 
 
 def main():
@@ -35,13 +39,14 @@ def main():
                 continue
             rel = src.relative_to(ROOT / 'img').with_suffix('')
             w = ancho_original(src)
-            for a in anchos(w):
+            for a in anchos(w, ANCHOS_COLLAGE if carpeta == 'collage' else ANCHOS):
                 dest = ROOT / 'img' / 'webp' / f'{rel}-{a}.webp'
                 if dest.exists() and dest.stat().st_mtime >= src.stat().st_mtime:
                     continue
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 # Fotos: calidad 78; PNG con transparencia: se conserva el canal alfa
-                calidad = ['-q', '82', '-alpha_q', '90'] if src.suffix.lower() == '.png' else ['-q', '78']
+                q = CALIDAD.get(str(rel), 82 if src.suffix.lower() == '.png' else 78)
+                calidad = ['-q', str(q), '-alpha_q', '90'] if src.suffix.lower() == '.png' else ['-q', str(q)]
                 tam = ['-resize', str(a), '0'] if a < w else []
                 subprocess.run(['cwebp', '-quiet', '-metadata', 'none', *calidad, *tam, str(src), '-o', str(dest)], check=True)
                 hechos += 1

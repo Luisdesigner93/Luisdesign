@@ -1,0 +1,769 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-10-29 18:40:53",
+  "containerVersion": {
+    "container": {
+      "name": "luisdesign",
+      "usageContext": [
+        "WEB"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "101",
+        "name": "GA4 · seccion_vista · ideas",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "201"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "102",
+        "name": "GA4 · seccion_vista · sistemas",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "202"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "103",
+        "name": "GA4 · seccion_vista · producto",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "203"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "104",
+        "name": "GA4 · seccion_vista · portafolio",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "204"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "105",
+        "name": "GA4 · seccion_vista · contacto",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "205"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "106",
+        "name": "GA4 · seccion_vista · blog",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "206"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "107",
+        "name": "GA4 · seccion_vista · preguntas",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "seccion_vista"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "207"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "108",
+        "name": "GA4 · clic_navegacion · menu_proyectos",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "208"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "109",
+        "name": "GA4 · clic_navegacion · menu_blog",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "209"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "110",
+        "name": "GA4 · clic_navegacion · menu_sobre_mi",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "210"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "111",
+        "name": "GA4 · clic_navegacion · whatsapp",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "211"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "112",
+        "name": "GA4 · clic_navegacion · linkedin",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "212"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "113",
+        "name": "GA4 · clic_navegacion · articulo_blog",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "213"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "",
+        "containerId": "",
+        "tagId": "114",
+        "name": "GA4 · clic_navegacion · cambio_idioma_en",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "clic_navegacion"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-42SV1ZZ5S1"
+          }
+        ],
+        "firingTriggerId": [
+          "214"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "triggerId": "201",
+        "name": "Visibilidad · ideas",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": "#ideas"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "202",
+        "name": "Visibilidad · sistemas",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": ".pl-caps"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "203",
+        "name": "Visibilidad · producto",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": ".pl-producto"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "204",
+        "name": "Visibilidad · portafolio",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": "#proyectos"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "205",
+        "name": "Visibilidad · contacto",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": "#contacto"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "206",
+        "name": "Visibilidad · blog",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": "#blog"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "207",
+        "name": "Visibilidad · preguntas",
+        "type": "ELEMENT_VISIBILITY",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "selectorType",
+            "value": "CSS"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "elementSelector",
+            "value": "#preguntas"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "firingFrequency",
+            "value": "ONCE"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "onScreenRatioMin",
+            "value": "50"
+          }
+        ]
+      },
+      {
+        "triggerId": "208",
+        "name": "Clic · menu_proyectos",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "#proyectos"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "209",
+        "name": "Clic · menu_blog",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "#blog"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "210",
+        "name": "Clic · menu_sobre_mi",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "ENDS_WITH",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "sobre-mi.html"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "211",
+        "name": "Clic · whatsapp",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "wa.me"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "212",
+        "name": "Clic · linkedin",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "linkedin.com"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "213",
+        "name": "Clic · articulo_blog",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "CONTAINS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "noticias/"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "214",
+        "name": "Clic · cambio_idioma_en",
+        "type": "LINK_CLICK",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "waitForTags",
+            "value": "false"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "checkValidation",
+            "value": "false"
+          }
+        ],
+        "filter": [
+          {
+            "type": "ENDS_WITH",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{Click URL}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "en/index.html"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [],
+    "folder": [],
+    "builtInVariable": [],
+    "customTemplate": []
+  }
+}

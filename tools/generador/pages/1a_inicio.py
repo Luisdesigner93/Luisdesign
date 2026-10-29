@@ -185,8 +185,6 @@ _ideas = _ideas.replace('<section class="panel panel-plain ideas"', '<section cl
 _ideas_desk = ['M994 0 C994 160 640 220 620 400 C680 560 860 560 820 720 C780 860 720 900 720 1000']
 _ideas_mob = ['M187.5 0 C187.5 140 120 220 150 380 C180 540 260 600 220 760 C200 860 187.5 900 187.5 1000']
 _ideas = _ideas.replace('      <div class="ideas-stage">', '      ' + _hilo(_ideas_desk, _ideas_mob) + '\n      <div class="ideas-stage">', 1)
-# Capa delantera (sobre los productos), recortada por js/main.js a los cruces por delante de la botella
-_ideas = _ideas.replace('      <div class="container ideas-foot">', '      ' + _hilo(_ideas_desk, _ideas_mob, 'pl-thread-front') + '\n      <div class="container ideas-foot">', 1)
 # Fijación: el contenido de la sección queda quieto mientras el scroll abre las palabras y crece el producto (css/inicio.css)
 _ideas = _ideas.replace('pl-sec pl-ideas" id="ideas" aria-labelledby="ideas-title">', 'pl-sec pl-ideas" id="ideas" aria-labelledby="ideas-title">\n      <div class="ideas-pin">', 1)
 _ideas = _ideas.rstrip()
@@ -221,7 +219,7 @@ INICIO_SISTEMAS = f'''
     <section class="pl-sec pl-light pl-caps" aria-labelledby="pl-caps-title">
       {_hilo(_caps_desk, _caps_mob)}
       <div class="pl-inner">
-        <h2 class="pl-title pl-caps-title" id="pl-caps-title">Encuentro la brecha entre tu negocio y tu público, y <mark class="pl-mark">diseño el camino</mark> para cerrarla.</h2>
+        <h2 class="pl-title pl-caps-title" id="pl-caps-title"><mark class="pl-mark">Diseño el camino</mark> <span class="pl-br-m"></span>para cerrar la <span class="pl-br-m"></span>brecha entre tu <span class="pl-br-m"></span>negocio y <span class="pl-br-m"></span>tu público.</h2>
       </div>
       <div class="pl-stage">
       <ul class="pl-caps-list" role="list">''' + ''.join(f'''
@@ -265,9 +263,11 @@ _pf_cubos = [
 _pf_cubo_html = '<span class="alt-cubo" aria-hidden="true"><span class="alt-cara alt-tapa"></span><span class="alt-cara alt-izq"></span><span class="alt-cara alt-der"></span></span>'
 # Mockups definitivos (img/portafolio): se reparten en orden entre las posiciones
 _pf_mockups = [('mockup-cerveza', 800, 667), ('mockup-telefono', 700, 738), ('mockup-laptop', 800, 534), ('mockup-pin', 800, 534)]
+# Isométricos de producto (Khronos y Fuchi Chao), ya reducidos al tamaño que se muestra en pantalla
+_pf_fotos = {'Khronos': ('mockup-khronos', 384, 576), 'Fuchi Chao': ('mockup-fuchi', 384, 576), 'Botes Salvavidas': ('mockup-botes', 480, 320), 'Yomecontrolo': ('mockup-yomecontrolo', 384, 576)}
 _pf_items = ''
 for i, (nombre, enlace, x, y, k) in enumerate(_pf_cubos):
-    archivo, ancho, alto = _pf_mockups[i % len(_pf_mockups)]
+    archivo, ancho, alto = _pf_fotos.get(nombre) or _pf_mockups[i % len(_pf_mockups)]
     mockup = f'<span class="alt-mock"><img src="img/portafolio/{archivo}.webp" width="{ancho}" height="{alto}" alt="" loading="lazy" decoding="async"></span>'
     if enlace:
         contenido = f'<a class="alt-link" href="{enlace}" aria-label="{nombre}: ver el proyecto completo">{mockup}<span class="alt-tag">{nombre}</span><span class="alt-hint">Haz clic para ver el proyecto completo</span></a>'
@@ -359,7 +359,7 @@ INICIO_PRODUCTO = f'''
       <div class="pl-signs" aria-hidden="true"><span class="pl-icono pl-icono-1"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-pen"/></svg></span><span class="pl-icono pl-icono-2"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-code"/></svg></span><span class="pl-icono pl-icono-3"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-layers"/></svg></span><span class="pl-cartel pl-cartel-1">Branding</span><span class="pl-cartel pl-cartel-2">Websites</span><span class="pl-cartel pl-cartel-3">Producto</span></div>
       <div class="pl-inner">
         <h2 class="pl-title" id="pl-producto-title">Construyamos en la misma dirección.</h2>
-        <p class="pl-lead">Combino diseño centrado en las personas con metodologías ágiles para definir problemas, ordenar prioridades y coordinar entregas junto a equipos multidisciplinarios. Me interesa conectar lo que el negocio necesita, lo que las personas esperan y lo que los equipos pueden construir. Porque una buena idea necesita más que diseño: necesita dirección, colaboración y decisiones fundamentadas.</p>
+        <p class="pl-lead">Combino diseño centrado en las personas con metodologías ágiles para definir problemas, ordenar prioridades y coordinar entregas junto a equipos multidisciplinarios. Me interesa conectar lo que el negocio necesita, lo que las personas esperan y lo que los equipos pueden construir. <span class="pl-lead-extra">Porque una buena idea necesita más que diseño: necesita dirección, colaboración y decisiones fundamentadas.</span></p>
         <!-- Firma de la sección -->
         <p class="pl-signature"><strong>Luis Vicencio</strong><span class="pl-mono">Brand &amp; Product Designer.</span></p>
       </div>
@@ -385,9 +385,9 @@ INICIO_CONTACTO = f'''
     <!-- INICIO · CONTACTO -->
     <section class="pl-sec pl-light pl-contact frame-grid" id="contacto" aria-labelledby="pl-contact-title">
       <div class="contact-pin">
-      {_hilo(['M1189.4 0.0 C1189.4 97.2 353.7 83.3 353.7 222.2 C368.5 305.6 486.4 319.4 471.6 388.9 C456.9 444.4 383.2 444.4 390.6 500.0 C400.9 555.6 530.6 544.4 678.0 538.9 C825.4 533.3 943.3 555.6 1075.9 527.8 C1179.1 527.8 1238.1 444.4 1186.5 420.8 C1134.9 395.8 1105.4 486.1 1127.5 538.9 C1134.9 722.2 766.4 972.2 619.0 830.6'], ['M187.5 0 V852'], paso=5)}
+      {_hilo(['M1189.4 0.0 C1189.4 97.2 353.7 83.3 353.7 222.2 C368.5 305.6 486.4 319.4 471.6 388.9 C456.9 444.4 383.2 444.4 390.6 500.0 C400.9 555.6 530.6 544.4 678.0 538.9 C825.4 533.3 943.3 555.6 1075.9 527.8 C1179.1 527.8 1238.1 444.4 1186.5 420.8 C1134.9 395.8 1105.4 486.1 1127.5 538.9 C1134.9 722.2 766.4 972.2 619.0 830.6'], ['M187.5 0 V852'], paso=8)}
       <div class="pl-inner pl-center">
-        <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">¿Qué haremos </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">avanzar </span></span><span class="pl-line"><span class="pl-line-in">juntos esta vez?</span></span></h2>
+        <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">Tu próximo proyecto </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">empieza acá.</span></span></h2>
         <p class="pl-lead pl-contact-lead">Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.</p>
 
         <a class="btn btn-primary" href="#contacto" data-abrir-contacto>Hablemos {_arrow}</a>
@@ -518,10 +518,10 @@ _EN_BLOQUES = [
      '<span class="ideas-gap" aria-hidden="true"></span><span>products</span></span>'
      '<span class="ideas-line"><span>for everyday</span><span class="ideas-gap" aria-hidden="true"></span><span>life</span></span></h2>'),
     (r'<h2 class="pl-title pl-caps-title" id="pl-caps-title">.*?</h2>',
-     '<h2 class="pl-title pl-caps-title" id="pl-caps-title">I find the gap between your business and your audience, and <mark class="pl-mark">design the path</mark> to close it.</h2>'),
+     '<h2 class="pl-title pl-caps-title" id="pl-caps-title"><mark class="pl-mark">I design the path</mark> <span class="pl-br-m"></span>to close the <span class="pl-br-m"></span>gap between your <span class="pl-br-m"></span>business and <span class="pl-br-m"></span>your audience.</h2>'),
     (r'<h2 class="pl-display pl-anim-title" id="pl-contact-title">.*?</h2>',
-     '<h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">What shall we </span></span>'
-     '<span class="pl-line"><span class="pl-line-in" data-dir="1">move forward </span></span><span class="pl-line"><span class="pl-line-in">together this time?</span></span></h2>'),
+     '<h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">Your next project </span></span>'
+     '<span class="pl-line"><span class="pl-line-in" data-dir="1">starts here.</span></span></h2>'),
     ('Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.', 'Every project starts from a different need. We can work on your brand, your web presence or a digital product, depending on what you have in hand and what you need to solve.'),
 ]
 
@@ -564,8 +564,8 @@ _EN_TEXTOS = [
     ('>Cerveza Khronos</h3>', '>Khronos beer</h3>'),
     # Marca y producto
     ('Construyamos en la misma dirección.', "Let's build in the same direction."),
-    ('Combino diseño centrado en las personas con metodologías ágiles para definir problemas, ordenar prioridades y coordinar entregas junto a equipos multidisciplinarios. Me interesa conectar lo que el negocio necesita, lo que las personas esperan y lo que los equipos pueden construir. Porque una buena idea necesita más que diseño: necesita dirección, colaboración y decisiones fundamentadas.',
-     'I combine people-centered design with agile methods to define problems, order priorities and coordinate deliveries alongside multidisciplinary teams. I am interested in connecting what the business needs, what people expect and what teams can build. Because a good idea needs more than design: it needs direction, collaboration and well-founded decisions.'),
+    ('Combino diseño centrado en las personas con metodologías ágiles para definir problemas, ordenar prioridades y coordinar entregas junto a equipos multidisciplinarios. Me interesa conectar lo que el negocio necesita, lo que las personas esperan y lo que los equipos pueden construir. <span class="pl-lead-extra">Porque una buena idea necesita más que diseño: necesita dirección, colaboración y decisiones fundamentadas.</span>',
+     'I combine people-centered design with agile methods to define problems, order priorities and coordinate deliveries alongside multidisciplinary teams. I am interested in connecting what the business needs, what people expect and what teams can build. <span class="pl-lead-extra">Because a good idea needs more than design: it needs direction, collaboration and well-founded decisions.</span>'),
     ('alt="Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás."',
      'alt="Profile silhouette of a person between translucent and frosted glass panels, with a lime green panel behind."'),
     ('alt="Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha."',

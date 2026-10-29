@@ -57,8 +57,8 @@ HEAD = '''<!doctype html>
         </mask>
         <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
       </defs>
-      <image href="{p}img/marca/logo-luy-design.png" width="500" height="265" mask="url(#loader-ink)"/>
-      <image class="loader-design" href="{p}img/marca/logo-luy-design.png" width="500" height="265" clip-path="url(#loader-word)"/>
+      <image href="{p}img/webp/marca/logo-luy-design-500.webp" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="{p}img/webp/marca/logo-luy-design-500.webp" width="500" height="265" clip-path="url(#loader-word)"/>
     </svg>
   </div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -135,7 +135,7 @@ FOOT = '''  </main>
     </div>
   </footer>
 
-  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" aria-labelledby="cookie-title" hidden>
+  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" data-ga="{ga_id}" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies y analítica</h2>
       <p>Uso Google Tag Manager y Google Analytics solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="{p}privacidad.html#cookies">Más información</a>.</p>
@@ -158,7 +158,9 @@ OG_ALT = 'Luis Vicencio, diseñador y Product Owner'
 # EDITAR: reactivar la casilla contacto@luisdesign.cl antes de publicar
 EMAIL = 'contacto@luisdesign.cl'
 # EDITAR: ID del contenedor de Google Tag Manager (formato GTM-XXXXXXX). Mientras diga XXXX, no se carga nada de Google.
-GTM_ID = 'GTM-XXXXXXX'
+GTM_ID = 'GTM-M8GHZ2BZ'
+# ID de medición de Google Analytics 4 (flujo "Luis Design - GA4"). Se carga solo con consentimiento, igual que GTM.
+GA_ID = 'G-42SV1ZZ5S1'
 _EXT = ' rel="noopener noreferrer" target="_blank"'
 _NEW_TAB = '<span class="sr-only"> (se abre en una pestaña nueva)</span>'
 
@@ -312,6 +314,7 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'extra_css': ''.join(f'  <link rel="stylesheet" href="{p}{c}">\n' for c in ([extra_css] if isinstance(extra_css, str) else extra_css or [])),
         'contact_href': '#contacto' if contact else home + '#contacto',
         'gtm_id': GTM_ID,
+        'ga_id': GA_ID,
         'lang_switch': _lang_switch(path, lang),
         'cur_noticias': ' aria-current="page"' if current == 'noticias' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
