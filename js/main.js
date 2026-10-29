@@ -591,7 +591,9 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     chain = [];
     let finAnteriorX = null; // x en pantalla del punto final del trazo de la sección anterior
     document.querySelectorAll('.pl-sec:not(.pl-hero)').forEach((sec) => {
-      const box = (sec.querySelector('.ideas-pin') || sec).getBoundingClientRect();
+      const pinContacto = sec.querySelector('.contact-pin');
+      const fijo = pinContacto && getComputedStyle(pinContacto).position === 'sticky' ? pinContacto : null;
+      const box = (sec.querySelector('.ideas-pin') || fijo || sec).getBoundingClientRect();
       const svgs = visible(sec);
       // Con .pl-stage, el dibujo (y entre 0 y 1000 del viewBox) se ajusta a ese bloque; las y negativas (de -500 a 0)
       // ocupan lo que hay encima de él (el título) y y = 1000 queda en el borde inferior de la sección
@@ -623,7 +625,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       // data-thread="fit": la línea se completa cuando la sección queda centrada (para ver su dibujo entero, p. ej. las flechas)
       const fit = sec.dataset.thread === 'fit' ? sec : null;
       const segs = ordered.map((path, i) => ({ path, fit, main: !(sec.classList.contains('pl-caps') && i === 1), t: table(path), marks: [],
-        twin: front ? front.querySelectorAll('path')[i] : null, spiral: sec.classList.contains('pl-ideas') ? { sec, back, front } : null }));
+        twin: front ? front.querySelectorAll('path')[i] : null, spiral: sec.classList.contains('pl-ideas') ? { sec, back, front } : null, contacto: sec.id === 'contacto' }));
       chain.push(...segs);
       // Elementos que aparecen cuando la línea pasa por ellos (Sistemas: disciplinas por su punto; el título, al entrar al óvalo)
       const items = [...sec.querySelectorAll('.pl-cap .pl-dot')].map((dot) => [dot.closest('.pl-cap'), dot.getBoundingClientRect()]);
@@ -655,7 +657,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       const startTop = window.innerHeight * SCAN; // empieza cuando la sección llega a la línea de lectura
       // En móvil la sección es más alta que la pantalla: termina antes (a un cuarto de alto) para que la línea no se sienta lenta
       const movil = window.matchMedia('(max-width: 40em)').matches;
-      const endTop = movil ? window.innerHeight * 0.25 : Math.max(0, (window.innerHeight - r.height) / 2); // termina con la sección centrada
+      const endTop = movil ? 0 : Math.max(0, (window.innerHeight - r.height) / 2); // termina con la sección centrada (en móvil, al llegar arriba: avance más largo y suave)
       return Math.min(1, Math.max(0, (startTop - r.top) / Math.max(1, startTop - endTop)));
     }
     const m = seg.path.getScreenCTM();
@@ -689,6 +691,16 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     heroStop = lens[k] / L;
   }
 
+  // Contacto (escritorio): el bloque se fija en pantalla y la línea avanza con el scroll hasta completarse.
+  // Devuelve null cuando el bloque no está fijado (móvil), para usar el avance normal.
+  function contactoP() {
+    const sec = document.getElementById('contacto');
+    const pin = sec && sec.querySelector('.contact-pin');
+    if (!pin || getComputedStyle(pin).position !== 'sticky') return null;
+    const recorrido = Math.max(1, sec.offsetHeight - pin.offsetHeight);
+    const inicio = Math.max(0, (window.innerHeight - pin.offsetHeight) / 2); // posición en que el bloque queda fijo
+    return Math.min(1, Math.max(0, (inicio - sec.getBoundingClientRect().top) / recorrido));
+  }
   // Fijación de la sección de ideas: 0 cuando la sección llega arriba, 1 cuando termina (y la página puede seguir bajando)
   function ideasP() {
     const sec = document.getElementById('ideas');
@@ -734,12 +746,16 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     let front = heroSvgs[0] ? { path: heroSvgs[0].querySelector('path'), p: heroP } : null;
     chain.forEach((seg) => {
       if (seg.spiral) ideasPath(seg);
-      const p = heroP < 1 ? 0 : (seg.spiral ? ideasProgress(seg) : progressOf(seg)); // las secciones esperan a que el hero esté completo
+      const pc = seg.contacto ? contactoP() : null;
+      const p = heroP < 1 ? 0 : (seg.spiral ? ideasProgress(seg) : pc !== null ? pc : progressOf(seg)); // las secciones esperan a que el hero esté completo
       seg.path.style.strokeDashoffset = String(1 - p);
       if (seg.twin) seg.twin.style.strokeDashoffset = String(1 - p);
       seg.marks.forEach((mk) => mk.el.classList.toggle('is-on', p >= mk.at - 0.01));
       if (seg.main && p > 0) front = { path: seg.path, p };
     });
+    // Contacto: el borde del llamado a la acción se ilumina cuando la línea termina su recorrido en él
+    const cta = document.querySelector('#contacto .btn');
+    if (cta) cta.classList.toggle('is-luz', (contactoP() ?? 0) >= 0.99);
     if (front) place(front.path, front.p);
   }
 
@@ -846,10 +862,10 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   const abrir = () => {
     document.documentElement.classList.remove('has-cursor');
     dialog.showModal();
-    form.querySelector('input').focus();
+    form.querySelector('input').focus({ preventScroll: true });
   };
   dialog.addEventListener('close', () => document.documentElement.classList.add('has-cursor'));
-  document.querySelectorAll('.header-actions a[href$="#contacto"], .ideas-cta').forEach((link) => {
+  document.querySelectorAll('.header-actions a[href$="#contacto"], .ideas-cta, [data-abrir-contacto]').forEach((link) => {
     link.addEventListener('click', (event) => { event.preventDefault(); abrir(); });
   });
   dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
@@ -969,4 +985,20 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     if (entradas.some((e) => e.isIntersecting)) { titulo.classList.add('is-on'); observador.disconnect(); }
   }, { threshold: 0.25 });
   observador.observe(titulo);
+})();
+
+// Inicio: carrusel de noticias complementarias. Cada botón desplaza una tarjeta (sin librerías)
+(function initBlogCarrusel() {
+  const suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-carrusel]').forEach((carrusel) => {
+    const pista = carrusel.querySelector('.pl-carrusel-pista');
+    if (!pista) return;
+    carrusel.querySelectorAll('[data-paso]').forEach((boton) => {
+      boton.addEventListener('click', () => {
+        const tarjeta = pista.querySelector(':scope > li');
+        const avance = tarjeta.offsetWidth + parseFloat(getComputedStyle(pista).columnGap || 0);
+        pista.scrollBy({ left: Number(boton.dataset.paso) * avance, behavior: suave ? 'smooth' : 'auto' });
+      });
+    });
+  });
 })();

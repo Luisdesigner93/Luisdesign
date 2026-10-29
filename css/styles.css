@@ -891,3 +891,20 @@ html.has-drawer { overflow: hidden; }
 /* En escritorio el selector va en la cabecera; en móvil, dentro del menú */
 .header-actions .lang-switch { display: inline-flex; }
 @media (max-width: 53.75em) { .header-actions .lang-switch { display: none; } }
+
+/* Cabecera de una noticia: fondo blanco con solo la cuadrícula (sin el degradado ni el resplandor del sitio) */
+.noticia-hero { background: var(--frame); }
+.noticia-hero::before { display: none; }
+/* Cabecera de una noticia: enlace de vuelta a la izquierda, título y datos a la derecha */
+.noticia-cabecera { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-8); align-items: start; padding-block: var(--space-10) var(--space-8); border-bottom: 1px solid var(--line); }
+.noticia-volver { font-size: 14px; }
+.noticia-h1 { margin: 0; font-size: clamp(32px, 4vw, 52px); line-height: 1.1; font-weight: 500; letter-spacing: -.03em; }
+.noticia-cabecera .lead { margin: var(--space-5) 0 0; }
+.noticia-meta { display: flex; flex-wrap: wrap; gap: var(--space-6); margin: var(--space-6) 0 0; font-size: 14px; }
+.noticia-meta div { display: flex; gap: var(--space-2); }
+.noticia-meta dt { color: var(--ink-muted); }
+.noticia-meta dd { margin: 0; font-weight: 600; }
+/* Imagen de portada de una noticia, a ancho completo debajo de la cabecera */
+.noticia-portada { margin: var(--space-8) 0 0; }
+.noticia-portada img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-xl); }
+@media (max-width: 53.75em) { .noticia-cabecera { grid-template-columns: 1fr; gap: var(--space-5); } }

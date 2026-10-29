@@ -215,7 +215,7 @@ _cap_cls = lambda slot: 'pl-cap-l' if slot <= 4 else 'pl-cap-r'
 # Ruta ortogonal con esquinas redondeadas: entra desde arriba, rodea el título por la derecha y vuelve por debajo hasta el aro
 _caps_desk = ['M1080 -500 L1080.0 -371.0 Q1080 -316 1135.0 -316.0 L1275.0 -316.0 Q1330 -316 1330.0 -261.0 L1330.0 -43.0 Q1330 12 1275.0 12.0 L151.5 12.0 Q115 12 115.0 48.5 L115.0 48.5 Q115 85 151.5 85.0 L665.0 85.0 Q720 85 720.0 140.0 L720 200 C885.7 200 1020 338.6 1020 500 C1020 661.4 885.7 800 720 800 V1000', 'M720 200 C554.3 200 420 338.6 420 500 C420 661.4 554.3 800 720 800']
 # En móvil, una sola línea recta por el centro exacto (50 % de 375); los puntos caen sobre ella y los textos quedan a cada lado
-_caps_mob = ['M187.5 -500 V1000']
+_caps_mob = ['M304 -500 C304 -200 187.5 -200 187.5 0 V1000']
 INICIO_SISTEMAS = f'''
     <!-- INICIO · SISTEMAS -->
     <section class="pl-sec pl-light pl-caps" aria-labelledby="pl-caps-title">
@@ -247,7 +247,9 @@ def _redondeada(pts, radio=55):
 # Recorrido (unidades 1440 × 1000, desde el borde superior de la sección): entra al centro, rodea el título y los cubos, y sale al centro
 _ruta_portafolio = [(720, 0), (719, 233), (211, 432), (353, 503), (975, 288), (1245, 456), (527, 787), (720, 870), (1190, 870), (1190, 1000)]
 _ruta_desk = _redondeada(_ruta_portafolio, 55)
-_ruta_mob = 'M187.5 0 V1000'
+# En móvil: recorrido isométrico (tramos a 30° como las caras de los cubos, en zigzag entre las dos columnas)
+# y vuelta al centro; las esquinas se redondean. Entra y sale por el centro, como las secciones vecinas.
+_ruta_mob = _redondeada([(187.5, 0), (187.5, 130), (67.5, 199), (67.5, 330), (307.5, 468), (307.5, 600), (187.5, 669), (187.5, 1000)], 14)
 
 # Cubos isométricos (x %, y %, escala) y proyectos enlazados
 _pf_cubos = [
@@ -328,7 +330,9 @@ _sig_puntos += [(_SIG_XQ, 950), (720, 950), (720, 1000)]
 _sig_desk = _a_curvas(_redondeada(_sig_puntos, 20))
 
 # Versión móvil (375 × 1000): las flechas van arriba, sobre el título, con la misma lógica (entrada, contorno, bajada)
-_M_X0, _M_X1, _M_TIP, _M_H, _M_GAP, _M_TOP, _M_D, _M_XQ = 30, 345, 36, 90, 40, 60, 8, 150
+# Flechas (móvil) alineadas con los iconos y textos: cada flecha envuelve su icono (izq.) y su texto (der.),
+# con el centro en la misma altura que el texto; la línea baja por el hueco entre icono y texto (x = _M_XQ)
+_M_X0, _M_X1, _M_TIP, _M_H, _M_GAP, _M_TOP, _M_D, _M_XQ = 50, 280, 22, 52, 65, 46, 5, 110
 _m_tops = [_M_TOP + i * (_M_H + _M_GAP) for i in range(3)]
 def _m_loop(top, ex):
     t, b, mid = top - _M_D, top + _M_H + _M_D, top + _M_H / 2
@@ -379,14 +383,16 @@ INICIO_FIRMA = f'''
 # 7. CONTACTO (claro): la línea llega desde arriba, sin pisadas, hasta el titular
 INICIO_CONTACTO = f'''
     <!-- INICIO · CONTACTO -->
-    <section class="pl-sec pl-light pl-contact" id="contacto" aria-labelledby="pl-contact-title">
-      {_hilo(['M1190 0 C1190 190 720 190 720 360'], ['M187.5 0 V460'], paso=5)}
+    <section class="pl-sec pl-light pl-contact frame-grid" id="contacto" aria-labelledby="pl-contact-title">
+      <div class="contact-pin">
+      {_hilo(['M1189.4 0.0 C1189.4 97.2 353.7 83.3 353.7 222.2 C368.5 305.6 486.4 319.4 471.6 388.9 C456.9 444.4 383.2 444.4 390.6 500.0 C400.9 555.6 530.6 544.4 678.0 538.9 C825.4 533.3 943.3 555.6 1075.9 527.8 C1179.1 527.8 1238.1 444.4 1186.5 420.8 C1134.9 395.8 1105.4 486.1 1127.5 538.9 C1134.9 722.2 766.4 972.2 619.0 830.6'], ['M187.5 0 V852'], paso=5)}
       <div class="pl-inner pl-center">
-        <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">¿Qué hacemos </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">avanzar </span></span><span class="pl-line"><span class="pl-line-in">juntos?</span></span></h2>
+        <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">¿Qué haremos </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">avanzar </span></span><span class="pl-line"><span class="pl-line-in">juntos esta vez?</span></span></h2>
         <p class="pl-lead pl-contact-lead">Si tienes una idea, una marca o un producto entre manos, conversemos.</p>
 
-        <a class="btn btn-primary" href="{WA_MARCAS}" rel="noopener noreferrer" target="_blank">Hablemos<span class="sr-only"> (WhatsApp, se abre en una pestaña nueva)</span> {_arrow}</a>
+        <a class="btn btn-primary" href="#contacto" data-abrir-contacto>Hablemos {_arrow}</a>
         
+      </div>
       </div>
       <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
         <div class="pl-dialog-grid">
@@ -399,7 +405,7 @@ INICIO_CONTACTO = f'''
               <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
             </div>
             <form class="pl-form" id="pl-form" method="dialog" aria-describedby="pl-form-note">
-              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" "><label for="pl-name">Nombre</label></div>
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Nombre</label></div>
               <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
               <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
               <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
@@ -413,24 +419,61 @@ INICIO_CONTACTO = f'''
     </section>
 '''
 
-# 8. BLOG (claro): cada tema es una noticia con su propia página (noticias/, tools/generador/pages/1d_noticias.py)
-_noticias_inicio = [
-    ('noticias/cuando-trabajar-tu-marca.html', 'Marca', '¿Cuándo es momento de trabajar tu marca?'),
-    ('noticias/un-buen-equipo-no-basta.html', 'Producto digital', 'Un buen equipo técnico no basta si nadie ordena el camino'),
-    ('noticias/tres-roles-de-producto.html', 'Servicios', 'Tres roles que normalmente contratas por separado'),
-    ('noticias/metodo-scrum.html', 'Método', 'Scrum, con los pies en el negocio'),
-    ('noticias/productos-con-ia.html', 'Casos', 'Productos con IA para organizaciones exigentes'),
-    ('noticias/modalidad-de-trabajo.html', 'Modalidad', 'Cómo trabajamos juntos'),
+# 8. BLOG (claro): una noticia principal y tres complementarias en carrusel. Cada tema es una página propia
+# (noticias/, tools/generador/pages/1d_noticias.py); las bajadas son las mismas de cada página.
+_noticia_principal = ('noticias/cuando-trabajar-tu-marca.html', 'Marca', '¿Cuándo es momento de trabajar tu marca?',
+                      'Cuando nace tu negocio, cuando crece, cuando te comparan por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces.')
+_noticias_complementarias = [
+    ('noticias/un-buen-equipo-no-basta.html', 'Producto digital', 'Un buen equipo técnico no basta si nadie ordena el camino',
+     'Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.'),
+    ('noticias/tres-roles-de-producto.html', 'Servicios', 'Tres roles que normalmente contratas por separado',
+     'Product Owner, estrategia de marca para productos y UX/UI con prototipos con IA. Los tres en una misma persona, con un norte claro.'),
+    ('noticias/metodo-scrum.html', 'Método', 'Scrum, con los pies en el negocio',
+     'Desde el inicio acordamos prioridades, responsables y entregables, y reviso las señales de alerta en cada sprint para corregir el rumbo a tiempo.'),
 ]
-INICIO_BLOG = '''
+
+
+# Imagen de las tarjetas complementarias que ya la tienen (misma imagen que la portada de la noticia)
+_IMAGEN_COMPLEMENTARIA = {
+    'noticias/metodo-scrum.html': ('img/noticias/metodo-scrum.webp',
+                                   'Persona cruzando una secuencia de bloques de piedra y paneles de vidrio, unidos por una cinta naranja.'),
+}
+
+
+def _tarjeta_complementaria(href, etiqueta, titulo, bajada):
+    imagen = _IMAGEN_COMPLEMENTARIA.get(href)
+    img = f'<img class="pl-tarjeta-img" src="{{p}}{imagen[0]}" width="1672" height="941" alt="{imagen[1]}" loading="lazy">' if imagen else ''
+    return f'''
+          <li class="card"><div class="pl-tarjeta-foto">{img}<p class="pl-mono pl-chip">{etiqueta}</p></div><div class="pl-tarjeta-texto"><h3 class="pl-post-title"><a href="{href}">{titulo}</a></h3><p class="pl-post-lead">{bajada}</p></div></li>'''
+
+
+_href, _etiqueta, _titulo, _bajada = _noticia_principal
+INICIO_BLOG = f'''
     <!-- INICIO · BLOG (NOTICIAS) -->
     <section class="pl-sec pl-light pl-blog" id="blog" aria-labelledby="pl-blog-title">
       <div class="pl-inner">
-        <h2 class="pl-title" id="pl-blog-title">Blog</h2>
-        <p class="pl-lead">Información que puede ser de utilidad para tu negocio o para que me conozcas.</p>
-        <ul class="pl-blog-list" role="list">''' + ''.join(f'''
-          <li class="card pl-post"><p class="pl-mono">{etiqueta}</p><p class="pl-post-title"><a href="{href}">{titulo}</a></p></li>''' for href, etiqueta, titulo in _noticias_inicio) + '''
-        </ul>
+        <p class="pl-mono pl-blog-ceja">Blog</p>
+        <h2 class="pl-title" id="pl-blog-title"><span class="pl-resalte">Lecturas</span> que pueden ser de utilidad <span class="pl-resalte">para tu negocio</span></h2>
+        <article class="card pl-blog-principal">
+          <figure class="pl-blog-foto"><img src="{{p}}img/noticias/cuando-trabajar-tu-marca.webp" width="1672" height="941" alt="Silueta de perfil de una persona frente a un disco naranja, con paneles de vidrio translúcido y la sombra de una hoja." loading="lazy"></figure>
+          <div class="pl-blog-texto">
+            <p class="pl-mono pl-chip">{_etiqueta}</p>
+            <h3 class="pl-blog-titulo"><a href="{_href}">{_titulo}</a></h3>
+            <p class="pl-post-lead">{_bajada}</p>
+            <div class="pl-blog-pie"><span>Por Luis Vicencio</span><a class="link-arrow" href="{_href}">Leer la noticia</a></div>
+          </div>
+        </article>
+        <div class="pl-carrusel" data-carrusel>
+          <div class="pl-carrusel-barra">
+            <p class="pl-mono">Más noticias</p>
+            <div class="pl-carrusel-botones">
+              <button class="btn btn-secondary" type="button" data-paso="-1" aria-label="Noticia anterior">&larr;</button>
+              <button class="btn btn-secondary" type="button" data-paso="1" aria-label="Noticia siguiente">&rarr;</button>
+            </div>
+          </div>
+          <ul class="pl-carrusel-pista" role="list">''' + ''.join(_tarjeta_complementaria(*n) for n in _noticias_complementarias) + '''
+          </ul>
+        </div>
       </div>
     </section>
 '''
@@ -470,7 +513,7 @@ _EN_BLOQUES = [
      '<h2 class="pl-title pl-caps-title" id="pl-caps-title">I find the gap between your business and your audience, and <mark class="pl-mark">design the path</mark> to close it.</h2>'),
     (r'<h2 class="pl-display pl-anim-title" id="pl-contact-title">.*?</h2>',
      '<h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">What shall we </span></span>'
-     '<span class="pl-line"><span class="pl-line-in" data-dir="1">move forward </span></span><span class="pl-line"><span class="pl-line-in">together?</span></span></h2>'),
+     '<span class="pl-line"><span class="pl-line-in" data-dir="1">move forward </span></span><span class="pl-line"><span class="pl-line-in">together this time?</span></span></h2>'),
     ('Si tienes una idea, una marca o un producto entre manos, conversemos.', "If you have an idea, a brand or a product in hand, let's talk."),
 ]
 
@@ -520,7 +563,7 @@ _EN_TEXTOS = [
     ('Hablemos (WhatsApp, se abre en una pestaña nueva)', 'Let’s talk (WhatsApp, opens in a new tab)'),
     ('(WhatsApp, se abre en una pestaña nueva)', '(WhatsApp, opens in a new tab)'),
     ('(se abre en una pestaña nueva)', '(opens in a new tab)'),
-    ('>Hablemos<span', '>Let’s talk<span'),
+    ('data-abrir-contacto>Hablemos ', 'data-abrir-contacto>Let’s talk '),
     ('<mark class="pl-mark">Hablemos</mark> de tu proyecto!</h2>', '<mark class="pl-mark">Let’s talk</mark> about your project!</h2>'),
     ('Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.', 'Tell me what stage your brand or product is at, and I will reply with a proposal for scope, timelines and budget.'),
     ('>Nombre</label>', '>Name</label>'), ('>Correo</label>', '>Email</label>'), ('>Mensaje</label>', '>Message</label>'),
@@ -530,10 +573,20 @@ _EN_TEXTOS = [
     ('>Enviar</button>', '>Send</button>'),
     ('aria-label="Cerrar"', 'aria-label="Close"'),
     # Blog
-    ('>Blog</h2>', '>Blog</h2>'),
-    ('Información que puede ser de utilidad para tu negocio o para que me conozcas.',
-     'Information that may be useful for your business, or to get to know me.'),
-    ('>Marca</p>', '>Brand</p>'), ('>Producto digital</p><p class="pl-post-title">', '>Digital product</p><p class="pl-post-title">'),
+    ('<span class="pl-resalte">Lecturas</span> que pueden ser de utilidad <span class="pl-resalte">para tu negocio</span></h2>',
+     '<span class="pl-resalte">Reading</span> that may be useful <span class="pl-resalte">for your business</span></h2>'),
+    ('>Marca</p>', '>Brand</p>'), ('>Producto digital</p>', '>Digital product</p>'),
+    ('>Leer la noticia</a>', '>Read the article</a>'), ('>Más noticias</p>', '>More news</p>'),
+    ('<span>Por Luis Vicencio</span>', '<span>By Luis Vicencio</span>'),
+    ('aria-label="Noticia anterior"', 'aria-label="Previous news"'), ('aria-label="Noticia siguiente"', 'aria-label="Next news"'),
+    ('Cuando nace tu negocio, cuando crece, cuando te comparan por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces.',
+     'When your business is born, when it grows, when you are compared on price, when your direction changes, or when people do not quite know what you do.'),
+    ('Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.',
+     'These are signs that repeat in digital products: the client asks for one thing, the team delivers another, and no one is clear on what to build first.'),
+    ('Product Owner, estrategia de marca para productos y UX/UI con prototipos con IA. Los tres en una misma persona, con un norte claro.',
+     'Product Owner, brand strategy for products, and UX/UI with AI prototypes. All three in one person, with a clear direction.'),
+    ('Desde el inicio acordamos prioridades, responsables y entregables, y reviso las señales de alerta en cada sprint para corregir el rumbo a tiempo.',
+     'From the start we agree on priorities, owners and deliverables, and I review warning signs in every sprint to correct course in time.'),
     ('>Servicios</p>', '>Services</p>'), ('>Método</p>', '>Method</p>'), ('>Casos</p>', '>Cases</p>'), ('>Modalidad</p>', '>Format</p>'),
     ('>¿Cuándo es momento de trabajar tu marca?</a>', '>When is it time to work on your brand?</a>'),
     ('>Un buen equipo técnico no basta si nadie ordena el camino</a>', '>A good tech team is not enough if no one sets the course</a>'),

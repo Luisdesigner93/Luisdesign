@@ -133,7 +133,6 @@
 /* Formulario de contacto (popup de Conversemos): abre el correo de la persona con el mensaje; no envía datos al servidor */
 .pl-dialog { width: min(52rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); padding: 0; overflow: auto; border: 0; border-radius: var(--radius-lg); background: var(--frame); color: var(--ink); box-shadow: 0 24px 60px rgba(11, 18, 32, .28); }
 .pl-dialog-grid { display: grid; }
-.pl-dialog { position: relative; }
 .pl-dialog-head { position: absolute; top: var(--space-4); right: var(--space-4); z-index: 1; }
 .pl-dialog-lead { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: var(--space-6); background: var(--surface-sunken); }
 .pl-dialog-lead .pl-dialog-title { font-size: clamp(36px, 4.6vw, 58px); line-height: .98; text-transform: uppercase; }
@@ -167,13 +166,51 @@
 .pl-form-note { margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.6; color: var(--ink-muted); }
 .pl-contact .pl-display { font-size: clamp(44px, 7vw, 120px); max-width: 12em; }
 @media (max-width: 40em) { .pl-contact { min-height: 640px; padding-top: 380px; } }
+/* Llamado a la acción de contacto: su borde se ilumina en lima cuando la línea llega a él */
+#contacto .btn { transition: box-shadow .6s ease; }
+#contacto .btn.is-luz { box-shadow: 0 0 0 2px #d4ff3f, 0 0 12px rgba(212, 255, 63, .95), 0 0 30px rgba(212, 255, 63, .6); }
+/* Contacto en escritorio: el bloque se fija en pantalla y la línea se completa con el scroll (luego la página sigue) */
+@media (min-width: 53.75em) {
+  .pl-contact { height: auto; min-height: calc(720px + 100svh); padding: 0; }
+  .contact-pin { position: sticky; top: max(0px, calc((100svh - 720px) / 2)); height: 720px; box-sizing: border-box; padding: 260px 0 clamp(4rem, 9vw, 6rem); }
+}
 
 /* 8. Blog */
-.pl-blog { padding-block: clamp(5rem, 10vw, 8rem); }
-.pl-blog-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: var(--space-10) 0 0; padding: 0; list-style: none; }
-.pl-post { display: grid; gap: var(--space-3); min-height: 12rem; align-content: end; padding: var(--space-6); border-style: dashed; box-shadow: none; }
-.pl-post-title { font-size: 20px; line-height: 1.2; font-weight: 600; }
-@media (max-width: 53.75em) { .pl-blog-list { grid-template-columns: 1fr; } }
+/* Fondo gris claro, tarjetas blancas con marco interior de 8 px y bordes redondeados (referencia visual del blog) */
+.pl-blog { padding-block: clamp(5rem, 10vw, 8rem); background: var(--surface-sunken); }
+.pl-blog-ceja { margin: 0 0 var(--space-3); }
+/* Resalte con la marca lima del menú: una franja inferior bajo la palabra */
+.pl-resalte { background: linear-gradient(transparent 56%, #d4ff3f 56%, #d4ff3f 90%, transparent 90%); }
+.pl-blog-principal { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-6); align-items: stretch; margin: var(--space-10) 0 var(--space-6); padding: var(--space-2); border-radius: var(--radius-xl); }
+.pl-blog-foto { margin: 0; }
+.pl-blog-foto img { display: block; width: 100%; height: 100%; min-height: 20rem; object-fit: cover; border-radius: var(--radius-lg); }
+.pl-blog-texto { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8) var(--space-8) var(--space-6); }
+.pl-chip { display: inline-flex; align-self: flex-start; margin: 0; padding: 6px 14px; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--ink); font-size: 12px; line-height: 1.2; }
+.pl-blog-titulo { margin: 0; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.1; font-weight: 600; letter-spacing: -.03em; }
+.pl-blog-titulo a { color: inherit; text-decoration: none; }
+.pl-post-lead { margin: 0; color: var(--ink-muted); }
+.pl-blog-pie { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); font-size: 14px; color: var(--ink-muted); }
+.pl-blog-pie .link-arrow { color: var(--ink); }
+.pl-carrusel-barra { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.pl-carrusel-botones { display: flex; gap: var(--space-2); }
+.pl-carrusel-botones .btn { width: 44px; height: 44px; padding: 0; justify-content: center; }
+.pl-carrusel-pista { display: flex; gap: var(--space-5); margin: var(--space-6) 0 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.pl-carrusel-pista::-webkit-scrollbar { display: none; }
+.pl-carrusel-pista > li { flex: 0 0 min(340px, 82%); display: flex; flex-direction: column; padding: var(--space-2); border-radius: var(--radius-xl); scroll-snap-align: start; box-shadow: none; }
+.pl-tarjeta-foto { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); background: linear-gradient(160deg, #ffffff 0%, #dfe6f0 100%); }
+.pl-tarjeta-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.pl-tarjeta-foto .pl-chip { position: absolute; top: var(--space-3); right: var(--space-3); background: var(--surface); }
+.pl-tarjeta-texto { display: grid; gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-4); }
+.pl-post-title { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 600; }
+.pl-post-title a { color: inherit; text-decoration: none; }
+@media (min-width: 61.25em) {
+  .pl-carrusel-pista > li { flex: 0 0 calc((100% - 2 * var(--space-5)) / 3); }
+  .pl-carrusel-botones { display: none; }
+}
+@media (max-width: 53.75em) {
+  .pl-blog-principal { grid-template-columns: 1fr; gap: var(--space-4); }
+  .pl-blog-texto { padding: var(--space-5) var(--space-4) var(--space-4); }
+}
 
 /* ===== Textos que no son títulos: mismo estilo que "Sigue la línea" (monoespaciada, espaciada y atenuada), sin forzar mayúsculas ===== */
 .inicio .pl-lead, .inicio .ideas-intro p, .inicio .pl-mono, .inicio .pl-cap, .inicio .pl-post .pl-mono,
@@ -181,6 +218,9 @@
   font-family: var(--mono); font-weight: 400; letter-spacing: .08em; text-transform: none; }
 /* Párrafos: algo más grandes que las etiquetas para que se lean cómodos */
 .inicio .pl-lead, .inicio .ideas-intro p, .inicio .faq details p { font-size: 14px; line-height: 1.75; color: var(--ink-muted); }
+/* Párrafo de introducción de Ideas: la columna ocupa el 70 % del ancho del bloque */
+.inicio .ideas-foot { grid-template-columns: minmax(0, 70%) minmax(0, 1fr); }
+.inicio .ideas-intro { width: 100%; max-width: none; }
 .inicio .pl-dark .pl-lead { color: var(--pl-on-dark-muted); }
 .inicio .faq summary { font-size: 14px; line-height: 1.6; }
 .inicio .pl-cap, .inicio .pl-mono { font-size: 12px; }
@@ -347,7 +387,11 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .inicio .alt-stage { height: 1000px; width: 100%; max-width: none; margin: 0; }
 .inicio .alt-bg { top: 50%; }
 @media (max-width: 40em) {
-  .inicio .alt-stage { height: auto; }
+  .inicio .alt-stage { height: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 0.75rem; width: 100%; padding: 0 1rem; box-sizing: border-box; }
+  .inicio .alt-item { position: relative; left: auto !important; top: auto !important; min-width: 0; display: flex; justify-content: center; }
+  .inicio .alt-mock img { width: 100%; height: auto; max-width: 100%; }
+  .inicio .alt-tag { white-space: normal; font-size: 11px; text-align: center; }
+  .inicio .alt-hint { display: none; }
 }
 
 /* Marca y producto: flechas de señalética (solo contorno flúor, sin fondo) con el nombre del servicio dentro (posiciones en % de la sección) */
@@ -366,14 +410,14 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .pl-producto { padding-top: 370px; min-height: 0; }
   .pl-producto .pl-inner { padding-right: 22px; }
   .pl-signs { display: block; }
-  .pl-icono { position: absolute; left: calc(24% - 20px); width: 40px; height: 40px; }
-  .pl-cartel { position: absolute; left: 45.3%; width: 42.7%; height: 9%; transform: none; font-size: 18px; justify-content: flex-start; padding-right: 0; }
-  .pl-icono.pl-icono-1 { top: calc(6% + (9% - 40px) / 2); }
-  .pl-icono.pl-icono-2 { top: calc(19% + (9% - 40px) / 2); }
-  .pl-icono.pl-icono-3 { top: calc(32% + (9% - 40px) / 2); }
-  .pl-cartel.pl-cartel-1 { top: 6%; }
-  .pl-cartel.pl-cartel-2 { top: 19%; }
-  .pl-cartel.pl-cartel-3 { top: 32%; }
+  .pl-icono { position: absolute; left: calc(21.5% - 20px); width: 40px; height: 40px; }
+  .pl-cartel { position: absolute; left: 33.9%; width: 44.7%; height: 9%; transform: none; font-size: 18px; justify-content: flex-start; padding-right: 0; }
+  .pl-icono.pl-icono-1 { top: calc(7.3% - 20px); }
+  .pl-icono.pl-icono-2 { top: calc(19.3% - 20px); }
+  .pl-icono.pl-icono-3 { top: calc(30.6% - 20px); }
+  .pl-cartel.pl-cartel-1 { top: 2.8%; }
+  .pl-cartel.pl-cartel-2 { top: 14.8%; }
+  .pl-cartel.pl-cartel-3 { top: 26.1%; }
 }
 
 /* Marca y producto: el icono y el nombre de cada flecha aparecen con suavidad cuando la línea la recorre (js/main.js, marcas de la sección) */

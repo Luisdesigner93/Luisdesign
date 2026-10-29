@@ -6,8 +6,20 @@
 _noticias_proyecto = {'Legisnova': 'proyectos/bytequest.html', 'Yomecontrolo': 'proyectos/yomecontrolo.html',
                       'AuditorWeb 21.719': 'proyectos/auditorweb.html'}
 
-_ES = dict(inicio='Inicio', noticias='Noticias', volver='Volver a las noticias', lang='es')
-_EN = dict(inicio='Home', noticias='News', volver='Back to news', lang='en')
+_ES = dict(inicio='Inicio', noticias='Noticias', volver='Volver a las noticias', autor='Autor', categoria='Categoría', lang='es')
+_EN = dict(inicio='Home', noticias='News', volver='Back to news', autor='Author', categoria='Category', lang='en')
+
+# Imagen de portada de las noticias que ya la tienen (archivo en img/noticias/<slug>.webp), con texto alternativo por idioma
+_IMAGEN_PORTADA = {
+    'cuando-trabajar-tu-marca': {
+        'es': 'Silueta de perfil de una persona frente a un disco naranja, con paneles de vidrio translúcido y la sombra de una hoja.',
+        'en': 'Profile silhouette of a person in front of a large orange disc, with translucent glass panels and the shadow of a leaf.',
+    },
+    'metodo-scrum': {
+        'es': 'Persona cruzando una secuencia de bloques de piedra y paneles de vidrio, unidos por una cinta naranja.',
+        'en': 'A person stepping across a sequence of stone blocks and glass panels, joined by an orange ribbon.',
+    },
+}
 
 
 def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
@@ -17,14 +29,24 @@ def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
     # Desde en/noticias/ el inicio en inglés es {p}en/index.html; desde noticias/ es {p}index.html
     inicio_href = '{p}en/index.html' if en else '{p}index.html'
     noticias_href = inicio_href + '#blog'
+    alt = _IMAGEN_PORTADA.get(slug, {}).get(idioma['lang'])
+    figura = (f'\n          <figure class="noticia-portada"><img src="{{p}}img/noticias/{slug}.webp" width="1672" height="941" alt="{alt}"></figure>' if alt else '')
+    # Composición: enlace de vuelta a la izquierda; título, bajada y datos a la derecha; imagen a ancho completo debajo
     body = f'''
     <section class="hero-shell" aria-labelledby="page-title">
-      <div class="shell-body frame-grid page-hero">
+      <div class="shell-body frame-grid page-hero noticia-hero">
         <div class="container">
-          <ol class="breadcrumb" aria-label="{'Route' if en else 'Ruta'}"><li><a href="{inicio_href}">{idioma['inicio']}</a></li><li><a href="{noticias_href}">{idioma['noticias']}</a></li><li aria-current="page">{titulo}</li></ol>
-          <span class="tag tag-eyebrow">{etiqueta}</span>
-          <h1 class="display" id="page-title">{titulo}</h1>
-          <p class="lead">{bajada}</p>
+          <div class="noticia-cabecera">
+            <a class="link-arrow noticia-volver" href="{noticias_href}">&larr; {idioma['volver']}</a>
+            <div>
+              <h1 class="noticia-h1" id="page-title">{titulo}</h1>
+              <p class="lead">{bajada}</p>
+              <dl class="noticia-meta">
+                <div><dt>{idioma['autor']}</dt><dd>Luis Vicencio</dd></div>
+                <div><dt>{idioma['categoria']}</dt><dd>{etiqueta}</dd></div>
+              </dl>
+            </div>
+          </div>{figura}
         </div>
       </div>
     </section>
