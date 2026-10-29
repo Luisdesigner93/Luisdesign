@@ -235,7 +235,8 @@ button.link-arrow { padding: 0; border: 0; background: none; font: inherit; font
   .main-nav.is-open > :nth-child(6) { transition-delay: 0.44s; }
   html.menu-open { overflow: hidden; }
 }
-@media (max-width: 26em) { .header-actions .btn-primary { display: none; } }
+/* En teléfonos el botón Conversemos sigue visible en la cabecera, un poco más compacto */
+@media (max-width: 26em) { .header-actions .btn-primary { padding-inline: 14px; font-size: 14px; } }
 
 /* ===================== Paneles ===================== */
 /* El hero es un panel redondeado inserto en la página blanca */
