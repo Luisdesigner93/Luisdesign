@@ -785,6 +785,13 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   window.addEventListener('scroll', request, { passive: true });
   window.addEventListener('resize', () => { build(); request(); });
   window.addEventListener('load', () => { build(); request(); }); // las imágenes cambian el alto de las secciones
+  // Si una sección cambia de alto después de cargar (fuentes, textos que se ajustan, Safari), se recalcula la línea
+  // para que siga alineada con los carteles y los textos
+  if ('ResizeObserver' in window) {
+    let pendiente = null;
+    const recalcular = new ResizeObserver(() => { cancelAnimationFrame(pendiente); pendiente = requestAnimationFrame(() => { build(); request(); }); });
+    document.querySelectorAll('.pl-sec').forEach((sec) => recalcular.observe(sec));
+  }
   window.addEventListener('pl:title-move', () => { heroPath(); heroStopAt(); request(); }); // el titular se desplaza con el scroll
 })();
 
