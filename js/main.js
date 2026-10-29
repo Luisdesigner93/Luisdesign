@@ -994,6 +994,40 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   observador.observe(titulo);
 })();
 
+// Inglés: cada objeto de ideas nace desde el hueco entre las palabras de su línea y luego se mueve a su lugar final (CSS)
+(function alinearObjetosIdeasEn() {
+  if (document.documentElement.lang !== 'en') return;
+  const sec = document.getElementById('ideas');
+  const collage = sec && sec.querySelector('.ideas-collage');
+  if (!collage) return;
+  const objetos = ['ideas-item-phone', 'ideas-item-beer', 'ideas-item-spray']; // de la línea de arriba a la de abajo
+  const sonda = document.createElement('div'); // mide --ideas-fs en píxeles
+  sonda.style.cssText = 'position:absolute;visibility:hidden;width:var(--ideas-fs)';
+  function alinear() {
+    const stage = sec.querySelector('.ideas-stage') || sec;
+    stage.appendChild(sonda);
+    const fs = sonda.getBoundingClientRect().width || 1;
+    sonda.remove();
+    const lineas = sec.querySelectorAll('.ideas-title > .ideas-line');
+    const c = collage.getBoundingClientRect();
+    objetos.forEach((clase, i) => {
+      const item = sec.querySelector(`.${clase}`);
+      const linea = lineas[i];
+      const hueco = linea && linea.querySelector(':scope > .ideas-gap');
+      if (!item || !hueco) return;
+      const g = hueco.getBoundingClientRect();
+      if (g.width === 0) { item.style.removeProperty('--line-x'); item.style.removeProperty('--line'); return; } // móvil: el hueco está oculto
+      const l = linea.getBoundingClientRect();
+      // Punto de partida de la animación (ver @keyframes ideas-item-in): left = 50% + --line-x·fs, top = 50% + --line·0.95·fs
+      item.style.setProperty('--line-x', `${(g.left + g.width / 2 - (c.left + c.width / 2)) / fs}`);
+      item.style.setProperty('--line', `${(l.top + l.height / 2 - (c.top + c.height / 2)) / (0.95 * fs)}`);
+    });
+  }
+  alinear();
+  window.addEventListener('resize', alinear);
+  if (document.fonts) document.fonts.ready.then(alinear);
+})();
+
 // Inicio: carrusel de noticias complementarias. Cada botón desplaza una tarjeta (sin librerías)
 (function initBlogCarrusel() {
   const suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -203,8 +203,8 @@ _disciplinas = [('Branding estratégico', 'Investigo el negocio, su contexto y s
                 ('Design Systems', 'Creo componentes y reglas compartidas que mantienen la coherencia del producto y permiten que evolucione junto al equipo de desarrollo.'),
                 ('Productos digitales', 'Defino, prototipo y planifico soluciones digitales, desde las primeras ideas hasta su implementación.'),
                 ('Desarrollo web', 'Diseño y coordino sitios web que comunican el valor de tu marca, generan oportunidades y ayudan a vender.'),
-                ('AI Workflow', 'Diseño flujos de trabajo asistidos por inteligencia artificial para abordar desarrollos complejos. La IA ejecuta; yo hago las preguntas correctas, tomo las decisiones y superviso el resultado.'),
-                ('Colaboración', 'Me integro a tu equipo o coordino diseñadores, desarrolladores y proveedores, manteniendo una dirección clara desde la idea inicial hasta la entrega.')]
+                ('AI Workflow', 'Diseño flujos de trabajo con IA para desarrollos complejos. La IA ejecuta; yo decido y superviso el resultado.'),
+                ('Gestión ágil de producto', 'Organizo el backlog, priorizo requerimientos y planifico entregas para avanzar de forma iterativa junto al equipo.')]
 # Las cuatro primeras van a la izquierda del óvalo y las cinco siguientes a la derecha; la primera de cada lado, arriba
 _cap_slot = [1, 2, 3, 4, 6, 7, 8, 9]  # posiciones del óvalo en CSS (inicio.css): izquierda 1-4, derecha 6-9
 _cap_cls = lambda slot: 'pl-cap-l' if slot <= 4 else 'pl-cap-r'
@@ -359,7 +359,7 @@ INICIO_PRODUCTO = f'''
       <div class="pl-signs" aria-hidden="true"><span class="pl-icono pl-icono-1"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-pen"/></svg></span><span class="pl-icono pl-icono-2"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-code"/></svg></span><span class="pl-icono pl-icono-3"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-layers"/></svg></span><span class="pl-cartel pl-cartel-1">Branding</span><span class="pl-cartel pl-cartel-2">Websites</span><span class="pl-cartel pl-cartel-3">Producto</span></div>
       <div class="pl-inner">
         <h2 class="pl-title" id="pl-producto-title">Construyamos en la misma dirección.</h2>
-        <p class="pl-lead">Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.</p>
+        <p class="pl-lead">Combino diseño centrado en las personas con metodologías ágiles para definir problemas, ordenar prioridades y coordinar entregas junto a equipos multidisciplinarios. Me interesa conectar lo que el negocio necesita, lo que las personas esperan y lo que los equipos pueden construir. Porque una buena idea necesita más que diseño: necesita dirección, colaboración y decisiones fundamentadas.</p>
         <!-- Firma de la sección -->
         <p class="pl-signature"><strong>Luis Vicencio</strong><span class="pl-mono">Brand &amp; Product Designer.</span></p>
       </div>
@@ -388,7 +388,7 @@ INICIO_CONTACTO = f'''
       {_hilo(['M1189.4 0.0 C1189.4 97.2 353.7 83.3 353.7 222.2 C368.5 305.6 486.4 319.4 471.6 388.9 C456.9 444.4 383.2 444.4 390.6 500.0 C400.9 555.6 530.6 544.4 678.0 538.9 C825.4 533.3 943.3 555.6 1075.9 527.8 C1179.1 527.8 1238.1 444.4 1186.5 420.8 C1134.9 395.8 1105.4 486.1 1127.5 538.9 C1134.9 722.2 766.4 972.2 619.0 830.6'], ['M187.5 0 V852'], paso=5)}
       <div class="pl-inner pl-center">
         <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">¿Qué haremos </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">avanzar </span></span><span class="pl-line"><span class="pl-line-in">juntos esta vez?</span></span></h2>
-        <p class="pl-lead pl-contact-lead">Si tienes una idea, una marca o un producto entre manos, conversemos.</p>
+        <p class="pl-lead pl-contact-lead">Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.</p>
 
         <a class="btn btn-primary" href="#contacto" data-abrir-contacto>Hablemos {_arrow}</a>
         
@@ -426,17 +426,25 @@ _noticia_principal = ('noticias/cuando-trabajar-tu-marca.html', 'Marca', '¿Cuá
 _noticias_complementarias = [
     ('noticias/un-buen-equipo-no-basta.html', 'Producto digital', 'Un buen equipo técnico no basta si nadie ordena el camino',
      'Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.'),
-    ('noticias/tres-roles-de-producto.html', 'Servicios', 'Tres roles que normalmente contratas por separado',
-     'Product Owner, estrategia de marca para productos y UX/UI con prototipos con IA. Los tres en una misma persona, con un norte claro.'),
+    ('noticias/tres-roles-de-producto.html', 'Servicios', 'Diseñar va más allá de diseñar: negocio, marcas y productos digitales',
+     'En todos esos casos, el diseño puede aportar mucho más que una solución visual.'),
     ('noticias/metodo-scrum.html', 'Método', 'Scrum, con los pies en el negocio',
      'Desde el inicio acordamos prioridades, responsables y entregables, y reviso las señales de alerta en cada sprint para corregir el rumbo a tiempo.'),
+    ('noticias/ley-21719-prepara-tu-web.html', 'Normativa', 'Ley 21.719 prepara tu web ante multas',
+     'La Ley 21.719 está prevista para entrar en vigor a fines de 2026. Revisa formularios, cookies y avisos de privacidad de tu web antes de esa fecha.'),
 ]
 
 
 # Imagen de las tarjetas complementarias que ya la tienen (misma imagen que la portada de la noticia)
 _IMAGEN_COMPLEMENTARIA = {
     'noticias/metodo-scrum.html': ('img/noticias/metodo-scrum.webp',
-                                   'Persona cruzando una secuencia de bloques de piedra y paneles de vidrio, unidos por una cinta naranja.'),
+                                   'Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha.'),
+    'noticias/tres-roles-de-producto.html': ('img/noticias/tres-roles-de-producto.webp',
+                                   'Mano sosteniendo un lápiz frente a paneles de vidrio translúcido y uno verde lima.'),
+    'noticias/ley-21719-prepara-tu-web.html': ('img/noticias/ley-21719-prepara-tu-web.webp',
+                                   'Balanza de justicia, un computador y un documento sobre bloques de concreto, junto a paneles de vidrio y un panel verde lima.'),
+    'noticias/un-buen-equipo-no-basta.html': ('img/noticias/un-buen-equipo-no-basta.webp',
+                                   'Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima.'),
 }
 
 
@@ -449,26 +457,26 @@ def _tarjeta_complementaria(href, etiqueta, titulo, bajada):
 
 _href, _etiqueta, _titulo, _bajada = _noticia_principal
 INICIO_BLOG = f'''
-    <!-- INICIO · BLOG (NOTICIAS) -->
+    <!-- INICIO · BLOG (ARTÍCULOS) -->
     <section class="pl-sec pl-light pl-blog" id="blog" aria-labelledby="pl-blog-title">
       <div class="pl-inner">
         <p class="pl-mono pl-blog-ceja">Blog</p>
         <h2 class="pl-title" id="pl-blog-title"><span class="pl-resalte">Lecturas</span> que pueden ser de utilidad <span class="pl-resalte">para tu negocio</span></h2>
         <article class="card pl-blog-principal">
-          <figure class="pl-blog-foto"><img src="{{p}}img/noticias/cuando-trabajar-tu-marca.webp" width="1672" height="941" alt="Silueta de perfil de una persona frente a un disco naranja, con paneles de vidrio translúcido y la sombra de una hoja." loading="lazy"></figure>
+          <figure class="pl-blog-foto"><img src="{{p}}img/noticias/cuando-trabajar-tu-marca.webp" width="1536" height="1024" alt="Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás." loading="lazy"></figure>
           <div class="pl-blog-texto">
             <p class="pl-mono pl-chip">{_etiqueta}</p>
             <h3 class="pl-blog-titulo"><a href="{_href}">{_titulo}</a></h3>
             <p class="pl-post-lead">{_bajada}</p>
-            <div class="pl-blog-pie"><span>Por Luis Vicencio</span><a class="link-arrow" href="{_href}">Leer la noticia</a></div>
+            <div class="pl-blog-pie"><span>Por Luis Vicencio</span><a class="link-arrow" href="{_href}">Leer el artículo</a></div>
           </div>
         </article>
         <div class="pl-carrusel" data-carrusel>
           <div class="pl-carrusel-barra">
-            <p class="pl-mono">Más noticias</p>
+            <p class="pl-mono">Más artículos</p>
             <div class="pl-carrusel-botones">
-              <button class="btn btn-secondary" type="button" data-paso="-1" aria-label="Noticia anterior">&larr;</button>
-              <button class="btn btn-secondary" type="button" data-paso="1" aria-label="Noticia siguiente">&rarr;</button>
+              <button class="btn btn-secondary" type="button" data-paso="-1" aria-label="Artículo anterior">&larr;</button>
+              <button class="btn btn-secondary" type="button" data-paso="1" aria-label="Artículo siguiente">&rarr;</button>
             </div>
           </div>
           <ul class="pl-carrusel-pista" role="list">''' + ''.join(_tarjeta_complementaria(*n) for n in _noticias_complementarias) + '''
@@ -500,7 +508,7 @@ import re
 # conservando sus clases. El resto se traduce por texto exacto. Traducción en revisión: pendiente de revisión de Luis.
 _EN_BLOQUES = [
     (r'<h1 class="pl-display pl-hero-title".*?</h1>',
-     '<h1 class="pl-display pl-hero-title" id="pl-hero-title"><span class="pl-line"><span class="pl-line-in"><span class="pl-o">O</span>ur brands </span></span>'
+     '<h1 class="pl-display pl-hero-title" id="pl-hero-title"><span class="pl-line"><span class="pl-line-in">De<span class="pl-o">s</span>ign <span class="pl-br-m"></span>brands </span></span>'
      '<span class="pl-line"><span class="pl-line-in" data-dir="1">that <span class="pl-u">want<span class="pl-base" aria-hidden="true"></span></span> </span></span>'
      '<span class="pl-line"><span class="pl-line-in">to move</span></span></h1>'),
     (r'<h2 class="ideas-title" id="ideas-title">.*?</h2>',
@@ -514,7 +522,7 @@ _EN_BLOQUES = [
     (r'<h2 class="pl-display pl-anim-title" id="pl-contact-title">.*?</h2>',
      '<h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">What shall we </span></span>'
      '<span class="pl-line"><span class="pl-line-in" data-dir="1">move forward </span></span><span class="pl-line"><span class="pl-line-in">together this time?</span></span></h2>'),
-    ('Si tienes una idea, una marca o un producto entre manos, conversemos.', "If you have an idea, a brand or a product in hand, let's talk."),
+    ('Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.', 'Every project starts from a different need. We can work on your brand, your web presence or a digital product, depending on what you have in hand and what you need to solve.'),
 ]
 
 _EN_TEXTOS = [
@@ -532,11 +540,11 @@ _EN_TEXTOS = [
     ('Creo componentes y reglas compartidas que mantienen la coherencia del producto y permiten que evolucione junto al equipo de desarrollo.', 'I create shared components and rules that keep the product coherent and let it evolve alongside the development team.'),
     ('Defino, prototipo y planifico soluciones digitales, desde las primeras ideas hasta su implementación.', 'I define, prototype and plan digital solutions, from the first ideas to their implementation.'),
     ('Diseño y coordino sitios web que comunican el valor de tu marca, generan oportunidades y ayudan a vender.', 'I design and coordinate websites that communicate your brand\'s value, generate opportunities and help sell.'),
-    ('Diseño flujos de trabajo asistidos por inteligencia artificial para abordar desarrollos complejos. La IA ejecuta; yo hago las preguntas correctas, tomo las decisiones y superviso el resultado.', 'I design AI-assisted workflows to tackle complex developments. AI executes; I ask the right questions, make the decisions and supervise the result.'),
-    ('Me integro a tu equipo o coordino diseñadores, desarrolladores y proveedores, manteniendo una dirección clara desde la idea inicial hasta la entrega.', 'I join your team or coordinate designers, developers and suppliers, keeping a clear direction from the initial idea to delivery.'),
+    ('Diseño flujos de trabajo con IA para desarrollos complejos. La IA ejecuta; yo decido y superviso el resultado.', 'I design AI workflows for complex developments. AI executes; I decide and supervise the result.'),
+    ('Organizo el backlog, priorizo requerimientos y planifico entregas para avanzar de forma iterativa junto al equipo.', 'I organize the backlog, prioritize requirements and plan deliveries to move forward iteratively alongside the team.'),
     ('>Identidad</strong>', '>Identity</strong>'), ('>Branding estratégico</strong>', '>Strategic branding</strong>'),
     ('>Prototipado</strong>', '>Prototyping</strong>'), ('>Productos digitales</strong>', '>Digital products</strong>'),
-    ('>Desarrollo web</strong>', '>Web development</strong>'), ('>Colaboración</strong>', '>Collaboration</strong>'),
+    ('>Desarrollo web</strong>', '>Web development</strong>'), ('>Gestión ágil de producto</strong>', '>Agile product management</strong>'),
     ('>Design Systems</strong>', '>Design Systems</strong>'),
     # Portafolio
     ('>Portafolio</h2>', '>Portfolio</h2>'), ('Imagen pendiente', 'Image pending'), ('aria-label="Ver proyecto: ', 'aria-label="View project: '),
@@ -556,8 +564,22 @@ _EN_TEXTOS = [
     ('>Cerveza Khronos</h3>', '>Khronos beer</h3>'),
     # Marca y producto
     ('Construyamos en la misma dirección.', "Let's build in the same direction."),
-    ('Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.',
-     'Every project starts from a different need. We can work on your brand, your web presence or a digital product, depending on what you have in hand and what you need to solve.'),
+    ('Combino diseño centrado en las personas con metodologías ágiles para definir problemas, ordenar prioridades y coordinar entregas junto a equipos multidisciplinarios. Me interesa conectar lo que el negocio necesita, lo que las personas esperan y lo que los equipos pueden construir. Porque una buena idea necesita más que diseño: necesita dirección, colaboración y decisiones fundamentadas.',
+     'I combine people-centered design with agile methods to define problems, order priorities and coordinate deliveries alongside multidisciplinary teams. I am interested in connecting what the business needs, what people expect and what teams can build. Because a good idea needs more than design: it needs direction, collaboration and well-founded decisions.'),
+    ('alt="Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás."',
+     'alt="Profile silhouette of a person between translucent and frosted glass panels, with a lime green panel behind."'),
+    ('alt="Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha."',
+     'alt="A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow."'),
+    ('alt="Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima."',
+     'alt="Four people gathered around a laptop on concrete blocks, between glass panels and a lime green panel."'),
+    ('La Ley 21.719 está prevista para entrar en vigor a fines de 2026. Revisa formularios, cookies y avisos de privacidad de tu web antes de esa fecha.',
+     'Law 21.719 is expected to take effect at the end of 2026. Review forms, cookies and privacy notices on your website before that date.'),
+    ('>Normativa</p>', '>Regulation</p>'),
+    ('>Ley 21.719 prepara tu web ante multas</a>', '>Law 21.719 prepares your website for fines</a>'),
+    ('alt="Balanza de justicia, un computador y un documento sobre bloques de concreto, junto a paneles de vidrio y un panel verde lima."',
+     'alt="A justice scale, a laptop and a document on concrete blocks, beside glass panels and a lime green panel."'),
+    ('alt="Mano sosteniendo un lápiz frente a paneles de vidrio translúcido y uno verde lima."',
+     'alt="A hand holding a pencil in front of translucent glass panels and a lime green one."'),
     ('>Diseñador digital.<', '>Digital designer.<'),
     # Contacto y diálogo
     ('Hablemos (WhatsApp, se abre en una pestaña nueva)', 'Let’s talk (WhatsApp, opens in a new tab)'),
@@ -576,21 +598,21 @@ _EN_TEXTOS = [
     ('<span class="pl-resalte">Lecturas</span> que pueden ser de utilidad <span class="pl-resalte">para tu negocio</span></h2>',
      '<span class="pl-resalte">Reading</span> that may be useful <span class="pl-resalte">for your business</span></h2>'),
     ('>Marca</p>', '>Brand</p>'), ('>Producto digital</p>', '>Digital product</p>'),
-    ('>Leer la noticia</a>', '>Read the article</a>'), ('>Más noticias</p>', '>More news</p>'),
+    ('>Leer el artículo</a>', '>Read the article</a>'), ('>Más artículos</p>', '>More articles</p>'),
     ('<span>Por Luis Vicencio</span>', '<span>By Luis Vicencio</span>'),
-    ('aria-label="Noticia anterior"', 'aria-label="Previous news"'), ('aria-label="Noticia siguiente"', 'aria-label="Next news"'),
+    ('aria-label="Artículo anterior"', 'aria-label="Previous article"'), ('aria-label="Artículo siguiente"', 'aria-label="Next article"'),
     ('Cuando nace tu negocio, cuando crece, cuando te comparan por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces.',
      'When your business is born, when it grows, when you are compared on price, when your direction changes, or when people do not quite know what you do.'),
     ('Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.',
      'These are signs that repeat in digital products: the client asks for one thing, the team delivers another, and no one is clear on what to build first.'),
-    ('Product Owner, estrategia de marca para productos y UX/UI con prototipos con IA. Los tres en una misma persona, con un norte claro.',
-     'Product Owner, brand strategy for products, and UX/UI with AI prototypes. All three in one person, with a clear direction.'),
+    ('En todos esos casos, el diseño puede aportar mucho más que una solución visual.',
+     'In all those cases, design can offer much more than a visual solution.'),
     ('Desde el inicio acordamos prioridades, responsables y entregables, y reviso las señales de alerta en cada sprint para corregir el rumbo a tiempo.',
      'From the start we agree on priorities, owners and deliverables, and I review warning signs in every sprint to correct course in time.'),
     ('>Servicios</p>', '>Services</p>'), ('>Método</p>', '>Method</p>'), ('>Casos</p>', '>Cases</p>'), ('>Modalidad</p>', '>Format</p>'),
     ('>¿Cuándo es momento de trabajar tu marca?</a>', '>When is it time to work on your brand?</a>'),
     ('>Un buen equipo técnico no basta si nadie ordena el camino</a>', '>A good tech team is not enough if no one sets the course</a>'),
-    ('>Tres roles que normalmente contratas por separado</a>', '>Three roles you usually hire separately</a>'),
+    ('>Diseñar va más allá de diseñar: negocio, marcas y productos digitales</a>', '>Design goes beyond design: business, brands and digital products</a>'),
     ('>Scrum, con los pies en el negocio</a>', '>Scrum, grounded in the business</a>'),
     ('>Productos con IA para organizaciones exigentes</a>', '>AI products for demanding organizations</a>'),
     ('>Cómo trabajamos juntos</a>', '>How we work together</a>'),

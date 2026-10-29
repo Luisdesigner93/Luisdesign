@@ -72,7 +72,7 @@ HEAD = '''<!doctype html>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
         <a href="{home}#proyectos"{cur_proyectos}>Proyectos</a>
-        <a href="{home}#blog"{cur_noticias}>Noticias</a>
+        <a href="{home}#blog"{cur_noticias}>Blog</a>
         <a href="{p}sobre-mi.html"{cur_sobre}>Sobre mí</a>
         <a href="{contact_href}">Contacto</a>
         <div class="nav-foot">
@@ -122,7 +122,7 @@ FOOT = '''  </main>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{home}#proyectos">Proyectos</a></li><li><a href="{home}#blog">Noticias</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{home}#proyectos">Proyectos</a></li><li><a href="{home}#blog">Blog</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -170,7 +170,6 @@ EN_CHROME = [
     ('aria-label="Principal"', 'aria-label="Main"'),
     ('<span>Branding, UX/UI y producto</span>', '<span>Branding, UX/UI and product</span>'),
     ('>Marcas</a>', '>Brands</a>'),
-    ('>Noticias</a>', '>News</a>'),
     ('>Marcas</a></li>', '>Brands</a></li>'),
     ('>Proyectos</a>', '>Projects</a>'),
     ('aria-label="Categorías de proyectos"', 'aria-label="Project categories"'),
@@ -178,10 +177,10 @@ EN_CHROME = [
     ('>Contacto</a>', '>Contact</a>'),
     (' (se abre en una pestaña nueva)', ' (opens in a new tab)'),
     ('>Conversemos</a>', '>Let’s talk</a>'),
-    ('alt="Persona cruzando una secuencia de bloques de piedra y paneles de vidrio, unidos por una cinta naranja."',
-     'alt="A person stepping across a sequence of stone blocks and glass panels, joined by an orange ribbon."'),
-    ('alt="Silueta de perfil de una persona frente a un disco naranja, con paneles de vidrio translúcido y la sombra de una hoja."',
-     'alt="Profile silhouette of a person in front of a large orange disc, with translucent glass panels and the shadow of a leaf."'),
+    ('alt="Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha."',
+     'alt="A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow."'),
+    ('alt="Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás."',
+     'alt="Profile silhouette of a person between translucent and frosted glass panels, with a lime green panel behind."'),
     ('aria-label="Abrir menú"', 'aria-label="Open menu"'),
     ('Escríbeme por WhatsApp', 'Message me on WhatsApp'),
     ('Respuesta en 1 a 2 días hábiles', 'Reply within 1 to 2 business days'),

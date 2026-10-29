@@ -268,7 +268,7 @@ _preguntas = [
 ]
 HOME_PREGUNTAS = '''
     <!-- PREGUNTAS FRECUENTES -->
-    <section class="panel section" id="preguntas" aria-labelledby="faq-title">
+    <section class="panel panel-plain frame-grid section" id="preguntas" aria-labelledby="faq-title">
       <div class="container">
         <div class="narrow">
           <div class="section-head center">

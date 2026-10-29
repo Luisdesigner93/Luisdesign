@@ -207,7 +207,6 @@
 .pl-post-title a { color: inherit; text-decoration: none; }
 @media (min-width: 61.25em) {
   .pl-carrusel-pista > li { flex: 0 0 calc((100% - 2 * var(--space-5)) / 3); }
-  .pl-carrusel-botones { display: none; }
 }
 @media (max-width: 53.75em) {
   .pl-blog-principal { grid-template-columns: 1fr; gap: var(--space-4); }
@@ -440,3 +439,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .pl-cap-name { white-space: normal; font-size: 15px; }
   .pl-cap-desc { font-size: 11px; }
 }
+
+/* Preguntas frecuentes: fondo blanco con la grilla cuadrille, sin el degradado ni el resplandor del panel */
+.inicio #preguntas { background: #fff; }
+.inicio #preguntas::before { display: none; }

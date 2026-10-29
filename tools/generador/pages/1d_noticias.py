@@ -6,18 +6,30 @@
 _noticias_proyecto = {'Legisnova': 'proyectos/bytequest.html', 'Yomecontrolo': 'proyectos/yomecontrolo.html',
                       'AuditorWeb 21.719': 'proyectos/auditorweb.html'}
 
-_ES = dict(inicio='Inicio', noticias='Noticias', volver='Volver a las noticias', autor='Autor', categoria='Categoría', lang='es')
-_EN = dict(inicio='Home', noticias='News', volver='Back to news', autor='Author', categoria='Category', lang='en')
+_ES = dict(inicio='Inicio', noticias='Blog', volver='Volver al blog', autor='Autor', categoria='Categoría', lang='es')
+_EN = dict(inicio='Home', noticias='Blog', volver='Back to blog', autor='Author', categoria='Category', lang='en')
 
 # Imagen de portada de las noticias que ya la tienen (archivo en img/noticias/<slug>.webp), con texto alternativo por idioma
 _IMAGEN_PORTADA = {
     'cuando-trabajar-tu-marca': {
-        'es': 'Silueta de perfil de una persona frente a un disco naranja, con paneles de vidrio translúcido y la sombra de una hoja.',
-        'en': 'Profile silhouette of a person in front of a large orange disc, with translucent glass panels and the shadow of a leaf.',
+        'es': 'Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás.',
+        'en': 'Profile silhouette of a person between translucent and frosted glass panels, with a lime green panel behind.',
+    },
+    'un-buen-equipo-no-basta': {
+        'es': 'Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima.',
+        'en': 'Four people gathered around a laptop on concrete blocks, between glass panels and a lime green panel.',
+    },
+    'ley-21719-prepara-tu-web': {
+        'es': 'Balanza de justicia, un computador y un documento sobre bloques de concreto, junto a paneles de vidrio y un panel verde lima.',
+        'en': 'A justice scale, a laptop and a document on concrete blocks, beside glass panels and a lime green panel.',
+    },
+    'tres-roles-de-producto': {
+        'es': 'Mano sosteniendo un lápiz frente a paneles de vidrio translúcido y uno verde lima.',
+        'en': 'A hand holding a pencil in front of translucent glass panels and a lime green one.',
     },
     'metodo-scrum': {
-        'es': 'Persona cruzando una secuencia de bloques de piedra y paneles de vidrio, unidos por una cinta naranja.',
-        'en': 'A person stepping across a sequence of stone blocks and glass panels, joined by an orange ribbon.',
+        'es': 'Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha.',
+        'en': 'A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow.',
     },
 }
 
@@ -51,7 +63,7 @@ def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
       </div>
     </section>
 
-    <section class="panel panel-plain section" aria-label="{'Content of the news item' if en else 'Contenido de la noticia'}">
+    <section class="panel panel-plain section" aria-label="{'Content of the article' if en else 'Contenido del artículo'}">
       <div class="container">
         <div class="narrow prose">
 {cuerpo}
@@ -93,15 +105,10 @@ _noticia('un-buen-equipo-no-basta', 'Un buen equipo técnico no basta si nadie o
          '<p>Mi trabajo es ser el puente entre tu negocio, tu cliente y tu equipo técnico.</p>',
          'Producto digital')
 
-# 3. Servicios: tres roles que normalmente se contratan por separado
-_noticia('tres-roles-de-producto', 'Tres roles que normalmente contratas por separado',
-         'Product Owner, estrategia de marca para productos y UX/UI con prototipos con IA. Los tres en una misma persona, con un norte claro.',
-         '<h2>Product Owner</h2><p>Represento a tu negocio frente al equipo técnico. Traduzco lo que el cliente necesita en historias de usuario claras, ordeno el backlog y reviso que cada entrega cumpla lo esperado.</p>'
-         '<p class="muted">Incluye: comprensión del negocio, historias de usuario, roadmap y backlog priorizado, ceremonias Scrum, QA de cada historia, gestión de expectativas e informes de avance.</p>'
-         '<h2>Estrategia de marca para productos</h2><p>Un producto sin identidad se explica peor y se vende peor. Defino el propósito, la voz y la identidad del producto o de la empresa que lo construye.</p>'
-         '<p class="muted">Incluye: Brand Compass, naming, identidad visual, voz y sitio web.</p>'
-         '<h2>UX/UI y prototipos con IA</h2><p>Diseño la experiencia y la llevo a un prototipo funcional con desarrollo asistido por IA, para validar antes de invertir en desarrollo. Después lo traspaso a tu equipo para producción.</p>'
-         '<p class="muted">Incluye: flujos, prototipos navegables o funcionales, diseño de interfaces y traspaso al equipo de desarrollo.</p>',
+# 3. Servicios: artículo sobre el diseño más allá del diseño (negocio, marca y producto digital)
+_noticia('tres-roles-de-producto', 'Diseñar va más allá de diseñar: negocio, marcas y productos digitales',
+         'En todos esos casos, el diseño puede aportar mucho más que una solución visual.',
+         '<p>Hay proyectos que parten con una buena idea, pero no saben muy bien cómo llevarla a la realidad. Otros tienen un equipo técnico capaz de construir casi cualquier cosa, pero necesitan definir qué vale la pena construir. Y también están los que tienen un buen producto, pero no logran comunicar por qué alguien debería elegirlo.</p><p>En todos esos casos, el diseño puede aportar mucho más que una solución visual.</p><p>Con el tiempo, mi trabajo como diseñador me ha llevado a involucrarme en distintas etapas de un proyecto: desde entender el negocio y definir una estrategia de marca, hasta organizar el desarrollo de un producto digital y diseñar la experiencia de quienes lo utilizan.</p><p>Esa combinación me permite abordar los proyectos desde una perspectiva más amplia, conectando las ideas con las personas que las necesitan y con los equipos que deben hacerlas realidad.</p><h2>Entender el problema antes de buscar la solución</h2><p>No siempre lo que un negocio necesita es una nueva web, una aplicación o una identidad visual. A veces, lo que falta es claridad: entender qué problema se quiere resolver, cuáles son las prioridades y qué camino tiene más sentido seguir.</p><p>Por eso, antes de pensar en soluciones, me interesa comprender el contexto. Qué busca el negocio, qué necesitan sus usuarios y qué condiciones existen para llevar una idea a la práctica.</p><p>Esta mirada también es parte de mi trabajo como Product Owner. En ese rol, conecto las necesidades del negocio con el equipo técnico, transformando ideas y objetivos en tareas concretas que se puedan desarrollar, probar y mejorar.</p><p>Trabajo con historias de usuario, roadmap y backlog priorizado, participo en las ceremonias Scrum y reviso las entregas para comprobar que respondan a lo definido. También ayudo a ordenar las expectativas y mantener al equipo enfocado en lo que realmente importa.</p><p>En pocas palabras, ayudo a que todos entiendan qué estamos construyendo, por qué lo hacemos y cuál es el siguiente paso.</p><h2>Darle sentido a lo que una marca quiere construir</h2><p>Una vez que entendemos el negocio y su propuesta, aparece otra pregunta: ¿cómo hacemos que las personas comprendan su valor?</p><p>Una marca no es solamente un logotipo o un sistema de colores. Es la forma en que una empresa o un producto se presenta, se diferencia y construye una relación con las personas. Cuando esa identidad no está bien definida, comunicar una buena idea puede volverse mucho más difícil.</p><p>Desde la estrategia de marca, trabajo en encontrar ese sentido y convertirlo en una dirección clara. Defino el propósito, el posicionamiento y los elementos que permiten expresar lo que hace diferente a un producto o a la empresa detrás de él.</p><p>Esto puede incluir un Brand Compass para orientar las decisiones de marca, el desarrollo de un nombre, la identidad visual, la voz y el tono de comunicación, e incluso el diseño de su sitio web.</p><p>La idea es que cada decisión tenga una razón de ser y que la marca no solo se vea bien, sino que también ayude a comunicar mejor lo que ofrece.</p><h2>Convertir las ideas en experiencias que podamos probar</h2><p>Cuando trabajamos con productos digitales, hay una distancia importante entre tener una idea y saber si realmente funciona para las personas que la van a utilizar.</p><p>El diseño UX/UI ayuda a reducir esa distancia. Me permite explorar cómo debería funcionar un producto, qué pasos necesita seguir una persona y cómo podemos hacer que la experiencia sea más intuitiva, útil y coherente con los objetivos del negocio.</p><p>Trabajo en los flujos de usuario, la estructura de navegación, el diseño de interfaces y los prototipos que permiten explorar una solución antes de desarrollarla por completo.</p><p>Además, incorporo herramientas de inteligencia artificial para llevar algunas de estas ideas a prototipos navegables o funcionales con mayor rapidez. Así podemos visualizar mejor la propuesta, probar alternativas y detectar oportunidades de mejora antes de comprometer más recursos en el desarrollo.</p><p>Una vez que tenemos una dirección clara, preparo el diseño y el traspaso al equipo técnico para que la solución pueda implementarse en producción.</p><h2>Una mirada que conecta las distintas partes del proyecto</h2><p>Mi trabajo no se limita a una sola etapa ni a una única disciplina. Me interesa entender cómo se relacionan el negocio, la marca, la experiencia de usuario y la tecnología, porque las decisiones que tomamos en un área terminan influyendo en las demás.</p><p>Esa perspectiva me permite colaborar con perfiles distintos, conversar tanto con personas de negocio como con equipos técnicos y ayudar a que las decisiones de diseño respondan a necesidades concretas.</p><p>No se trata de hacer de todo, sino de entender qué necesita cada proyecto y aportar desde el lugar donde puedo generar más valor: dando dirección a las ideas, convirtiéndolas en soluciones y ayudando a que lleguen a las personas para las que fueron pensadas.</p><p>Al final, diseñar también consiste en conectar las piezas para que las cosas funcionen mejor.</p>',
          'Servicios')
 
 # 4. Proceso: Scrum, con los pies en el negocio
@@ -135,6 +142,21 @@ _noticia('modalidad-de-trabajo', 'Cómo trabajamos juntos',
                  '<strong>Remoto:</strong> en español o inglés.']),
          'Modalidad')
 
+# 7. Normativa: prepara tu web ante la Ley 21.719
+_noticia('ley-21719-prepara-tu-web', 'Ley 21.719 prepara tu web ante multas',
+         'La Ley 21.719 está prevista para entrar en vigor a fines de 2026. Revisa formularios, cookies y avisos de privacidad de tu web antes de esa fecha.',
+         '<p>La Ley 21.719 moderniza la Ley 19.628, la normativa vigente sobre datos personales en Chile. Cambia la forma en que las empresas recogen, usan y protegen la información de las personas, y eso incluye a tu web cada vez que recibe datos desde un formulario, una cookie o una herramienta de analítica.</p>'
+         '<h2>Qué está previsto</h2><p>La ley se publicó en diciembre de 2024 y su entrada en vigor está prevista para el 1 de diciembre de 2026. También hay un proyecto que propone postergarla. Antes de planificar cambios, revisa el estado vigente en la Biblioteca del Congreso Nacional (bcn.cl).</p>'
+         '<h2>Qué revisar en tu web</h2>' + _lista([
+             '<strong>Formularios:</strong> pide solo los datos que necesitas y explica para qué los usas.',
+             '<strong>Cookies y analítica:</strong> informa qué herramientas usas y pide consentimiento cuando corresponda.',
+             '<strong>Aviso de privacidad:</strong> debe ser claro, fácil de encontrar y explicar cómo ejercer tus derechos.',
+             '<strong>Derechos de las personas:</strong> acceso, rectificación, supresión, oposición y portabilidad, con un canal para responder.',
+             '<strong>Proveedores:</strong> revisa qué servicios externos reciben datos de tus usuarios.']) +
+         '<h2>Por dónde empezar</h2><p>Hago un inventario de los datos que recoge tu sitio, reviso los textos legales y ajusto la experiencia para que la privacidad sea parte del diseño y no un parche al final. Si quieres ver cómo abordé la ley en un producto propio, revisa <a href="{p}proyectos/auditorweb.html">AuditorWeb 21.719</a>.</p>'
+         '<p class="muted">Esta nota es una orientación general y no reemplaza una asesoría legal.</p>',
+         'Normativa')
+
 # ---------- Inglés (en/noticias/) ----------
 
 _noticia('cuando-trabajar-tu-marca', 'When is it time to work on your brand?',
@@ -157,14 +179,9 @@ _noticia('un-buen-equipo-no-basta', 'A good tech team is not enough if no one se
          '<p>My job is to be the bridge between your business, your client and your tech team.</p>',
          'Digital product', _EN)
 
-_noticia('tres-roles-de-producto', 'Three roles you usually hire separately',
-         'Product Owner, brand strategy for products, and UX/UI with AI prototypes. All three in one person, with a clear direction.',
-         '<h2>Product Owner</h2><p>I represent your business in front of the tech team. I turn what the client needs into clear user stories, order the backlog and check that every delivery meets expectations.</p>'
-         '<p class="muted">Includes: understanding of the business, user stories, roadmap and prioritized backlog, Scrum ceremonies, QA of each story, expectation management and progress reports.</p>'
-         '<h2>Brand strategy for products</h2><p>A product without identity is explained worse and sells worse. I define the purpose, voice and identity of the product or of the company that builds it.</p>'
-         '<p class="muted">Includes: Brand Compass, naming, visual identity, voice and website.</p>'
-         '<h2>UX/UI and AI prototypes</h2><p>I design the experience and take it to a functional prototype with AI-assisted development, to validate before investing in development. Then I hand it over to your team for production.</p>'
-         '<p class="muted">Includes: flows, clickable or functional prototypes, interface design and handover to the development team.</p>',
+_noticia('tres-roles-de-producto', 'Design goes beyond design: business, brands and digital products',
+         'In all those cases, design can offer much more than a visual solution.',
+         '<p>There are projects that start with a good idea, but do not quite know how to make it real. Others have a technical team capable of building almost anything, but need to define what is worth building. And there are those with a good product who cannot communicate why someone should choose it.</p><p>In all those cases, design can offer much more than a visual solution.</p><p>Over time, my work as a designer has led me to get involved in different stages of a project: from understanding the business and defining a brand strategy, to organizing the development of a digital product and designing the experience of the people who use it.</p><p>That combination lets me approach projects from a broader perspective, connecting ideas with the people who need them and with the teams that must make them real.</p><h2>Understand the problem before looking for the solution</h2><p>What a business needs is not always a new website, an app or a visual identity. Sometimes what is missing is clarity: understanding which problem needs to be solved, what the priorities are and which path makes the most sense to follow.</p><p>That is why, before thinking about solutions, I care about understanding the context. What the business is looking for, what its users need and what conditions exist to bring an idea into practice.</p><p>This view is also part of my work as a Product Owner. In that role, I connect the needs of the business with the technical team, turning ideas and goals into concrete tasks that can be developed, tested and improved.</p><p>I work with user stories, a roadmap and a prioritized backlog, take part in Scrum ceremonies and review deliveries to check that they meet what was defined. I also help order expectations and keep the team focused on what really matters.</p><p>In short, I help everyone understand what we are building, why we are building it and what the next step is.</p><h2>Give meaning to what a brand wants to build</h2><p>Once we understand the business and its proposal, another question appears: how do we help people understand its value?</p><p>A brand is not just a logo or a color system. It is the way a company or a product presents itself, sets itself apart and builds a relationship with people. When that identity is not well defined, communicating a good idea can become much harder.</p><p>Through brand strategy, I work on finding that meaning and turning it into a clear direction. I define the purpose, the positioning and the elements that express what makes a product, or the company behind it, different.</p><p>This can include a Brand Compass to guide brand decisions, naming, visual identity, voice and tone of communication, and even the design of its website.</p><p>The goal is for every decision to have a reason behind it, and for the brand not only to look good but also to help communicate better what it offers.</p><h2>Turn ideas into experiences we can test</h2><p>With digital products, there is an important gap between having an idea and knowing whether it really works for the people who will use it.</p><p>UX/UI design helps close that gap. It lets me explore how a product should work, which steps a person needs to follow, and how we can make the experience more intuitive, useful and consistent with the business goals.</p><p>I work on user flows, navigation structure, interface design and the prototypes that let us explore a solution before fully developing it.</p><p>I also use artificial intelligence tools to take some of these ideas to navigable or functional prototypes more quickly. That way we can see the proposal more clearly, test alternatives and spot opportunities for improvement before committing more resources to development.</p><p>Once we have a clear direction, I prepare the design and the handover to the technical team so the solution can be implemented in production.</p><h2>A view that connects the different parts of a project</h2><p>My work is not limited to a single stage or a single discipline. I care about how the business, the brand, the user experience and the technology relate, because the decisions we make in one area end up influencing the others.</p><p>That perspective lets me collaborate with different profiles, talk with both business people and technical teams, and help design decisions respond to concrete needs.</p><p>It is not about doing everything, but about understanding what each project needs and contributing from where I can add the most value: giving direction to ideas, turning them into solutions and helping them reach the people they were made for.</p><p>In the end, designing also means connecting the pieces so things work better.</p>',
          'Services', _EN)
 
 _noticia('metodo-scrum', 'Scrum, grounded in the business',
@@ -194,3 +211,17 @@ _noticia('modalidad-de-trabajo', 'How we work together',
                  '<strong>Per project:</strong> I take on a product or a stage (discovery, MVP, launch) with a closed scope and deliverables.',
                  '<strong>Remote:</strong> in Spanish or English.']),
          'Format', _EN)
+
+_noticia('ley-21719-prepara-tu-web', 'Law 21.719 prepares your website for fines',
+         'Law 21.719 is expected to take effect at the end of 2026. Review forms, cookies and privacy notices on your website before that date.',
+         '<p>Law 21.719 modernizes Law 19.628, the current rule on personal data in Chile. It changes how companies collect, use and protect people’s information, and that includes your website every time it receives data through a form, a cookie or an analytics tool.</p>'
+         '<h2>What is planned</h2><p>The law was published in December 2024, and its entry into force is planned for 1 December 2026. There is also a bill that proposes postponing it. Before planning changes, check the current status at the National Congress Library (bcn.cl).</p>'
+         '<h2>What to review on your website</h2>' + _lista([
+             '<strong>Forms:</strong> ask only for the data you need and explain what you use it for.',
+             '<strong>Cookies and analytics:</strong> say which tools you use and ask for consent when needed.',
+             '<strong>Privacy notice:</strong> it should be clear, easy to find and explain how to exercise your rights.',
+             '<strong>People’s rights:</strong> access, rectification, erasure, objection and portability, with a channel to respond.',
+             '<strong>Providers:</strong> check which external services receive your users’ data.']) +
+         '<h2>Where to start</h2><p>I inventory the data your site collects, review the legal texts and adjust the experience so privacy is part of the design, not a patch at the end. If you want to see how I approached the law in an own product, check <a href="{p}proyectos/auditorweb.html">AuditorWeb 21.719</a>.</p>'
+         '<p class="muted">This note is general guidance and does not replace legal advice.</p>',
+         'Regulation', _EN)

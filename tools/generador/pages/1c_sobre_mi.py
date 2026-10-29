@@ -86,7 +86,7 @@ page('sobre-mi.html', 'Sobre mí · Luis Vicencio, diseñador y Product Owner',
           <h2 class="heading" id="caminos-title">¿Por dónde <strong>empezamos</strong>?</h2>
           <div class="btn-row">
             <a class="btn btn-primary" href="./">Marcas para pymes {_arrow}</a>
-            <a class="btn btn-outline" href="{{p}}#blog">Noticias</a>
+            <a class="btn btn-outline" href="{{p}}#blog">Blog</a>
           </div>
         </div>
       </div>
