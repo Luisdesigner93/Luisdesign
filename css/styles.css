@@ -803,6 +803,19 @@ html.has-drawer { overflow: hidden; }
 .case-nav span { font-size: 11px; line-height: 16px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-subtle); }
 .case-nav strong { font-size: 18px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
 @media (max-width: 40em) { .case-nav { grid-template-columns: 1fr; } .case-nav a:last-child { align-items: flex-start; text-align: left; } }
+/* Proyectos vecinos con imagen lateral difuminada, mismo efecto que las tarjetas del blog */
+.case-nav a.con-foto, .case-nav a.con-foto:last-child { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: stretch; text-align: left; padding: 0; overflow: hidden; }
+.case-nav a.con-foto.caso-vecino-der { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+.case-nav .caso-texto { display: flex; flex-direction: column; justify-content: center; gap: var(--space-1); padding: var(--space-5) var(--space-6); }
+.case-nav .caso-foto { position: relative; margin: 0; min-height: 9rem; overflow: hidden; }
+.case-nav .caso-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.case-nav .caso-vecino-izq .caso-foto img { -webkit-mask-image: linear-gradient(to right, #000 55%, transparent); mask-image: linear-gradient(to right, #000 55%, transparent); }
+.case-nav .caso-vecino-der .caso-foto img { -webkit-mask-image: linear-gradient(to left, #000 55%, transparent); mask-image: linear-gradient(to left, #000 55%, transparent); }
+@media (max-width: 40em) {
+  .case-nav a.con-foto, .case-nav a.con-foto.caso-vecino-der { grid-template-columns: 1fr; }
+  .case-nav .caso-foto { order: -1; min-height: 0; height: 9rem; }
+  .case-nav .caso-vecino .caso-foto img { -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent); mask-image: linear-gradient(to bottom, #000 50%, transparent); }
+}
 
 /* ===================== Texto largo (política) ===================== */
 .prose { max-width: 46rem; }

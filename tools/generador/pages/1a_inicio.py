@@ -247,7 +247,7 @@ _ruta_portafolio = [(720, 0), (719, 233), (211, 432), (353, 503), (975, 288), (1
 _ruta_desk = _redondeada(_ruta_portafolio, 55)
 # En móvil: recorrido isométrico (tramos a 30° como las caras de los cubos, en zigzag entre las dos columnas)
 # y vuelta al centro; las esquinas se redondean. Entra y sale por el centro, como las secciones vecinas.
-_ruta_mob = _redondeada([(187.5, 0), (187.5, 130), (67.5, 199), (67.5, 330), (307.5, 468), (307.5, 600), (187.5, 669), (187.5, 1000)], 14)
+_ruta_mob = _redondeada([(358, 0), (358, 40), (67.5, 199), (67.5, 330), (307.5, 468), (307.5, 600), (187.5, 669), (187.5, 1000)], 14)
 
 # Cubos isométricos (x %, y %, escala) y proyectos enlazados
 _pf_cubos = [
@@ -257,14 +257,14 @@ _pf_cubos = [
     ('Uvenergy', 'proyectos/uvenergy.html', 67.4, 21.0, 1.0),
     ('Yomecontrolo', 'proyectos/yomecontrolo.html', 25.9, 40.8, 1.2),
     ('Botes Salvavidas', 'proyectos/botes-salvavidas.html', 38.7, 57.0, 0.9),
-    ('Bowraps', None, 68.1, 58.7, 1.0),
-    ('Proyecto 8', None, 86.0, 41.0, 0.9),
+    ('Bowraps', 'proyectos/bowraps.html', 68.1, 58.7, 1.0),
+    ('LAB*502', 'proyectos/lab502.html', 86.0, 41.0, 1.2),
 ]
 _pf_cubo_html = '<span class="alt-cubo" aria-hidden="true"><span class="alt-cara alt-tapa"></span><span class="alt-cara alt-izq"></span><span class="alt-cara alt-der"></span></span>'
 # Mockups definitivos (img/portafolio): se reparten en orden entre las posiciones
 _pf_mockups = [('mockup-cerveza', 800, 667), ('mockup-telefono', 700, 738), ('mockup-laptop', 800, 534), ('mockup-pin', 800, 534)]
 # Isométricos de producto (Khronos y Fuchi Chao), ya reducidos al tamaño que se muestra en pantalla
-_pf_fotos = {'Khronos': ('mockup-khronos', 384, 576), 'Fuchi Chao': ('mockup-fuchi', 384, 576), 'Botes Salvavidas': ('mockup-botes', 480, 320), 'Yomecontrolo': ('mockup-yomecontrolo', 384, 576)}
+_pf_fotos = {'LAB*502': ('mockup-lab502', 480, 720), 'Bowraps': ('mockup-bowraps', 480, 320), 'Khronos': ('mockup-khronos', 384, 576), 'Fuchi Chao': ('mockup-fuchi', 384, 576), 'Botes Salvavidas': ('mockup-botes', 480, 439), 'Yomecontrolo': ('mockup-yomecontrolo', 384, 576)}
 _pf_items = ''
 for i, (nombre, enlace, x, y, k) in enumerate(_pf_cubos):
     archivo, ancho, alto = _pf_fotos.get(nombre) or _pf_mockups[i % len(_pf_mockups)]
@@ -284,6 +284,11 @@ _pf_mock_css = (
     # Cada elemento se centra en su posición (sobre las diagonales); en móvil vuelve a la cuadrícula
     '.alt-folio .alt-item { transform: translate(-50%, -50%); }\n'
     '@media (max-width: 40em) { .alt-folio .alt-item { transform: none; } }\n'
+    # Móvil: todos los mockups ocupan la misma caja (la escala por proyecto --k no aplica), así se ven de tamaño parejo
+    '@media (max-width: 40em) { .inicio .alt-folio .alt-mock { display: flex; align-items: center; justify-content: center; width: 100%; height: clamp(150px, 40vw, 190px); } .inicio .alt-folio .alt-mock img { width: auto; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; } }\n'
+    # Título «Proyectos»: oculto en escritorio (solo para lectores de pantalla) y visible en móvil, arriba de la lista
+    '.alt-titulo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }\n'
+    '@media (max-width: 40em) { .alt-titulo { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; margin: 0 0 var(--space-6); padding-top: var(--space-3); text-align: center; font-family: "Plus Jakarta Sans", sans-serif; font-size: clamp(30px, 8vw, 40px); line-height: .95; font-weight: 800; letter-spacing: -0.045em; word-spacing: .08em; text-transform: uppercase; color: var(--ink); } }\n'
 )
 open('css/portafolio-home.css', 'w', encoding='utf-8').write(_pf_pos + _pf_mock_css)
 
@@ -292,7 +297,7 @@ INICIO_PORTAFOLIO = f"""
     <section class="pl-sec pl-light alt-folio" id="proyectos" aria-labelledby="pl-folio-title">
       {_hilo([_a_curvas(_ruta_desk)], [_a_curvas(_ruta_mob)])}
       <p class="alt-bg" aria-hidden="true">PORTAFOLIO</p>
-      <h2 class="sr-only" id="pl-folio-title">Portafolio</h2>
+      <h2 class="alt-titulo" id="pl-folio-title">Proyectos</h2>
       <ul class="alt-stage" role="list">{_pf_items}
       </ul>
     </section>
@@ -342,7 +347,7 @@ def _m_loop(top, ex):
 # Tras la última flecha, la línea baja, rodea el texto por la derecha (por fuera, nunca por detrás) y vuelve al centro bajo la firma
 _M_RX, _M_GIRO, _M_FIN = 358, 440, 930
 # Entra por el centro (187.5), igual que la sección anterior, y baja hasta el poste de las flechas
-_m_puntos = [(187.5, 0), (_M_XQ, 0)] + _m_loop(_m_tops[0], _M_XQ) + _m_loop(_m_tops[1], _M_XQ) + _m_loop(_m_tops[2], _M_XQ) + [(_M_XQ, _M_GIRO), (_M_RX, _M_GIRO), (_M_RX, _M_FIN), (_M_XQ, _M_FIN), (187.5, _M_FIN), (187.5, 1000)]
+_m_puntos = [(187.5, 0), (_M_XQ, 0)] + _m_loop(_m_tops[0], _M_XQ) + _m_loop(_m_tops[1], _M_XQ) + _m_loop(_m_tops[2], _M_XQ) + [(_M_XQ, _M_GIRO), (_M_RX, _M_GIRO), (_M_RX, 1000)]
 _sig_mob = _a_curvas(_redondeada(_m_puntos, 12))
 
 

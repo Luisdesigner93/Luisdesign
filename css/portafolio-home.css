@@ -5,10 +5,13 @@
 .alt-pf4 { left: 25.9%; top: 40.8%; --k: 1.2; }
 .alt-pf5 { left: 38.7%; top: 57.0%; --k: 0.9; }
 .alt-pf6 { left: 68.1%; top: 58.7%; --k: 1.0; }
-.alt-pf7 { left: 86.0%; top: 41.0%; --k: 0.9; }
+.alt-pf7 { left: 86.0%; top: 41.0%; --k: 1.2; }
 .alt-mock { display: block; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
 .alt-mock img { display: block; width: auto; height: calc(clamp(150px, 17vw, 230px) * var(--k, 1)); max-width: none; }
 .alt-link:hover .alt-mock, .alt-link:focus-visible .alt-mock { transform: translateY(-14px); }
 .alt-folio .alt-bg { font-size: clamp(56px, calc((100vw - 2rem) / 6.1), 300px); }
 .alt-folio .alt-item { transform: translate(-50%, -50%); }
 @media (max-width: 40em) { .alt-folio .alt-item { transform: none; } }
+@media (max-width: 40em) { .inicio .alt-folio .alt-mock { display: flex; align-items: center; justify-content: center; width: 100%; height: clamp(150px, 40vw, 190px); } .inicio .alt-folio .alt-mock img { width: auto; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; } }
+.alt-titulo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-width: 40em) { .alt-titulo { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; margin: 0 0 var(--space-6); padding-top: var(--space-3); text-align: center; font-family: "Plus Jakarta Sans", sans-serif; font-size: clamp(30px, 8vw, 40px); line-height: .95; font-weight: 800; letter-spacing: -0.045em; word-spacing: .08em; text-transform: uppercase; color: var(--ink); } }

@@ -4,7 +4,7 @@ _ym = next(pr for pr in PROJECTS if pr['slug'] == 'yomecontrolo')
 _ym_desc = 'Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.'
 page('proyectos/yomecontrolo.html', 'Yomecontrolo: estrategia de marca, identidad y UX/UI para una startup de salud · Luis Vicencio',
      _ym_desc, current='proyectos', ogtype='article', **case_seo(_ym, _ym_desc),
-     cta_title='¿Tu producto digital necesita <strong>una marca que conecte</strong>?',
+     contact=False, html_class='motion inicio', extra_css=['css/inicio.css'], cta_title='¿Tu producto digital necesita <strong>una marca que conecte</strong>?',
      cta_lead='Conversemos sobre tu proyecto y definamos juntos la estrategia, la identidad y la experiencia.',
      body=case_intro(_ym, _ym['summary'],
         case_facts(_ym))
@@ -17,9 +17,8 @@ page('proyectos/yomecontrolo.html', 'Yomecontrolo: estrategia de marca, identida
          '<p class="lead">Un proceso de branding por etapas, del descubrimiento a los puntos de contacto, en el que cada fase alimenta a la siguiente.</p>'
          + case_steps([('Research', 'Investigación de escritorio que cruzó marca, categoría, usuarios y tendencias, como la medicina predictiva, la telemedicina y los wearables, para encontrar oportunidades.'),
                        ('Estrategia', 'Con un Brand Compass, una herramienta para definir el norte de la marca, fijamos su propósito, diferencial, personalidad y promesa. El público principal: adultos de 30 a 50 años que gestionan la salud de su familia.'),
-                       ('Experiencia de marca', 'Con diseño especulativo imaginamos cómo sería cuidarse en el futuro, para diseñar hoy la experiencia que lleva hacia allá; con diseño de servicios trazamos el viaje del usuario por cada punto de contacto.'),
-                       # EDITAR (revisar): media línea propuesta para explicar «territorio de marca»
-                       ('Visión creativa', 'Concepto, idea central y territorio de marca, es decir, el espacio propio desde donde la marca habla: la narrativa que guía la expresión antes de diseñar.'),
+                       ('Experiencia de marca', 'Trabajé con diseño especulativo para imaginar escenarios donde la tecnología y la medicina preventiva se integraran en la vida de las personas. También desarrollé el recorrido del usuario antes, durante y después de cada interacción con el servicio.'),
+                       ('Visión creativa', 'De ese proceso surgieron dos territorios: «Cuidado conectado», la tecnología como una forma de acercar el conocimiento y el acompañamiento médico a las personas y sus familias, y «La Ruta del Bienestar», el cuidado de la salud como un recorrido donde cada paso cuenta.'),
                        ('Identidad', 'Construcción de la nueva identidad visual a partir de esa narrativa.'),
                        ('Puntos de contacto', 'Diseño UX/UI de la web app del MVP de 2024: solicitud de exámenes en línea y medición del riesgo cardiovascular.')])),
         ('solucion', 'La <strong>solución</strong>',
@@ -32,4 +31,4 @@ page('proyectos/yomecontrolo.html', 'Yomecontrolo: estrategia de marca, identida
         # EDITAR: testimonio de los fundadores (opcional)
         ('aprendizaje', 'Lo que <strong>me llevé</strong>',
          '<p class="lead">Este proyecto me mostró que una buena estrategia de marca necesita herramientas de producto para llegar a producción. Por eso me formé en Product Owner y Scrum, y hoy acompaño las dos etapas.</p>'),
-     ]) + case_landing(_ym) + case_nav(_ym))
+     ]) + case_nav(_ym))

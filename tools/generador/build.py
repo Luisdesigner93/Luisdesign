@@ -73,7 +73,7 @@ HEAD = '''<!doctype html>
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
         <a href="{home}#proyectos"{cur_proyectos}>Proyectos</a>
         <a href="{home}#blog"{cur_noticias}>Blog</a>
-        <a href="{p}sobre-mi.html"{cur_sobre}>Sobre mí</a>
+        <a href="{sobre_href}"{cur_sobre}>Sobre mí</a>
         <div class="nav-foot">
           <div class="nav-foot-row">
             {lang_switch}
@@ -117,11 +117,12 @@ FOOT = '''  </main>
       <div>
         <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio"><img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
         <p>Analítica solo con tu permiso.</p>
+        <ul class="footer-social"><li><a href="tel:+56958217041">+56 9 5821 7041</a></li><li><a href="mailto:{email}">{email}</a></li></ul>
         <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{home}#proyectos">Proyectos</a></li><li><a href="{home}#blog">Blog</a></li><li><a href="{p}sobre-mi.html">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{home}#proyectos">Proyectos</a></li><li><a href="{home}#blog">Blog</a></li><li><a href="{sobre_href}">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -174,7 +175,7 @@ EN_CHROME = [
     ('>Marcas</a></li>', '>Brands</a></li>'),
     ('>Proyectos</a>', '>Projects</a>'),
     ('aria-label="Categorías de proyectos"', 'aria-label="Project categories"'),
-    ('>Sobre mí</a>', '>About (Spanish)</a>'),
+    ('>Sobre mí</a>', '>About</a>'),
     ('>Contacto</a>', '>Contact</a>'),
     (' (se abre en una pestaña nueva)', ' (opens in a new tab)'),
     ('>Conversemos</a>', '>Let’s talk</a>'),
@@ -279,13 +280,13 @@ def _webp(html):
     return _IMG.sub(swap, html)
 
 
-EN_PAGES = ('index.html', 'noticias/')
+EN_PAGES = ('index.html', 'noticias/', 'sobre-mi.html')
 
 
 def _lang_switch(path, lang):
     """Selector ES / EN del encabezado. La versión en inglés existe para el inicio y las noticias; el resto enlaza al inicio en inglés."""
     es_path = path[3:] if path.startswith('en/') else path
-    en_path = 'en/' + es_path if es_path == 'index.html' or es_path.startswith('noticias/') else 'en/index.html'
+    en_path = 'en/' + es_path if es_path in ('index.html', 'sobre-mi.html') or es_path.startswith('noticias/') else 'en/index.html'
     carpeta = posixpath.dirname(path) or '.'
     es_href = posixpath.relpath(es_path, carpeta)
     en_href = posixpath.relpath(en_path, carpeta)
@@ -315,6 +316,8 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'gtm_id': GTM_ID,
         'ga_id': GA_ID,
         'lang_switch': _lang_switch(path, lang),
+        'sobre_href': p + ('en/sobre-mi.html' if lang == 'en' else 'sobre-mi.html'),
+        'email': EMAIL,
         'cur_noticias': ' aria-current="page"' if current == 'noticias' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_sobre': ' aria-current="page"' if current == 'sobre' else '',

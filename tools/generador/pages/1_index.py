@@ -107,6 +107,7 @@ _ext = ' rel="noopener noreferrer" target="_blank"'
 _wa_sr = '<span class="sr-only"> (WhatsApp, se abre en una pestaña nueva)</span>'
 # Enlaces de casos (LAB*502 se crea en la fase 4; Bowraps vive en Logofolio)
 _case = {
+    'Bowraps': 'proyectos/bowraps.html',
     'Uvenergy': 'proyectos/uvenergy.html', 'Uvenergy (2023)': 'proyectos/uvenergy.html', 'Uvenergy (2025)': 'proyectos/uvenergy.html',
     'Fuchi Chao (2021)': 'proyectos/fuchi-chao.html', 'Fuchi Chao (2023)': 'proyectos/fuchi-chao.html',
     'Sustentando': 'proyectos/sustentando.html', 'Khronos (propuesta)': 'proyectos/khronos.html', 'LAB*502': 'proyectos/lab502.html',

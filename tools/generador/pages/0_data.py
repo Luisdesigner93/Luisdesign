@@ -12,15 +12,39 @@ PROJECTS = [
                  img('fuchi-chao', '04.jpg', 2000, 896, 'Construcción del logotipo de Fuchi Chao en tres versiones con su área de resguardo.', 'Construcción del logotipo.'),
                  img('fuchi-chao', '02.jpg', 2000, 1132, 'Tres teléfonos con el perfil y publicaciones de Instagram de Fuchi Chao.', 'Redes sociales.'),
                  img('fuchi-chao', '03.jpg', 2000, 1128, 'Envase del jabón anti olores Fuchi Chao junto a su etiqueta extendida con medidas.', 'Etiqueta del jabón anti olores.')]),
-    dict(slug='bytequest', cats=['producto'], landing='producto', title='Bytequest', mark='Bq', kind='Marca y producto · Soluciones con IA', year='2025 – 2026', featured=True,
+    dict(slug='bytequest', cats=['producto'], landing='producto', title='Bytequest', mark='Bq', kind='Marca y producto · Soluciones con IA', year='2025 – 2026', featured=True, en_portafolio=False,
          summary='Marca y producto con un mismo criterio: la identidad de Bytequest y tres productos de IA para organizaciones con procesos complejos.',
          tags=['Product Owner', 'QA', 'Marca'], role='Líder de Innovación y Productos (Brand Manager y Product Owner)', client='Bytequest SpA', status='Prototipos y plataforma en pruebas',
          placeholders=('Marca de Bytequest.', 'Pantallas de Legisnova.'), images=[]),
     dict(slug='lab502', cats=['marcas'], landing='marcas', title='LAB*502', mark='L*', kind='Laboratorio fotográfico · Estrategia e identidad', year='2023', featured=True,
          summary='De una tienda de insumos a un laboratorio creativo con propósito: una marca que le dio al norte una forma de mirarse.',
          tags=['Estrategia', 'Identidad'], role='Estrategia, experiencia de marca, líneas de negocio, identidad y plantillas para redes', client='LAB*502 (antes Taller 502), Iquique', status='Marca en uso',
-         # EDITAR: imágenes en alta desde Behance (behance.net/gallery/169683847/LAB502)
-         placeholders=('Identidad de LAB*502.', 'Plantillas de redes por línea de negocio.'), images=[]),
+         images=[img('lab502', '01.webp', 1600, 900, 'Servicios de LAB*502 con cuatro líneas: fotografía de eventos, experiencias análogas, studio fotográfico y editorial 502.', 'Soluciones y servicios.'),
+                 img('lab502', '02.webp', 1600, 900, 'Logotipo de LAB*502 con la tipografía Archimoto y el asterisco como constante, en distintas composiciones sobre fondos azul, amarillo, turquesa y magenta.', 'Arquitectura de marca: el logotipo.'),
+                 img('lab502', '03.webp', 1400, 788, 'Plantillas para redes de la línea de soluciones: fotografía de eventos y experiencias análogas.', 'Plantillas de niveles: soluciones.'),
+                 img('lab502', '04.webp', 1600, 900, 'Construcción del símbolo: el número 502 con la o reemplazada por un marco que contiene un asterisco.', 'La construcción del símbolo.'),
+                 img('lab502', '05.webp', 1600, 900, 'Reducción del isotipo a tamaños menores, manteniendo el asterisco dentro del marco.', 'Reducción y adaptabilidad.'),
+                 img('lab502', '06.webp', 600, 1066, 'Página de visión de LAB*502 con la frase «Redistribuir los ejes artísticos al norte de Chile» sobre una fotografía del norte.', 'Visión: redistribuir los ejes artísticos.'),
+                 img('lab502', '07.webp', 1400, 788, 'Plantillas para redes de la línea corporativa con fotografías en blanco y azul.', 'Plantillas de niveles: corporativo.'),
+                 img('lab502', '08.webp', 1920, 1080, 'Afiche de turismo fotográfico en Iquique con la frase «¿Quieres disfrutar del turismo y la fotografía análoga al mismo tiempo?».', 'Turismo fotográfico.'),
+                 img('lab502', '09.webp', 1600, 900, 'Plantillas para redes de la línea de exploración: un tutorial de composición y el proceso de una sesión.', 'Plantillas de niveles: exploración.'),
+                 img('lab502', '10.webp', 1920, 1080, 'Bolsas de papel kraft con el logotipo LAB*502, el eslogan «Luz, arte y norte» y un sticker con el isotipo.', 'Aplicaciones de marca.')]),
+    dict(slug='bowraps', cats=['marcas'], landing='marcas', title='Bowraps', mark='Bw', kind='Comida saludable · Naming e identidad visual', year='2022', featured=False,
+         summary='Naming e identidad visual para una marca de wraps y bowls frescos, hoy en funcionamiento en Viña del Mar.',
+         tags=['Naming', 'Identidad', 'Aplicaciones'], role='Naming, logotipo, identidad visual y aplicaciones, en colaboración con Claudio Almeyda Godoy', client='Bowraps', status='Marca en uso',
+         images=[img('bowraps', '13.webp', 1600, 1599, 'Letrero circular de Bowraps con el isotipo en verde lima sobre fondo verde oscuro.', 'Letrero del local.'),
+                 img('bowraps', '01.webp', 1600, 900, 'Mockups de uniformes, delantal y gorras con el logotipo de Bowraps en verde lima.', 'Uniformes y accesorios.'),
+                 img('bowraps', '02.webp', 1600, 900, 'Logotipo horizontal de Bowraps con el eslogan Fresh wraps & bowls sobre fondo claro.', 'Logotipo.'),
+                 img('bowraps', '03.webp', 1600, 958, 'Construcción del logotipo de Bowraps sobre una retícula de medidas.', 'Construcción del logotipo.'),
+                 img('bowraps', '04.webp', 1600, 2171, 'Piezas de la identidad de Bowraps: naming, imagotipo, uso del color y aplicaciones.', 'Sistema de identidad.'),
+                 img('bowraps', '05.webp', 1600, 1114, 'Aplicaciones de Bowraps en su local y en sus piezas gráficas.', 'Aplicaciones en el local.'),
+                 img('bowraps', '06.webp', 1600, 900, 'Pieza gráfica de Bowraps con la pregunta «¿y tú qué team eliges?» y los hashtags #teamwraps y #teambowls.', 'Campaña #teamwraps y #teambowls.'),
+                 img('bowraps', '07.webp', 1600, 796, 'Piezas de Bowraps: menú con código QR, stickers y etiquetas con el eslogan «team wraps o team bowls?».', 'Menú y stickers.'),
+                 img('bowraps', '08.webp', 1600, 901, 'Menú de Bowraps con bowls de vegan, falafel y atún, con sus precios.', 'Menú de bowls.'),
+                 img('bowraps', '09.webp', 1600, 447, 'Fotografías de verduras frescas usadas en la línea gráfica de Bowraps.', 'Ingredientes frescos.'),
+                 img('bowraps', '10.webp', 1600, 1555, 'Menús digitales de Bowraps para teléfono: wraps, bowls, agregados y arma tu personalizado.', 'Menús digitales.'),
+                 img('bowraps', '11.webp', 1600, 1694, 'Pantallas del local de Bowraps con el menú de wraps y de agregados.', 'Pantallas del local.'),
+                 img('bowraps', '12.webp', 1600, 1712, 'Fachada de Bowraps con el nombre en letras blancas sobre fondo verde.', 'Fachada del local.')]),
     dict(slug='sustentando', cats=['marcas'], landing='marcas', title='Sustentando', mark='Su', kind='Consultoría en calidad · Branding y web', year='2022 – 2026', featured=True,
          summary='Desde 2022 acompaño a Sustentando como aliado estratégico. Partimos por entender sus necesidades y fuimos escalando el servicio hasta consolidar una comunicación que eleva el valor percibido de su trabajo.',
          tags=['Identidad', 'Web', 'Comunicación B2B'], role='Identidad, web, comunicación B2B y diseño gráfico', client='Sustentando', status='Aliado desde 2022',
@@ -37,7 +61,7 @@ PROJECTS = [
                  img('yomecontrolo', '06.jpg', 1629, 966, 'Logotipo de Yomecontrolo con el tagline “vivir más y mejor” sobre fondo celeste.', 'Logotipo.'),
                  img('yomecontrolo', '07.jpg', 906, 1736, 'Teléfono con la pantalla “Controla tus indicadores de salud” de la web app de Yomecontrolo.', 'Web app: indicadores de salud.'),
                  img('yomecontrolo', '08.jpg', 1122, 1402, 'Ícono de Yomecontrolo en la pantalla de inicio de un teléfono.', 'Acceso directo en el teléfono.')]),
-    dict(slug='auditorweb', cats=['producto'], landing='producto', title='AuditorWeb 21.719', mark=None, kind='Producto digital', year='2026', featured=True,
+    dict(slug='auditorweb', cats=['producto'], landing='producto', title='AuditorWeb 21.719', mark=None, kind='Producto digital', year='2026', featured=True, en_portafolio=False,
          summary='Auditor automatizado que revisa 30 controles de cumplimiento de la Ley de Protección de Datos Personales y entrega un plan de acción priorizado.',
          tags=['Producto', 'UX/UI', 'IA'], images=[], role='Producto, UX/UI y desarrollo asistido con IA', client='Producto propio'),
     dict(slug='uvenergy', cats=['marcas'], landing='marcas', title='Uvenergy', mark='UV', kind='Energía solar y eólica · Identidad y web', year='2023 y 2025', featured=False,
@@ -45,11 +69,11 @@ PROJECTS = [
          tags=['Identidad', 'Web'], role='Identidad de marca, presentación comercial, sitio web con blog y rediseño', client='Uvenergy', status='Marca en uso',
          # EDITAR: imágenes de la identidad, la presentación y las dos versiones del sitio
          images=[img('uvenergy', '01.jpg', 1600, 899, 'Página de artículo del sitio web de Uvenergy sobre el mantenimiento de plantas fotovoltaicas.', 'Página de artículo del sitio web.')]),
-    dict(slug='botes-salvavidas', cats=['marcas'], landing='marcas', title='Botes Salvavidas de Valparaíso', mark='BS', kind='Comunicación · Web y redes', year='2023', featured=False,
+    dict(slug='botes-salvavidas', cats=['marcas'], landing='marcas', title='Botes Salvavidas de Valparaíso', mark='BS', kind='Comunicación · Web y redes', year='2023 y 2025', featured=False,
          summary='Una estrategia de comunicación para que Valparaíso reconozca la labor de rescate que los Botes Salvavidas cumplen cada día.',
          tags=['Comunicación', 'Web', 'Redes'], role='Estrategia de comunicación, sitio web, redes sociales y logo del centenario', client='Botes Salvavidas de Valparaíso',
-         images=[img('botes-salvavidas', '01.jpg', 864, 1080, 'Pieza para redes sociales: rescatista en moto de agua con el mensaje “A las emergencias en el mar”.', 'Pieza para redes sociales.'),
-                 img('botes-salvavidas', '02.jpg', 864, 1080, 'Pieza para redes sociales con un salvavidas y el mensaje “¡Estar preparados para el rescate!”.', 'Pieza para redes sociales.')]),
+         images=[img('botes-salvavidas', '04.webp', 1600, 1230, 'Mockup de Instagram de Botes Salvavidas con tres piezas para redes: alertas en el mar, voluntariado y socios.', 'Piezas para redes sociales.'),
+                 img('botes-salvavidas', '03.webp', 919, 1711, 'Logotipo conmemorativo del centenario de los Botes Salvavidas: el número 100 en naranja, rojo y azul, con la leyenda Desde 1925 y el nombre CV Bote Salvavidas Valparaíso.', 'Logotipo del centenario.')]),
     dict(slug='khronos', cats=['marcas'], landing='marcas', title='Cerveza Khronos', mark='Kh', kind='Cerveza artesanal · Rebranding y packaging', year='2023', featured=True,
          summary='Rebranding para una cervecería artesanal nacida en las bierfest. Buscamos el sentido de su nombre en su raíz griega, khronos, tiempo, y lo convertimos en el concepto que guía la marca: tómate el tiempo.',
          tags=['Propuesta', 'Estrategia', 'Packaging'], role='Estrategia, concepto, identidad y packaging', client='Cervecería Khronos', status='Propuesta de rebranding, no implementada', proposal=True,
@@ -105,18 +129,30 @@ def project_card(pr, heading='h3'):
 '''
 
 
+def _caso_vecino(pr, etiqueta, lado):
+    """Tarjeta de proyecto vecino: imagen lateral difuminada hacia el texto (mismo efecto que el blog). Sin imagen, solo texto."""
+    texto = '<div class="caso-texto"><span>' + etiqueta + '</span><strong>' + pr['title'] + '</strong></div>'
+    foto = ''
+    if pr['images']:
+        im = pr['images'][0]
+        foto = ('<figure class="caso-foto"><img src="{p}' + im['src'] + '" width="' + str(im['w']) + '" height="' + str(im['h'])
+                + '" alt="' + im['alt'] + '" loading="lazy" decoding="async"></figure>')
+    contenido = foto + texto if lado == 'izq' else texto + foto
+    clase = 'card caso-vecino caso-vecino-' + lado + (' con-foto' if foto else '')
+    return '<a class="' + clase + '" href="' + pr['slug'] + '.html">' + contenido + '</a>'
+
+
 def case_nav(pr):
-    i = [x['slug'] for x in PROJECTS].index(pr['slug'])
-    prev, nxt = PROJECTS[i - 1], PROJECTS[(i + 1) % len(PROJECTS)]
-    return f'''    <section class="panel panel-plain section" aria-label="Otros proyectos">
-      <div class="container">
-        <nav class="case-nav" aria-label="Más proyectos">
-          <a class="card" href="{prev['slug']}.html"><span>Proyecto anterior</span><strong>{prev['title']}</strong></a>
-          <a class="card" href="{nxt['slug']}.html"><span>Proyecto siguiente</span><strong>{nxt['title']}</strong></a>
-        </nav>
-      </div>
-    </section>
-'''
+    # Los proyectos con en_portafolio=False no aparecen como vecinos (el propio caso sí conserva su lugar)
+    lista = [x for x in PROJECTS if x.get('en_portafolio', True) or x['slug'] == pr['slug']]
+    i = [x['slug'] for x in lista].index(pr['slug'])
+    prev, nxt = lista[i - 1], lista[(i + 1) % len(lista)]
+    tarjetas = _caso_vecino(prev, 'Proyecto anterior', 'izq') + _caso_vecino(nxt, 'Proyecto siguiente', 'der')
+    return ('    <section class="panel panel-plain section" aria-label="Otros proyectos">\n'
+            '      <div class="container">\n'
+            '        <nav class="case-nav" aria-label="Más proyectos">' + tarjetas + '</nav>\n'
+            '      </div>\n'
+            '    </section>\n')
 
 
 # ---- Caso de estudio: composición minimalista (referencia: wama.com.br/cases) ----
@@ -239,27 +275,10 @@ def case_seo(pr, desc):
     return dict(og_image=og, og_alt=pr['images'][0]['alt'] if pr['images'] else None, jsonld=[ld])
 
 
-def case_landing(pr):
-    """Cierre de cada caso: botón a su landing (Marcas o Producto digital)."""
-    if pr['landing'] == 'producto':
-        q, href = '¿Tu producto necesita <strong>un norte</strong>?', '{p}#contacto'
-    else:
-        q, href = '¿Tu marca está en <strong>un momento parecido</strong>?', '{home}'
-    return f'''    <section class="panel section" aria-labelledby="landing-title">
-      <div class="container">
-        <div class="section-head center">
-          <h2 class="heading" id="landing-title">{q}</h2>
-          <a class="btn btn-primary" href="{href}">Conoce cómo trabajo <svg class="icon" aria-hidden="true"><use href="{{p}}img/icons.svg#i-arrow"/></svg></a>
-        </div>
-      </div>
-    </section>
-'''
-
-
 def case_page(pr, title, desc, summary, statement, sections, facts=None, cta_title=None, cta_lead=None, actions=''):
     """Página de caso con la plantilla: ficha, secciones, botón a su landing y navegación."""
-    page(f"proyectos/{pr['slug']}.html", title, desc, current='proyectos', ogtype='article', cta_title=cta_title, cta_lead=cta_lead,
-         **case_seo(pr, desc), body=case_intro(pr, summary, facts or case_facts(pr), actions) + case_detail(statement, sections) + case_landing(pr) + case_nav(pr))
+    page(f"proyectos/{pr['slug']}.html", title, desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio', extra_css=['css/inicio.css'],
+         **case_seo(pr, desc), body=case_intro(pr, summary, facts or case_facts(pr), actions) + case_detail(statement, sections) + case_nav(pr))
 
 
 # ---- Piezas del inicio (index.html; index-v2.html tiene las suyas en fragmentos/) ----

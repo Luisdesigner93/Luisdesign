@@ -7,12 +7,16 @@ case_page(_fc, 'Fuchi Chao: naming, identidad y estrategia de marca para product
     _fc['summary'],
     'Fuchi Chao: todo el cariño por tu mascota, <strong>sin la parte fuchi</strong>.', [
     ('nacer', 'Nacer con <strong>una marca</strong> (2021)',
-     '<p class="lead">Citrex quería llevar su experiencia en eliminación de olores al mundo de las mascotas. Creé el nombre, el logotipo y las etiquetas: una marca cercana que habla como hablamos en Chile, donde «fuchi» es la forma tierna de decir que algo huele mal.</p>'),
+     '<p class="lead">Citrex quería llevar su experiencia en eliminación de olores al mundo de las mascotas. El desafío era transformar una línea de productos funcionales en una marca capaz de conectar con quienes conviven con perros y gatos.</p>'
+     '<p>Comencé por el nombre. Quería algo cercano, fácil de recordar y con sentido en nuestra forma de hablar. Así apareció Fuchi Chao: una expresión que combina el gesto cotidiano de decir «fuchi» cuando algo huele mal, con una manera cariñosa y divertida de comunicarlo.</p>'
+     '<p>A partir de ese concepto desarrollé el logotipo, la identidad visual y las etiquetas de los productos, buscando una marca reconocible, cercana y con personalidad propia.</p>'),
     ('crecer', 'Crecer con <strong>un propósito</strong> (2023)',
-     '<p class="lead">La marca estaba en el mercado, pero no había claridad sobre qué la movía ni cómo comunicarlo. Con un Brand Compass definimos su propósito, el norte de la marca, y a su comunidad.</p>'
-     '<p>Con eso, el mensaje dejó de ser «cómprame» y pasó a ser una invitación: «vamos hacia allá, ¿vienes con nosotros?». El propósito: una tenencia feliz, libre de malos olores.</p>'),
+     '<p class="lead">Dos años después volvimos a trabajar en Fuchi Chao. La marca ya tenía productos y presencia en el mercado, pero faltaba una dirección más clara sobre qué la movía, qué quería representar y cómo conectar con las personas que la elegían.</p>'
+     '<p>Esta vez el desafío no estaba en diseñar un nuevo logotipo, sino en encontrar un propósito que orientara sus decisiones y su comunicación. Trabajé con Brand Compass para definir su norte estratégico, su personalidad y su comunidad. La conversación cambió: ya no se trataba solo de productos que eliminan malos olores, sino de una forma de entender la convivencia con nuestras mascotas.</p>'
+     '<p>El propósito quedó en una frase: una tenencia feliz, libre de malos olores. La comunicación dejó de centrarse en «cómprame» para convertirse en una invitación: «vamos hacia allá, ¿vienes con nosotros?».</p>'),
     ('resultado', '<strong>Resultado</strong>',
-     '<p class="lead">Después de la estrategia creció la comunidad. Fuchi Chao se vende en tiendas veterinarias, plataformas en línea y redes sociales, es un éxito en las exposiciones de mascotas, y petlovers e influencers se sumaron a contar su historia.</p>'),
+     '<p class="lead">Hoy la marca está presente en tiendas veterinarias, plataformas de venta online y exposiciones de mascotas. Petlovers e influencers se han sumado a contar su historia y ayudan a conectar con nuevas personas.</p>'
+     '<p>Fuchi Chao es uno de esos proyectos que me recuerdan que las marcas no se construyen de una sola vez. A veces necesitan encontrar un nombre; otras veces, descubrir qué las mueve y hacia dónde quieren ir. En este caso tuve la oportunidad de acompañar ambos momentos: primero dándole forma a una idea y después ayudándola a encontrar un propósito con el que otras personas pudieran identificarse.</p>'),
     ],
     cta_title='¿Tu producto necesita <strong>una marca propia</strong>?',
     cta_lead='Conversemos sobre tu idea y definamos juntos el nombre, la identidad y el packaging.')
