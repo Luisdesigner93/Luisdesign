@@ -253,8 +253,8 @@ _ruta_mob = _redondeada([(358, 0), (358, 40), (67.5, 199), (67.5, 330), (307.5, 
 _pf_cubos = [
     ('Fuchi Chao', 'proyectos/fuchi-chao.html', 14.8, 26.8, 1.0),
     ('Khronos', 'proyectos/khronos.html', 33.8, 17.7, 0.9),
-    ('Sustentando', 'proyectos/sustentando.html', 51.0, 38.2, 1.1),
-    ('Uvenergy', 'proyectos/uvenergy.html', 67.4, 21.0, 1.0),
+    ('Sustentando', 'proyectos/sustentando.html', 51.0, 38.2, 0.9),
+    ('Uvenergy', 'proyectos/uvenergy.html', 67.4, 21.0, 0.7),
     ('Yomecontrolo', 'proyectos/yomecontrolo.html', 25.9, 40.8, 1.2),
     ('Botes Salvavidas', 'proyectos/botes-salvavidas.html', 38.7, 57.0, 0.9),
     ('Bowraps', 'proyectos/bowraps.html', 68.1, 58.7, 1.0),
@@ -264,7 +264,7 @@ _pf_cubo_html = '<span class="alt-cubo" aria-hidden="true"><span class="alt-cara
 # Mockups definitivos (img/portafolio): se reparten en orden entre las posiciones
 _pf_mockups = [('mockup-cerveza', 800, 667), ('mockup-telefono', 700, 738), ('mockup-laptop', 800, 534), ('mockup-pin', 800, 534)]
 # Isométricos de producto (Khronos y Fuchi Chao), ya reducidos al tamaño que se muestra en pantalla
-_pf_fotos = {'LAB*502': ('mockup-lab502', 480, 720), 'Bowraps': ('mockup-bowraps', 480, 320), 'Khronos': ('mockup-khronos', 384, 576), 'Fuchi Chao': ('mockup-fuchi', 384, 576), 'Botes Salvavidas': ('mockup-botes', 480, 439), 'Yomecontrolo': ('mockup-yomecontrolo', 384, 576)}
+_pf_fotos = {'Sustentando': ('mockup-sustentando', 480, 439), 'Uvenergy': ('mockup-uvenergy', 480, 320), 'LAB*502': ('mockup-lab502', 480, 720), 'Bowraps': ('mockup-bowraps', 480, 320), 'Khronos': ('mockup-khronos', 384, 576), 'Fuchi Chao': ('mockup-fuchi', 384, 576), 'Botes Salvavidas': ('mockup-botes', 480, 439), 'Yomecontrolo': ('mockup-yomecontrolo', 384, 576)}
 _pf_items = ''
 for i, (nombre, enlace, x, y, k) in enumerate(_pf_cubos):
     archivo, ancho, alto = _pf_fotos.get(nombre) or _pf_mockups[i % len(_pf_mockups)]

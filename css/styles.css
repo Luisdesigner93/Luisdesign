@@ -802,7 +802,7 @@ html.has-drawer { overflow: hidden; }
 .case-nav a:last-child { align-items: flex-end; text-align: right; }
 .case-nav span { font-size: 11px; line-height: 16px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-subtle); }
 .case-nav strong { font-size: 18px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
-@media (max-width: 40em) { .case-nav { grid-template-columns: 1fr; } .case-nav a:last-child { align-items: flex-start; text-align: left; } }
+@media (max-width: 40em) { .case-nav { grid-template-columns: 1fr 1fr; gap: var(--space-3); } .case-nav a:last-child { align-items: flex-start; text-align: left; } }
 /* Proyectos vecinos con imagen lateral difuminada, mismo efecto que las tarjetas del blog */
 .case-nav a.con-foto, .case-nav a.con-foto:last-child { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: stretch; text-align: left; padding: 0; overflow: hidden; }
 .case-nav a.con-foto.caso-vecino-der { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
@@ -813,7 +813,10 @@ html.has-drawer { overflow: hidden; }
 .case-nav .caso-vecino-der .caso-foto img { -webkit-mask-image: linear-gradient(to left, #000 55%, transparent); mask-image: linear-gradient(to left, #000 55%, transparent); }
 @media (max-width: 40em) {
   .case-nav a.con-foto, .case-nav a.con-foto.caso-vecino-der { grid-template-columns: 1fr; }
-  .case-nav .caso-foto { order: -1; min-height: 0; height: 9rem; }
+  .case-nav .caso-foto { order: -1; min-height: 0; height: 6rem; }
+  .case-nav .caso-texto { padding: var(--space-4); }
+  .case-nav a:last-child .caso-texto { align-items: flex-end; text-align: right; }
+  .case-nav strong { font-size: 16px; line-height: 22px; }
   .case-nav .caso-vecino .caso-foto img { -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent); mask-image: linear-gradient(to bottom, #000 50%, transparent); }
 }
 

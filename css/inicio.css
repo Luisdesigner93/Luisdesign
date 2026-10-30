@@ -212,7 +212,7 @@
 .pl-blog-titulo a::after, .pl-post-title a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .prose .noticias-otras-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
 .prose .noticias-otras-lista > li.card { position: relative; display: grid; align-content: start; gap: var(--space-3); padding: var(--space-5); border-radius: var(--radius-xl); }
-@media (max-width: 40em) { .prose .noticias-otras-lista { grid-template-columns: 1fr; } }
+@media (max-width: 40em) { .prose .noticias-otras-lista { grid-template-columns: 1fr 1fr; gap: var(--space-3); } }
 /* Sigue leyendo: separado del texto por una línea y con el tamaño del título del artículo */
 .prose .noticias-otras { margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--line); }
 .prose .noticias-otras > h2 { margin: 0; font-size: clamp(32px, 4vw, 52px); line-height: 1.1; font-weight: 500; letter-spacing: -.03em; }
@@ -228,7 +228,10 @@
 .prose .noticias-otra-der .noticias-otras-foto img { -webkit-mask-image: linear-gradient(to left, #000 55%, transparent); mask-image: linear-gradient(to left, #000 55%, transparent); }
 @media (max-width: 40em) {
   .prose .noticias-otras-lista > li.card.con-foto, .prose .noticias-otras-lista > li.card.con-foto.noticias-otra-der { grid-template-columns: 1fr; }
-  .prose .noticias-otras-lista > li.card.con-foto .noticias-otras-foto { order: -1; height: 9rem; }
+  .prose .noticias-otras-lista > li.card.con-foto .noticias-otras-foto { order: -1; height: 6rem; }
+  .prose .noticias-otras-lista > li.card.con-foto .noticias-otras-texto { padding: var(--space-4); }
+  .prose .noticias-otras-lista .pl-post-title { font-size: 16px; line-height: 1.25; }
+  .prose .noticias-otra-der .noticias-otras-texto { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
   .prose .noticias-otra-izq .noticias-otras-foto img, .prose .noticias-otra-der .noticias-otras-foto img { -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent); mask-image: linear-gradient(to bottom, #000 50%, transparent); }
 }
 @media (min-width: 61.25em) {
