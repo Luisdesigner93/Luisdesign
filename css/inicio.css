@@ -466,3 +466,34 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .inicio .pl-dark .pl-title, .inicio .pl-dark .pl-title strong { color: var(--pl-on-dark); }
 /* Sobre mí: el contacto no está fijado en un bloque de scroll, así que no necesita la altura de la portada */
 .pl-sobre.pl-contact { height: auto; min-height: 0; padding: clamp(3rem, 8vw, 6rem) 0; }
+
+/* Sobre mí: retrato de escena (foto completa, no recorte), sin el círculo de acento del recorte */
+.portrait-escena::before { display: none; }
+.portrait-escena img { width: 100%; height: 100%; object-fit: cover; object-position: 62% center; }
+
+/* Sobre mí: nombre grande, etiquetas bajo el nombre, bajada, foto con el ancho máximo del contenido y texto de presentación */
+.sobre-intro { padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.5rem, 6vw, 4rem); }
+.sobre-titulo { margin: 0; font-size: clamp(2.6rem, 8.5vw, 8.5rem); line-height: 0.95; letter-spacing: -0.035em; font-weight: 700; text-transform: uppercase; }
+.sobre-bajada { margin: clamp(2.5rem, 6vw, 4rem) auto 0; max-width: 24em; text-align: center; font-size: clamp(1.2rem, 2.4vw, 1.9rem); line-height: 1.25; font-weight: 500; }
+.sobre-bajada::before { content: "["; }
+.sobre-bajada::after { content: "]"; }
+.sobre-foto { margin: 0; }
+.sobre-foto img { display: block; width: 100%; height: auto; }
+.sobre-texto { padding-block: clamp(3rem, 8vw, 6rem); }
+.sobre-texto p { margin: 0 0 1.25em; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.6; }
+.sobre-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 0; padding: 1rem 0 0; list-style: none; border-top: 1px solid currentColor; font-size: 0.9rem; line-height: 1.4; }
+@media (max-width: 40em) { .sobre-meta { grid-template-columns: 1fr; } .sobre-meta li:nth-child(n) { text-align: left; } }
+.sobre-cabecera { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; }
+.sobre-rol { margin: 0 0 0.5rem; max-width: 14em; font-size: 0.95rem; line-height: 1.4; text-align: right; }
+@media (max-width: 40em) { .sobre-rol { text-align: left; } }
+/* Sobre mí: bajada de la sección de etapas en una sola línea cuando cabe, con aire antes de la lista */
+.sobre-etapas-intro { width: max-content; max-width: 100%; margin: 0 0 clamp(2rem, 5vw, 3rem); font-family: inherit; font-size: clamp(1rem, 1.5vw, 1.2rem); letter-spacing: normal; color: inherit; }
+/* Sobre mí: aire entre la foto y la sección de etapas */
+.sobre-etapas { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
+/* Sobre mí: habilidades como tags bajo el texto final */
+.sobre-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+.sobre-tags li { padding: 0.35rem 0.9rem; border: 1px solid currentColor; border-radius: 999px; font-size: 0.9rem; line-height: 1.4; }
+/* Sobre mí: en móvil el nombre ocupa todo el ancho del contenido, en una sola línea */
+@media (max-width: 40em) { .sobre-titulo { font-size: 12.8vw; white-space: nowrap; } }
+/* Sobre mí: la grilla de fondo se concentra hacia la derecha de la sección del nombre */
+.sobre-intro.frame-grid { --grid-at: 85% 40%; }

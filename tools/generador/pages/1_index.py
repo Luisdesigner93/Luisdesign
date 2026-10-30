@@ -312,11 +312,11 @@ HOME_TRAYECTORIA = '''
                 <div class="career-when"><span>2022 – 2025</span></div>
                 <div>
                   <h3>CEO cofundador <span class="career-org">Studio Dinoi</span></h3>
-                  <p>Cofundé y lideré una agencia que integraba branding, desarrollo web, ecommerce y comunicación corporativa. Asesoré a pymes de rubros como cervecerías, asesorías legales, productos para mascotas, servicios B2B, productos químicos y fundaciones.</p>
+                  <p>Cofundé y lideré una consultora de estrategia y diseño. Trabajé en el rebranding de Cervecería Khronos, la estrategia de marca de YoMeControlo y la comunicación de Bote Salvavidas de Valparaíso.</p>
                 </div>
               </li>
               <li class="card">
-                <div class="career-when"><span>2020 – actualidad</span><span class="tag tag-value">Actual</span></div>
+                <div class="career-when"><span>2020 – 2022</span></div>
                 <div>
                   <h3>Diseñador freelance <span class="career-org">luisdesign.cl</span></h3>
                   <p>Comunicación digital, branding y diseño para pequeñas y medianas empresas.</p>

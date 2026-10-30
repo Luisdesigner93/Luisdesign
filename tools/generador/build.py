@@ -74,7 +74,6 @@ HEAD = '''<!doctype html>
         <a href="{home}#proyectos"{cur_proyectos}>Proyectos</a>
         <a href="{home}#blog"{cur_noticias}>Blog</a>
         <a href="{p}sobre-mi.html"{cur_sobre}>Sobre mí</a>
-        <a href="{contact_href}">Contacto</a>
         <div class="nav-foot">
           <div class="nav-foot-row">
             {lang_switch}
