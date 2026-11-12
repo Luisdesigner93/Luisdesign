@@ -55,5 +55,5 @@ _lab_body = f'''    <section class="lab-head" aria-labelledby="page-title">
 
 _lab_desc = 'Caso de estudio: posicionamiento, líneas de servicio y sistema de identidad de LAB*502, un laboratorio fotográfico y editorial en Iquique.'
 page('proyectos/lab502.html', 'LAB*502: una marca para acercar las experiencias artísticas análogas al norte de Chile · Luis Vicencio',
-     _lab_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio', extra_css=['css/inicio.css'],
+     _lab_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
      **case_seo(_lab, _lab_desc), body=_lab_body + case_nav(_lab))

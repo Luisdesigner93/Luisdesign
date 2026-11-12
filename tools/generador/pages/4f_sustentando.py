@@ -4,7 +4,7 @@ _su = next(pr for pr in PROJECTS if pr['slug'] == 'sustentando')
 _su_desc = 'Caso de estudio: identidad de marca, sitio web, comunicación B2B y diseño gráfico para Sustentando, desde 2022.'
 page('proyectos/sustentando.html', 'Sustentando: identidad, sitio web y comunicación B2B para una consultora · Luis Vicencio',
      _su_desc, current='proyectos', ogtype='article', **case_seo(_su, _su_desc),
-     contact=False, html_class='motion inicio', extra_css=['css/inicio.css'], cta_title='¿Buscas un aliado para <strong>hacer crecer tu marca</strong>?',
+     contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'], cta_title='¿Buscas un aliado para <strong>hacer crecer tu marca</strong>?',
      cta_lead='Conversemos sobre la etapa en que está tu empresa y veamos juntos por dónde partir.',
      body=case_intro(_su, _su['summary'],
         case_facts(_su))

@@ -295,7 +295,7 @@ def case_seo(pr, desc):
 
 def case_page(pr, title, desc, summary, statement, sections, facts=None, cta_title=None, cta_lead=None, actions=''):
     """Página de caso con la plantilla: ficha, secciones, botón a su landing y navegación."""
-    page(f"proyectos/{pr['slug']}.html", title, desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio', extra_css=['css/inicio.css'],
+    page(f"proyectos/{pr['slug']}.html", title, desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
          **case_seo(pr, desc), body=case_intro(pr, summary, facts or case_facts(pr), actions) + case_detail(statement, sections) + case_nav(pr))
 
 

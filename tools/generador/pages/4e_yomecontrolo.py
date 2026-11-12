@@ -4,7 +4,7 @@ _ym = next(pr for pr in PROJECTS if pr['slug'] == 'yomecontrolo')
 _ym_desc = 'Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.'
 page('proyectos/yomecontrolo.html', 'Yomecontrolo: estrategia de marca, identidad y UX/UI para una startup de salud · Luis Vicencio',
      _ym_desc, current='proyectos', ogtype='article', **case_seo(_ym, _ym_desc),
-     contact=False, html_class='motion inicio', extra_css=['css/inicio.css'], cta_title='¿Tu producto digital necesita <strong>una marca que conecte</strong>?',
+     contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'], cta_title='¿Tu producto digital necesita <strong>una marca que conecte</strong>?',
      cta_lead='Conversemos sobre tu proyecto y definamos juntos la estrategia, la identidad y la experiencia.',
      body=case_intro(_ym, _ym['summary'],
         case_facts(_ym))

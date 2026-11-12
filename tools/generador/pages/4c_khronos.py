@@ -4,7 +4,7 @@ _kh = next(pr for pr in PROJECTS if pr['slug'] == 'khronos')
 _kh_desc = 'Caso de estudio: rebranding de Cerveza Khronos, una cervecería artesanal de Chile. Concepto de marca, identidad visual y packaging.'
 page('proyectos/khronos.html', 'Cerveza Khronos: propuesta de rebranding, concepto y packaging · Luis Vicencio',
      _kh_desc, current='proyectos', ogtype='article', **case_seo(_kh, _kh_desc),
-     contact=False, html_class='motion inicio', extra_css=['css/inicio.css'], cta_title='¿Tu marca necesita <strong>una idea propia</strong>?',
+     contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'], cta_title='¿Tu marca necesita <strong>una idea propia</strong>?',
      cta_lead='Conversemos sobre tu producto y encontremos juntos el concepto que lo distinga.',
      body=case_intro(_kh,
         'Rebranding para una cervecería artesanal nacida en las bierfest. Buscamos el sentido de su nombre en su raíz griega, <em>khronos</em>, tiempo, y lo convertimos en el concepto que guía la marca: tómate el tiempo.',

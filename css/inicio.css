@@ -551,3 +551,12 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 .lab-pair { display: grid; grid-template-columns: 1149fr 662fr; gap: 0; align-items: stretch; }
 @media (max-width: 47.99em) { .lab-pair { grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3.6vw, 4.375rem); } }
+/* Páginas de proyecto: encabezado y contenido con un ancho máximo de 1464 px (referencia: wunderdogs.co/cases),
+   para que en pantallas grandes no se estiren de borde a borde */
+.caso { --caso-max: 91.5rem; }
+.caso .header-inner { width: min(100%, var(--caso-max) + 2 * var(--header-pad)); margin-inline: auto; }
+.inicio.caso { --content-width: min(100% - 2 * var(--header-pad), var(--caso-max)); }
+.caso .lab-wide { width: var(--content-width); }
+/* Páginas de proyecto: en el encabezado solo el logo, sin la bajada «Branding, UX/UI y Producto», y más grande */
+.caso .site-header .brand-tagline { display: none; }
+.caso .site-header .brand-logo { height: clamp(2.75rem, 3.4vw, 3.25rem); }
