@@ -524,3 +524,30 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 @media (max-width: 40em) { .sobre-titulo { font-size: 12.8vw; white-space: nowrap; } }
 /* Sobre mí: la grilla de fondo se concentra hacia la derecha de la sección del nombre */
 .sobre-intro.frame-grid { --grid-at: 85% 40%; }
+/* Caso LAB*502: composición editorial (Figma «Portfolio», frame LAB502). Imágenes a lo ancho y párrafos centrados */
+.lab-wide { width: min(100% - 2 * var(--gutter), 113rem); margin-inline: auto; }
+.lab-head { padding: clamp(1.5rem, 4vw, 3rem) 0 clamp(2rem, 4vw, 3rem); }
+.lab-head .breadcrumb { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.lab-title { margin: 0; font-size: clamp(40px, 5vw, 96px); line-height: 1; font-weight: 400; letter-spacing: -0.03em; text-transform: uppercase; text-wrap: balance; }
+.lab-lead { margin: var(--space-4) 0 0; max-width: 42em; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.4; color: var(--ink-muted); }
+.lab-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: clamp(1.5rem, 3vw, 2.5rem); }
+.lab-year { margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.lab-case { display: grid; gap: clamp(1.5rem, 3.6vw, 4.375rem); padding-bottom: clamp(3rem, 7vw, 6rem); }
+.lab-fig { margin: 0; }
+.lab-fig img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); }
+.lab-fig-plain img { border-radius: 0; }
+.lab-fig-logo { justify-self: center; width: min(100%, 64rem); }
+.lab-fig-logo img { border-radius: 0; }
+.lab-text { justify-self: center; width: min(100%, 44rem); padding-block: clamp(1rem, 3vw, 2.5rem); color: var(--ink); }
+.lab-text p { margin: 0; font-size: clamp(17px, 1.3vw, 20px); line-height: 1.5; font-weight: 300; text-align: justify; hyphens: auto; }
+.lab-text p + p { margin-top: 1em; }
+.lab-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(1.5rem, 3.6vw, 4.375rem); }
+.lab-split .lab-text { padding-block: 0; }
+.lab-split-solo { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 47.99em) {
+  .lab-split { grid-template-columns: minmax(0, 1fr); }
+  .lab-text p { text-align: left; }
+  .lab-fig img { border-radius: var(--radius-md); }
+}
+.lab-pair { display: grid; grid-template-columns: 1149fr 662fr; gap: 0; align-items: stretch; }
+@media (max-width: 47.99em) { .lab-pair { grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3.6vw, 4.375rem); } }

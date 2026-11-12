@@ -19,16 +19,23 @@ PROJECTS = [
     dict(slug='lab502', cats=['marcas'], landing='marcas', title='LAB*502', mark='L*', kind='Laboratorio fotográfico · Estrategia e identidad', year='2023', featured=True,
          summary='De una tienda de insumos a un laboratorio creativo con propósito: una marca que le dio al norte una forma de mirarse.',
          tags=['Estrategia', 'Identidad'], role='Estrategia, experiencia de marca, líneas de negocio, identidad y plantillas para redes', client='LAB*502 (antes Taller 502), Iquique', status='Marca en uso',
-         images=[img('lab502', '01.webp', 1600, 900, 'Servicios de LAB*502 con cuatro líneas: fotografía de eventos, experiencias análogas, studio fotográfico y editorial 502.', 'Soluciones y servicios.'),
-                 img('lab502', '02.webp', 1600, 900, 'Logotipo de LAB*502 con la tipografía Archimoto y el asterisco como constante, en distintas composiciones sobre fondos azul, amarillo, turquesa y magenta.', 'Arquitectura de marca: el logotipo.'),
-                 img('lab502', '03.webp', 1400, 788, 'Plantillas para redes de la línea de soluciones: fotografía de eventos y experiencias análogas.', 'Plantillas de niveles: soluciones.'),
-                 img('lab502', '04.webp', 1600, 900, 'Construcción del símbolo: el número 502 con la o reemplazada por un marco que contiene un asterisco.', 'La construcción del símbolo.'),
-                 img('lab502', '05.webp', 1600, 900, 'Reducción del isotipo a tamaños menores, manteniendo el asterisco dentro del marco.', 'Reducción y adaptabilidad.'),
-                 img('lab502', '06.webp', 600, 1066, 'Página de visión de LAB*502 con la frase «Redistribuir los ejes artísticos al norte de Chile» sobre una fotografía del norte.', 'Visión: redistribuir los ejes artísticos.'),
-                 img('lab502', '07.webp', 1400, 788, 'Plantillas para redes de la línea corporativa con fotografías en blanco y azul.', 'Plantillas de niveles: corporativo.'),
-                 img('lab502', '08.webp', 1920, 1080, 'Afiche de turismo fotográfico en Iquique con la frase «¿Quieres disfrutar del turismo y la fotografía análoga al mismo tiempo?».', 'Turismo fotográfico.'),
-                 img('lab502', '09.webp', 1600, 900, 'Plantillas para redes de la línea de exploración: un tutorial de composición y el proceso de una sesión.', 'Plantillas de niveles: exploración.'),
-                 img('lab502', '10.webp', 1920, 1080, 'Bolsas de papel kraft con el logotipo LAB*502, el eslogan «Luz, arte y norte» y un sticker con el isotipo.', 'Aplicaciones de marca.')]),
+         # Imágenes del caso rediseñado (Figma «Portfolio», frame LAB502). Orden de aparición en la página.
+         images=[img('lab502', '01-portada.webp', 1811, 711, 'Logotipo de LAB*502 en blanco sobre un fondo azul eléctrico con destellos de luz.', 'Portada.'),
+                 img('lab502', '02-collage.webp', 1811, 1026, 'Collage con el número 502 en azul, una fotógrafa tras su cámara y destellos de color arcoíris.', 'Lenguaje visual.'),
+                 img('lab502', '03-logotipos.webp', 1811, 630, 'Versiones del logotipo de LAB*502 sobre fondos azul, amarillo, magenta y turquesa.', 'Logotipo y colores.'),
+                 img('lab502', '04-estrategia.webp', 1811, 1051, 'Láminas de la estrategia de marca: valores, la luz del desierto, nuestra tribu, eje conceptual y dirección de expresión.', 'Estrategia de marca.'),
+                 img('lab502', '05-reticula.webp', 1811, 1046, 'Retícula editorial de LAB*502 con titulares en mayúsculas, texto de ejemplo y el lema «Luz, arte y norte».', 'Retícula editorial.'),
+                 img('lab502', '06-servicios.webp', 1149, 662, 'Lámina de soluciones y servicios con las cuatro líneas de negocio: fotografía de eventos, experiencias análogas, studio fotográfico y Editorial 502.', 'Soluciones y servicios.'),
+                 img('lab502', '07-isotipo.webp', 1080, 1080, 'Isotipo LAB 502 en blanco sobre un fondo azul con textura de película y un destello magenta.', 'Isotipo sobre textura.'),
+                 img('lab502', '08-foto.webp', 1080, 1080, 'Fotografía análoga de una persona con globos a contraluz, con el logotipo de LAB*502 y el lema «Luz, arte y norte».', 'Dirección creativa.'),
+                 img('lab502', '09-reduccion.webp', 1811, 1051, 'Reducción del isotipo 502 en distintos tamaños sobre fondo azul.', 'Reducción del isotipo.'),
+                 img('lab502', '10-arquitectura.webp', 1811, 1023, 'Arquitectura de marca de LAB*502 con su logotipo principal e imagotipos secundarios.', 'Arquitectura de marca.'),
+                 img('lab502', '11-logo-horizontal.webp', 1024, 295, 'Logotipo horizontal LAB.QUINIENTOS*DOS sobre fondo turquesa.', 'Logotipo horizontal.'),
+                 img('lab502', '12-historias.webp', 1811, 1013, 'Historias de Instagram de LAB*502: descentralizar el arte, turismo fotográfico, foto nortina y los ejes artísticos del norte.', 'Historias para redes.'),
+                 img('lab502', '13-publicaciones.webp', 1799, 580, 'Cuatro publicaciones de Instagram de LAB*502 sobre fotografía de eventos, el legado visual del norte y experiencias análogas.', 'Publicaciones para redes.'),
+                 img('lab502', '14-turismo.webp', 1920, 1080, 'Afiche de turismo fotográfico en Iquique colgado de un cordel, con la frase «¿Quieres disfrutar del turismo y la fotografía análoga al mismo tiempo?».', 'Turismo fotográfico.'),
+                 img('lab502', '15-sitio-web.webp', 1811, 1078, 'Sitio web de LAB*502 en un computador portátil junto a una grilla de fotografías.', 'Sitio web.'),
+                 img('lab502', '16-talleres.webp', 1811, 1092, 'Personas en un taller de LAB*502 alrededor de una mesa, con el isotipo 502 en la esquina.', 'Talleres y comunidad.')]),
     dict(slug='bowraps', cats=['marcas'], landing='marcas', title='Bowraps', mark='Bw', kind='Comida saludable · Naming e identidad visual', year='2022', featured=False,
          summary='Naming e identidad visual para una marca de wraps y bowls frescos, hoy en funcionamiento en Viña del Mar.',
          tags=['Naming', 'Identidad', 'Aplicaciones'], role='Naming, logotipo, identidad visual y aplicaciones, en colaboración con Claudio Almeyda Godoy', client='Bowraps', status='Marca en uso',
@@ -84,6 +91,17 @@ PROJECTS = [
                  img('khronos', '03.jpg', 1254, 1254, 'Botella de Cerveza Khronos Stout sobre un bloque de piedra.', 'Etiqueta Stout.'),
                  img('khronos', '04.jpg', 1254, 1254, 'Botella de Cerveza Khronos American Pale Ale con el tagline “Tómate el tiempo” sobre fondo naranja.', 'Etiqueta American Pale Ale.')]),
 ]
+
+# LAB*502: las imágenes que aún no se exportan desde Figma (10 y 11) se omiten hasta que existan en img/proyectos/lab502/
+# (rutas relativas a la raíz del proyecto, desde donde se ejecuta build.py)
+import os as _os
+for _pr in PROJECTS:
+    if _pr['slug'] == 'lab502':
+        _keep = []
+        for _im in _pr['images']:
+            if _os.path.exists(_im['src']):
+                _keep.append(_im)
+        _pr['images'] = _keep
 
 AUDITOR_ART = '''<div class="mini-window">
                 <div class="mini-bar"><i></i><i></i><i></i><span></span></div>
