@@ -560,3 +560,47 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 /* Páginas de proyecto: en el encabezado solo el logo, sin la bajada «Branding, UX/UI y Producto», y más grande */
 .caso .site-header .brand-tagline { display: none; }
 .caso .site-header .brand-logo { height: clamp(2.75rem, 3.4vw, 3.25rem); }
+/* Página de proyectos (proyectos/index.html; referencia: wunderdogs.co/our-work): título grande, filtros y grilla de tarjetas */
+.pj-head { position: relative; isolation: isolate; padding: clamp(1.5rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 4rem); }
+/* Cuadrícula de fondo del sitio (frame-grid), concentrada hacia la derecha del título como en Sobre mí */
+.pj-head.frame-grid { --grid-at: 80% 45%; --grid-size: 55% 60%; }
+.pj-head .breadcrumb { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.pj-title { margin: 0; font-size: clamp(56px, 9vw, 128px); line-height: .95; font-weight: 400; letter-spacing: -0.04em; text-transform: uppercase; }
+.pj-lead { margin: var(--space-6) 0 0; max-width: 32em; font-size: clamp(16px, 1.3vw, 18px); line-height: 1.5; color: var(--ink-muted); }
+.pj-list { padding: 0 0 clamp(4rem, 8vw, 7rem); }
+.pj-filters { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5) clamp(2rem, 5vw, 4rem); margin-top: clamp(2rem, 4vw, 3rem); }
+@media (max-width: 47.99em) { .pj-filters { grid-template-columns: minmax(0, 1fr); } }
+.pj-group-label { margin: 0 0 var(--space-2); font-size: 11px; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+.pj-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.pj-chip { display: inline-flex; align-items: baseline; gap: .3em; min-height: 32px; padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--radius-xs); background: var(--surface); color: var(--ink); font: inherit; font-size: 13px; line-height: 18px; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+.pj-chip:hover { border-color: var(--line-control); }
+.pj-chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--on-night); }
+.pj-n { font-size: 11px; color: var(--ink-subtle); }
+.pj-chip[aria-pressed="true"] .pj-n { color: inherit; opacity: .7; }
+.pj-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 3vw, 3rem) clamp(1rem, 1.6vw, 1.5rem); list-style: none; margin: 0; padding: 0; }
+.pj-item[hidden] { display: none; }
+.pj-card { display: flex; flex-direction: column; gap: var(--space-4); color: var(--ink); text-decoration: none; }
+.pj-media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-sm); background: var(--canvas); }
+.pj-media > img, .pj-media > * { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.pj-card:hover .pj-media > img, .pj-card:focus-visible .pj-media > img { transform: scale(1.04); }
+.pj-name { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); font-size: clamp(17px, 1.4vw, 20px); line-height: 1.3; }
+.pj-name .icon { width: 20px; height: 20px; flex-shrink: 0; transform: rotate(-45deg); transition: transform .3s var(--ease); }
+.pj-card:hover .pj-name .icon, .pj-card:focus-visible .pj-name .icon { transform: rotate(0); }
+.pj-empty { margin: var(--space-8) 0 0; color: var(--ink-muted); }
+@media (max-width: 63.99em) { .pj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 35.99em) { .pj-grid { grid-template-columns: minmax(0, 1fr); } }
+/* ===== Páginas de proyecto y página de proyectos: mismo sistema tipográfico que el inicio =====
+   Títulos en Plus Jakarta Sans 800, mayúsculas y apretados (.pl-display / .pl-title); textos en monoespaciada
+   espaciada (.pl-lead); etiquetas en monoespaciada de 12 px (.pl-mono); nombres de tarjetas en 600 (.pl-post-title). */
+.caso .lab-title, .caso .pj-title, .caso .case-title, .caso .case-sec-title {
+  font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; word-spacing: .08em; text-wrap: balance; }
+.caso .lab-title, .caso .pj-title { font-size: clamp(44px, 7.4vw, 128px); line-height: .9; letter-spacing: -0.055em; }
+.caso .case-title { font-size: clamp(30px, 3.4vw, 48px); line-height: .95; letter-spacing: -0.045em; }
+.caso .case-sec-title { font-size: clamp(24px, 2.6vw, 36px); line-height: 1; letter-spacing: -0.04em; }
+.caso .case-statement { font-weight: 800; text-transform: uppercase; letter-spacing: -0.04em; line-height: 1; }
+.caso .lab-lead, .caso .pj-lead, .caso .case-summary, .caso .case-text p, .caso .case-text li, .caso .lab-text p {
+  font-family: var(--mono); font-weight: 400; font-size: 14px; line-height: 1.75; letter-spacing: .08em; }
+.caso .case-text .lead { color: var(--ink); }
+.caso .breadcrumb, .caso .case-chips li, .caso .pj-chip, .caso .lab-year, .caso .pj-group-label, .caso .case-meta div, .caso .caso-texto span {
+  font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .08em; }
+.caso .pj-name, .caso .caso-texto strong { font-weight: 600; letter-spacing: -0.01em; }

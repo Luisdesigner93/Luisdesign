@@ -1,7 +1,7 @@
 # luisdesign.cl — configuración Apache (hosting cPanel)
 # Requiere mod_rewrite y mod_headers (habituales en cPanel). mod_deflate y mod_expires son opcionales.
 
-Options -Indexes
+Options -Indexes -MultiViews
 ServerSignature Off
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
@@ -14,10 +14,21 @@ ErrorDocument 404 /404.html
   RewriteCond %{HTTP:X-Forwarded-Proto} !=https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-  # Páginas eliminadas: sus URLs van a la sección correspondiente del inicio (no se rompen enlaces ya compartidos)
-  RewriteRule ^proyectos\.html$ / [R=301,L]
-  RewriteRule ^producto-digital\.html$ / [R=301,L]
-  RewriteRule ^en/digital-product\.html$ / [R=301,L]
+  # Páginas eliminadas o movidas (no se rompen enlaces ya compartidos)
+  RewriteRule ^proyectos\.html$ /proyectos/ [R=301,L]
+  RewriteRule ^producto-digital(\.html)?$ / [R=301,L]
+  RewriteRule ^en/digital-product(\.html)?$ / [R=301,L]
+
+  # URLs sin .html. Las direcciones antiguas se redirigen (301) a la versión limpia:
+  #   /index.html y /carpeta/index.html → / y /carpeta/ ; /pagina.html → /pagina
+  RewriteCond %{THE_REQUEST} \s/+((?:[^?\s]*/)?)index\.html[\s?]
+  RewriteRule ^ /%1 [R=301,L,NE]
+  RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.html[\s?]
+  RewriteRule ^ /%1 [R=301,L,NE]
+  # /pagina sirve pagina.html (si existe y no es una carpeta)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
 
   # No exponer archivos ocultos, herramientas locales ni documentación del repositorio
   RewriteRule (^|/)\. - [F,L]

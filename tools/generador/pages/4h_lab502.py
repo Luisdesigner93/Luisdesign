@@ -20,7 +20,7 @@ def _lab_text(html):
 _chips = ''.join(f'<li>{t}</li>' for t in _lab['tags'])
 _lab_body = f'''    <section class="lab-head" aria-labelledby="page-title">
       <div class="lab-wide">
-        <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{home}}#proyectos">Proyectos</a></li><li aria-current="page">{_lab['title']}</li></ol>
+        <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos/index.html">Proyectos</a></li><li aria-current="page">{_lab['title']}</li></ol>
         <h1 class="lab-title" id="page-title">Lab quinientos dos<span class="sr-only"> (LAB*502)</span></h1>
         <p class="lab-lead">Construir una marca para acercar las experiencias artísticas análogas al norte de Chile.</p>
         <div class="lab-meta">

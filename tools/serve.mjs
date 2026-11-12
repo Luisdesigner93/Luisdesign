@@ -18,8 +18,20 @@ const HEADERS = {
 
 createServer(async (req, res) => {
   try {
-    let path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    const url = new URL(req.url, 'http://localhost');
+    let path = decodeURIComponent(url.pathname);
+    // Como .htaccess: /pagina.html y /carpeta/index.html redirigen (301) a /pagina y /carpeta/
+    if (path.endsWith('.html') && !path.endsWith('/404.html')) {
+      const limpio = path.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '');
+      res.writeHead(301, { ...HEADERS, Location: limpio + url.search });
+      return res.end();
+    }
     if (path.endsWith('/')) path += 'index.html';
+    // /pagina sirve pagina.html
+    else if (!extname(path)) {
+      const conHtml = normalize(join(ROOT, path + '.html'));
+      if (await stat(conHtml).then((s) => s.isFile(), () => false)) path += '.html';
+    }
     const file = normalize(join(ROOT, path));
     // Evita path traversal y archivos ocultos o de herramientas.
     if (!file.startsWith(ROOT + sep) || /[\\/]\.|[\\/]tools[\\/]/.test(file.slice(ROOT.length))) throw Object.assign(new Error(), { code: 'ENOENT' });

@@ -71,7 +71,7 @@ HEAD = '''<!doctype html>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
-        <a href="{home}#proyectos"{cur_proyectos}>Proyectos</a>
+        <a href="{proyectos_href}"{cur_proyectos}>Proyectos</a>
         <a href="{home}#blog"{cur_noticias}>Blog</a>
         <a href="{sobre_href}"{cur_sobre}>Sobre mí</a>
         <div class="nav-foot">
@@ -122,7 +122,7 @@ FOOT = '''  </main>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{home}#proyectos">Proyectos</a></li><li><a href="{home}#blog">Blog</a></li><li><a href="{sobre_href}">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{proyectos_href}">Proyectos</a></li><li><a href="{home}#blog">Blog</a></li><li><a href="{sobre_href}">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -280,6 +280,25 @@ def _webp(html):
     return _IMG.sub(swap, html)
 
 
+# ---- URLs sin .html: enlaces, canonical, og:url y JSON-LD apuntan a /pagina en vez de /pagina.html ----
+# (.htaccess sirve pagina.html para /pagina y redirige con 301 las direcciones antiguas con .html)
+_URL_ABS = re.compile(r'(https://luisdesign\.cl/)([^\s"\'<>#?]*?)\.html')
+_URL_REL = re.compile(r'(href=")((?!https?:|mailto:|tel:|//)[^"#?]*?)\.html')
+
+
+def _sin_html(ruta, absoluta=False):
+    """sobre-mi → sobre-mi; proyectos/index → proyectos/; index → ./ (o la raíz si es absoluta)."""
+    if ruta == 'index' or ruta.endswith('/index'):
+        ruta = ruta[:-len('index')]
+        return ruta if (ruta or absoluta) else './'
+    return ruta
+
+
+def _urls_limpias(html):
+    html = _URL_ABS.sub(lambda m: m.group(1) + _sin_html(m.group(2), True), html)
+    return _URL_REL.sub(lambda m: m.group(1) + _sin_html(m.group(2)), html)
+
+
 EN_PAGES = ('index.html', 'noticias/', 'sobre-mi.html')
 
 
@@ -317,6 +336,8 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'ga_id': GA_ID,
         'lang_switch': _lang_switch(path, lang),
         'sobre_href': p + ('en/sobre-mi.html' if lang == 'en' else 'sobre-mi.html'),
+        # Página de proyectos (solo en español; en inglés sigue la sección de la home)
+        'proyectos_href': home + '#proyectos' if lang == 'en' else p + 'proyectos/index.html',
         'email': EMAIL,
         'cur_noticias': ' aria-current="page"' if current == 'noticias' else '',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
@@ -337,7 +358,7 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
             chrome = [c.replace(es, en) for c in chrome]
         # En inglés, "Digital product" apunta a la versión en inglés
     html = chrome[0] + fill(body, values) + chrome[1] + chrome[2]
-    html = _webp(_card_titles(html))
+    html = _urls_limpias(_webp(_card_titles(html)))
     out = ROOT / path
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding='utf-8')
