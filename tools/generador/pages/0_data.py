@@ -30,7 +30,7 @@ PROJECTS = [
                  img('lab502', '08-foto.webp', 1080, 1080, 'Fotografía análoga de una persona con globos a contraluz, con el logotipo de LAB*502 y el lema «Luz, arte y norte».', 'Dirección creativa.'),
                  img('lab502', '09-reduccion.webp', 1811, 1051, 'Reducción del isotipo 502 en distintos tamaños sobre fondo azul.', 'Reducción del isotipo.'),
                  img('lab502', '10-arquitectura.webp', 1811, 1023, 'Arquitectura de marca de LAB*502 con su logotipo principal e imagotipos secundarios.', 'Arquitectura de marca.'),
-                 img('lab502', '11-logo-horizontal.webp', 1024, 295, 'Logotipo horizontal LAB.QUINIENTOS*DOS sobre fondo turquesa.', 'Logotipo horizontal.'),
+                 img('lab502', '11-logo-horizontal.webp', 1025, 295, 'Logotipo horizontal LAB.QUINIENTOS*DOS sobre fondo turquesa.', 'Logotipo horizontal.'),
                  img('lab502', '12-historias.webp', 1811, 1013, 'Historias de Instagram de LAB*502: descentralizar el arte, turismo fotográfico, foto nortina y los ejes artísticos del norte.', 'Historias para redes.'),
                  img('lab502', '13-publicaciones.webp', 1799, 580, 'Cuatro publicaciones de Instagram de LAB*502 sobre fotografía de eventos, el legado visual del norte y experiencias análogas.', 'Publicaciones para redes.'),
                  img('lab502', '14-turismo.webp', 1920, 1080, 'Afiche de turismo fotográfico en Iquique colgado de un cordel, con la frase «¿Quieres disfrutar del turismo y la fotografía análoga al mismo tiempo?».', 'Turismo fotográfico.'),
@@ -92,7 +92,7 @@ PROJECTS = [
                  img('khronos', '04.jpg', 1254, 1254, 'Botella de Cerveza Khronos American Pale Ale con el tagline “Tómate el tiempo” sobre fondo naranja.', 'Etiqueta American Pale Ale.')]),
 ]
 
-# LAB*502: las imágenes que aún no se exportan desde Figma (10 y 11) se omiten hasta que existan en img/proyectos/lab502/
+# LAB*502: si falta alguna imagen en img/proyectos/lab502/, se omite en vez de dejar un enlace roto
 # (rutas relativas a la raíz del proyecto, desde donde se ejecuta build.py)
 import os as _os
 for _pr in PROJECTS:
