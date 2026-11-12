@@ -604,3 +604,5 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .caso .breadcrumb, .caso .case-chips li, .caso .pj-chip, .caso .lab-year, .caso .pj-group-label, .caso .case-meta div, .caso .caso-texto span {
   font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .08em; }
 .caso .pj-name, .caso .caso-texto strong { font-weight: 600; letter-spacing: -0.01em; }
+/* LAB*502: en móvil los párrafos del caso van a 12 px con interlineado 1.25 */
+@media (max-width: 47.99em) { .caso .lab-text p { font-size: 12px; line-height: 1.25; } }
