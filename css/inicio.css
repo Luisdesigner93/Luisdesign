@@ -606,3 +606,10 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .caso .pj-name, .caso .caso-texto strong { font-weight: 600; letter-spacing: -0.01em; }
 /* LAB*502: en móvil los párrafos del caso van a 12 px con interlineado 1.25 */
 @media (max-width: 47.99em) { .caso .lab-text p { font-size: 12px; line-height: 1.25; } }
+/* Yomecontrolo: pares de imágenes con columnas proporcionales a cada imagen, para que ambas queden a la misma altura */
+.lab-pair.lab-pair-ymc-a { grid-template-columns: 877fr 931fr; }
+.lab-pair.lab-pair-ymc-b { grid-template-columns: 687fr 1110fr; }
+.lab-pair.lab-pair-ymc-c { grid-template-columns: 904fr 900fr; }
+/* Teléfono en la pantalla de inicio + indicadores (ya exportadas con el encuadre del diseño) */
+.lab-pair.lab-pair-ymc-d { grid-template-columns: 1139fr 669fr; }
+@media (max-width: 47.99em) { .lab-pair.lab-pair-ymc-a, .lab-pair.lab-pair-ymc-b, .lab-pair.lab-pair-ymc-c, .lab-pair.lab-pair-ymc-d { grid-template-columns: minmax(0, 1fr); } }
