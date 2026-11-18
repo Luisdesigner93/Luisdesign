@@ -63,7 +63,7 @@ PROJECTS = [
                  img('sustentando', '06.jpg', 1000, 939, 'Publicación de Sustentando en LinkedIn sobre un curso de auditores internos de calidad.', 'Publicación para LinkedIn.')]),
     dict(slug='yomecontrolo', cats=['producto'], landing='producto', title='Yomecontrolo', mark='Ym', kind='Salud preventiva · Marca y UX/UI', year='2023 – 2024', featured=True,
          summary='Estrategia, experiencia y expresión de marca para Yomecontrolo, una startup chilena de salud preventiva. Una marca que deja atrás la carga negativa de ir al médico y acompaña a las personas a cuidar su salud mucho antes de que llegue la enfermedad.',
-         tags=['Estrategia', 'Identidad', 'UX/UI'], role='Estrategia de marca, identidad y UX/UI', client='Yomecontrolo', status='Marca en uso · MVP no implementado',
+         tags=['Estrategia', 'Identidad', 'UX/UI'], role='Estrategia de marca, identidad y UX/UI', client='Yomecontrolo', status='Marca en uso · MVP no implementado', card='11-indicadores.png',
          # Imágenes del caso rediseñado (Figma «Portfolio», frame YMC), en el orden en que aparecen en la página.
          # En la carpeta quedan sin usarse: 05.jpg a 08.jpg (versión anterior del caso) y desafio.png (ya no está en el diseño).
          images=[img('yomecontrolo', '01-logo.png', 1808, 851, 'Logotipo de Yo me controlo: un isotipo de figuras superpuestas con una cruz y el nombre en violeta.', 'Logotipo.'),
@@ -86,6 +86,25 @@ PROJECTS = [
                  img('yomecontrolo', '18-credencial.png', 904, 908, 'Credencial del equipo de Yomecontrolo con cordón turquesa.', 'Credencial.'),
                  img('yomecontrolo', '19-ciclista.png', 900, 908, 'Mujer sonriente con casco de bicicleta sobre un fondo celeste con cruces de la marca.', 'Fotografía de marca.'),
                  img('yomecontrolo', '20-historias.png', 1811, 1013, 'Historias de Instagram de Yomecontrolo: edad del corazón, control de tiroides y el mes del corazón.', 'Historias para redes.')]),
+    dict(slug='temporis-pro', cats=['producto', 'marcas'], landing='producto', title='Temporis Pro', mark='Tp', kind='Plataforma industrial B2B · Marca y producto', year='2026', featured=True,
+         summary='De datos dispersos a una operación conectada: la marca y la definición de producto de Temporis Pro, una plataforma que unificó dos soluciones industriales en una sola oferta.',
+         tags=['Estrategia', 'Identidad', 'UX/UI', 'Gestión de producto'], role='Encargado de Marca y Producto', client='Bytequest', status='Proyecto detenido durante el desarrollo', card='13-web-monitor.jpg',
+         # Imágenes del caso (Figma «Portfolio», frame Temporis Pro), en el orden en que aparecen en la página.
+         images=[img('temporis-pro', '01-portada.jpg', 1808, 739, 'Logotipo de Temporis Pro en blanco sobre una nave industrial teñida de naranja, con un operario y una grúa horquilla.', 'Portada.'),
+                 img('temporis-pro', '02-mapa.png', 1808, 1161, 'Mapa de funcionalidades de Temporis Pro: configuración de la empresa, DCS y fabricación, con sus módulos de turnos, recursos, indicadores, seguimiento de acciones y catálogo de productos.', 'Mapa de funcionalidades.'),
+                 img('temporis-pro', '03-wireframes.png', 1920, 1393, 'Wireframes de la plataforma: configuración de turnos, ficha de una máquina con sus sensores, estructura de plantas y órdenes de fabricación.', 'Wireframes de la plataforma.'),
+                 img('temporis-pro', '04-logo-construccion.png', 1808, 1117, 'Construcción del logotipo de Temporis Pro sobre su retícula, con las medidas del área de resguardo.', 'Construcción del logotipo.'),
+                 img('temporis-pro', '05-web-plataforma.jpg', 1808, 1808, 'Portátil con el sitio de Temporis Pro: «Una sola plataforma que conecta cada fuente de datos de tu operación», con los módulos multi-tenant, planificación, detenciones, conductor, indicadores e inteligencia.', 'Sitio web: la plataforma.'),
+                 img('temporis-pro', '06-tarjetas.jpg', 862, 1098, 'Tarjetas de presentación de Temporis Pro en naranja y crema, con el lema «Trazabilidad y excelencia» y un código QR.', 'Tarjetas de presentación.'),
+                 img('temporis-pro', '07-lanyard.png', 926, 1098, 'Cordones de credencial de Temporis Pro en naranja y café con la frase «La operación como un sistema vivo».', 'Cordón de credencial.'),
+                 img('temporis-pro', '08-paleta.png', 1808, 1117, 'Paleta de colores de Temporis Pro sobre metal cepillado: crema, verde agua, naranja y café oscuro, con degradados entre ellos.', 'Paleta de colores.'),
+                 img('temporis-pro', '09-tipografia.png', 1808, 1117, 'Sistema tipográfico de Temporis Pro: Mortend Bold para títulos y Byotone Light y Regular para subtítulos, párrafos y botones.', 'Tipografía.'),
+                 img('temporis-pro', '10-login.jpg', 894, 1117, 'Pantalla de inicio de sesión de Temporis Pro con el mensaje «Descubre qué está pasando y dónde».', 'Inicio de sesión.'),
+                 img('temporis-pro', '11-logotipos.png', 888, 1117, 'Versiones del logotipo de Temporis Pro sobre fondos crema, café, negro y naranja.', 'Versiones del logotipo.'),
+                 img('temporis-pro', '12-portatil.jpg', 1336, 1002, 'Portátil sobre un puf naranja con la lámina «Podemos consolidar más de 6 años de datos históricos para análisis y entrenamiento».', 'Consolidación de datos históricos.'),
+                 img('temporis-pro', '13-web-monitor.jpg', 894, 830, 'Monitor con el sitio de Temporis Pro: «Los datos de producción existen. Pero están dispersos, aislados y no se comunican entre sí».', 'Sitio web: el problema.'),
+                 img('temporis-pro', '14-tablet.jpg', 894, 830, 'Tablet con la estructura organizacional de Temporis Pro y una planta marcada en alerta por una parada no programada.', 'Estructura organizacional.'),
+                 img('temporis-pro', '15-monitor.jpg', 1796, 1041, 'Dos personas frente a un monitor con el panel de estado de planta de Temporis Pro: OEE por turno, producción, detenciones y recomendaciones de IA.', 'Panel de estado de planta.')]),
     dict(slug='auditorweb', cats=['producto'], landing='producto', title='AuditorWeb 21.719', mark=None, kind='Producto digital', year='2026', featured=True, en_portafolio=False,
          summary='Auditor automatizado que revisa 30 controles de cumplimiento de la Ley de Protección de Datos Personales y entrega un plan de acción priorizado.',
          tags=['UX/UI', 'Gestión de producto'], images=[], role='Producto, UX/UI y desarrollo asistido con IA', client='Producto propio'),
@@ -138,8 +157,11 @@ def img_tag(im, cls='', lazy=True):
 
 
 def project_art(pr, lazy=True):
+    # card: imagen de la tarjeta del proyecto (nombre de archivo); si no se indica, la primera del caso
     if pr['images']:
-        return img_tag(pr['images'][0], lazy=lazy)
+        im = next((i for i in pr['images'] if i['src'].endswith('/' + pr['card'])), pr['images'][0]) if pr.get('card') else pr['images'][0]
+        # card_arriba: la tarjeta muestra la parte superior de la imagen en vez del centro
+        return img_tag(im, 'img-arriba' if pr.get('card_arriba') else '', lazy=lazy)
     if pr['mark'] is None:
         return AUDITOR_ART
     # EDITAR: reemplazar por una imagen del proyecto (<img src="..." alt="" width height>)

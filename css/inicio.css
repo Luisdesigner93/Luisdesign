@@ -613,3 +613,30 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 /* Teléfono en la pantalla de inicio + indicadores (ya exportadas con el encuadre del diseño) */
 .lab-pair.lab-pair-ymc-d { grid-template-columns: 1139fr 669fr; }
 @media (max-width: 47.99em) { .lab-pair.lab-pair-ymc-a, .lab-pair.lab-pair-ymc-b, .lab-pair.lab-pair-ymc-c, .lab-pair.lab-pair-ymc-d { grid-template-columns: minmax(0, 1fr); } }
+/* Temporis Pro: rol y empresa bajo la bajada (filas con línea divisoria), disciplinas y año a la derecha */
+.lab-meta-tp { align-items: flex-end; }
+.lab-facts { margin: 0; flex: 0 1 34rem; border-top: 1px solid var(--line); }
+.lab-facts div { display: flex; gap: .5em; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.lab-facts dt { font-weight: 700; }
+.lab-facts dd { margin: 0; }
+.caso .lab-facts { font-family: var(--mono); font-size: 14px; line-height: 1.5; letter-spacing: .08em; color: var(--ink); }
+.lab-meta-side { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--space-4); }
+/* Temporis Pro: pares con separación entre imágenes y columnas proporcionales a cada imagen (misma altura) */
+.lab-pair.lab-pair-tp { gap: clamp(.75rem, 1.2vw, 1.25rem); }
+.lab-pair.lab-pair-tp-a { grid-template-columns: 862fr 926fr; }
+.lab-pair.lab-pair-tp-b { grid-template-columns: 894fr 888fr; }
+.lab-pair.lab-pair-tp-c { grid-template-columns: 1fr 1fr; }
+/* Texto angosto a la izquierda y el portátil a la derecha, alineados abajo */
+.lab-split.lab-split-tp { grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr); align-items: stretch; }
+.lab-split-tp .lab-text { align-self: end; }
+/* Si el texto es más alto que el portátil, la imagen se estira hasta su altura (recorta los bordes, sin deformarse) */
+@media (min-width: 48em) { .lab-split-tp .lab-fig img { height: 100%; object-fit: cover; } }
+@media (max-width: 47.99em) {
+  .lab-pair.lab-pair-tp-a, .lab-pair.lab-pair-tp-b, .lab-pair.lab-pair-tp-c, .lab-split.lab-split-tp { grid-template-columns: minmax(0, 1fr); }
+  .lab-pair.lab-pair-tp { gap: clamp(1.5rem, 3.6vw, 4.375rem); }
+  .lab-meta-side { justify-content: flex-start; }
+}
+/* Páginas de proyecto: los párrafos del caso van a 12 px (las bajadas bajo el título siguen en 14 px) */
+.caso .lab-text p, .caso .case-text p, .caso .case-text li { font-size: 12px; }
+/* Tarjetas de proyecto: recorte alineado arriba (card_arriba en 0_data.py) */
+img.img-arriba { object-position: 50% 0; }
