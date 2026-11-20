@@ -135,10 +135,10 @@ FOOT = '''  </main>
     </div>
   </footer>
 
-  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" data-ga="{ga_id}" aria-labelledby="cookie-title" hidden>
+  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" data-ga="{ga_id}" data-clarity="{clarity_id}" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies y analítica</h2>
-      <p>Uso Google Tag Manager y Google Analytics solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="{p}privacidad.html#cookies">Más información</a>.</p>
+      <p>Uso Google Tag Manager, Google Analytics y Microsoft Clarity solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="{p}privacidad.html#cookies">Más información</a>.</p>
     </div>
     <div class="cookie-banner-actions">
       <button class="btn btn-secondary" type="button" data-consent="rechazado">Rechazar</button>
@@ -161,6 +161,8 @@ EMAIL = 'contacto@luisdesign.cl'
 GTM_ID = 'GTM-M8GHZ2BZ'
 # ID de medición de Google Analytics 4 (flujo "Luis Design - GA4"). Se carga solo con consentimiento, igual que GTM.
 GA_ID = 'G-42SV1ZZ5S1'
+# EDITAR: ID del proyecto de Microsoft Clarity (Configuración → Información general). Vacío: no se carga. Solo con consentimiento.
+CLARITY_ID = 'zgo49leb9c'
 _EXT = ' rel="noopener noreferrer" target="_blank"'
 _NEW_TAB = '<span class="sr-only"> (se abre en una pestaña nueva)</span>'
 
@@ -192,8 +194,8 @@ EN_CHROME = [
     ('>Política de privacidad</a>', '>Privacy policy (Spanish)</a>'),
     ('Branding, UX/UI y producto digital · Chile', 'Branding, UX/UI and digital product · Chile'),
     ('Cookies y analítica', 'Cookies and analytics'),
-    ('Uso Google Tag Manager y Google Analytics solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica.',
-     'I use Google Tag Manager and Google Analytics only if you accept. If not, no analytics cookies are loaded or stored. Your choice is saved in a technical cookie.'),
+    ('Uso Google Tag Manager, Google Analytics y Microsoft Clarity solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica.',
+     'I use Google Tag Manager, Google Analytics and Microsoft Clarity only if you accept. If not, no analytics cookies are loaded or stored. Your choice is saved in a technical cookie.'),
     ('>Más información</a>', '>More information</a>'),
     ('data-consent="rechazado">Rechazar<', 'data-consent="rechazado">Decline<'),
     ('data-consent="aceptado">Aceptar<', 'data-consent="aceptado">Accept<'),
@@ -334,6 +336,7 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'contact_href': '#contacto' if contact else home + '#contacto',
         'gtm_id': GTM_ID,
         'ga_id': GA_ID,
+        'clarity_id': CLARITY_ID,
         'lang_switch': _lang_switch(path, lang),
         'sobre_href': p + ('en/sobre-mi.html' if lang == 'en' else 'sobre-mi.html'),
         # Página de proyectos (solo en español; en inglés sigue la sección de la home)

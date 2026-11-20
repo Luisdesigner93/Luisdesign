@@ -1,8 +1,8 @@
 /* ===== Inicio: identidad con una línea continua que recorre la página =====
    Referencia: dakshgajjar.com. Se usa en index.html (tools/generador/pages/1a_inicio.py). */
-.inicio { --pl-dark: #07090d; --pl-on-dark: #f1eee6; --pl-on-dark-muted: rgba(241, 238, 230, .7); --pl-stroke: 4px;
+.inicio { --pl-dark: var(--night); --pl-on-dark: var(--cream); --pl-on-dark-muted: var(--cream-muted); --pl-stroke: 4px;
   /* Color de la línea: verde amarillo de destacador (flúor) */
-  --pl-line: #d4ff3f; }
+  --pl-line: var(--lima); }
 
 /* Secciones: claras sin fondo propio; oscuras como panel redondeado. Sin margen vertical para que la línea no se corte */
 .pl-sec { position: relative; isolation: isolate; margin-block: 0; }
@@ -48,7 +48,7 @@
 /* 1. Hero: la línea pasa por detrás y por delante del titular (la capa delantera solo se ve en franjas) */
 /* Fondo del hero anterior (home-v2.css): degradado oscuro, fotografía en monocromo y cuadrícula que se desvanecen.
    Marca y producto repite el degradado y la cuadrícula, sin la fotografía. */
-.pl-hero, .pl-producto { background: radial-gradient(60% 70% at 78% 100%, #17233a, transparent), linear-gradient(160deg, #0b1220, #070b13); }
+.pl-hero, .pl-producto { background: radial-gradient(60% 70% at 78% 100%, var(--night-glow), transparent), linear-gradient(160deg, var(--ink), var(--night)); }
 .pl-hero::after, .pl-producto::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px); background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); }
@@ -141,7 +141,7 @@
 .pl-dialog-lead { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: var(--space-6); background: var(--surface-sunken); }
 .pl-dialog-lead .pl-dialog-title { font-size: clamp(36px, 4.6vw, 58px); line-height: .98; text-transform: uppercase; }
 /* "Hablemos" con el destacador flúor; sobre el fondo oscuro, el texto de la marca va en oscuro */
-.pl-dialog-title .pl-mark { display: inline-block; line-height: 1.12; color: #0b0d12; background: #d4ff3f; padding: .02em .1em .04em; border-radius: .06em; }
+.pl-dialog-title .pl-mark { display: inline-block; line-height: 1.12; color: var(--night); background: var(--lima); padding: .02em .1em .04em; border-radius: .06em; }
 .pl-dialog-lead-text { margin: var(--space-4) 0 0; max-width: 24rem; font-family: var(--mono); font-size: 13px; line-height: 1.7; letter-spacing: .02em; color: rgba(241, 238, 230, .7); }
 .pl-dialog-body { display: grid; align-content: start; gap: var(--space-5); padding: var(--space-6); }
 @media (min-width: 40em) {
@@ -172,7 +172,7 @@
 @media (max-width: 40em) { .pl-contact { min-height: 640px; padding-top: 380px; } }
 /* Llamado a la acción de contacto: su borde se ilumina en lima cuando la línea llega a él */
 #contacto .btn { transition: box-shadow .6s ease; }
-#contacto .btn.is-luz { box-shadow: 0 0 0 2px #d4ff3f, 0 0 12px rgba(212, 255, 63, .95), 0 0 30px rgba(212, 255, 63, .6); }
+#contacto .btn.is-luz { box-shadow: 0 0 0 2px var(--lima), 0 0 12px rgba(212, 255, 63, .95), 0 0 30px rgba(212, 255, 63, .6); }
 /* Contacto en escritorio: el bloque se fija en pantalla y la línea se completa con el scroll (luego la página sigue) */
 @media (min-width: 53.75em) {
   .pl-contact { height: auto; min-height: calc(720px + 100svh); padding: 0; }
@@ -184,12 +184,12 @@
 .pl-blog { padding-block: clamp(5rem, 10vw, 8rem); background: var(--surface-sunken); }
 .pl-blog-ceja { margin: 0 0 var(--space-3); }
 /* Resalte con la marca lima del menú: una franja inferior bajo la palabra */
-.pl-resalte { background: linear-gradient(transparent 56%, #d4ff3f 56%, #d4ff3f 90%, transparent 90%); }
-.pl-blog-principal { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-6); align-items: stretch; margin: var(--space-10) 0 var(--space-6); padding: var(--space-2); border-radius: var(--radius-xl); }
+.pl-resalte { background: linear-gradient(transparent 56%, var(--lima) 56%, var(--lima) 90%, transparent 90%); }
+.pl-blog-principal { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-6); align-items: stretch; margin: var(--space-10) 0 var(--space-6); --r-outer: var(--radius-xl); --r-pad: var(--space-2); padding: var(--r-pad); border-radius: var(--r-outer); }
 .pl-blog-foto { margin: 0; }
-.pl-blog-foto img { display: block; width: 100%; height: 100%; min-height: 20rem; object-fit: cover; border-radius: var(--radius-lg); }
+.pl-blog-foto img { display: block; width: 100%; height: 100%; min-height: 20rem; object-fit: cover; border-radius: max(var(--radius-sm), calc(var(--r-outer, var(--radius-xl)) - var(--r-pad, var(--space-2)))); }
 .pl-blog-texto { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8) var(--space-8) var(--space-6); }
-.pl-chip { display: inline-flex; align-self: flex-start; margin: 0; padding: 6px 14px; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--ink); font-size: 12px; line-height: 1.2; }
+.pl-chip { display: inline-flex; align-self: flex-start; margin: 0; padding: 6px 14px; border: 0; border-radius: var(--radius-pill); font-family: var(--mono); font-size: 12px; line-height: 1.2; font-weight: 400; letter-spacing: .08em; text-transform: none; background: var(--surface-sunken); color: var(--ink); }
 .pl-blog-titulo { margin: 0; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.1; font-weight: 600; letter-spacing: -.03em; }
 .pl-blog-titulo a { color: inherit; text-decoration: none; }
 .pl-post-lead { margin: 0; color: var(--ink-muted); }
@@ -200,8 +200,8 @@
 .pl-carrusel-botones .btn { width: 44px; height: 44px; padding: 0; justify-content: center; }
 .pl-carrusel-pista { display: flex; gap: var(--space-5); margin: var(--space-6) 0 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .pl-carrusel-pista::-webkit-scrollbar { display: none; }
-.pl-carrusel-pista > li { flex: 0 0 min(340px, 82%); display: flex; flex-direction: column; padding: var(--space-2); border-radius: var(--radius-xl); scroll-snap-align: start; box-shadow: none; }
-.pl-tarjeta-foto { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); background: linear-gradient(160deg, #ffffff 0%, #dfe6f0 100%); }
+.pl-carrusel-pista > li { --r-pad: var(--space-2); flex: 0 0 min(340px, 82%); display: flex; flex-direction: column; padding: var(--r-pad); border-radius: var(--r-outer, var(--radius-xl)); scroll-snap-align: start; box-shadow: none; }
+.pl-tarjeta-foto { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: max(var(--radius-sm), calc(var(--r-outer, var(--radius-xl)) - var(--r-pad, var(--space-2)))); background: linear-gradient(160deg, #ffffff 0%, var(--canvas-deep) 100%); }
 .pl-tarjeta-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 .pl-tarjeta-foto .pl-chip { position: absolute; top: var(--space-3); right: var(--space-3); background: var(--surface); }
 .pl-tarjeta-texto { display: grid; gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-4); }
@@ -289,22 +289,20 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 @keyframes pl-scroll-hint { 0%, 100% { translate: 0 -3px; } 50% { translate: 0 5px; } }
 
 /* Popup de Conversemos con el mismo lenguaje oscuro del hero: fondo, degradado y textos claros */
-.pl-dialog { background: radial-gradient(60% 70% at 78% 100%, #17233a, transparent), linear-gradient(160deg, #0b1220, #070b13); color: #f1eee6; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.pl-dialog { background: radial-gradient(60% 70% at 78% 100%, var(--night-glow), transparent), linear-gradient(160deg, var(--ink), var(--night)); color: var(--cream); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
 .pl-dialog-lead, .pl-dialog-body { background: transparent; }
-.pl-dialog-lead .pl-dialog-title, .pl-dialog-title { color: #f1eee6; }
-.pl-dialog-close { border-color: rgba(241, 238, 230, .35); color: #f1eee6; }
+.pl-dialog-lead .pl-dialog-title, .pl-dialog-title { color: var(--cream); }
+.pl-dialog-close { border-color: rgba(241, 238, 230, .35); color: var(--cream); }
 .pl-field label { color: rgba(241, 238, 230, .6); }
-.pl-field input, .pl-field textarea { color: #f1eee6; border-bottom-color: rgba(241, 238, 230, .35); }
+.pl-field input, .pl-field textarea { color: var(--cream); border-bottom-color: rgba(241, 238, 230, .35); }
 .pl-field input:focus, .pl-field textarea:focus { border-bottom-color: var(--pl-line); }
-.pl-dialog .btn-primary { background: #f1eee6; color: #0b0d12; }
-.pl-dialog .btn-primary:hover, .pl-dialog .btn-primary:focus-visible { background: #d4ff3f; color: #0b0d12; }
 .pl-form-note { color: rgba(241, 238, 230, .6); }
 .pl-form-note:empty { display: none; }
 .pl-check { color: rgba(241, 238, 230, .75); }
-.pl-check a { color: #f1eee6; }
-.pl-check input { accent-color: #d4ff3f; }
+.pl-check a { color: var(--cream); }
+.pl-check input { accent-color: var(--lima); }
 /* El campo activo se marca solo con el subrayado flúor (sin contorno de caja) */
-.pl-dialog .pl-field input:focus, .pl-dialog .pl-field textarea:focus { outline: 0; border-bottom: 2px solid #d4ff3f; }
+.pl-dialog .pl-field input:focus, .pl-dialog .pl-field textarea:focus { outline: 0; border-bottom: 2px solid var(--lima); }
 
 /* Títulos de sección de la home: mismo movimiento que el hero (js/main.js, initSectionTitles) */
 .pl-w { display: inline-block; transform: translate3d(calc(var(--shift, 0px) * var(--dir, 1)), 0, 0); will-change: transform; }
@@ -339,7 +337,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* Sistemas: la misma cuadrícula de fondo del hero, en versión clara (líneas oscuras y suaves, desvanecidas) */
 .inicio .pl-caps::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image: linear-gradient(rgba(11, 18, 32, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(11, 18, 32, .06) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(7, 9, 13, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(7, 9, 13, .06) 1px, transparent 1px);
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); }
 
@@ -430,8 +428,8 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* Marca y producto: flechas de señalética (solo contorno flúor, sin fondo) con el nombre del servicio dentro (posiciones en % de la sección) */
 .pl-signs { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-.pl-cartel { position: absolute; left: 76.4%; width: 20%; height: 13%; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 600; font-size: clamp(18px, 1.9vw, 26px); letter-spacing: -0.02em; color: #f1eee6; white-space: nowrap; }
-.pl-icono { position: absolute; left: 66.9%; width: 4.86%; height: 7%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #d4ff3f; }
+.pl-cartel { position: absolute; left: 76.4%; width: 20%; height: 13%; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 600; font-size: clamp(18px, 1.9vw, 26px); letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; }
+.pl-icono { position: absolute; left: 66.9%; width: 4.86%; height: 7%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: var(--lima); }
 .pl-icono .icon { width: 50%; height: 50%; fill: none; stroke: currentColor; }
 .pl-icono-1 { top: 31.3%; }
 .pl-icono-2 { top: 49.3%; }
@@ -474,7 +472,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 
 /* Preguntas frecuentes: fondo blanco con la grilla cuadrille, sin el degradado ni el resplandor del panel */
-.inicio #preguntas { background: #fff; }
+.inicio #preguntas { background: var(--frame); }
 .inicio #preguntas::before { display: none; }
 
 /* Footer en la portada: ancho completo, con el mismo fondo oscuro de las secciones; el contenido se alinea con el contenedor y el logo se invierte para leerse */
@@ -519,7 +517,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .sobre-etapas { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
 /* Sobre mí: habilidades como tags bajo el texto final */
 .sobre-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 2rem 0 0; padding: 0; list-style: none; }
-.sobre-tags li { padding: 0.35rem 0.9rem; border: 1px solid currentColor; border-radius: 999px; font-size: 0.9rem; line-height: 1.4; }
+.sobre-tags li { padding: 6px 14px; border: 0; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--ink); font-family: var(--mono); font-size: 12px; line-height: 1.2; letter-spacing: .08em; }
 /* Sobre mí: en móvil el nombre ocupa todo el ancho del contenido, en una sola línea */
 @media (max-width: 40em) { .sobre-titulo { font-size: 12.8vw; white-space: nowrap; } }
 /* Sobre mí: la grilla de fondo se concentra hacia la derecha de la sección del nombre */
@@ -534,7 +532,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .lab-year { margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .lab-case { display: grid; gap: clamp(1.5rem, 3.6vw, 4.375rem); padding-bottom: clamp(3rem, 7vw, 6rem); }
 .lab-fig { margin: 0; }
-.lab-fig img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); }
+.lab-fig img { display: block; width: 100%; height: auto; border-radius: var(--radius-image); }
 .lab-fig-plain img { border-radius: 0; }
 .lab-fig-logo { justify-self: center; width: min(100%, 64rem); }
 .lab-fig-logo img { border-radius: 0; }
@@ -547,7 +545,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 @media (max-width: 47.99em) {
   .lab-split { grid-template-columns: minmax(0, 1fr); }
   .lab-text p { text-align: left; }
-  .lab-fig img { border-radius: var(--radius-md); }
+  .lab-fig img, .pj-media { border-radius: var(--radius-md); }
 }
 .lab-pair { display: grid; grid-template-columns: 1149fr 662fr; gap: 0; align-items: stretch; }
 @media (max-width: 47.99em) { .lab-pair { grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3.6vw, 4.375rem); } }
@@ -572,15 +570,11 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 @media (max-width: 47.99em) { .pj-filters { grid-template-columns: minmax(0, 1fr); } }
 .pj-group-label { margin: 0 0 var(--space-2); font-size: 11px; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
 .pj-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
-.pj-chip { display: inline-flex; align-items: baseline; gap: .3em; min-height: 32px; padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--radius-xs); background: var(--surface); color: var(--ink); font: inherit; font-size: 13px; line-height: 18px; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
-.pj-chip:hover { border-color: var(--line-control); }
-.pj-chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--on-night); }
 .pj-n { font-size: 11px; color: var(--ink-subtle); }
-.pj-chip[aria-pressed="true"] .pj-n { color: inherit; opacity: .7; }
 .pj-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 3vw, 3rem) clamp(1rem, 1.6vw, 1.5rem); list-style: none; margin: 0; padding: 0; }
 .pj-item[hidden] { display: none; }
 .pj-card { display: flex; flex-direction: column; gap: var(--space-4); color: var(--ink); text-decoration: none; }
-.pj-media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-sm); background: var(--canvas); }
+.pj-media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-image); background: var(--canvas); }
 .pj-media > img, .pj-media > * { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
 .pj-card:hover .pj-media > img, .pj-card:focus-visible .pj-media > img { transform: scale(1.04); }
 .pj-name { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); font-size: clamp(17px, 1.4vw, 20px); line-height: 1.3; }
@@ -601,7 +595,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .caso .lab-lead, .caso .pj-lead, .caso .case-summary, .caso .case-text p, .caso .case-text li, .caso .lab-text p {
   font-family: var(--mono); font-weight: 400; font-size: 14px; line-height: 1.75; letter-spacing: .08em; }
 .caso .case-text .lead { color: var(--ink); }
-.caso .breadcrumb, .caso .case-chips li, .caso .pj-chip, .caso .lab-year, .caso .pj-group-label, .caso .case-meta div, .caso .caso-texto span {
+.caso .breadcrumb, .caso .pj-chip, .caso .lab-year, .caso .pj-group-label, .caso .case-meta div, .caso .caso-texto span {
   font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .08em; }
 .caso .pj-name, .caso .caso-texto strong { font-weight: 600; letter-spacing: -0.01em; }
 /* LAB*502: en móvil los párrafos del caso van a 12 px con interlineado 1.25 */
@@ -640,3 +634,107 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .caso .lab-text p, .caso .case-text p, .caso .case-text li { font-size: 12px; }
 /* Tarjetas de proyecto: recorte alineado arriba (card_arriba en 0_data.py) */
 img.img-arriba { object-position: 50% 0; }
+/* Proyectos: el encabezado de la página ocupa, junto al menú, el 85 % de la altura de la pantalla.
+   Ruta, título y bajada arriba; los filtros abajo */
+.pj-head { display: flex; flex-direction: column; min-height: calc(85svh - var(--header-h, 4.5rem)); }
+.pj-head > .container { flex: 1; display: flex; flex-direction: column; }
+.pj-head .pj-filters { margin-top: auto; padding-top: clamp(2rem, 4vw, 3rem); }
+/* Proyectos: capa sobre la imagen con disciplinas, año y «Ver proyecto». Aparece con hover o foco;
+   en pantallas táctiles, con el primer toque (js/proyectos.js agrega .is-open) y el segundo abre el caso */
+.pj-media { position: relative; }
+.pj-media > .pj-over { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-4);
+  width: auto; height: auto; padding: clamp(1rem, 1.6vw, 1.5rem); background: color-mix(in srgb, var(--frame) 65%, transparent);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); color: var(--ink); opacity: 0; transition: opacity .3s var(--ease); }
+.pj-card:hover .pj-over, .pj-card:focus-visible .pj-over, .pj-card.is-open .pj-over { opacity: 1; }
+.pj-over-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-4); }
+.pj-over-tags { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+/* Igual que las etiquetas de los artículos del blog en el inicio (.pl-chip sobre la foto) */
+.pj-over-tag { padding: 6px 14px; border-radius: var(--radius-pill); background: var(--surface); color: var(--ink); font-family: var(--mono); font-size: 12px; line-height: 1.2; letter-spacing: .08em; }
+.pj-over-year { align-self: flex-end; font-family: var(--mono); font-size: 12px; line-height: 28px; letter-spacing: .08em; color: var(--ink-muted); }
+/* «Ver proyecto» usa el botón primario (.btn .btn-primary); aquí solo se ajusta su posición */
+.pj-over-btn { flex-shrink: 0; }
+.pj-over-btn .icon { width: 16px; height: 16px; transform: rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .pj-media > .pj-over { transition: none; } }
+/* Etiqueta (componente de referencia del sitio): píldora sin borde, gris claro, monoespaciada de 12 px.
+   Estados: inactiva (gris) · hover (flúor suave) · click mientras se presiona (flúor) · activa (negra, aria-pressed="true") · foco del teclado (anillo flúor) */
+.pj-chip { display: inline-flex; align-items: center; gap: .3em; min-height: 32px; padding: 6px 14px; border: 0; border-radius: var(--radius-pill);
+  background: var(--surface-sunken); color: var(--ink); font: inherit; font-family: var(--mono); font-size: 12px; line-height: 1.2; letter-spacing: .08em; cursor: pointer;
+  transition: background-color .2s var(--ease), color .2s var(--ease), transform .12s var(--ease); }
+.caso .pj-chip { font-size: 12px; }
+.pj-chip:hover { background: var(--lima-soft); }
+.pj-chip[aria-pressed="true"] { background: var(--ink); color: var(--on-night); }
+.pj-chip[aria-pressed="true"]:hover { background: color-mix(in srgb, var(--ink) 82%, var(--frame)); }
+.pj-chip:active, .pj-chip[aria-pressed="true"]:active { background: var(--lima); color: var(--ink); transform: scale(.96); }
+/* Foco: anillo sólido --lima-deep de 2 px, separado 2 px (3.0:1 sobre blanco) */
+.pj-chip:focus-visible { outline: 0; box-shadow: 0 0 0 2px var(--frame), 0 0 0 4px var(--lima-deep); }
+.pj-chip[aria-pressed="true"] .pj-n { color: inherit; opacity: .7; }
+/* Etiqueta sobre fondo oscuro (.on-dark o las secciones oscuras del inicio, .pl-dark):
+   inactiva (crema al 10 %) · hover (flúor tenue) · click (flúor) · activa (blanca, inversa de la negra) · foco (contorno flúor) */
+:is(.on-dark, .pl-dark) .pj-chip { background: color-mix(in srgb, var(--cream) 10%, transparent); color: var(--cream); }
+:is(.on-dark, .pl-dark) .pj-chip .pj-n { color: var(--cream-muted); }
+:is(.on-dark, .pl-dark) .pj-chip:hover { background: color-mix(in srgb, var(--lima) 22%, var(--night)); }
+:is(.on-dark, .pl-dark) .pj-chip[aria-pressed="true"] { background: var(--on-night); color: var(--ink); }
+:is(.on-dark, .pl-dark) .pj-chip[aria-pressed="true"] .pj-n { color: inherit; }
+:is(.on-dark, .pl-dark) .pj-chip[aria-pressed="true"]:hover { background: color-mix(in srgb, var(--on-night) 85%, var(--night)); }
+:is(.on-dark, .pl-dark) .pj-chip:active, :is(.on-dark, .pl-dark) .pj-chip[aria-pressed="true"]:active { background: var(--lima); color: var(--ink); }
+:is(.on-dark, .pl-dark) .pj-chip:focus-visible { box-shadow: 0 0 0 2px var(--night), 0 0 0 4px var(--lima-deep); }
+:is(.on-dark, .pl-dark) .pj-chip:active .pj-n { color: inherit; }
+@media (prefers-reduced-motion: reduce) { .pj-chip:active, .pj-chip[aria-pressed="true"]:active { transform: none; } }
+/* ===================== Escala de títulos h1 a h4 =====================
+   Una sola escala para todo el sitio (tokens --h1-size … --h5-size en styles.css).
+   Se agrupa por el papel visual del título, no por la etiqueta: un h2 dentro de un texto largo (.prose) se ve como h3.
+   Quedan fuera las composiciones especiales del inicio: el título del hero, el cierre «Tu próximo proyecto empieza acá»
+   y el título de Ideas, que tienen su propio tamaño y movimiento. */
+:root :is(.lab-title, .pj-title, .case-title, .sobre-titulo, .display, .noticia-h1) {
+  font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; word-spacing: .08em;
+  font-size: var(--h1-size); line-height: var(--h1-lh); letter-spacing: var(--h1-ls); text-wrap: balance; }
+:root :is(.lab-title, .pj-title, .case-title, .sobre-titulo, .display, .noticia-h1) strong { font-weight: 800; }
+:root :is(.pl-title, .pl-dialog-title, .case-sec-title, .alt-titulo, .heading, main > section h2.pl-split:not(.prose h2)) {
+  font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; word-spacing: .08em;
+  font-size: var(--h2-size); line-height: var(--h2-lh); letter-spacing: var(--h2-ls); }
+:root :is(.pl-blog-titulo, .pl-post-title, .prose h2) {
+  font-family: "Plus Jakarta Sans", sans-serif; font-weight: 600; text-transform: none; word-spacing: normal;
+  font-size: var(--h3-size); line-height: var(--h3-lh); letter-spacing: var(--h3-ls); }
+:root :is(.prose h3, .cookie-banner h2, .sobre-etapas h3) {
+  font-family: var(--mono); font-weight: 600; text-transform: none;
+  font-size: var(--h5-size); line-height: var(--h5-lh); letter-spacing: var(--h5-ls); }
+/* Sobre mí en móvil: el título va en una línea y se ajusta al ancho */
+@media (max-width: 40em) { :root .sobre-titulo { font-size: 12.8vw; white-space: nowrap; } }
+/* Fichas de proyecto antiguas: el h1 va en una columna angosta (.case-aside). Mantiene el estilo h1, pero el tamaño
+   se limita al ancho de la columna para que palabras largas («Valparaíso», «Sustentando») no se salgan */
+.caso .case-aside { container-type: inline-size; }
+:root .case-aside .case-title { font-size: min(var(--h1-size), 16cqi); }
+/* ===================== Escala de texto =====================
+   Cuatro estilos para todo el sitio (tokens --text-size … --label-size en styles.css). El color lo pone cada contexto
+   (gris en fondo claro, crema en fondo oscuro); aquí solo se define la tipografía. */
+/* Texto: bajadas bajo los títulos, introducciones y textos largos (artículos, política de privacidad) */
+:root :is(.pl-lead, .lab-lead, .pj-lead, .lead, .ideas-intro p, .pl-dialog-lead-text, .prose p:not(.destacado), .prose li, .prose dd, .prose dt) {
+  font-family: var(--mono); font-weight: 400; font-style: normal; font-size: var(--text-size); line-height: var(--text-lh); letter-spacing: var(--text-ls); text-transform: none; }
+/* Texto pequeño: párrafos de los casos y textos de las tarjetas */
+:root :is(.lab-text p, .case-text p:not(.lead), .case-text li, .case-summary, .pl-post-lead, .pl-cap-desc) {
+  font-family: var(--mono); font-weight: 400; font-size: var(--text-sm-size); line-height: var(--text-sm-lh); letter-spacing: var(--text-ls); text-transform: none; }
+/* Rótulo: encabezados de grupo (filtros, columnas del pie, cejas) */
+:root :is(.eyebrow-text, .pj-group-label, .footer-grid h2) {
+  font-family: var(--mono); font-weight: 400; font-size: var(--label-size); line-height: var(--label-lh); letter-spacing: var(--text-ls); text-transform: uppercase; color: var(--ink-muted); }
+.inicio .site-footer .footer-grid h2 { color: var(--pl-on-dark-muted); }
+/* Meta: ruta de navegación, años, datos de ficha y notas en monoespaciada */
+:root :is(.breadcrumb, .lab-year, .case-meta div, .caso-texto span, .pl-mono:not(.pl-chip), .pl-cap-txt, p.muted, .noticia-meta, .pl-blog-pie > span, .toc a) {
+  font-family: var(--mono); font-weight: 400; font-size: var(--label-size); line-height: var(--label-lh); letter-spacing: var(--text-ls); text-transform: none; }
+/* Nombre de proyecto en las tarjetas: estilo H5 */
+:root .pj-name { font-family: var(--mono); font-weight: 600; font-size: var(--h5-size); line-height: var(--h5-lh); letter-spacing: var(--h5-ls); }
+/* Párrafos de casos en móvil: 12 px con interlineado 1.25 (pedido para LAB*502 y aplicado a todos los casos) */
+@media (max-width: 47.99em) { :root .lab-text p { line-height: 1.25; } }
+/* Cita destacada de los artículos: misma letra que el texto (sin cursiva ni otra familia).
+   Se distingue por el color de texto principal y una línea flúor a la izquierda */
+:root .prose p.destacado { font-family: var(--mono); font-style: normal; font-weight: 400; font-size: var(--text-size); line-height: var(--text-lh); letter-spacing: var(--text-ls);
+  color: var(--ink); padding-left: var(--space-5); border-left: 2px solid var(--lima-deep); }
+/* H4 · subtítulo de blog: los apartados de los artículos (h2 dentro de .narrow.prose) en la monoespaciada de la bajada,
+   20 px y en mayúsculas, en el color de texto principal */
+:root .narrow.prose h2 { font-family: var(--mono); font-weight: 400; text-transform: uppercase; word-spacing: normal;
+  font-size: var(--h4-size); line-height: var(--h4-lh); letter-spacing: var(--h4-ls); color: var(--ink); }
+/* Títulos de artículo: más interlineado y movimiento horizontal con el scroll, como el título del hero (js/main.js).
+   El recorte evita que las líneas desplazadas generen scroll lateral */
+:root .noticia-h1 { line-height: 1.05; }
+.noticia-cabecera { overflow-x: clip; }
+.noticia-h1 .pl-line { display: block; }
+.noticia-h1 .pl-line-in { display: inline-block; will-change: transform; }

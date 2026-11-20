@@ -32,13 +32,13 @@ ErrorDocument 404 /404.html
 
   # No exponer archivos ocultos, herramientas locales ni documentación del repositorio
   RewriteRule (^|/)\. - [F,L]
-  RewriteRule ^(tools|\.claude)(/|$) - [F,L]
+  RewriteRule ^(tools|_interno|\.claude)(/|$) - [F,L]
   RewriteRule ^(README\.md|\.gitignore)$ - [F,L]
 </IfModule>
 
 <IfModule mod_headers.c>
-  # Google Tag Manager y Analytics solo se cargan si la persona acepta el aviso de cookies (js/consent.js)
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+  # Google Tag Manager, Analytics y Microsoft Clarity solo se cargan si la persona acepta el aviso de cookies (js/consent.js)
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; style-src 'self'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://*.clarity.ms https://c.bing.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://*.clarity.ms https://c.bing.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "DENY"

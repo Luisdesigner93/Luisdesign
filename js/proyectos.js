@@ -23,4 +23,23 @@
       vacio.hidden = n > 0;
     });
   });
+
+  // Pantallas táctiles (sin hover): el primer toque muestra la capa con disciplinas, año y «Ver proyecto»;
+  // el segundo abre el caso. Tocar fuera de las tarjetas cierra la capa.
+  var sinHover = window.matchMedia('(hover: none)');
+  var tarjetas = document.querySelectorAll('.pj-card');
+  function cerrar(excepto) {
+    tarjetas.forEach(function (t) { if (t !== excepto) t.classList.remove('is-open'); });
+  }
+  tarjetas.forEach(function (t) {
+    t.addEventListener('click', function (e) {
+      if (!sinHover.matches || t.classList.contains('is-open')) return;
+      e.preventDefault();
+      cerrar(t);
+      t.classList.add('is-open');
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.pj-card')) cerrar(null);
+  });
 })();

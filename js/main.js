@@ -782,10 +782,44 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
 // con suavidad (la primera y la tercera hacia la izquierda; la marcada con data-dir="1", hacia la derecha).
 // El del hero se mueve desde el inicio de la página; los demás desde que entran en pantalla, y aparecen línea a línea.
 (function initHomeTitle() {
-  const titles = [...document.querySelectorAll('.pl-hero-title, .pl-anim-title')];
+  // Títulos de artículo (.noticia-h1): se dividen en líneas según cómo se ven en pantalla y se mueven como el del hero,
+  // alternando el sentido (línea 1 a la izquierda, 2 a la derecha, 3 a la izquierda…). Se vuelven a dividir al cambiar el ancho.
+  const movibles = [...document.querySelectorAll('.noticia-h1')];
+  function dividir(el) {
+    const texto = el.dataset.texto || el.textContent.trim();
+    el.dataset.texto = texto;
+    el.textContent = '';
+    const palabras = texto.split(/\s+/).map((p) => { const s = document.createElement('span'); s.textContent = p + ' '; el.appendChild(s); return s; });
+    const lineas = [];
+    palabras.forEach((s) => {
+      const ultima = lineas[lineas.length - 1];
+      if (!ultima || Math.abs(ultima.top - s.offsetTop) > 2) lineas.push({ top: s.offsetTop, palabras: [] });
+      lineas[lineas.length - 1].palabras.push(s.textContent);
+    });
+    el.textContent = '';
+    lineas.forEach((l, i) => {
+      const linea = document.createElement('span'); linea.className = 'pl-line';
+      const dentro = document.createElement('span'); dentro.className = 'pl-line-in';
+      if (i % 2 === 1) dentro.dataset.dir = '1';
+      dentro.textContent = l.palabras.join(''); // con el espacio final, para que el texto siga leyéndose con espacios
+      linea.appendChild(dentro); el.appendChild(linea);
+    });
+  }
+  movibles.forEach(dividir);
+  const titles = [...document.querySelectorAll('.pl-hero-title, .pl-anim-title, .noticia-h1')];
   if (!titles.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const SPEED = 0.07; // px de desplazamiento por px de scroll
-  const groups = titles.map((el) => ({ el, hero: el.classList.contains('pl-hero-title'), lines: [...el.querySelectorAll('.pl-line-in')], current: 0 }));
+  // Los títulos de artículo se mueven desde el inicio de la página, como el del hero
+  const groups = titles.map((el) => ({ el, hero: el.classList.contains('pl-hero-title') || el.classList.contains('noticia-h1'), lines: [...el.querySelectorAll('.pl-line-in')], current: 0 }));
+  const redividir = () => groups.filter((g) => g.el.classList.contains('noticia-h1')).forEach((g) => { dividir(g.el); g.lines = [...g.el.querySelectorAll('.pl-line-in')]; g.current = 0; });
+  // Con la tipografía ya cargada las líneas pueden cortar distinto: se vuelven a dividir
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redividir);
+  let anchoPrevio = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === anchoPrevio) return;
+    anchoPrevio = window.innerWidth;
+    redividir();
+  });
   // Entrada línea a línea al aparecer en pantalla (el hero ya entra al cargar, por CSS)
   const later = groups.filter((g) => !g.hero).map((g) => g.el);
   if (later.length && 'IntersectionObserver' in window) {

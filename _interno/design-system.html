@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es" class="inicio">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Design system · luisdesign.cl (interno)</title>
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/inicio.css">
+<link rel="stylesheet" href="../css/portafolio-alt.css">
+<link rel="stylesheet" href="ds.css">
+</head>
+<body>
+<main class="ds">
+  <h1>Design system</h1>
+  <p class="ds-intro">Inventario de luisdesign.cl a partir de css/styles.css e css/inicio.css (20 de noviembre de 2026). Los componentes de esta página usan las clases reales del sitio, así que se ven igual que en producción. Página interna: no se publica.</p>
+
+  <nav class="ds-indice" aria-label="Índice">
+    <p class="pj-group-label">Índice</p>
+    <ol>
+      <li><a href="#inconsistencias"><span>01</span>Inconsistencias</a></li>
+      <li><a href="#color"><span>02</span>Color</a></li>
+      <li><a href="#tipografia"><span>03</span>Tipografía</a></li>
+      <li><a href="#etiquetas"><span>04</span>Etiquetas</a></li>
+      <li><a href="#botones"><span>05</span>Botones</a></li>
+      <li><a href="#radios"><span>06</span>Radios</a></li>
+      <li><a href="#espaciado"><span>07</span>Espaciado</a></li>
+      <li><a href="#visuales"><span>08</span>Elementos visuales</a></li>
+      <li><a href="#componentes"><span>09</span>Componentes</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============ Inconsistencias ============ -->
+  <section class="ds-sec" id="inconsistencias">
+    <h2>Inconsistencias pendientes</h2>
+    <p>Lo que falta ordenar. Ya se resolvieron las etiquetas, el color de acento, los negros, los botones, los radios, la escala de títulos, la de texto y el «+» de las preguntas frecuentes.</p>
+    <ol class="ds-issues">
+      <li><strong>Restos de la versión anterior</strong>
+        <p>La fuente Anton se sigue cargando (styles.css) aunque solo la usa el inicio alternativo (index-v2). Los tokens --glow, --frost y --shadow-glass vienen de Frost Glass y casi no se usan.</p>
+        <p class="ds-fix">Propuesta: quitar Anton de styles.css si index-v2 ya no se usa.</p></li>
+    </ol>
+  </section>
+
+  <!-- ============ Color ============ -->
+  <section class="ds-sec" id="color">
+    <h2>Color</h2>
+    <p>Paleta ordenada el 20 de noviembre de 2026: neutros sin tinte (antes eran grises azulados de la maqueta Frost Glass) y la marca en el espectro flúor. Todos los colores viven como tokens en :root de styles.css; ya no quedan lima, crema ni negros escritos a mano en styles.css e inicio.css.</p>
+    <h3>Marca · flúor</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-lima-soft"></div></div><span class="ds-spec"><b>--lima-soft / --accent-soft / --glow</b> #f2ffc9 · fondos suaves, halos <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-lima"></div></div><span class="ds-spec"><b>--lima / --accent</b> #d4ff3f · rellenos, resaltes, subrayado del menú</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-lima-mid"></div></div><span class="ds-spec"><b>--lima-mid / --accent-mist</b> #b5d92a · detalles decorativos (viñetas, líneas) <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-lima-deep"></div></div><span class="ds-spec"><b>--lima-deep</b> #7fa015 · tono intermedio entre --lima-mid y --accent-ink; foco del teclado, íconos y gráficos (3.0:1, no para texto pequeño) <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-accent-ink"></div></div><span class="ds-spec"><b>--accent-ink</b> #4a6600 · texto e íconos de acento sobre blanco (6.6:1) <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+    </ul>
+    <h3>Neutros claros</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-frame"></div></div><span class="ds-spec"><b>--frame / --surface</b> #ffffff · fondo y tarjetas</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-surface-sunken"></div></div><span class="ds-spec"><b>--surface-sunken</b> #f3f3f3 · etiquetas, campos</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-canvas"></div></div><span class="ds-spec"><b>--canvas</b> #efefef · fondos de sección</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-frost"></div></div><span class="ds-spec"><b>--frost</b> #ebebeb · botón secundario</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-canvas-deep"></div></div><span class="ds-spec"><b>--canvas-deep</b> #e2e2e2 · hover de etiquetas</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-line"></div></div><span class="ds-spec"><b>--line</b> #e2e2e2 · bordes</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-line-control"></div></div><span class="ds-spec"><b>--line-control</b> #858585 · bordes de campos, «/» de la ruta (3.7:1)</span></li>
+    </ul>
+    <h3>Texto</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink"></div></div><span class="ds-spec"><b>--ink</b> #0a0b0d · texto, foco del teclado (19.7:1)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink-muted"></div></div><span class="ds-spec"><b>--ink-muted</b> #5e5e5e · texto secundario (6.5:1)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink-subtle"></div></div><span class="ds-spec"><b>--ink-subtle</b> #6b6b6b · contadores, notas (5.3:1)</span></li>
+    </ul>
+    <h3>Oscuros</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-night"></div></div><span class="ds-spec"><b>--night</b> #07090d · fondos oscuros, botón primario, cookies</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-night-glow"></div></div><span class="ds-spec"><b>--night-glow</b> #1d1f22 · brillo del degradado del hero <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-cream"></div></div><span class="ds-spec"><b>--cream</b> #f1eee6 · texto sobre oscuro <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-success"></div></div><span class="ds-spec"><b>--success</b> #1f7a55 · confirmaciones</span></li>
+    </ul>
+  </section>
+
+  <!-- ============ Tipografía ============ -->
+  <section class="ds-sec" id="tipografia">
+    <h2>Tipografía</h2>
+    <p>Dos familias: Plus Jakarta Sans para títulos (h1 a h4) y navegación, y la monoespaciada del sistema para párrafos de casos, rótulos y etiquetas.</p>
+    <h3>Escala tipográfica, de mayor a menor</h3>
+    <p class="ds-spec">Títulos en Plus Jakarta Sans (H1 a H3); H4, H5 y textos en la monoespaciada con espaciado .08em. El color lo pone el contexto: gris o negro en fondo claro, crema en fondo oscuro.</p>
+    <div class="ds-type"><p class="ds-t ds-h1">Temporis Pro</p><span class="ds-spec"><b>H1 · título de página</b><br>Jakarta 800 · mayúsculas · clamp(44–128 px) · .9 · −0.055em<br>casos, Proyectos, Sobre mí, privacidad, artículos</span></div>
+    <div class="ds-type"><p class="ds-t ds-h2">Lecturas para tu negocio</p><span class="ds-spec"><b>H2 · título de sección</b><br>Jakarta 800 · mayúsculas · clamp(30–68 px) · .95 · −0.045em<br>secciones del inicio, formulario, secciones de casos</span></div>
+    <div class="ds-type"><p class="ds-t ds-h3">¿Cuándo es momento de trabajar tu marca?</p><span class="ds-spec"><b>H3 · subtítulo y tarjeta</b><br>Jakarta 600 · clamp(20–24 px) · 1.2 · −0.02em<br>tarjetas del blog, apartados de artículos y de la política</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto ds-subblog">Cuando nace</p><span class="ds-spec"><b>H4 · subtítulo de blog</b><br>monoespaciada de la bajada (.pl-lead) · 20 px · mayúsculas · 1.4 · .08em · en --ink<br>apartados dentro de los artículos (h2 en .narrow.prose)</span></div>
+    <div class="ds-type"><p class="ds-t ds-h4">Cookies y analítica</p><span class="ds-spec"><b>H5 · título menor</b><br>monoespaciada 600 · 14 px · 1.5 · .08em (como el texto, en negrita)<br>aviso de cookies, etapas de Sobre mí, h3 dentro de artículos</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto ds-destacado">En mi experiencia, trabajar una marca no es algo que ocurre una sola vez.</p><span class="ds-spec"><b>Cita destacada · Texto</b><br>mismo estilo que el texto, en --ink y con línea --lima-deep de 2 px<br>citas dentro de los artículos</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto">Marcas, sitios y productos digitales para pymes y empresas en Chile.</p><span class="ds-spec"><b>Texto · 14 px</b><br>interlineado 1.75<br>bajadas bajo los títulos, introducciones, artículos y política de privacidad</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto-sm">Temporis Pro nace de la integración de dos softwares y servicios que ya estaban en funcionamiento.</p><span class="ds-spec"><b>Texto pequeño · 12 px</b><br>interlineado 1.75 (1.25 en móvil en los casos)<br>párrafos de casos y textos de tarjetas</span></div>
+    <div class="ds-type"><p class="ds-x ds-rotulo">Servicio</p><span class="ds-spec"><b>Rótulo · 12 px · mayúsculas</b><br>interlineado 1.5<br>encabezados de grupo: filtros, columnas del pie, «En esta página»</span></div>
+    <div class="ds-type"><p class="ds-x ds-meta">Inicio / Proyectos / Temporis Pro</p><span class="ds-spec"><b>Meta · 12 px</b><br>interlineado 1.5<br>ruta, años, datos de ficha, autor, fechas, índice</span></div>
+    <p class="ds-spec">Fuera de la escala, a propósito: el título del hero del inicio, el cierre «Tu próximo proyecto empieza acá» y el titular de Ideas, que son composiciones con tamaño y movimiento propios. En las fichas de proyecto antiguas el H1 se limita al ancho de su columna. El nombre de proyecto en las tarjetas usa el estilo H5. Los apartados de la política de privacidad usan H3.</p>
+</section>
+
+  <!-- ============ Etiquetas ============ -->
+  <section class="ds-sec" id="etiquetas">
+    <h2>Etiquetas</h2>
+    <p>Seis variantes para lo mismo. La referencia es .pj-chip (filtros de Proyectos): píldora sin borde, gris claro, monoespaciada de 12 px. Hover con flúor suave, click con flúor y activa en negro.</p>
+    <div class="ds-head"><h3>Componente de referencia: .pj-chip · estados sobre fondo claro</h3><div class="ds-try caso" aria-label="Zona de prueba"><div class="ds-row ds-prueba"><button class="pj-chip" type="button" aria-pressed="false">Marcas<span class="pj-n">(5)</span></button><button class="pj-chip" type="button" aria-pressed="false">Producto digital<span class="pj-n">(2)</span></button></div></div></div>
+    <p class="ds-spec">Los estados de hover, click y foco se muestran fijos para compararlos; en el sitio aparecen al interactuar. Pruébalos en la zona punteada junto a cada título.</p>
+    <ul class="ds-states caso">
+      <li class="ds-state"><div class="ds-row"><button class="pj-chip" type="button" aria-pressed="false">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Inactiva</b> (por defecto)<br>--surface-sunken #f3f3f3 · texto --ink · número --ink-subtle</span></li>
+      <li class="ds-state"><div class="ds-row"><button class="pj-chip ds-st-hover" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Hover</b><br>resaltado suave --lima-soft #f2ffc9</span></li>
+      <li class="ds-state"><div class="ds-row"><button class="pj-chip ds-st-press" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>resaltado flúor --lima #d4ff3f · escala 96 %</span></li>
+      <li class="ds-state"><div class="ds-row"><button class="pj-chip" type="button" aria-pressed="true" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Activa</b> (seleccionada)<br>--ink · texto --on-night · número al 70 %</span></li>
+      <li class="ds-state"><div class="ds-row"><button class="pj-chip ds-st-active-hover" type="button" aria-pressed="true" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Activa + hover</b><br>--ink al 82 %</span></li>
+      <li class="ds-state"><div class="ds-row"><button class="pj-chip ds-st-focus" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo sólido --lima-deep de 2 px, separado 2 px (3.0:1)</span></li>
+    </ul>
+    <div class="ds-head"><h3>Sobre fondo oscuro</h3><div class="ds-try on-dark caso" aria-label="Zona de prueba"><div class="ds-row ds-prueba"><button class="pj-chip" type="button" aria-pressed="false">Marcas<span class="pj-n">(5)</span></button><button class="pj-chip" type="button" aria-pressed="false">Producto digital<span class="pj-n">(2)</span></button></div></div></div>
+    <p class="ds-spec">Se aplica dentro de .on-dark o de las secciones oscuras del inicio (.pl-dark).</p>
+    <div class="ds-dark-band on-dark caso">
+      <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="pj-chip" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Inactiva</b><br>crema al 10 % · texto --cream · número --cream-muted</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="pj-chip ds-st-hover" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Hover</b><br>flúor tenue: --lima al 22 % sobre --night</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="pj-chip ds-st-press" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>resaltado flúor --lima · texto --ink · escala 96 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="pj-chip" type="button" aria-pressed="true" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Activa</b> (seleccionada)<br>blanco --on-night · texto --ink (inversa de la negra)</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="pj-chip ds-st-active-hover" type="button" aria-pressed="true" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Activa + hover</b><br>blanco al 85 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="pj-chip ds-st-focus" type="button" aria-pressed="false" tabindex="-1">Identidad<span class="pj-n">(6)</span></button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo sólido --lima-deep de 2 px, separado 2 px</span></li>
+      </ul>
+    </div>
+    <h3>Todas las variantes de etiqueta del sitio</h3>
+    <p class="ds-spec">Todas usan la misma base que .pj-chip: píldora sin borde, --surface-sunken, monoespaciada de 12 px, .08em, relleno 6 × 14 px. Sobre imagen van en blanco y sobre oscuro en crema al 10 %.</p>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><span class="pl-mono pl-chip">Branding</span></div><span class="ds-spec"><b>.pl-chip</b> · categoría de los artículos del blog (inicio y noticias) <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample ds-cell-photo"><span class="pj-over-tag">Estrategia</span></div><span class="ds-spec"><b>.pj-over-tag</b> · disciplinas sobre la imagen en Proyectos (fondo blanco) <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample caso"><ul class="case-chips"><li>Estrategia</li><li>Identidad</li></ul></div><span class="ds-spec"><b>.case-chips li</b> · disciplinas en el encabezado de cada caso <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="numtag">01</span><span class="numtag">02</span></div><span class="ds-spec"><b>.numtag</b> · numeración de pasos en los casos antiguos (texto --ink-muted) <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="alt-tag">Fuchi Chao</span></div><span class="ds-spec"><b>.alt-tag</b> · nombre de cada proyecto en el portafolio del inicio · hover flúor suave <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><ul class="sobre-tags"><li>Discovery</li><li>Scrum</li></ul></div><span class="ds-spec"><b>.sobre-tags li</b> · herramientas y métodos en Sobre mí <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="tag tag-eyebrow"><svg class="icon"><use href="../img/icons.svg#i-shield"/></svg>Ley 21.719</span></div><span class="ds-spec"><b>.tag / .tag-eyebrow</b> · encabezado de la política de privacidad (con ícono) <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="tag tag-value">78</span></div><span class="ds-spec"><b>.tag-value</b> · valor destacado (index-v2): fondo --ink <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+      <li class="ds-state"><div class="ds-sample ds-cell-dark"><ul class="svc-tags"><li>Branding</li></ul></div><span class="ds-spec"><b>.svc-tags li</b> · sobre fondo oscuro (sin uso en las páginas actuales): crema al 10 % <span class="ds-flag ds-flag-ok">unificada</span></span></li>
+    </ul>
+  </section>
+
+  <!-- ============ Botones ============ -->
+  <section class="ds-sec" id="botones">
+    <h2>Botones</h2>
+    <p>Tres variantes, todas píldora (14 px, peso 500, relleno 12 × 20). Estados: inactivo (deshabilitado), default, hover, click, cargando y foco del teclado. El hover se destaca en flúor, el click pasa a negro y el foco lleva el anillo --lima-deep. Sobre fondo oscuro (secciones oscuras del inicio, aviso de cookies, formulario de contacto o .on-dark) el primario se invierte a blanco. «Ver proyecto» en las tarjetas de Proyectos ahora es un .btn-primary.</p>
+    <div class="ds-head"><h3>Primario · .btn-primary</h3><div class="ds-try" aria-label="Zona de prueba"><button class="btn btn-primary" type="button">Conversemos</button></div></div>
+    <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1" disabled>Conversemos</button></div><span class="ds-spec"><b>Inactivo</b> (deshabilitado)<br>:disabled o aria-disabled="true" · --surface-sunken · texto --ink-subtle · sin sombra</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Default</b><br>--night · texto blanco · sombra flotante</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary ds-b-hover" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Hover</b><br>flúor --lima · texto --ink</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary ds-b-press" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>negro --night · texto blanco · escala 97 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1" aria-busy="true">Conversemos</button></div><span class="ds-spec"><b>Cargando</b><br>aria-busy="true" · el texto se oculta (mantiene el ancho) y gira un indicador de 16 px</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary ds-b-focus" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo --lima-deep de 2 px, separado 2 px</span></li>
+    </ul>
+    <div class="ds-head"><h3>Secundario · .btn-secondary</h3><div class="ds-try" aria-label="Zona de prueba"><button class="btn btn-secondary" type="button">Rechazar</button></div></div>
+    <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary" type="button" tabindex="-1" disabled>Rechazar</button></div><span class="ds-spec"><b>Inactivo</b> (deshabilitado)<br>:disabled o aria-disabled="true" · --surface-sunken · texto --ink-subtle · sin sombra</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Default</b><br>--surface-sunken · sin borde</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary ds-b-hover" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Hover</b><br>flúor --lima · texto --ink</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary ds-b-press" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>negro --night · texto blanco · escala 97 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary" type="button" tabindex="-1" aria-busy="true">Rechazar</button></div><span class="ds-spec"><b>Cargando</b><br>aria-busy="true" · el texto se oculta (mantiene el ancho) y gira un indicador de 16 px</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary ds-b-focus" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo --lima-deep de 2 px, separado 2 px</span></li>
+    </ul>
+    <div class="ds-head"><h3>Contorno · .btn-outline</h3><div class="ds-try" aria-label="Zona de prueba"><button class="btn btn-outline" type="button">Ver más</button></div></div>
+    <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline" type="button" tabindex="-1" disabled>Ver más</button></div><span class="ds-spec"><b>Inactivo</b> (deshabilitado)<br>:disabled o aria-disabled="true" · --surface-sunken · texto --ink-subtle · sin sombra</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Default</b><br>blanco · borde --line-control</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline ds-b-hover" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Hover</b><br>flúor --lima · texto --ink</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline ds-b-press" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>negro --night · texto blanco · escala 97 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline" type="button" tabindex="-1" aria-busy="true">Ver más</button></div><span class="ds-spec"><b>Cargando</b><br>aria-busy="true" · el texto se oculta (mantiene el ancho) y gira un indicador de 16 px</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline ds-b-focus" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo --lima-deep de 2 px, separado 2 px</span></li>
+    </ul>
+    <h3>Sobre fondo oscuro</h3>
+    <div class="ds-head"><h3 class="ds-h-dark">Primario · .btn-primary</h3><div class="ds-try on-dark caso" aria-label="Zona de prueba"><button class="btn btn-primary" type="button">Conversemos</button></div></div>
+    <div class="ds-dark-band on-dark">
+      <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1" disabled>Conversemos</button></div><span class="ds-spec"><b>Inactivo</b> (deshabilitado)<br>:disabled o aria-disabled="true" · crema al 6 % · texto crema al 45 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Default</b><br>blanco · texto --ink · sin sombra</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary ds-b-hover" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Hover</b><br>flúor --lima · texto --ink</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary ds-b-press" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>negro --night · texto --cream · borde crema al 50 % · escala 97 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1" aria-busy="true">Conversemos</button></div><span class="ds-spec"><b>Cargando</b><br>aria-busy="true" · el texto se oculta (mantiene el ancho) y gira un indicador de 16 px</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary ds-b-focus" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo --lima-deep de 2 px, separado 2 px</span></li>
+      </ul>
+    </div>
+    <div class="ds-head"><h3 class="ds-h-dark">Secundario · .btn-secondary</h3><div class="ds-try on-dark caso" aria-label="Zona de prueba"><button class="btn btn-secondary" type="button">Rechazar</button></div></div>
+    <div class="ds-dark-band on-dark">
+      <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary" type="button" tabindex="-1" disabled>Rechazar</button></div><span class="ds-spec"><b>Inactivo</b> (deshabilitado)<br>:disabled o aria-disabled="true" · crema al 6 % · texto crema al 45 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Default</b><br>crema al 10 % · texto --cream</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary ds-b-hover" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Hover</b><br>flúor --lima · texto --ink</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary ds-b-press" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>negro --night · texto --cream · borde crema al 50 % · escala 97 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary" type="button" tabindex="-1" aria-busy="true">Rechazar</button></div><span class="ds-spec"><b>Cargando</b><br>aria-busy="true" · el texto se oculta (mantiene el ancho) y gira un indicador de 16 px</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-secondary ds-b-focus" type="button" tabindex="-1">Rechazar</button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo --lima-deep de 2 px, separado 2 px</span></li>
+      </ul>
+    </div>
+    <div class="ds-head"><h3 class="ds-h-dark">Contorno · .btn-outline</h3><div class="ds-try on-dark caso" aria-label="Zona de prueba"><button class="btn btn-outline" type="button">Ver más</button></div></div>
+    <div class="ds-dark-band on-dark">
+      <ul class="ds-states">
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline" type="button" tabindex="-1" disabled>Ver más</button></div><span class="ds-spec"><b>Inactivo</b> (deshabilitado)<br>:disabled o aria-disabled="true" · crema al 6 % · texto crema al 45 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Default</b><br>transparente · borde crema al 40 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline ds-b-hover" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Hover</b><br>flúor --lima · texto --ink</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline ds-b-press" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Click</b> (mientras se presiona)<br>negro --night · texto --cream · borde crema al 50 % · escala 97 %</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline" type="button" tabindex="-1" aria-busy="true">Ver más</button></div><span class="ds-spec"><b>Cargando</b><br>aria-busy="true" · el texto se oculta (mantiene el ancho) y gira un indicador de 16 px</span></li>
+        <li class="ds-state"><div class="ds-sample"><button class="btn btn-outline ds-b-focus" type="button" tabindex="-1">Ver más</button></div><span class="ds-spec"><b>Foco del teclado</b><br>anillo --lima-deep de 2 px, separado 2 px</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ Radios ============ -->
+  <section class="ds-sec" id="radios">
+    <h2>Radios</h2>
+    <p>Estructura de formas de Apple (iOS 26 y 27): cada esquina pertenece a uno de tres tipos. Así los elementos anidados quedan alineados y no hay radios sueltos.</p>
+    <h3>1 · Cápsula</h3>
+    <p class="ds-spec">Radio = mitad de la altura (--radius-pill). Para todo lo que se pulsa o es una barra: botones, etiquetas, indicadores y barras de progreso.</p>
+    <ul class="ds-states caso">
+      <li class="ds-state"><div class="ds-sample"><button class="btn btn-primary" type="button" tabindex="-1">Conversemos</button></div><span class="ds-spec"><b>Botones</b> · --radius-pill</span></li>
+      <li class="ds-state"><div class="ds-sample"><button class="pj-chip" type="button" tabindex="-1">Identidad</button></div><span class="ds-spec"><b>Etiquetas</b> · --radius-pill</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-bar"></div></div><span class="ds-spec"><b>Barras e indicadores</b> · --radius-pill (antes 2 y 6 px)</span></li>
+    </ul>
+    <h3>2 · Fija</h3>
+    <p class="ds-spec">Una escala para contenedores e imágenes que no están dentro de otro contenedor redondeado.</p>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-2xs"></div></div><span class="ds-spec"><b>--radius-2xs</b> 2 px · detalles mínimos (cuadrado de la marca)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-xs"></div></div><span class="ds-spec"><b>--radius-xs</b> 6 px · muestras pequeñas</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-sm"></div></div><span class="ds-spec"><b>--radius-sm</b> 8 px · campos, enlaces del menú; mínimo de los concéntricos</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-md"></div></div><span class="ds-spec"><b>--radius-md</b> 12 px · imágenes en móvil, íconos, submenú</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-lg"></div></div><span class="ds-spec"><b>--radius-lg = --radius-image</b> 20 px · imágenes de proyectos y artículos (tarjeta y caso)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-xl"></div></div><span class="ds-spec"><b>--radius-xl</b> 28 px · tarjetas y contenedores</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-2xl"></div></div><span class="ds-spec"><b>--radius-2xl</b> 40 px · retrato</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-shell"></div></div><span class="ds-spec"><b>--shell-inner-radius</b> 20–32 px · secciones del marco (oscuras, cookies, menú móvil)</span></li>
+    </ul>
+    <h3>3 · Concéntrica</h3>
+    <p class="ds-spec">Dentro de un contenedor redondeado, el radio interior es el del contenedor menos su relleno: max(--radius-sm, --r-outer − --r-pad). El contenedor declara --r-outer y --r-pad. Se usa en las tarjetas del blog y en las tarjetas de proyecto.</p>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-conc"><div class="ds-conc-in"></div></div></div><span class="ds-spec"><b>Tarjeta del blog</b> · contenedor --radius-xl (28 px) con relleno de 8 px → imagen 20 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-conc ds-conc-mal"><div class="ds-conc-in"></div></div></div><span class="ds-spec"><b>Error que evita</b> · mismo radio dentro y fuera (28 px): la esquina interior se ve más gruesa <span class="ds-flag ds-flag-mal">no</span></span></li>
+    </ul>
+    <h3>Corregido</h3>
+    <p class="ds-spec">Las imágenes de las tarjetas de Proyectos pasaron de 8 a 20 px, igual que dentro del caso (12 px en móvil en ambos). Los valores escritos a mano (2, 6, 7, 9 y 12 px) ahora son tokens; las barras pasaron a cápsula.</p>
+  </section>
+
+  <!-- ============ Espaciado ============ -->
+  <section class="ds-sec" id="espaciado">
+    <h2>Espaciado</h2>
+    <p>Escala de 4 px. Se respeta bastante; las separaciones grandes entre bloques usan clamp() propios.</p>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-1"></i></span></div><span class="ds-spec"><b>--space-1</b> 4 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-2"></i></span></div><span class="ds-spec"><b>--space-2</b> 8 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-3"></i></span></div><span class="ds-spec"><b>--space-3</b> 12 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-4"></i></span></div><span class="ds-spec"><b>--space-4</b> 16 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-5"></i></span></div><span class="ds-spec"><b>--space-5</b> 20 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-6"></i></span></div><span class="ds-spec"><b>--space-6</b> 24 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-8"></i></span></div><span class="ds-spec"><b>--space-8</b> 32 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-10"></i></span></div><span class="ds-spec"><b>--space-10</b> 40 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-12"></i></span></div><span class="ds-spec"><b>--space-12</b> 48 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-16"></i></span></div><span class="ds-spec"><b>--space-16</b> 64 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-space"><i class="sp-24"></i></span></div><span class="ds-spec"><b>--space-24</b> 96 px</span></li>
+    </ul>
+  </section>
+  <!-- ============ Elementos visuales ============ -->
+  <section class="ds-sec" id="visuales">
+    <h2>Elementos visuales</h2>
+    <p>Fondos, imágenes, líneas, sombras y cursor: todo lo que no es texto ni componente. Las muestras usan las mismas clases y tokens que el sitio.</p>
+    <h3>Fondos</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-bg-frame"></div></div><span class="ds-spec"><b>Marco</b> · --frame (blanco)<br>fondo general de todas las páginas</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-bg-panel"></div></div><span class="ds-spec"><b>Panel</b> · degradado vertical --canvas → --canvas-deep · radio --shell-inner-radius<br>cabeceras de artículos y política de privacidad (.panel, .shell-body)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-bg-grid frame-grid"></div></div><span class="ds-spec"><b>Cuadrícula</b> · líneas de 1 px cada 64 px en --line-control al 26 %, desvanecidas con una máscara radial<br>.frame-grid; se ubica con --grid-at y --grid-size (Proyectos, Sobre mí, cabeceras)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-bg-dark"></div></div><span class="ds-spec"><b>Sección oscura</b> · degradado --ink → --night con brillo --night-glow abajo a la derecha · texto crema<br>hero y producto del inicio (.pl-dark), aviso de cookies</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-bg-gris"></div></div><span class="ds-spec"><b>Sección gris</b> · --surface-sunken<br>bloque del blog en el inicio</span></li>
+    </ul>
+    <h3>Imágenes · proporciones</h3>
+    <p class="ds-spec">Todas con object-fit: cover y radio --radius-image (20 px; 12 px en celular).</p>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-43"><img src="../img/webp/proyectos/temporis-pro/13-web-monitor-480.webp" alt=""></div></div><span class="ds-spec"><b>4:3</b> · tarjetas de Proyectos y del blog (.pj-media, .pl-tarjeta-foto)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-169"><img src="../img/webp/proyectos/temporis-pro/01-portada-480.webp" alt=""></div></div><span class="ds-spec"><b>16:9</b> · portada de cada artículo (.noticia-portada)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-1610"><img src="../img/webp/proyectos/temporis-pro/12-portatil-480.webp" alt=""></div></div><span class="ds-spec"><b>16:10</b> · imágenes de las fichas de proyecto antiguas y espacios por llenar (.case-media, .media-ph)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-75"><img src="../img/webp/proyectos/temporis-pro/05-web-plataforma-480.webp" alt=""></div></div><span class="ds-spec"><b>7:5</b> · collage de Ideas en el inicio</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-45"><img src="../img/webp/proyectos/temporis-pro/06-tarjetas-480.webp" alt=""></div></div><span class="ds-spec"><b>4:5</b> · retrato de Sobre mí (radio --radius-2xl)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-libre"><img src="../img/webp/proyectos/temporis-pro/15-monitor-480.webp" alt=""></div></div><span class="ds-spec"><b>Libre</b> · imágenes de los casos a lo ancho (.lab-fig), con su proporción original; los pares se igualan en altura</span></li>
+    </ul>
+    <h3>Imágenes · tratamientos</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-43 ds-fundido"><img src="../img/webp/proyectos/temporis-pro/14-tablet-480.webp" alt=""></div></div><span class="ds-spec"><b>Fundido lateral</b> · la imagen se desvanece al 55 % hacia el texto (hacia abajo en celular)<br>navegación entre casos y «Sigue leyendo» en artículos</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-43 ds-capa"><img src="../img/webp/proyectos/temporis-pro/13-web-monitor-480.webp" alt=""><span class="ds-capa-velo"></span></div></div><span class="ds-spec"><b>Capa sobre imagen</b> · --frame al 65 % con desenfoque de 3 px<br>tarjetas de Proyectos al pasar el mouse</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-43 ds-zoom"><img src="../img/webp/proyectos/temporis-pro/13-web-monitor-480.webp" alt=""></div></div><span class="ds-spec"><b>Zoom suave</b> · escala 104 % en 0.6 s al pasar el mouse<br>tarjetas de Proyectos (pásale el mouse)</span></li>
+    </ul>
+    <h3>Línea flúor</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><svg class="ds-hilo" viewBox="0 0 200 60" aria-hidden="true"><path d="M4 50 C 50 50, 60 10, 110 12 S 170 40, 196 8"/></svg></div><span class="ds-spec"><b>Hilo</b> · trazo --lima de 4 px, puntas redondas<br>recorre el inicio de sección en sección (.pl-thread) y dibuja la firma (.pl-firma)</span></li>
+      <li class="ds-state"><div class="ds-sample"><span class="ds-cursor"></span><span class="ds-cursor ds-cursor-hover"></span></div><span class="ds-spec"><b>Cursor</b> · anillo --lima de 2 px, 22 px; 44 px sobre enlaces y botones<br>solo en el inicio, con mouse</span></li>
+    </ul>
+    <h3>Sombras</h3>
+    <ul class="ds-states">
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-sh ds-sh-card"></div></div><span class="ds-spec"><b>--shadow-card</b> · tarjetas, collage y celdas</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-sh ds-sh-float"></div></div><span class="ds-spec"><b>--shadow-float</b> · botón primario sobre fondo claro</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-sh ds-sh-glass"></div></div><span class="ds-spec"><b>--shadow-glass</b> · brillo interior + sombra (casi sin uso, viene de Frost Glass)</span></li>
+    </ul>
+  </section>
+
+  <!-- ============ Componentes ============ -->
+  <section class="ds-sec" id="componentes">
+    <h2>Componentes</h2>
+    <p>Las piezas que se repiten en el sitio, con su marcado real. Etiquetas y botones están en sus propias secciones.</p>
+    <h3>Desplegable de preguntas frecuentes</h3>
+    <p class="ds-spec">.faq details.card · tarjeta --radius-lg con borde --line · pregunta en Texto (14 px) · botón «+» en cápsula de 28 px con los estados de la etiqueta: gris, hover flúor suave, click flúor, abierto en negro con «−» y foco con anillo --lima-deep · respuesta en Texto, gris. Uno cerrado y uno abierto: haz clic para probar.</p>
+    <div class="ds-comp "><div class="faq"><details class="card">
+              <summary>¿Cuándo es momento de trabajar mi marca?</summary>
+              <p>Cuando nace tu negocio, cuando crece, cuando te comparan solo por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces. Si te reconoces en alguno, es buen momento.</p>
+            </details><details class="card" open>
+              <summary>¿Puedo partir solo con la identidad visual?</summary>
+              <p>Sí. Muchas marcas parten por la identidad y suman estrategia cuando el negocio crece, como Fuchi Chao.</p>
+            </details></div></div>
+    <h3>Tarjeta base</h3>
+    <p class="ds-spec">.card · --surface · borde --line · --radius-xl (28 px) · --shadow-card. Base de las tarjetas del blog, la navegación entre casos y el desplegable.</p>
+    <div class="ds-comp "><div class="card ds-card-demo"><p class="ds-x ds-texto">Contenido</p></div></div>
+    <h3>Tarjeta de artículo</h3>
+    <p class="ds-spec">Tarjeta base con relleno de 8 px · imagen 4:3 concéntrica (20 px) con la etiqueta de categoría encima · título H3 · bajada en Texto pequeño. Carrusel del blog en el inicio.</p>
+    <div class="ds-comp "><ul class="pl-carrusel-pista ds-unica"><li class="card"><div class="pl-tarjeta-foto"><img class="pl-tarjeta-img" src="../img/noticias/un-buen-equipo-no-basta.webp" width="1672" height="941" alt="Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima."><p class="pl-mono pl-chip">Producto digital</p></div><div class="pl-tarjeta-texto"><h3 class="pl-post-title"><a href="#">Un buen equipo técnico no basta si nadie ordena el camino</a></h3><p class="pl-post-lead">Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.</p></div></li></ul></div>
+    <h3>Tarjeta de proyecto</h3>
+    <p class="ds-spec">.pj-card · imagen 4:3 (--radius-image) · nombre H5 con flecha · al pasar el mouse: capa blanca con disciplinas, año y «Ver proyecto», zoom suave de la imagen. Página de Proyectos.</p>
+    <div class="ds-comp "><ul class="pj-grid ds-unica caso"><li class="pj-item" data-filtros="marcas estrategia naming identidad packaging">
+            <a class="pj-card" href="#">
+              <figure class="pj-media"><img src="../img/webp/proyectos/fuchi-chao/01-1397.webp" srcset="../img/webp/proyectos/fuchi-chao/01-480.webp 480w, ../img/webp/proyectos/fuchi-chao/01-960.webp 960w, ../img/webp/proyectos/fuchi-chao/01-1397.webp 1397w" sizes="(max-width: 53.75em) 92vw, 46vw" width="1397" height="1400" alt="Detergente, eliminador de olores y jabón anti olores Fuchi Chao sobre fondo rosado." decoding="async"><span class="pj-over" aria-hidden="true"><span class="pj-over-year">2021 y 2023</span><span class="pj-over-bottom"><span class="btn btn-primary pj-over-btn">Ver proyecto<svg class="icon"><use href="#"/></svg></span><span class="pj-over-tags"><span class="pj-over-tag">Naming</span><span class="pj-over-tag">Identidad</span><span class="pj-over-tag">Packaging</span><span class="pj-over-tag">Estrategia</span></span></span></span></figure>
+              <span class="pj-name">Fuchi Chao<svg class="icon" aria-hidden="true"><use href="#"/></svg></span>
+            </a>
+          </li></ul></div>
+    <h3>Navegación entre casos</h3>
+    <p class="ds-spec">.case-nav · dos tarjetas (anterior y siguiente) con la imagen fundida hacia el texto. Al final de cada caso.</p>
+    <div class="ds-comp "><div class="caso"><nav class="case-nav" aria-label="Más proyectos"><a class="card caso-vecino caso-vecino-izq con-foto" href="#"><figure class="caso-foto"><img src="../img/webp/proyectos/khronos/05-1600.webp" srcset="../img/webp/proyectos/khronos/05-480.webp 480w, ../img/webp/proyectos/khronos/05-960.webp 960w, ../img/webp/proyectos/khronos/05-1600.webp 1600w" sizes="(max-width: 53.75em) 92vw, 46vw" width="1672" height="941" alt="Logotipo de Cerveza Khronos con el tagline “Tómate el tiempo” en blanco sobre un muro naranja." decoding="async"></figure><div class="caso-texto"><span>Proyecto anterior</span><strong>Cerveza Khronos</strong></div></a><a class="card caso-vecino caso-vecino-der con-foto" href="#"><div class="caso-texto"><span>Proyecto siguiente</span><strong>LAB*502</strong></div><figure class="caso-foto"><img src="../img/proyectos/lab502/01-portada.webp" width="1811" height="711" alt="Logotipo de LAB*502 en blanco sobre un fondo azul eléctrico con destellos de luz." decoding="async"></figure></a></nav></div></div>
+    <h3>Menú principal</h3>
+    <p class="ds-spec">Enlaces en Jakarta 15 px · página actual y hover con el subrayado flúor (--lima) y un punto debajo · selector de idioma ES / EN. En celular el menú se abre a pantalla completa.</p>
+    <div class="ds-comp "><nav class="main-nav ds-nav"><a href="#" aria-current="page">Proyectos</a><a href="#">Blog</a><a href="#">Sobre mí</a></nav><nav class="lang-switch ds-lang" aria-label="Idioma / Language"><a href="#" lang="es" hreflang="es" aria-current="true">ES</a><span aria-hidden="true">/</span><a href="#" lang="en" hreflang="en">EN</a></nav></div>
+    <h3>Flechas de carrusel</h3>
+    <p class="ds-spec">Dos .btn-secondary cuadrados de 44 px (en cápsula): mismos estados que el botón secundario.</p>
+    <div class="ds-comp "><div class="pl-carrusel-botones">
+              <button class="btn btn-secondary" type="button" data-paso="-1" aria-label="Artículo anterior">&larr;</button>
+              <button class="btn btn-secondary" type="button" data-paso="1" aria-label="Artículo siguiente">&rarr;</button>
+            </div></div>
+    <h3>Índice lateral</h3>
+    <p class="ds-spec">.toc · rótulo «En esta página» · enlaces en Meta (12 px) con una línea a la izquierda que se marca en --ink al pasar el mouse. Política de privacidad.</p>
+    <div class="ds-comp "><nav class="toc">
+          <p class="eyebrow-text">En esta página</p>
+          <ol>
+            <li><a href="#">Responsable</a></li>
+            <li><a href="#">Datos que se tratan</a></li>
+            <li><a href="#">Finalidades y base de licitud</a></li>
+            <li><a href="#">Conservación</a></li>
+            <li><a href="#">Destinatarios y transferencias</a></li>
+            <li><a href="#">Tus derechos</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Seguridad</a></li>
+            <li><a href="#">Cambios</a></li>
+          </ol>
+        </nav></div>
+    <h3>Campos del formulario</h3>
+    <p class="ds-spec">.pl-field · sin caja: solo una línea inferior crema al 35 % · la etiqueta sube al escribir · al enfocar, la línea pasa a --lima de 2 px. Casilla de consentimiento con color --lima. Formulario de contacto (fondo oscuro).</p>
+    <div class="ds-comp ds-dark-band on-dark "><div class="pl-field"><input name="nombre" type="text" autocomplete="name" maxlength="100" placeholder=" "><label>Nombre</label></div><div class="pl-field"><textarea placeholder=" " rows="2"></textarea><label>Mensaje</label></div><label class="pl-check"><input type="checkbox" name="consentimiento" value="1"><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="#">política de privacidad</a>.</span></label></div>
+    <h3>Aviso de cookies</h3>
+    <p class="ds-spec">.cookie-banner · sección oscura con radio --shell-inner-radius · título H5 · texto · botones Rechazar (secundario) y Aceptar (primario) en su versión oscura. Fijo abajo en todas las páginas hasta que se elige.</p>
+    <div class="ds-comp "><section class="cookie-banner ds-cookie" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c">
+    <div class="cookie-banner-text">
+      <h2>Cookies y analítica</h2>
+      <p>Uso Google Tag Manager, Google Analytics y Microsoft Clarity solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="#">Más información</a>.</p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button class="btn btn-secondary" type="button" data-consent="rechazado">Rechazar</button>
+      <button class="btn btn-primary" type="button" data-consent="aceptado">Aceptar</button>
+    </div>
+  </section></div>
+  </section>
+
+</main>
+<script src="ds.js" defer></script>
+</body>
+</html>
