@@ -56,8 +56,8 @@
   -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, .6) 50%, transparent 100%); }
 @media (max-width: 53.75em) { .pl-hero-bg { opacity: .4; } }
 .pl-hero { display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(100svh - var(--header-h, 4.5rem) - var(--shell-pad)); padding-block: clamp(8rem, 22vh, 14rem) clamp(3rem, 8vh, 5rem); }
-/* Escritorio: hero más bajo (menos aire arriba), para que "Ideas" entre con menos scroll */
-@media (min-width: 40em) { .pl-hero { min-height: calc(100svh - var(--header-h, 4.5rem) - var(--shell-pad) - 200px); padding-top: clamp(8rem, 15vh, 14rem); } }
+/* Escritorio: el hero ocupa toda la altura de la pantalla bajo el menú (se quitó el recorte de 200 px) */
+@media (min-width: 40em) { .pl-hero { padding-top: clamp(8rem, 15vh, 14rem); } }
 /* La línea pasa por detrás del titular, salvo al entrar a la O: ahí cruza por encima de su anillo (capa delantera,
    recortada por js/main.js a ese cruce). Sin JavaScript, la capa delantera no se ve. */
 .pl-hero .pl-thread-front { z-index: 2; clip-path: inset(100% 0 0 0); }
@@ -162,7 +162,6 @@
 .pl-field input, .pl-field textarea { display: block; width: 100%; font: inherit; font-size: 16px; padding: var(--space-4) 0; border-radius: 0; border: 0; border-bottom: 1px solid var(--line-control); background: transparent; color: var(--ink); }
 .pl-field label { position: absolute; left: var(--space-4); top: 50%; transform: translateY(-50%); padding-inline: 0; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--ink-muted); pointer-events: none; transition: top .2s var(--ease), font-size .2s var(--ease), color .2s var(--ease); background: transparent; }
 .pl-field input:focus + label, .pl-field input:not(:placeholder-shown) + label, .pl-field textarea:focus + label, .pl-field textarea:not(:placeholder-shown) + label { top: 0; font-size: 11px; padding-inline: 0; background: transparent; }
-.pl-field input:focus, .pl-field textarea:focus { border-bottom-color: var(--pl-line); box-shadow: 0 1px 0 0 var(--pl-line); outline: 0; }
 .pl-field input:focus-visible, .pl-field textarea:focus-visible { outline: 0; }
 .pl-field textarea { resize: vertical; min-height: 7rem; padding-top: var(--space-5); }
 .pl-field textarea:not(:placeholder-shown) + label, .pl-field textarea:focus + label { top: 0; }
@@ -293,16 +292,25 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 .pl-dialog-lead, .pl-dialog-body { background: transparent; }
 .pl-dialog-lead .pl-dialog-title, .pl-dialog-title { color: var(--cream); }
 .pl-dialog-close { border-color: rgba(241, 238, 230, .35); color: var(--cream); }
-.pl-field label { color: rgba(241, 238, 230, .6); }
-.pl-field input, .pl-field textarea { color: var(--cream); border-bottom-color: rgba(241, 238, 230, .35); }
-.pl-field input:focus, .pl-field textarea:focus { border-bottom-color: var(--pl-line); }
-.pl-form-note { color: rgba(241, 238, 230, .6); }
+/* Formulario: versión clara (por defecto) y oscura (dentro de .on-dark, .pl-dark o del popup de contacto).
+   Sin caja: solo una línea inferior. La etiqueta (Meta) sube al escribir. El campo activo se marca con la línea de 2 px:
+   --lima-deep sobre claro (el flúor no se ve sobre blanco) y --lima sobre oscuro */
+.pl-field label { font-size: var(--label-size); letter-spacing: var(--text-ls); color: var(--ink-muted); }
+.pl-field input:focus + label, .pl-field input:not(:placeholder-shown) + label, .pl-field textarea:focus + label, .pl-field textarea:not(:placeholder-shown) + label { font-size: 11px; }
+.pl-field input, .pl-field textarea { font-family: var(--mono); font-size: var(--text-size); letter-spacing: var(--text-ls); color: var(--ink); border-bottom-color: var(--line-control); }
+.pl-field input:focus, .pl-field textarea:focus { outline: 0; border-bottom: 2px solid var(--lima-deep); box-shadow: none; }
+.pl-form-note { color: var(--ink-muted); }
 .pl-form-note:empty { display: none; }
-.pl-check { color: rgba(241, 238, 230, .75); }
-.pl-check a { color: var(--cream); }
-.pl-check input { accent-color: var(--lima); }
-/* El campo activo se marca solo con el subrayado flúor (sin contorno de caja) */
-.pl-dialog .pl-field input:focus, .pl-dialog .pl-field textarea:focus { outline: 0; border-bottom: 2px solid var(--lima); }
+.pl-check { color: var(--ink-muted); }
+.pl-check a { color: var(--ink); }
+.pl-check input { accent-color: var(--lima-deep); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-field label { color: color-mix(in srgb, var(--cream) 60%, transparent); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-field input, :is(.on-dark, .pl-dark, .pl-dialog) .pl-field textarea { color: var(--cream); border-bottom-color: color-mix(in srgb, var(--cream) 35%, transparent); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-field input:focus, :is(.on-dark, .pl-dark, .pl-dialog) .pl-field textarea:focus { border-bottom-color: var(--lima); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-form-note { color: color-mix(in srgb, var(--cream) 60%, transparent); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-check { color: var(--cream-muted); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-check a { color: var(--cream); }
+:is(.on-dark, .pl-dark, .pl-dialog) .pl-check input { accent-color: var(--lima); }
 
 /* Títulos de sección de la home: mismo movimiento que el hero (js/main.js, initSectionTitles) */
 .pl-w { display: inline-block; transform: translate3d(calc(var(--shift, 0px) * var(--dir, 1)), 0, 0); will-change: transform; }
@@ -630,6 +638,36 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
   .lab-pair.lab-pair-tp { gap: clamp(1.5rem, 3.6vw, 4.375rem); }
   .lab-meta-side { justify-content: flex-start; }
 }
+/* Fuchi Chao: portada con dos giros de producto, texto junto a imagen y anchos proporcionales al diseño */
+.lab-fc-hero { display: grid; grid-template-columns: 1400fr 481fr; overflow: hidden; border-radius: var(--radius-image); }
+.lab-fc-hero .lab-fig img { border-radius: 0; }
+.lab-fc-hero > .lab-fig img { height: 100%; object-fit: cover; }
+.lab-fc-giros { display: grid; grid-template-rows: 1fr 1fr; }
+.lab-split.lab-fc-intro { grid-template-columns: 616fr 1400fr; align-items: stretch; }
+/* La foto toma la altura de la columna de texto; si recorta, conserva el lado izquierdo (donde está el mensaje) */
+@media (min-width: 48em) { .lab-fc-intro .lab-fig img { height: 100%; object-fit: cover; object-position: left center; } }
+.lab-fc-85, .lab-fc-76 { justify-self: center; }
+.lab-fc-85 { width: 85%; }
+.lab-fc-76 { width: 76%; }
+.lab-fc-izq { justify-self: start; }
+.lab-fc-der { justify-self: end; }
+/* Etiqueta y personajes a la misma altura: columnas proporcionales a cada imagen */
+.lab-pair.lab-fc-par-a { grid-template-columns: 1283fr 1104fr; }
+.lab-pair.lab-fc-par-b { grid-template-columns: 1fr 1fr; justify-self: center; width: 66%; }
+@media (max-width: 47.99em) {
+  .lab-fc-hero { grid-template-columns: minmax(0, 1fr); }
+  .lab-fc-giros { grid-template-rows: auto; grid-template-columns: 1fr 1fr; }
+  .lab-split.lab-fc-intro, .lab-pair.lab-fc-par-a { grid-template-columns: minmax(0, 1fr); }
+  .lab-pair.lab-fc-par-b { width: 100%; gap: .75rem; }
+  .lab-fc-85, .lab-fc-76 { width: 100%; }
+}
+/* Bowraps: pares a la misma altura (columnas proporcionales a cada imagen) */
+.lab-pair.lab-bw-a { grid-template-columns: 1000fr 1436fr; }
+.lab-pair.lab-bw-c { grid-template-columns: 2010fr 1776fr; }
+.lab-pair.lab-bw-d { grid-template-columns: 945fr 935fr; }
+@media (max-width: 47.99em) {
+  .lab-pair.lab-bw-a, .lab-pair.lab-bw-c, .lab-pair.lab-bw-d { grid-template-columns: minmax(0, 1fr); }
+}
 /* Páginas de proyecto: los párrafos del caso van a 12 px (las bajadas bajo el título siguen en 14 px) */
 .caso .lab-text p, .caso .case-text p, .caso .case-text li { font-size: 12px; }
 /* Tarjetas de proyecto: recorte alineado arriba (card_arriba en 0_data.py) */
@@ -738,3 +776,11 @@ img.img-arriba { object-position: 50% 0; }
 .noticia-cabecera { overflow-x: clip; }
 .noticia-h1 .pl-line { display: block; }
 .noticia-h1 .pl-line-in { display: inline-block; will-change: transform; }
+/* Página 404: número grande con el resaltado flúor, título H2, bajada en Texto y dos botones (primario y secundario) */
+.not-found-num { margin: 0; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: clamp(96px, 18vw, 220px); line-height: .9; letter-spacing: -0.055em; color: var(--ink); }
+:root .not-found-title { margin: 0; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; text-transform: uppercase; word-spacing: .08em; font-size: var(--h2-size); line-height: var(--h2-lh); letter-spacing: var(--h2-ls); text-wrap: balance; }
+.not-found .pl-lead { margin: 0; max-width: 34rem; }
+/* 404: sin el brillo inferior del panel */
+.not-found.panel::before { content: none; }
+/* Preguntas frecuentes: tarjetas planas, solo con borde (sin sombra) */
+.faq details.card { box-shadow: none; }

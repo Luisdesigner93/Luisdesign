@@ -253,11 +253,11 @@ _ruta_mob = _redondeada([(358, 0), (358, 40), (67.5, 199), (67.5, 330), (307.5, 
 _pf_cubos = [
     ('Fuchi Chao', 'proyectos/fuchi-chao.html', 14.8, 26.8, 1.0),
     ('Khronos', 'proyectos/khronos.html', 33.8, 17.7, 0.9),
-    ('Sustentando', 'proyectos/sustentando.html', 51.0, 38.2, 0.9),
-    ('Uvenergy', 'proyectos/uvenergy.html', 67.4, 21.0, 0.7),
-    ('Yomecontrolo', 'proyectos/yomecontrolo.html', 25.9, 40.8, 1.2),
-    ('Botes Salvavidas', 'proyectos/botes-salvavidas.html', 38.7, 57.0, 0.9),
-    ('Bowraps', 'proyectos/bowraps.html', 68.1, 58.7, 1.0),
+    ('Sustentando', 'proyectos/sustentando.html', 46.0, 42.0, 0.9),
+    # PAUSADO (al recuperarlo, reacomodar las posiciones): ('Uvenergy', 'proyectos/uvenergy.html', 67.4, 21.0, 0.7),
+    ('Yomecontrolo', 'proyectos/yomecontrolo.html', 27.0, 45.0, 1.2),
+    ('Botes Salvavidas', 'proyectos/botes-salvavidas.html', 65.0, 60.0, 0.9),
+    ('Bowraps', 'proyectos/bowraps.html', 67.4, 23.0, 1.0),
     ('LAB*502', 'proyectos/lab502.html', 86.0, 41.0, 1.2),
 ]
 _pf_cubo_html = '<span class="alt-cubo" aria-hidden="true"><span class="alt-cara alt-tapa"></span><span class="alt-cara alt-izq"></span><span class="alt-cara alt-der"></span></span>'
@@ -284,6 +284,8 @@ _pf_mock_css = (
     # Cada elemento se centra en su posición (sobre las diagonales); en móvil vuelve a la cuadrícula
     '.alt-folio .alt-item { transform: translate(-50%, -50%); }\n'
     '@media (max-width: 40em) { .alt-folio .alt-item { transform: none; } }\n'
+    # Móvil: con siete proyectos, el último va centrado en su propia fila
+    '@media (max-width: 40em) { .alt-folio .alt-pf6 { grid-column: 1 / -1; } }\n'
     # Móvil: todos los mockups ocupan la misma caja (la escala por proyecto --k no aplica), así se ven de tamaño parejo
     '@media (max-width: 40em) { .inicio .alt-folio .alt-mock { display: flex; align-items: center; justify-content: center; width: 100%; height: clamp(150px, 40vw, 190px); } .inicio .alt-folio .alt-mock img { width: auto; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; } }\n'
     # Título «Proyectos»: oculto en escritorio (solo para lectores de pantalla) y visible en móvil, arriba de la lista

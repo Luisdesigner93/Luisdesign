@@ -14,7 +14,7 @@ _alt_proyectos = [
     ('Fuchi Chao', 'proyectos/fuchi-chao.html'),
     ('Khronos', 'proyectos/khronos.html'),
     ('Sustentando', 'proyectos/sustentando.html'),
-    ('Uvenergy', 'proyectos/uvenergy.html'),
+    # PAUSADO: ('Uvenergy', 'proyectos/uvenergy.html'),
     ('Yomecontrolo', 'proyectos/yomecontrolo.html'),
     ('Botes Salvavidas', 'proyectos/botes-salvavidas.html'),
     ('Bowraps', None),  # sin página propia todavía

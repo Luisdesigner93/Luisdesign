@@ -108,7 +108,7 @@ PROJECTS = [
     dict(slug='auditorweb', cats=['producto'], landing='producto', title='AuditorWeb 21.719', mark=None, kind='Producto digital', year='2026', featured=True, en_portafolio=False,
          summary='Auditor automatizado que revisa 30 controles de cumplimiento de la Ley de Protección de Datos Personales y entrega un plan de acción priorizado.',
          tags=['UX/UI', 'Gestión de producto'], images=[], role='Producto, UX/UI y desarrollo asistido con IA', client='Producto propio'),
-    dict(slug='uvenergy', cats=['marcas'], landing='marcas', title='Uvenergy', mark='UV', kind='Energía solar y eólica · Identidad y web', year='2023 y 2025', featured=False,
+    dict(slug='uvenergy', cats=['marcas'], landing='marcas', title='Uvenergy', mark='UV', kind='Energía solar y eólica · Identidad y web', year='2023 y 2025', featured=False, en_portafolio=False,  # PAUSADO
          summary='Una marca que acompañó a Uvenergy desde su lanzamiento hasta su consolidación en la ingeniería de energías renovables.',
          tags=['Identidad', 'Web'], role='Identidad de marca, presentación comercial, sitio web con blog y rediseño', client='Uvenergy', status='Marca en uso',
          # EDITAR: imágenes de la identidad, la presentación y las dos versiones del sitio

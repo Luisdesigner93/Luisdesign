@@ -174,3 +174,5 @@
 #componentes > h3 { margin-top: 0; padding-top: 32px; border-top: 1px solid var(--line); }
 #componentes > .ds-comp { margin-bottom: 40px; }
 #componentes > .ds-comp:last-of-type { margin-bottom: 0; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+.ds .ds-form { max-width: 420px; padding: 8px 0; }
+.ds .ds-form-claro { padding: 8px 24px; border: 1px solid var(--line); border-radius: 16px; }

@@ -302,7 +302,7 @@
     <h2>Componentes</h2>
     <p>Las piezas que se repiten en el sitio, con su marcado real. Etiquetas y botones están en sus propias secciones.</p>
     <h3>Desplegable de preguntas frecuentes</h3>
-    <p class="ds-spec">.faq details.card · tarjeta --radius-lg con borde --line · pregunta en Texto (14 px) · botón «+» en cápsula de 28 px con los estados de la etiqueta: gris, hover flúor suave, click flúor, abierto en negro con «−» y foco con anillo --lima-deep · respuesta en Texto, gris. Uno cerrado y uno abierto: haz clic para probar.</p>
+    <p class="ds-spec">.faq details.card · tarjeta --radius-lg con borde --line, sin sombra · pregunta en Texto (14 px) · botón «+» en cápsula de 28 px con los estados de la etiqueta: gris, hover flúor suave, click flúor, abierto en negro con «−» y foco con anillo --lima-deep · respuesta en Texto, gris. Uno cerrado y uno abierto: haz clic para probar.</p>
     <div class="ds-comp "><div class="faq"><details class="card">
               <summary>¿Cuándo es momento de trabajar mi marca?</summary>
               <p>Cuando nace tu negocio, cuando crece, cuando te comparan solo por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces. Si te reconoces en alguno, es buen momento.</p>
@@ -352,9 +352,24 @@
             <li><a href="#">Cambios</a></li>
           </ol>
         </nav></div>
-    <h3>Campos del formulario</h3>
-    <p class="ds-spec">.pl-field · sin caja: solo una línea inferior crema al 35 % · la etiqueta sube al escribir · al enfocar, la línea pasa a --lima de 2 px. Casilla de consentimiento con color --lima. Formulario de contacto (fondo oscuro).</p>
-    <div class="ds-comp ds-dark-band on-dark "><div class="pl-field"><input name="nombre" type="text" autocomplete="name" maxlength="100" placeholder=" "><label>Nombre</label></div><div class="pl-field"><textarea placeholder=" " rows="2"></textarea><label>Mensaje</label></div><label class="pl-check"><input type="checkbox" name="consentimiento" value="1"><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="#">política de privacidad</a>.</span></label></div>
+    <h3>Formulario · versión clara</h3>
+    <p class="ds-spec">.pl-field · sin caja, solo una línea inferior --line-control · texto en Texto (14 px) · la etiqueta (Meta) sube al escribir · al enfocar, línea de 2 px --lima-deep (el flúor no se ve sobre blanco) · casilla en --lima-deep · botón primario. Haz clic en un campo para probar.</p>
+    <div class="ds-comp ds-form-claro"><form class="pl-form ds-form">
+        <div class="pl-field"><input type="text" placeholder=" "><label>Nombre</label></div>
+        <div class="pl-field"><input type="email" placeholder=" " value="hola@empresa.cl"><label>Correo</label></div>
+        <div class="pl-field"><textarea placeholder=" " rows="3"></textarea><label>Cuéntame de tu proyecto</label></div>
+        <label class="pl-check"><input type="checkbox" checked><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="#">política de privacidad</a>.</span></label>
+        <button class="btn btn-primary" type="button">Enviar</button>
+      </form></div>
+    <h3>Formulario · versión oscura</h3>
+    <p class="ds-spec">Dentro de .on-dark, .pl-dark o del popup de contacto · línea crema al 35 % · texto crema · etiqueta crema al 60 % · al enfocar, línea de 2 px --lima · casilla en --lima · botón primario en su versión oscura (blanco). Es la que usa el formulario de contacto del sitio.</p>
+    <div class="ds-comp ds-dark-band on-dark"><form class="pl-form ds-form">
+        <div class="pl-field"><input type="text" placeholder=" "><label>Nombre</label></div>
+        <div class="pl-field"><input type="email" placeholder=" " value="hola@empresa.cl"><label>Correo</label></div>
+        <div class="pl-field"><textarea placeholder=" " rows="3"></textarea><label>Cuéntame de tu proyecto</label></div>
+        <label class="pl-check"><input type="checkbox" checked><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="#">política de privacidad</a>.</span></label>
+        <button class="btn btn-primary" type="button">Enviar</button>
+      </form></div>
     <h3>Aviso de cookies</h3>
     <p class="ds-spec">.cookie-banner · sección oscura con radio --shell-inner-radius · título H5 · texto · botones Rechazar (secundario) y Aceptar (primario) en su versión oscura. Fijo abajo en todas las páginas hasta que se elige.</p>
     <div class="ds-comp "><section class="cookie-banner ds-cookie" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c">

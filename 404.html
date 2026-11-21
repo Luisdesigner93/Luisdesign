@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-CL" class="motion">
+<html lang="es-CL" class="motion inicio">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,6 +22,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/inicio.css">
   <script src="/js/intro.js"></script>
   <script src="/js/main.js" defer></script>
 </head>
@@ -75,12 +76,12 @@
   <main id="contenido">
     <section class="panel frame-grid not-found" aria-labelledby="page-title">
       <div class="container">
-        <span class="stat" aria-hidden="true">404</span>
-        <h1 class="heading" id="page-title">Esta página <strong>no existe</strong>.</h1>
-        <p class="lead">Puede que la dirección esté mal escrita o que el contenido se haya movido.</p>
+        <p class="not-found-num" aria-hidden="true"><span class="pl-resalte">404</span></p>
+        <h1 class="not-found-title" id="page-title">Esta página no existe.</h1>
+        <p class="pl-lead">Puede que la dirección esté mal escrita o que el contenido se haya movido.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="/">Ir al inicio</a>
-          <a class="btn btn-outline" href="/#proyectos">Ver proyectos</a>
+          <a class="btn btn-secondary" href="/proyectos/">Ver proyectos</a>
         </div>
       </div>
     </section>
