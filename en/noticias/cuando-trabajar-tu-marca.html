@@ -52,7 +52,7 @@
         <span class="brand-tagline">Branding, UX/UI<br>and Product</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Main">
-        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI and product</span></p>
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI and Product</span></p>
         <a href="../../#proyectos">Projects</a>
         <a href="../../#blog" aria-current="page">Blog</a>
         <a href="../../en/sobre-mi">About</a>
@@ -90,13 +90,14 @@
                 <div><dt>Category</dt><dd>Brand</dd></div>
               </dl>
             </div>
+            <a class="pl-scroll noticia-bajar" href="#portada" aria-label="Scroll down to the article"><span class="noticia-ovalo" aria-hidden="true"></span></a>
           </div>
-          <figure class="noticia-portada"><img src="../../img/noticias/cuando-trabajar-tu-marca.webp" width="1672" height="941" alt="Profile silhouette of a person between translucent and frosted glass panels, with a lime green panel behind."></figure>
+          <figure class="noticia-portada" id="portada"><img src="../../img/noticias/cuando-trabajar-tu-marca.webp" width="1672" height="941" alt="Profile silhouette of a person between translucent and frosted glass panels, with a lime green panel behind."></figure>
         </div>
       </div>
     </section>
 
-    <section class="panel panel-plain section" aria-label="Content of the article">
+    <section class="panel panel-plain section" id="articulo" aria-label="Content of the article">
       <div class="container">
         <div class="narrow prose">
 <p>There is a question that comes up often when we talk about branding: do I really need to work on my brand now?</p><p>Sometimes the answer seems obvious. You are starting a business and need a name, an identity and a way to present yourself. Other times it is not so easy to recognize. The business has been running for years, you have clients, you sell products or services, but you feel that something no longer fits.</p><p>What you communicated at the beginning may no longer represent what you do today. Or your clients may not understand what sets you apart from other options.</p><p>In my experience, working on a brand is not something that happens only once. It is part of a business’s evolution. And there are moments when stopping to review it can open up interesting opportunities.</p><h2>When it is born</h2><p><strong>You have a good idea, but you still need to give it an identity.</strong></p><p>You are about to launch a business, a product or a new line of services. You are clear on what you want to offer, but you still need to find a way to present it to the world.</p><p>Here, brand work helps build a foundation. It is not only about finding a nice name or designing a logo. It is about understanding what you are offering, who you want to reach and how you want people to recognize you.</p><p>It is the moment to define a direction before you start communicating.</p><h2>When it grows</h2><p><strong>Your business has evolved, but your brand has stayed behind.</strong></p><p>You started by offering one service and now you have several. You added clients, brought people into the team or found new business opportunities.</p><p>It is a good problem to have, but it can also create some confusion. What used to be easy to explain now needs more context. Your brand no longer tells everything you do, or the image you project does not reflect the level your business has reached.</p><p>In these cases, working on the brand helps you organize what you have built, find a narrative that represents this new stage and bring coherence to your different services or products.</p><p>You do not necessarily have to start from scratch. Sometimes what matters is recognizing how much your business has changed and making your brand move in the same direction.</p><h2>When it competes</h2><p><strong>If everyone seems to offer the same thing, why should people choose you?</strong></p><p>There are markets where alternatives abound. Clients compare prices, features and benefits, and brands often end up communicating practically the same thing.</p><p>When that happens, competing only on price can become a race that is hard to sustain.</p><p>Working on your brand means finding what truly sets you apart and learning to communicate it. It may lie in the way you work, the experience you deliver, your knowledge or the relationships you build with your clients.</p><p>Differentiation does not mean inventing something extraordinary. It means recognizing what value you can bring and making it visible.</p><h2>When direction changes</h2><p><strong>The business you have today will not necessarily be the same tomorrow.</strong></p><p>Sometimes new opportunities appear: you want to enter another market, develop a product or look for funding to grow.</p><p>These changes also test your brand. Does it still represent what you want to build? Is the value proposition clear enough for the new people you need to reach?</p><p>At these moments, brand strategy can help you organize ideas, define a direction and build a narrative that supports the next step of the business.</p><p>It is not about changing for the sake of it, but about making sure your brand still makes sense in light of what you want to achieve.</p><h2>When people do not recognize you</h2><p><strong>You do far more than people can see.</strong></p><p>There are organizations and businesses with an important track record, specialized knowledge or a huge contribution to their community, but they struggle to communicate it.</p><p>Sometimes people do not quite understand what they do. Other times they know the organization but are unaware of everything behind it.</p><p>Here the challenge is not always having more presence. It is also finding a way to explain who you are, what you do and why it matters.</p><p>A good communication strategy helps organize messages, identify who you need to reach and find a clearer way to connect with each audience.</p><h2>A brand also needs to move forward</h2><p>There is no single moment to work on your brand. It can be when you are starting and need to find a direction; during growth, when you need to organize what you have built; or when something changes and you need to reconnect with people.</p><p>Nor does it always mean designing a new logo. Sometimes you need to review your strategy, other times improve how you communicate and, occasionally, completely rethink your identity.</p><p>What matters is understanding what is happening in your business before deciding what you need to do.</p><p><strong>Where is your brand right now?</strong></p><p>Tell me what you have in hand and let’s talk about how we can take it where you want to go.</p>
@@ -130,6 +131,31 @@
     </div>
   </footer>
 
+      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Let’s talk</mark> <br>about your <br>project!</h2>
+            <p class="pl-dialog-lead-text">Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Close">&times;</button>
+            </div>
+            <form class="pl-form" id="pl-form" data-endpoint="../../contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Name</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Email</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Message</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">Leave this field empty</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>I agree that my name, email and message are stored so I can reply. See the <a href="../../privacidad">privacy policy</a>.</span></label>
+              <div class="pl-form-acciones">
+                <a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (opens in a new tab)"><svg class="icon" aria-hidden="true"><use href="../../img/icons.svg#i-linkedin"/></svg></a>
+                <button class="btn btn-primary" type="submit">Send</button>
+              </div>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
   <section class="cookie-banner" id="cookie-banner" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies and analytics</h2>

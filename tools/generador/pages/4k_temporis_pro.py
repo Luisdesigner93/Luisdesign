@@ -26,7 +26,7 @@ def _tp_text(html):
 _tp_chips = ''.join(f'<li>{t}</li>' for t in _tp['tags'])
 _tp_body = f'''    <section class="lab-head" aria-labelledby="page-title">
       <div class="lab-wide">
-        <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos/index.html">Proyectos</a></li><li aria-current="page">{_tp['title']}</li></ol>
+        {case_ruta(_tp)}
         <h1 class="lab-title" id="page-title">Temporis Pro</h1>
         <p class="lab-lead">De datos dispersos a una operación conectada. Unificando dos soluciones para construir una nueva plataforma industrial.</p>
         <div class="lab-meta lab-meta-tp">

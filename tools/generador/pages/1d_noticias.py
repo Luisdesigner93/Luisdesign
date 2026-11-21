@@ -78,7 +78,10 @@ def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
     inicio_href = '{p}en/index.html' if en else '{p}index.html'
     noticias_href = inicio_href + '#blog'
     alt = _IMAGEN_PORTADA.get(slug, {}).get(idioma['lang'])
-    figura = (f'\n          <figure class="noticia-portada"><img src="{{p}}img/noticias/{slug}.webp" width="1672" height="941" alt="{alt}"></figure>' if alt else '')
+    figura = (f'\n          <figure class="noticia-portada" id="portada"><img src="{{p}}img/noticias/{slug}.webp" width="1672" height="941" alt="{alt}"></figure>' if alt else '')
+    # Óvalo de scroll animado abajo a la derecha de la cabecera: baja a la portada o, si no hay, al texto
+    bajar_a = 'portada' if alt else 'articulo'
+    bajar_txt = 'Scroll down to the article' if en else 'Bajar al artículo'
     # Composición: enlace de vuelta a la izquierda; título, bajada y datos a la derecha; imagen a ancho completo debajo
     body = f'''
     <section class="hero-shell" aria-labelledby="page-title">
@@ -94,12 +97,13 @@ def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
                 <div><dt>{idioma['categoria']}</dt><dd>{etiqueta}</dd></div>
               </dl>
             </div>
+            <a class="pl-scroll noticia-bajar" href="#{bajar_a}" aria-label="{bajar_txt}"><span class="noticia-ovalo" aria-hidden="true"></span></a>
           </div>{figura}
         </div>
       </div>
     </section>
 
-    <section class="panel panel-plain section" aria-label="{'Content of the article' if en else 'Contenido del artículo'}">
+    <section class="panel panel-plain section" id="articulo" aria-label="{'Content of the article' if en else 'Contenido del artículo'}">
       <div class="container">
         <div class="narrow prose">
 {cuerpo}
@@ -111,7 +115,7 @@ def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
 '''
     alternos = {'es-CL': f'noticias/{slug}.html', 'en': f'en/noticias/{slug}.html', 'x-default': f'noticias/{slug}.html'}
     cta = dict(cta_title='Let’s talk about <strong>your project</strong>.',
-               cta_lead='Tell me what stage your brand or product is at, and I will reply with a proposal for scope, timelines and budget.') if en else {}
+               cta_lead='Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.') if en else {}
     page(path, f'{titulo} · Luis Vicencio', bajada, body=body, current='noticias', contact=False, html_class='motion inicio', extra_css=['css/inicio.css'],
          lang=idioma['lang'], alternates=alternos if en else {'es-CL': f'noticias/{slug}.html', 'en': f'en/noticias/{slug}.html', 'x-default': f'noticias/{slug}.html'}, **cta)
 
@@ -130,14 +134,31 @@ _noticia('cuando-trabajar-tu-marca', '¿Cuándo es momento de trabajar tu marca?
 
 # 2. Problema: un buen equipo no basta si nadie ordena el camino (landing de producto digital)
 _noticia('un-buen-equipo-no-basta', 'Un buen equipo técnico no basta si nadie ordena el camino',
-         'Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.',
-         '<p>¿Te suena alguna de estas situaciones?</p>' + _lista([
-             'El cliente pide una cosa y el equipo entrega otra.',
-             'Los requerimientos llegan difusos y el desarrollo se alarga.',
-             'Nadie tiene claro qué construir primero ni por qué.',
-             'Hay muchas ideas con IA, pero ninguna llega a producción.',
-             'El producto funciona, pero no tiene identidad y nadie lo entiende a la primera.']) +
-         '<p>Mi trabajo es ser el puente entre tu negocio, tu cliente y tu equipo técnico.</p>',
+         'Reunir talento y capacidades técnicas no garantiza que un proyecto llegue a buen puerto.',
+         '<p>Contar con buenos diseñadores, desarrolladores y especialistas es, sin duda, una ventaja. Pero reunir talento y capacidades técnicas no garantiza que un proyecto llegue a buen puerto.</p>'
+         '<p>En muchos equipos, el trabajo avanza: se diseñan interfaces, se desarrollan funcionalidades, se implementan herramientas y se cumplen tareas. Sin embargo, no siempre existe una pregunta compartida detrás de todo ese esfuerzo: ¿qué problema estamos intentando resolver?</p>'
+         '<p>Cuando esa respuesta no está clara, es fácil confundir actividad con progreso. Se construyen soluciones antes de comprender las necesidades, se priorizan funcionalidades sin entender su impacto y se optimizan procesos que quizás nunca debieron existir.</p>'
+         '<p>El problema no siempre es la falta de organización. A veces, es una falta de perspectiva.</p>'
+         '<h2>Antes de ejecutar, hay que entender.</h2>'
+         '<p>La estrategia no consiste simplemente en definir objetivos y distribuir tareas. Implica comprender el contexto, identificar oportunidades, reconocer las limitaciones y tomar decisiones sobre dónde concentrar los esfuerzos.</p>'
+         '<p>Esto requiere conectar distintas miradas: negocio, tecnología, diseño y experiencia de las personas. No para imponer una dirección desde arriba, sino para construir un entendimiento común sobre lo que realmente importa.</p>'
+         '<h2>Ordenar no es lo mismo que dirigir.</h2>'
+         '<p>Un backlog organizado, un roadmap actualizado o un proceso de trabajo bien definido pueden ayudar a un equipo a avanzar. Pero ninguna de estas herramientas garantiza que estemos avanzando en la dirección correcta.</p>'
+         '<p>La gestión de producto, el diseño estratégico y la coordinación técnica tienen valor cuando ayudan a tomar mejores decisiones, reducir incertidumbre y aprender durante el proceso.</p>'
+         '<p>De lo contrario, corremos el riesgo de convertir la organización en un objetivo por sí mismo.</p>'
+         '<h2>Cuatro fases, cuatro preguntas.</h2>'
+         '<p>La guía de Harvard Business Review sobre gestión de proyectos organiza el trabajo en cuatro fases que se superponen: planificación, desarrollo, ejecución y finalización. Yo las leo como cuatro preguntas que un equipo debería poder responder:</p>' + _lista([
+             '<strong>Planificación:</strong> ¿qué problema vamos a resolver y cómo sabremos que lo logramos?',
+             '<strong>Desarrollo:</strong> ¿tenemos a las personas, los acuerdos y el plan para hacerlo?',
+             '<strong>Ejecución:</strong> ¿lo que estamos aprendiendo está cambiando nuestras decisiones?',
+             '<strong>Finalización:</strong> ¿qué entregamos, quién se hace cargo y qué aprendimos?']) +
+         '<p>Que las fases se superpongan es clave: entender el problema no termina cuando empieza el desarrollo.</p>'
+         '<h2>El verdadero desafío es conectar las capacidades.</h2>'
+         '<p>Un buen equipo necesita autonomía, conocimiento y herramientas. Pero también necesita comprender cómo su trabajo contribuye a un propósito compartido.</p>'
+         '<p>No se trata de sumar más reuniones, procesos o roles. Se trata de generar las condiciones para que las decisiones tengan sentido y el esfuerzo se traduzca en resultados.</p>'
+         '<p>Porque desarrollar más rápido no siempre significa avanzar más. Y tener un equipo técnicamente excelente no sirve de mucho si estamos resolviendo el problema equivocado.</p>'
+         '<p><strong>La pregunta no es solamente qué podemos construir, sino si realmente vale la pena construirlo.</strong></p>'
+         '<p><small>Referencia: <cite>Guías HBR: Gestión de proyectos</cite>. Harvard Business Review Press y Reverté Management.</small></p>',
          'Producto digital')
 
 # 3. Servicios: artículo sobre el diseño más allá del diseño (negocio, marca y producto digital)
@@ -168,14 +189,31 @@ _noticia('cuando-trabajar-tu-marca', 'When is it time to work on your brand?',
          'Brand', _EN)
 
 _noticia('un-buen-equipo-no-basta', 'A good tech team is not enough if no one sets the course',
-         'These are signs that repeat in digital products: the client asks for one thing, the team delivers another, and no one is clear on what to build first.',
-         '<p>Does any of this sound familiar?</p>' + _lista([
-             'The client asks for one thing and the team delivers another.',
-             'Requirements arrive vague and development drags on.',
-             'No one is clear on what to build first, or why.',
-             'Many AI ideas, but none reaches production.',
-             'The product works, but it has no identity and people do not get it at first sight.']) +
-         '<p>My job is to be the bridge between your business, your client and your tech team.</p>',
+         'Bringing together talent and technical skills does not guarantee that a project will succeed.',
+         '<p>Having good designers, developers and specialists is undoubtedly an advantage. But bringing together talent and technical skills does not guarantee that a project will succeed.</p>'
+         '<p>In many teams, the work moves forward: interfaces get designed, features get built, tools get implemented and tasks get done. Yet there is not always a shared question behind all that effort: what problem are we trying to solve?</p>'
+         '<p>When that answer is unclear, it is easy to mistake activity for progress. Solutions get built before the needs are understood, features get prioritized without grasping their impact, and processes get optimized that perhaps should never have existed.</p>'
+         '<p>The problem is not always a lack of organization. Sometimes, it is a lack of perspective.</p>'
+         '<h2>Before executing, you have to understand.</h2>'
+         '<p>Strategy is not simply about setting goals and assigning tasks. It means understanding the context, identifying opportunities, recognizing limitations and deciding where to focus the effort.</p>'
+         '<p>This requires connecting different perspectives: business, technology, design and people’s experience. Not to impose a direction from above, but to build a common understanding of what really matters.</p>'
+         '<h2>Organizing is not the same as leading.</h2>'
+         '<p>An organized backlog, an up-to-date roadmap or a well-defined workflow can help a team move forward. But none of these tools guarantees that we are moving in the right direction.</p>'
+         '<p>Product management, strategic design and technical coordination are valuable when they help us make better decisions, reduce uncertainty and learn along the way.</p>'
+         '<p>Otherwise, we risk turning organization into an end in itself.</p>'
+         '<h2>Four phases, four questions.</h2>'
+         '<p>The Harvard Business Review guide to project management organizes the work into four overlapping phases: planning, build-up, implementation and closeout. I read them as four questions a team should be able to answer:</p>' + _lista([
+             '<strong>Planning:</strong> what problem are we going to solve, and how will we know we solved it?',
+             '<strong>Build-up:</strong> do we have the people, the agreements and the plan to do it?',
+             '<strong>Implementation:</strong> is what we are learning changing our decisions?',
+             '<strong>Closeout:</strong> what are we delivering, who takes ownership and what did we learn?']) +
+         '<p>The overlap is key: understanding the problem does not end when the build begins.</p>'
+         '<h2>The real challenge is connecting capabilities.</h2>'
+         '<p>A good team needs autonomy, knowledge and tools. But it also needs to understand how its work contributes to a shared purpose.</p>'
+         '<p>It is not about adding more meetings, processes or roles. It is about creating the conditions for decisions to make sense and for effort to turn into results.</p>'
+         '<p>Because developing faster does not always mean getting further. And having a technically excellent team is not worth much if we are solving the wrong problem.</p>'
+         '<p><strong>The question is not only what we can build, but whether it is really worth building.</strong></p>'
+         '<p><small>Reference: <cite>HBR Guide to Project Management</cite>. Harvard Business Review Press.</small></p>',
          'Digital product', _EN)
 
 _noticia('tres-roles-de-producto', 'Design goes beyond design: business, brands and digital products',

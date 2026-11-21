@@ -54,7 +54,7 @@
         <span class="brand-tagline">Branding, UX/UI<br>and Product</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Main">
-        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI and product</span></p>
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI and Product</span></p>
         <a href="../#proyectos">Projects</a>
         <a href="../#blog">Blog</a>
         <a href="../en/sobre-mi" aria-current="page">About</a>
@@ -182,6 +182,31 @@
     </div>
   </footer>
 
+      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Let’s talk</mark> <br>about your <br>project!</h2>
+            <p class="pl-dialog-lead-text">Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Close">&times;</button>
+            </div>
+            <form class="pl-form" id="pl-form" data-endpoint="../contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Name</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Email</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Message</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">Leave this field empty</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>I agree that my name, email and message are stored so I can reply. See the <a href="../privacidad">privacy policy</a>.</span></label>
+              <div class="pl-form-acciones">
+                <a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (opens in a new tab)"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-linkedin"/></svg></a>
+                <button class="btn btn-primary" type="submit">Send</button>
+              </div>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
   <section class="cookie-banner" id="cookie-banner" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies and analytics</h2>

@@ -9,8 +9,8 @@
 .ds-spec { font-family: var(--mono); font-size: 11px; line-height: 1.5; letter-spacing: .02em; color: var(--ink-muted); }
 .ds-spec b { color: var(--ink); font-weight: 600; }
 .ds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-.ds-cell { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-.ds-cell-dark { background: #07090d; color: #f1eee6; border-color: #07090d; }
+.ds-cell { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.ds-cell-dark { background: #1d1f22; color: #f1eee6; border-color: #1d1f22; }
 .ds-cell-dark .ds-spec { color: rgba(241, 238, 230, .7); } .ds-cell-dark .ds-spec b { color: #f1eee6; }
 .ds-cell-photo { background: linear-gradient(135deg, #f0b9cf, #c9d6ea); }
 .ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; min-height: 40px; }
@@ -18,7 +18,7 @@
 .ds-flag-mal { background: #fde2e1; color: #9b1c1c; } .ds-flag-ok { background: var(--success-soft); color: var(--success); } .ds-flag-ojo { background: #fff3c4; color: #7a5600; }
 /* Problemas */
 .ds-issues { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: i; }
-.ds-issues li { counter-increment: i; display: grid; grid-template-columns: 36px 1fr; gap: 4px 12px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.ds-issues li { counter-increment: i; display: grid; grid-template-columns: 36px 1fr; gap: 4px 12px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
 .ds-issues li::before { content: counter(i); grid-row: span 3; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
 .ds-issues strong { font-size: 15px; }
 .ds-issues p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-muted); }
@@ -29,7 +29,7 @@
 .sw-surface-sunken{background:var(--surface-sunken)} .sw-frost{background:var(--frost)} .sw-line{background:var(--line)} .sw-line-control{background:var(--line-control)}
 .sw-ink{background:var(--ink)} .sw-ink-muted{background:var(--ink-muted)} .sw-ink-subtle{background:var(--ink-subtle)} .sw-night{background:var(--night)}
 .sw-accent{background:var(--accent)} .sw-accent-soft{background:var(--accent-soft)} .sw-accent-mist{background:var(--accent-mist)} .sw-success{background:var(--success)}
-.sw-lima{background:#d4ff3f} .sw-crema{background:#f1eee6} .sw-n1{background:#07090d} .sw-n2{background:#0b0d12} .sw-n3{background:#070b13} .sw-n4{background:#17233a}
+.sw-lima{background:#d4ff3f} .sw-crema{background:#f1eee6} .sw-n1{background:#1d1f22} .sw-n2{background:#0b0d12} .sw-n3{background:#070b13} .sw-n4{background:#17233a}
 /* Tipografía */
 .ds-type { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 8px 24px; align-items: end; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .ds-type > :first-child { min-width: 0; overflow-wrap: anywhere; }
@@ -67,11 +67,11 @@
 .ds-sample > .ds-sw { width: 100%; height: 48px; }
 .ds-sample > .ds-rad { width: 160px; height: 96px; }
 .ds-sample > .ds-img { width: 100%; }
-.ds-sample.ds-cell-photo, .ds-sample.ds-cell-dark { padding: 14px; border-radius: 12px; }
-.ds-sample.ds-cell-dark { background: #07090d; }
+.ds-sample.ds-cell-photo, .ds-sample.ds-cell-dark { padding: 14px; border-radius: var(--radius-lg); }
+.ds-sample.ds-cell-dark { background: #1d1f22; }
 .ds-state > .ds-spec { font-size: 12px; }
 /* Estados fijados sobre fondo oscuro (mismos valores que css/inicio.css) */
-.ds-dark-band { margin-top: 16px; padding: 8px 24px; border-radius: 16px; background: var(--night); color: var(--cream); }
+.ds-dark-band { margin-top: 16px; padding: 8px 24px; border-radius: var(--radius-lg); background: var(--night); color: var(--cream); }
 .ds-dark-band .ds-states { border-top: 0; }
 .ds-dark-band .ds-state { border-bottom-color: color-mix(in srgb, var(--cream) 14%, transparent); }
 .ds-dark-band .ds-state:last-child { border-bottom: 0; }
@@ -95,13 +95,13 @@
 /* Zona de prueba al costado del título: 50 px de espacio por todos sus bordes */
 .ds-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin: 32px 0 12px; }
 .ds-head > h3 { margin: 0; }
-.ds-try { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 50px; border: 1px dashed var(--line-control); border-radius: 16px; }
+.ds-try { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 50px; border: 1px dashed var(--line-control); border-radius: var(--radius-lg); }
 .ds-try .ds-row { min-height: 0; }
 .ds-try.on-dark { background: var(--night); border-color: color-mix(in srgb, var(--cream) 30%, transparent); }
 /* Radios: muestras de cápsula y concéntrico */
 .ds-bar { width: 160px; height: 8px; border-radius: var(--radius-pill); background: var(--lima-deep); }
-.ds-conc { --r-outer: var(--radius-xl); --r-pad: 8px; width: 200px; padding: var(--r-pad); border-radius: var(--r-outer); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
-.ds-conc-in { height: 96px; border-radius: max(var(--radius-sm), calc(var(--r-outer) - var(--r-pad))); background: var(--canvas-deep); }
+.ds-conc { --r-outer: var(--radius-lg); --r-pad: 4px; width: 200px; padding: var(--r-pad); border-radius: var(--r-outer); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-card); }
+.ds-conc-in { height: 96px; border-radius: max(var(--radius-2xs), calc(var(--r-outer) - var(--r-pad))); background: var(--canvas-deep); }
 .ds-conc-mal .ds-conc-in { border-radius: var(--r-outer); }
 .r-2xs{border-radius:var(--radius-2xs)}
 /* Índice */
@@ -137,7 +137,7 @@
 .ds .ds-subblog { color: var(--ink); }
 .ds .ds-subblog { font-size: 20px; line-height: 1.4; text-transform: uppercase; }
 /* Elementos visuales */
-.ds-vis { width: 200px; height: 112px; border-radius: 16px; }
+.ds-vis { width: 200px; height: 112px; border-radius: var(--radius-lg); }
 .ds-bg-frame { background: var(--frame); border: 1px solid var(--line); }
 .ds-bg-panel { background: linear-gradient(180deg, var(--canvas), var(--canvas-deep)); border-radius: var(--shell-inner-radius); }
 .ds-bg-grid { position: relative; isolation: isolate; background: var(--frame); border: 1px solid var(--line); overflow: hidden; --grid-at: 70% 40%; }
@@ -175,4 +175,26 @@
 #componentes > .ds-comp { margin-bottom: 40px; }
 #componentes > .ds-comp:last-of-type { margin-bottom: 0; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
 .ds .ds-form { max-width: 420px; padding: 8px 0; }
-.ds .ds-form-claro { padding: 8px 24px; border: 1px solid var(--line); border-radius: 16px; }
+.ds .ds-form-claro { padding: 8px 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+
+/* Demos de casos e indicador de scroll */
+.ds-lab-demo { max-width: 60rem; }
+.ds-lab-demo .lab-head { padding: 0; }
+.ds-ovalo-linea { position: relative; max-width: 60rem; height: 64px; margin-bottom: 32px; border-bottom: 1px solid var(--line); }
+
+/* Fichas de las familias tipográficas */
+.ds-fuentes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 24px 0 40px; }
+.ds-fuente { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.ds .ds-fuente h4 { margin: 0 0 8px; font-size: 14px; font-weight: 600; }
+.ds .ds-fuente-a { margin: 0 0 16px; font-size: 64px; line-height: 1; color: var(--ink); }
+.ds .ds-fuente-sans { font-family: var(--font-sans); font-weight: 800; }
+.ds .ds-fuente-mono { font-family: var(--mono); font-weight: 400; }
+@media (max-width: 47.99em) { .ds-fuentes { grid-template-columns: minmax(0, 1fr); } }
+
+/* Muestras de vidrio sobre imágenes reales */
+.ds-vidrio-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 32px; }
+.ds-vidrio-escena { position: relative; overflow: hidden; aspect-ratio: 3 / 2; border-radius: var(--radius-lg); isolation: isolate; }
+.ds-vidrio-escena img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ds-vidrio-panel { position: absolute; inset: 14% 12% 14% 38%; display: flex; align-items: flex-end; padding: 12px; border-radius: var(--radius-md); }
+.ds-vidrio-panel span { padding: 4px 10px; border-radius: var(--radius-pill); background: var(--surface); font-family: var(--mono); font-size: 11px; color: var(--ink); }
+@media (max-width: 47.99em) { .ds-vidrio-grid { grid-template-columns: minmax(0, 1fr); } }

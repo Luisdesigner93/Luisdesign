@@ -13,7 +13,7 @@
 <body>
 <main class="ds">
   <h1>Design system</h1>
-  <p class="ds-intro">Inventario de luisdesign.cl a partir de css/styles.css e css/inicio.css (20 de noviembre de 2026). Los componentes de esta página usan las clases reales del sitio, así que se ven igual que en producción. Página interna: no se publica.</p>
+  <p class="ds-intro">Inventario de luisdesign.cl a partir de css/styles.css e css/inicio.css (actualizado el 21 de noviembre de 2026). Los componentes de esta página usan las clases reales del sitio, así que se ven igual que en producción. Página interna: no se publica.</p>
 
   <nav class="ds-indice" aria-label="Índice">
     <p class="pj-group-label">Índice</p>
@@ -26,7 +26,8 @@
       <li><a href="#radios"><span>06</span>Radios</a></li>
       <li><a href="#espaciado"><span>07</span>Espaciado</a></li>
       <li><a href="#visuales"><span>08</span>Elementos visuales</a></li>
-      <li><a href="#componentes"><span>09</span>Componentes</a></li>
+      <li><a href="#vidrio"><span>09</span>Vidrio</a></li>
+      <li><a href="#componentes"><span>10</span>Componentes</a></li>
     </ol>
   </nav>
 
@@ -38,6 +39,12 @@
       <li><strong>Restos de la versión anterior</strong>
         <p>La fuente Anton se sigue cargando (styles.css) aunque solo la usa el inicio alternativo (index-v2). Los tokens --glow, --frost y --shadow-glass vienen de Frost Glass y casi no se usan.</p>
         <p class="ds-fix">Propuesta: quitar Anton de styles.css si index-v2 ya no se usa.</p></li>
+      <li><strong>Paleta de Fuchi Chao</strong>
+        <p>La imagen de la paleta (caso-03-paleta) muestra valores RGB y CMYK erróneos en los colores 326 C y 7717 C.</p>
+        <p class="ds-fix">Propuesta: corregir los valores en el archivo original y volver a exportar la imagen.</p></li>
+      <li><strong>Contraste del indicador de scroll</strong>
+        <p>El óvalo de los artículos usa --line, igual que la línea sobre la que se apoya. Es un gris claro de bajo contraste para un elemento interactivo.</p>
+        <p class="ds-fix">Propuesta: si se busca más visibilidad, pasarlo a --line-control o a un gris más oscuro.</p></li>
     </ol>
   </section>
 
@@ -65,14 +72,14 @@
     </ul>
     <h3>Texto</h3>
     <ul class="ds-states">
-      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink"></div></div><span class="ds-spec"><b>--ink</b> #0a0b0d · texto, foco del teclado (19.7:1)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink"></div></div><span class="ds-spec"><b>--ink</b> = --night-glow #1d1f22 · texto, foco del teclado (16.5:1)</span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink-muted"></div></div><span class="ds-spec"><b>--ink-muted</b> #5e5e5e · texto secundario (6.5:1)</span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-ink-subtle"></div></div><span class="ds-spec"><b>--ink-subtle</b> #6b6b6b · contadores, notas (5.3:1)</span></li>
     </ul>
     <h3>Oscuros</h3>
     <ul class="ds-states">
-      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-night"></div></div><span class="ds-spec"><b>--night</b> #07090d · fondos oscuros, botón primario, cookies</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-night-glow"></div></div><span class="ds-spec"><b>--night-glow</b> #1d1f22 · brillo del degradado del hero <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-night"></div></div><span class="ds-spec"><b>--night</b> = --night-glow #1d1f22 · fondos oscuros, botón primario, cookies</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-night-glow"></div></div><span class="ds-spec"><b>--night-glow</b> #1d1f22 · único negro del sitio: texto, fondos, botones, sombras y velos <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-cream"></div></div><span class="ds-spec"><b>--cream</b> #f1eee6 · texto sobre oscuro <span class="ds-flag ds-flag-ok">nuevo</span></span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-sw sw-success"></div></div><span class="ds-spec"><b>--success</b> #1f7a55 · confirmaciones</span></li>
     </ul>
@@ -81,19 +88,23 @@
   <!-- ============ Tipografía ============ -->
   <section class="ds-sec" id="tipografia">
     <h2>Tipografía</h2>
-    <p>Dos familias: Plus Jakarta Sans para títulos (h1 a h4) y navegación, y la monoespaciada del sistema para párrafos de casos, rótulos y etiquetas.</p>
+    <p>Dos familias: Plus Jakarta Sans para títulos (H1 a H3), navegación y botones, y una monoespaciada del sistema para textos, rótulos y etiquetas.</p>
+    <div class="ds-fuentes">
+      <article class="ds-fuente"><p class="ds-fuente-a ds-fuente-sans">Aa</p><h4>Plus Jakarta Sans</h4><p class="ds-spec"><b>--font-sans</b> · variable, pesos 200 a 800<br>Archivo propio: fonts/plus-jakarta-sans.woff2<br>Se ve igual en todos los dispositivos.<br>Respaldo: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif</p></article>
+      <article class="ds-fuente"><p class="ds-fuente-a ds-fuente-mono">Aa</p><h4>Monoespaciada del sistema</h4><p class="ds-spec"><b>--mono</b> · no se descarga<br>SF Mono o Menlo en Mac y iPhone, Consolas en Windows, la monoespaciada del equipo en Android y Linux.<br>Cambia levemente según el dispositivo.<br>Orden: ui-monospace, SF Mono, Menlo, Consolas, monospace</p></article>
+    </div>
     <h3>Escala tipográfica, de mayor a menor</h3>
-    <p class="ds-spec">Títulos en Plus Jakarta Sans (H1 a H3); H4, H5 y textos en la monoespaciada con espaciado .08em. El color lo pone el contexto: gris o negro en fondo claro, crema en fondo oscuro.</p>
-    <div class="ds-type"><p class="ds-t ds-h1">Temporis Pro</p><span class="ds-spec"><b>H1 · título de página</b><br>Jakarta 800 · mayúsculas · clamp(44–128 px) · .9 · −0.055em<br>casos, Proyectos, Sobre mí, privacidad, artículos</span></div>
-    <div class="ds-type"><p class="ds-t ds-h2">Lecturas para tu negocio</p><span class="ds-spec"><b>H2 · título de sección</b><br>Jakarta 800 · mayúsculas · clamp(30–68 px) · .95 · −0.045em<br>secciones del inicio, formulario, secciones de casos</span></div>
-    <div class="ds-type"><p class="ds-t ds-h3">¿Cuándo es momento de trabajar tu marca?</p><span class="ds-spec"><b>H3 · subtítulo y tarjeta</b><br>Jakarta 600 · clamp(20–24 px) · 1.2 · −0.02em<br>tarjetas del blog, apartados de artículos y de la política</span></div>
-    <div class="ds-type"><p class="ds-x ds-texto ds-subblog">Cuando nace</p><span class="ds-spec"><b>H4 · subtítulo de blog</b><br>monoespaciada de la bajada (.pl-lead) · 20 px · mayúsculas · 1.4 · .08em · en --ink<br>apartados dentro de los artículos (h2 en .narrow.prose)</span></div>
-    <div class="ds-type"><p class="ds-t ds-h4">Cookies y analítica</p><span class="ds-spec"><b>H5 · título menor</b><br>monoespaciada 600 · 14 px · 1.5 · .08em (como el texto, en negrita)<br>aviso de cookies, etapas de Sobre mí, h3 dentro de artículos</span></div>
-    <div class="ds-type"><p class="ds-x ds-texto ds-destacado">En mi experiencia, trabajar una marca no es algo que ocurre una sola vez.</p><span class="ds-spec"><b>Cita destacada · Texto</b><br>mismo estilo que el texto, en --ink y con línea --lima-deep de 2 px<br>citas dentro de los artículos</span></div>
-    <div class="ds-type"><p class="ds-x ds-texto">Marcas, sitios y productos digitales para pymes y empresas en Chile.</p><span class="ds-spec"><b>Texto · 14 px</b><br>interlineado 1.75<br>bajadas bajo los títulos, introducciones, artículos y política de privacidad</span></div>
-    <div class="ds-type"><p class="ds-x ds-texto-sm">Temporis Pro nace de la integración de dos softwares y servicios que ya estaban en funcionamiento.</p><span class="ds-spec"><b>Texto pequeño · 12 px</b><br>interlineado 1.75 (1.25 en móvil en los casos)<br>párrafos de casos y textos de tarjetas</span></div>
-    <div class="ds-type"><p class="ds-x ds-rotulo">Servicio</p><span class="ds-spec"><b>Rótulo · 12 px · mayúsculas</b><br>interlineado 1.5<br>encabezados de grupo: filtros, columnas del pie, «En esta página»</span></div>
-    <div class="ds-type"><p class="ds-x ds-meta">Inicio / Proyectos / Temporis Pro</p><span class="ds-spec"><b>Meta · 12 px</b><br>interlineado 1.5<br>ruta, años, datos de ficha, autor, fechas, índice</span></div>
+    <p class="ds-spec">Títulos en Plus Jakarta Sans (H1 a H3); H4, H5 y textos en la mono del sistema con espaciado .08em. El color lo pone el contexto: gris o negro en fondo claro, crema en fondo oscuro.</p>
+    <div class="ds-type"><p class="ds-t ds-h1">Temporis Pro</p><span class="ds-spec"><b>H1 · título de página</b><br>Plus Jakarta Sans 800 · mayúsculas · clamp(44–128 px) · .9 · −0.055em<br>casos, Proyectos, Sobre mí, privacidad, artículos</span></div>
+    <div class="ds-type"><p class="ds-t ds-h2">Lecturas para tu negocio</p><span class="ds-spec"><b>H2 · título de sección</b><br>Plus Jakarta Sans 800 · mayúsculas · clamp(30–68 px) · .95 · −0.045em<br>secciones del inicio, formulario, secciones de casos</span></div>
+    <div class="ds-type"><p class="ds-t ds-h3">¿Cuándo es momento de trabajar tu marca?</p><span class="ds-spec"><b>H3 · subtítulo y tarjeta</b><br>Plus Jakarta Sans 600 · clamp(20–24 px) · 1.2 · −0.02em<br>tarjetas del blog, apartados de artículos y de la política</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto ds-subblog">Cuando nace</p><span class="ds-spec"><b>H4 · subtítulo de blog</b><br>Mono del sistema (--mono) · 20 px · mayúsculas · 1.4 · .08em · en --ink<br>apartados dentro de los artículos (h2 en .narrow.prose)</span></div>
+    <div class="ds-type"><p class="ds-t ds-h4">Cookies y analítica</p><span class="ds-spec"><b>H5 · título menor</b><br>Mono del sistema (--mono) 600 · 14 px · 1.5 · .08em (como el texto, en negrita)<br>aviso de cookies, etapas de Sobre mí, h3 dentro de artículos</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto ds-destacado">En mi experiencia, trabajar una marca no es algo que ocurre una sola vez.</p><span class="ds-spec"><b>Cita destacada · Texto</b><br>Mono del sistema (--mono) · mismo estilo que el texto, en --ink y con línea --lima-deep de 2 px<br>citas dentro de los artículos</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto">Marcas, sitios y productos digitales para pymes y empresas en Chile.</p><span class="ds-spec"><b>Texto · 14 px</b><br>Mono del sistema (--mono) · interlineado 1.75<br>bajadas bajo los títulos, introducciones, artículos y política de privacidad</span></div>
+    <div class="ds-type"><p class="ds-x ds-texto-sm">Temporis Pro nace de la integración de dos softwares y servicios que ya estaban en funcionamiento.</p><span class="ds-spec"><b>Texto pequeño · 12 px</b><br>Mono del sistema (--mono) · interlineado 1.75 (1.25 en móvil en los casos)<br>párrafos de casos y textos de tarjetas</span></div>
+    <div class="ds-type"><p class="ds-x ds-rotulo">Servicio</p><span class="ds-spec"><b>Rótulo · 12 px · mayúsculas</b><br>Mono del sistema (--mono) · interlineado 1.5<br>encabezados de grupo: filtros, columnas del pie, «En esta página»</span></div>
+    <div class="ds-type"><p class="ds-x ds-meta">Inicio / Proyectos / Temporis Pro</p><span class="ds-spec"><b>Meta · 12 px</b><br>Mono del sistema (--mono) · interlineado 1.5<br>ruta, años, datos de ficha, autor, fechas, índice</span></div>
     <p class="ds-spec">Fuera de la escala, a propósito: el título del hero del inicio, el cierre «Tu próximo proyecto empieza acá» y el titular de Ideas, que son composiciones con tamaño y movimiento propios. En las fichas de proyecto antiguas el H1 se limita al ancho de su columna. El nombre de proyecto en las tarjetas usa el estilo H5. Los apartados de la política de privacidad usan H3.</p>
 </section>
 
@@ -217,25 +228,25 @@
       <li class="ds-state"><div class="ds-sample"><div class="ds-bar"></div></div><span class="ds-spec"><b>Barras e indicadores</b> · --radius-pill (antes 2 y 6 px)</span></li>
     </ul>
     <h3>2 · Fija</h3>
-    <p class="ds-spec">Una escala para contenedores e imágenes que no están dentro de otro contenedor redondeado.</p>
+    <p class="ds-spec">Escala de 12 a 2 px para contenedores e imágenes. Las cápsulas no cambian.</p>
     <ul class="ds-states">
       <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-2xs"></div></div><span class="ds-spec"><b>--radius-2xs</b> 2 px · detalles mínimos (cuadrado de la marca)</span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-xs"></div></div><span class="ds-spec"><b>--radius-xs</b> 6 px · muestras pequeñas</span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-sm"></div></div><span class="ds-spec"><b>--radius-sm</b> 8 px · campos, enlaces del menú; mínimo de los concéntricos</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-md"></div></div><span class="ds-spec"><b>--radius-md</b> 12 px · imágenes en móvil, íconos, submenú</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-lg"></div></div><span class="ds-spec"><b>--radius-lg = --radius-image</b> 20 px · imágenes de proyectos y artículos (tarjeta y caso)</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-xl"></div></div><span class="ds-spec"><b>--radius-xl</b> 28 px · tarjetas y contenedores</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-2xl"></div></div><span class="ds-spec"><b>--radius-2xl</b> 40 px · retrato</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-shell"></div></div><span class="ds-spec"><b>--shell-inner-radius</b> 20–32 px · secciones del marco (oscuras, cookies, menú móvil)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-md"></div></div><span class="ds-spec"><b>--radius-md</b> 10 px · íconos, submenú</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-lg"></div></div><span class="ds-spec"><b>--radius-lg = --radius-image</b> 12 px · imágenes de proyectos y artículos (tarjeta y caso)</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-xl"></div></div><span class="ds-spec"><b>--radius-xl</b> 12 px · tarjetas y contenedores</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-2xl"></div></div><span class="ds-spec"><b>--radius-2xl</b> 12 px · retrato</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-rad r-shell"></div></div><span class="ds-spec"><b>--shell-inner-radius</b> 12 px · secciones del marco (oscuras, cookies, menú móvil)</span></li>
     </ul>
     <h3>3 · Concéntrica</h3>
-    <p class="ds-spec">Dentro de un contenedor redondeado, el radio interior es el del contenedor menos su relleno: max(--radius-sm, --r-outer − --r-pad). El contenedor declara --r-outer y --r-pad. Se usa en las tarjetas del blog y en las tarjetas de proyecto.</p>
+    <p class="ds-spec">El contenedor exterior parte en 12 px y cada nivel interno se achica: radio interior = radio exterior − distancia entre ambos bordes, con un mínimo de 2 px. Fórmula: max(--radius-2xs, --r-outer − --r-pad). Niveles: sección o tarjeta exterior 12 px, tarjeta o portada dentro de una sección 10 px, imagen dentro de una tarjeta de 12 px a 4 px de distancia, 8 px.</p>
     <ul class="ds-states">
-      <li class="ds-state"><div class="ds-sample"><div class="ds-conc"><div class="ds-conc-in"></div></div></div><span class="ds-spec"><b>Tarjeta del blog</b> · contenedor --radius-xl (28 px) con relleno de 8 px → imagen 20 px</span></li>
-      <li class="ds-state"><div class="ds-sample"><div class="ds-conc ds-conc-mal"><div class="ds-conc-in"></div></div></div><span class="ds-spec"><b>Error que evita</b> · mismo radio dentro y fuera (28 px): la esquina interior se ve más gruesa <span class="ds-flag ds-flag-mal">no</span></span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-conc"><div class="ds-conc-in"></div></div></div><span class="ds-spec"><b>Tarjeta del blog</b> · contenedor de 12 px, imagen a 4 px del borde (3 px de relleno + 1 px de borde) → imagen 8 px</span></li>
+      <li class="ds-state"><div class="ds-sample"><div class="ds-conc ds-conc-mal"><div class="ds-conc-in"></div></div></div><span class="ds-spec"><b>Error que evita</b> · mismo radio dentro y fuera (12 px): la esquina interior se ve más gruesa <span class="ds-flag ds-flag-mal">no</span></span></li>
     </ul>
     <h3>Corregido</h3>
-    <p class="ds-spec">Las imágenes de las tarjetas de Proyectos pasaron de 8 a 20 px, igual que dentro del caso (12 px en móvil en ambos). Los valores escritos a mano (2, 6, 7, 9 y 12 px) ahora son tokens; las barras pasaron a cápsula.</p>
+    <p class="ds-spec">El 21 de noviembre de 2026 todos los radios pasaron a la escala de 12 a 2 px, salvo las cápsulas y los círculos. Las imágenes sueltas usan 12 px en todos los tamaños.</p>
   </section>
 
   <!-- ============ Espaciado ============ -->
@@ -269,7 +280,7 @@
       <li class="ds-state"><div class="ds-sample"><div class="ds-vis ds-bg-gris"></div></div><span class="ds-spec"><b>Sección gris</b> · --surface-sunken<br>bloque del blog en el inicio</span></li>
     </ul>
     <h3>Imágenes · proporciones</h3>
-    <p class="ds-spec">Todas con object-fit: cover y radio --radius-image (20 px; 12 px en celular).</p>
+    <p class="ds-spec">Todas con object-fit: cover y radio --radius-image (12 px).</p>
     <ul class="ds-states">
       <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-43"><img src="../img/webp/proyectos/temporis-pro/13-web-monitor-480.webp" alt=""></div></div><span class="ds-spec"><b>4:3</b> · tarjetas de Proyectos y del blog (.pj-media, .pl-tarjeta-foto)</span></li>
       <li class="ds-state"><div class="ds-sample"><div class="ds-img-r ds-r-169"><img src="../img/webp/proyectos/temporis-pro/01-portada-480.webp" alt=""></div></div><span class="ds-spec"><b>16:9</b> · portada de cada artículo (.noticia-portada)</span></li>
@@ -298,11 +309,22 @@
   </section>
 
   <!-- ============ Componentes ============ -->
+  <section class="ds-sec" id="vidrio">
+    <h2>Vidrio</h2>
+    <p>Dos materiales para piezas que flotan sobre imágenes o contenido. Los valores viven como tokens en :root de styles.css. Si el dispositivo pide reducir la transparencia, ambos pasan a fondo sólido.</p>
+    <h3>1 · Liso · .glass</h3>
+    <p class="ds-spec">Estilo iOS, para paneles con texto · --glass-bg: --surface al 68 % · --glass-filter: desenfoque de 28 px y saturación 180 % · --glass-edge: brillo superior, filo claro y sombra suave · radio --radius-lg. Texto en --ink y secundarios en #3d3d3d. Lo usan el menú móvil y el hover de Proyectos.</p>
+    <div class="ds-comp ds-vidrio-grid"><div class="ds-vidrio-escena"><img src="../img/webp/marca/luis-vicencio-escena-960.webp" alt="" loading="lazy"><div class="glass ds-vidrio-panel"><span>Sobre fondo claro</span></div></div><div class="ds-vidrio-escena"><img src="../img/webp/marca/hero-fondo-960.webp" alt="" loading="lazy"><div class="glass ds-vidrio-panel"><span>Sobre fondo oscuro</span></div></div></div>
+    <h3>2 · Acanalado · .glass-acanalado</h3>
+    <p class="ds-spec">Líneas verticales como el vidrio de las fotos de marca, para piezas decorativas sobre imagen · --glass-ribs: canales de 5 px (--glass-rib) con luz y sombra · --surface al 20 % · --glass-ribbed-filter: desenfoque de 10 px y saturación 150 % · mismo borde que el liso. No usar detrás de párrafos: las líneas compiten con la lectura. Excepción: la columna del título del popup de contacto usa la variante oscura (--glass-ribs-dark sobre negro al 60 %), con texto breve en crema.</p>
+    <div class="ds-comp ds-vidrio-grid"><div class="ds-vidrio-escena"><img src="../img/webp/marca/luis-vicencio-escena-960.webp" alt="" loading="lazy"><div class="glass-acanalado ds-vidrio-panel"><span>Sobre fondo claro</span></div></div><div class="ds-vidrio-escena"><img src="../img/webp/marca/hero-fondo-960.webp" alt="" loading="lazy"><div class="glass-acanalado ds-vidrio-panel"><span>Sobre fondo oscuro</span></div></div></div>
+  </section>
+
   <section class="ds-sec" id="componentes">
     <h2>Componentes</h2>
     <p>Las piezas que se repiten en el sitio, con su marcado real. Etiquetas y botones están en sus propias secciones.</p>
     <h3>Desplegable de preguntas frecuentes</h3>
-    <p class="ds-spec">.faq details.card · tarjeta --radius-lg con borde --line, sin sombra · pregunta en Texto (14 px) · botón «+» en cápsula de 28 px con los estados de la etiqueta: gris, hover flúor suave, click flúor, abierto en negro con «−» y foco con anillo --lima-deep · respuesta en Texto, gris. Uno cerrado y uno abierto: haz clic para probar.</p>
+    <p class="ds-spec">.faq details.card · tarjeta --radius-lg (12 px; 10 px dentro de una sección) con borde --line, sin sombra · pregunta en Texto (14 px) · botón «+» en cápsula de 28 px con los estados de la etiqueta: gris, hover flúor suave, click flúor, abierto en negro con «−» y foco con anillo --lima-deep · respuesta en Texto, gris. Uno cerrado y uno abierto: haz clic para probar.</p>
     <div class="ds-comp "><div class="faq"><details class="card">
               <summary>¿Cuándo es momento de trabajar mi marca?</summary>
               <p>Cuando nace tu negocio, cuando crece, cuando te comparan solo por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces. Si te reconoces en alguno, es buen momento.</p>
@@ -311,11 +333,11 @@
               <p>Sí. Muchas marcas parten por la identidad y suman estrategia cuando el negocio crece, como Fuchi Chao.</p>
             </details></div></div>
     <h3>Tarjeta base</h3>
-    <p class="ds-spec">.card · --surface · borde --line · --radius-xl (28 px) · --shadow-card. Base de las tarjetas del blog, la navegación entre casos y el desplegable.</p>
+    <p class="ds-spec">.card · --surface · borde --line · --radius-xl (12 px) · --shadow-card. Base de las tarjetas del blog, la navegación entre casos y el desplegable.</p>
     <div class="ds-comp "><div class="card ds-card-demo"><p class="ds-x ds-texto">Contenido</p></div></div>
     <h3>Tarjeta de artículo</h3>
-    <p class="ds-spec">Tarjeta base con relleno de 8 px · imagen 4:3 concéntrica (20 px) con la etiqueta de categoría encima · título H3 · bajada en Texto pequeño. Carrusel del blog en el inicio.</p>
-    <div class="ds-comp "><ul class="pl-carrusel-pista ds-unica"><li class="card"><div class="pl-tarjeta-foto"><img class="pl-tarjeta-img" src="../img/noticias/un-buen-equipo-no-basta.webp" width="1672" height="941" alt="Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima."><p class="pl-mono pl-chip">Producto digital</p></div><div class="pl-tarjeta-texto"><h3 class="pl-post-title"><a href="#">Un buen equipo técnico no basta si nadie ordena el camino</a></h3><p class="pl-post-lead">Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.</p></div></li></ul></div>
+    <p class="ds-spec">Tarjeta base con relleno de 3 px + 1 px de borde · imagen 4:3 concéntrica (8 px, a 4 px del borde) con la etiqueta de categoría encima · título H3 · bajada en Texto pequeño. Carrusel del blog en el inicio.</p>
+    <div class="ds-comp "><ul class="pl-carrusel-pista ds-unica"><li class="card"><div class="pl-tarjeta-foto"><img class="pl-tarjeta-img" src="../img/noticias/un-buen-equipo-no-basta.webp" width="1672" height="941" alt="Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima."><p class="pl-mono pl-chip">Producto digital</p></div><div class="pl-tarjeta-texto"><h3 class="pl-post-title"><a href="#">Un buen equipo técnico no basta si nadie ordena el camino</a></h3><p class="pl-post-lead">Reunir talento y capacidades técnicas no garantiza que un proyecto llegue a buen puerto.</p></div></li></ul></div>
     <h3>Tarjeta de proyecto</h3>
     <p class="ds-spec">.pj-card · imagen 4:3 (--radius-image) · nombre H5 con flecha · al pasar el mouse: capa blanca con disciplinas, año y «Ver proyecto», zoom suave de la imagen. Página de Proyectos.</p>
     <div class="ds-comp "><ul class="pj-grid ds-unica caso"><li class="pj-item" data-filtros="marcas estrategia naming identidad packaging">
@@ -327,6 +349,20 @@
     <h3>Navegación entre casos</h3>
     <p class="ds-spec">.case-nav · dos tarjetas (anterior y siguiente) con la imagen fundida hacia el texto. Al final de cada caso.</p>
     <div class="ds-comp "><div class="caso"><nav class="case-nav" aria-label="Más proyectos"><a class="card caso-vecino caso-vecino-izq con-foto" href="#"><figure class="caso-foto"><img src="../img/webp/proyectos/khronos/05-1600.webp" srcset="../img/webp/proyectos/khronos/05-480.webp 480w, ../img/webp/proyectos/khronos/05-960.webp 960w, ../img/webp/proyectos/khronos/05-1600.webp 1600w" sizes="(max-width: 53.75em) 92vw, 46vw" width="1672" height="941" alt="Logotipo de Cerveza Khronos con el tagline “Tómate el tiempo” en blanco sobre un muro naranja." decoding="async"></figure><div class="caso-texto"><span>Proyecto anterior</span><strong>Cerveza Khronos</strong></div></a><a class="card caso-vecino caso-vecino-der con-foto" href="#"><div class="caso-texto"><span>Proyecto siguiente</span><strong>LAB*502</strong></div><figure class="caso-foto"><img src="../img/proyectos/lab502/01-portada.webp" width="1811" height="711" alt="Logotipo de LAB*502 en blanco sobre un fondo azul eléctrico con destellos de luz." decoding="async"></figure></a></nav></div></div>
+    <h3>Cabecera de caso</h3>
+    <p class="ds-spec">.lab-head · título .lab-title · bajada .lab-lead · fila .lab-meta con disciplinas (.case-chips) a la izquierda y año (.lab-year) a la derecha. Sin filas de rol, cliente ni estado. La usan LAB*502, Fuchi Chao y Bowraps.</p>
+    <div class="ds-comp"><div class="caso ds-lab-demo"><div class="lab-head"><p class="lab-title">Fuchi Chao</p><p class="lab-lead">Branding para una tenencia feliz sin olores molestos.</p><div class="lab-meta"><ul class="case-chips" aria-label="Disciplinas"><li>Estrategia</li><li>Naming</li><li>Identidad</li><li>Packaging</li><li>Comunicación</li></ul><p class="lab-year">2021 y 2023</p></div></div></div></div>
+    <h3>Composición de caso · texto e imagen</h3>
+    <p class="ds-spec">.lab-split · texto .lab-text junto a una imagen que ocupa toda la altura. Variante .lab-fc-intro (616:1400), con recorte desde la izquierda. En celular, una columna.</p>
+    <div class="ds-comp"><div class="caso ds-lab-demo"><div class="lab-split lab-fc-intro"><div class="lab-text"><p>Dos párrafos juntos, alineados con la imagen. El texto del caso va en Texto pequeño.</p></div><figure class="lab-fig"><img class="lab-img" src="../img/webp/proyectos/fuchi-chao/caso-02-tenencia-960.webp" srcset="../img/webp/proyectos/fuchi-chao/caso-02-tenencia-480.webp 480w, ../img/webp/proyectos/fuchi-chao/caso-02-tenencia-960.webp 960w" sizes="(max-width: 48em) 92vw, 40vw" alt="Mujer con audífonos junto a un perro." loading="lazy"></figure></div></div></div>
+    <h3>Composición de caso · par de imágenes</h3>
+    <p class="ds-spec">.lab-pair.lab-pair-tp · dos imágenes a la misma altura; las columnas siguen la proporción de cada imagen. Variantes: .lab-fc-par-a, .lab-fc-par-b, .lab-bw-a, .lab-bw-c y .lab-bw-d. En celular, una bajo la otra.</p>
+    <div class="ds-comp"><div class="caso ds-lab-demo"><div class="lab-pair lab-pair-tp lab-pair-tp-c"><figure class="lab-fig"><img class="lab-img" src="../img/webp/proyectos/fuchi-chao/caso-09-a-960.webp" srcset="../img/webp/proyectos/fuchi-chao/caso-09-a-480.webp 480w, ../img/webp/proyectos/fuchi-chao/caso-09-a-960.webp 960w" sizes="(max-width: 48em) 92vw, 40vw" alt="Publicación de Fuchi Chao." loading="lazy"></figure><figure class="lab-fig"><img class="lab-img" src="../img/webp/proyectos/fuchi-chao/caso-09-b-960.webp" srcset="../img/webp/proyectos/fuchi-chao/caso-09-b-480.webp 480w, ../img/webp/proyectos/fuchi-chao/caso-09-b-960.webp 960w" sizes="(max-width: 48em) 92vw, 40vw" alt="Afiches de Fuchi Chao en la calle." loading="lazy"></figure></div></div></div>
+    <h3>Anchos de imagen en casos</h3>
+    <p class="ds-spec">Por defecto, ancho completo. .lab-fc-85 (85 %, centrada) · .lab-fc-76 (76 %) · .lab-fc-izq y .lab-fc-der alinean a izquierda o derecha. En celular, siempre 100 %.</p>
+    <h3>Indicador de scroll</h3>
+    <p class="ds-spec">.noticia-bajar + .noticia-ovalo · óvalo de 24 × 38 px, borde de 1,5 px en --line, fondo blanco · centrado sobre la línea inferior de la cabecera · punto animado hacia abajo (se detiene con movimiento reducido) · baja a la portada del artículo. En el hero del inicio va abajo a la derecha, sin relleno y en el color de la línea flúor.</p>
+    <div class="ds-comp"><div class="ds-ovalo-linea"><a class="pl-scroll noticia-bajar" href="#componentes" aria-label="Ir a Componentes"><span class="noticia-ovalo" aria-hidden="true"></span></a></div></div>
     <h3>Menú principal</h3>
     <p class="ds-spec">Enlaces en Jakarta 15 px · página actual y hover con el subrayado flúor (--lima) y un punto debajo · selector de idioma ES / EN. En celular el menú se abre a pantalla completa.</p>
     <div class="ds-comp "><nav class="main-nav ds-nav"><a href="#" aria-current="page">Proyectos</a><a href="#">Blog</a><a href="#">Sobre mí</a></nav><nav class="lang-switch ds-lang" aria-label="Idioma / Language"><a href="#" lang="es" hreflang="es" aria-current="true">ES</a><span aria-hidden="true">/</span><a href="#" lang="en" hreflang="en">EN</a></nav></div>
@@ -353,7 +389,7 @@
           </ol>
         </nav></div>
     <h3>Formulario · versión clara</h3>
-    <p class="ds-spec">.pl-field · sin caja, solo una línea inferior --line-control · texto en Texto (14 px) · la etiqueta (Meta) sube al escribir · al enfocar, línea de 2 px --lima-deep (el flúor no se ve sobre blanco) · casilla en --lima-deep · botón primario. Haz clic en un campo para probar.</p>
+    <p class="ds-spec">.pl-field · sin caja, solo una línea inferior --line-control · texto en Texto (14 px) · la etiqueta (Meta) sube al escribir · al enfocar, línea de 2 px --lima-deep (el flúor no se ve sobre blanco) · casilla en --lima-deep, con su texto de aceptación en 12 px · botón primario. Haz clic en un campo para probar.</p>
     <div class="ds-comp ds-form-claro"><form class="pl-form ds-form">
         <div class="pl-field"><input type="text" placeholder=" "><label>Nombre</label></div>
         <div class="pl-field"><input type="email" placeholder=" " value="hola@empresa.cl"><label>Correo</label></div>

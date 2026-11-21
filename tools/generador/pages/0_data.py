@@ -200,11 +200,27 @@ def _caso_vecino(pr, etiqueta, lado):
     return '<a class="' + clase + '" href="' + pr['slug'] + '.html">' + contenido + '</a>'
 
 
-def case_nav(pr):
+def _vecinos(pr):
     # Los proyectos con en_portafolio=False no aparecen como vecinos (el propio caso sí conserva su lugar)
     lista = [x for x in PROJECTS if x.get('en_portafolio', True) or x['slug'] == pr['slug']]
     i = [x['slug'] for x in lista].index(pr['slug'])
-    prev, nxt = lista[i - 1], lista[(i + 1) % len(lista)]
+    return lista[i - 1], lista[(i + 1) % len(lista)]
+
+
+def case_ruta(pr):
+    """Fila superior del caso: ruta a la izquierda y flechas al proyecto anterior y siguiente a la derecha."""
+    prev, nxt = _vecinos(pr)
+    return ('<div class="case-ruta">'
+            '<ol class="breadcrumb" aria-label="Ruta"><li><a href="{home}">Inicio</a></li><li><a href="{p}proyectos/index.html">Proyectos</a></li>'
+            f'<li aria-current="page">{pr["title"]}</li></ol>'
+            '<nav class="pl-carrusel-botones" aria-label="Navegar entre proyectos">'
+            f'<a class="btn btn-secondary" href="{prev["slug"]}.html" rel="prev" aria-label="Proyecto anterior: {prev["title"]}">&larr;</a>'
+            f'<a class="btn btn-secondary" href="{nxt["slug"]}.html" rel="next" aria-label="Proyecto siguiente: {nxt["title"]}">&rarr;</a>'
+            '</nav></div>')
+
+
+def case_nav(pr):
+    prev, nxt = _vecinos(pr)
     tarjetas = _caso_vecino(prev, 'Proyecto anterior', 'izq') + _caso_vecino(nxt, 'Proyecto siguiente', 'der')
     return ('    <section class="panel panel-plain section" aria-label="Otros proyectos">\n'
             '      <div class="container">\n'
@@ -232,9 +248,9 @@ def case_intro(pr, summary, facts, actions=''):
     rows = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in facts)
     chips = ''.join(f'<li>{t}</li>' for t in pr['tags'])
     return f'''    <section class="case-intro" aria-labelledby="page-title">
+      <div class="container">{case_ruta(pr)}</div>
       <div class="container case-intro-grid">
         <div class="case-aside">
-          <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos/index.html">Proyectos</a></li><li aria-current="page">{pr['title']}</li></ol>
           <h1 class="case-title" id="page-title">{pr['title']}</h1>
           <dl class="case-meta">{rows}</dl>
           <ul class="case-chips" aria-label="Disciplinas">{chips}</ul>

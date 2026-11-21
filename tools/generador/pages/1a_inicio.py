@@ -161,7 +161,7 @@ INICIO_HERO = f'''
       </div>
       {_hilo([_hero_desk], [_hero_mob], 'pl-thread-front')}
       <span class="pl-head" aria-hidden="true"></span>
-      <a class="pl-scroll" href="#ideas" aria-label="Bajar a la siguiente sección"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+      <a class="pl-scroll" href="#ideas" aria-label="Bajar a la siguiente sección"><span class="noticia-ovalo" aria-hidden="true"></span></a>
     </section>
 '''
 
@@ -401,28 +401,6 @@ INICIO_CONTACTO = f'''
         
       </div>
       </div>
-      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
-        <div class="pl-dialog-grid">
-          <div class="pl-dialog-lead">
-            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Hablemos</mark> de tu proyecto!</h2>
-            <p class="pl-dialog-lead-text">Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.</p>
-          </div>
-          <div class="pl-dialog-body">
-            <div class="pl-dialog-head">
-              <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
-            </div>
-            <form class="pl-form" id="pl-form" method="dialog" aria-describedby="pl-form-note">
-              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Nombre</label></div>
-              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
-              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
-              <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
-              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="privacidad.html">política de privacidad</a>.</span></label>
-              <button class="btn btn-primary" type="submit">Enviar</button>
-              <p class="pl-form-note" id="pl-form-note" role="status"></p>
-            </form>
-          </div>
-        </div>
-      </dialog>
     </section>
 '''
 
@@ -432,7 +410,7 @@ _noticia_principal = ('noticias/cuando-trabajar-tu-marca.html', 'Marca', '¿Cuá
                       'Cuando nace tu negocio, cuando crece, cuando te comparan por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces.')
 _noticias_complementarias = [
     ('noticias/un-buen-equipo-no-basta.html', 'Producto digital', 'Un buen equipo técnico no basta si nadie ordena el camino',
-     'Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.'),
+     'Reunir talento y capacidades técnicas no garantiza que un proyecto llegue a buen puerto.'),
     ('noticias/tres-roles-de-producto.html', 'Servicios', 'Diseñar va más allá de diseñar: negocio, marcas y productos digitales',
      'En todos esos casos, el diseño puede aportar mucho más que una solución visual.'),
     ('noticias/metodo-scrum.html', 'Método', 'Scrum, con los pies en el negocio',
@@ -534,6 +512,7 @@ _EN_BLOQUES = [
 
 _EN_TEXTOS = [
     # Hero, ideas y sistemas
+    ('Bajar a la siguiente sección', 'Scroll down to the next section'),
     ('Soy Luis, diseñador especializado en marcas y productos digitales. Trabajo contigo para entender hacia dónde quieres llevar tu negocio y transformar esa dirección en marcas, experiencias y productos que conecten con las personas.',
      "Hi, I'm Luis, a designer specialized in brands and digital products. I work with you to understand where you want to take your business and turn that direction into brands, experiences and products that connect with people."),
     ('Conecto lo conceptual con lo práctico.', 'I connect the conceptual with the practical.'),
@@ -593,14 +572,6 @@ _EN_TEXTOS = [
     ('(WhatsApp, se abre en una pestaña nueva)', '(WhatsApp, opens in a new tab)'),
     ('(se abre en una pestaña nueva)', '(opens in a new tab)'),
     ('data-abrir-contacto>Hablemos ', 'data-abrir-contacto>Let’s talk '),
-    ('<mark class="pl-mark">Hablemos</mark> de tu proyecto!</h2>', '<mark class="pl-mark">Let’s talk</mark> about your project!</h2>'),
-    ('Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.', 'Tell me what stage your brand or product is at, and I will reply with a proposal for scope, timelines and budget.'),
-    ('>Nombre</label>', '>Name</label>'), ('>Correo</label>', '>Email</label>'), ('>Mensaje</label>', '>Message</label>'),
-    ('No completes este campo', 'Leave this field empty'),
-    ('Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="privacidad.html">política de privacidad</a>.',
-     'I agree that my name, email and message are stored so I can reply. See the <a href="privacidad.html">privacy policy</a>.'),
-    ('>Enviar</button>', '>Send</button>'),
-    ('aria-label="Cerrar"', 'aria-label="Close"'),
     # Blog
     ('<span class="pl-resalte">Lecturas</span> que pueden ser de utilidad <span class="pl-resalte">para tu negocio</span></h2>',
      '<span class="pl-resalte">Reading</span> that may be useful <span class="pl-resalte">for your business</span></h2>'),
@@ -610,8 +581,8 @@ _EN_TEXTOS = [
     ('aria-label="Artículo anterior"', 'aria-label="Previous article"'), ('aria-label="Artículo siguiente"', 'aria-label="Next article"'),
     ('Cuando nace tu negocio, cuando crece, cuando te comparan por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces.',
      'When your business is born, when it grows, when you are compared on price, when your direction changes, or when people do not quite know what you do.'),
-    ('Son señales que se repiten en productos digitales: el cliente pide una cosa, el equipo entrega otra y nadie tiene claro qué construir primero.',
-     'These are signs that repeat in digital products: the client asks for one thing, the team delivers another, and no one is clear on what to build first.'),
+    ('Reunir talento y capacidades técnicas no garantiza que un proyecto llegue a buen puerto.',
+     'Bringing together talent and technical skills does not guarantee that a project will succeed.'),
     ('En todos esos casos, el diseño puede aportar mucho más que una solución visual.',
      'In all those cases, design can offer much more than a visual solution.'),
     ('Desde el inicio acordamos prioridades, responsables y entregables, y reviso las señales de alerta en cada sprint para corregir el rumbo a tiempo.',

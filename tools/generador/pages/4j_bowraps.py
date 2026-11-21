@@ -21,7 +21,7 @@ def _bw_text(html):
 _bw_chips = ''.join(f'<li>{t}</li>' for t in _bw['tags'])
 _bw_body = f'''    <section class="lab-head" aria-labelledby="page-title">
       <div class="lab-wide">
-        <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos/index.html">Proyectos</a></li><li aria-current="page">{_bw['title']}</li></ol>
+        {case_ruta(_bw)}
         <h1 class="lab-title" id="page-title">{_bw['title']}</h1>
         <p class="lab-lead">{_bw['summary']}</p>
         <div class="lab-meta">

@@ -332,23 +332,58 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   window.addEventListener('resize', build);
 })();
 
-// Pantalla de carga: se retira cuando terminó la firma (≈2,6 s desde la navegación) y la página cargó.
+// Pantalla de carga: en la primera visita se retira cuando terminó la firma (≈2,6 s) y la página cargó;
+// al llegar desde otra página, apenas la página está lista.
 (function initLoader() {
   const root = document.documentElement;
   if (!root.classList.contains('is-loading')) return;
-  const MIN_MS = 2600;
+  const transicion = root.classList.contains('is-transition');
+  const MIN_MS = transicion ? 0 : 2600;
   let finished = false;
   const finish = () => {
     if (finished) return;
     finished = true;
     root.classList.add('is-loaded');
     try { sessionStorage.setItem('intro', '1'); } catch { /* sin almacenamiento */ }
-    setTimeout(() => root.classList.remove('is-loading', 'is-loaded'), 700);
+    document.dispatchEvent(new Event('loader:fin'));
+    setTimeout(() => root.classList.remove('is-loading', 'is-loaded', 'is-transition'), transicion ? 400 : 700);
   };
   const whenReady = () => setTimeout(finish, Math.max(0, MIN_MS - performance.now()));
   if (document.readyState === 'complete') whenReady();
   else window.addEventListener('load', whenReady, { once: true });
   setTimeout(finish, 6000); // respaldo si la carga se demora
+})();
+
+// Transición entre páginas: al seguir un enlace interno se dibuja el logo y luego se navega.
+(function initPageTransition() {
+  const root = document.documentElement;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const SALIDA_MS = 850;
+  const ruta = (url) => url.pathname.replace(/(index)?(\.html)?$/, '').replace(/\/$/, '');
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest && event.target.closest('a[href]');
+    if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+    const url = new URL(link.href, location.href);
+    if (url.origin !== location.origin) return;
+    if (/\.[a-z0-9]+$/i.test(url.pathname) && !/\.html$/i.test(url.pathname)) return; // archivos, no páginas
+    if (ruta(url) === ruta(location) && url.search === location.search) return; // ancla en la misma página
+    if (root.classList.contains('is-loading')) return;
+    event.preventDefault();
+    const modal = link.closest('dialog');
+    if (modal && modal.open) modal.close(); // un popup quedaría sobre la pantalla de carga
+    const previa = document.createElement('link');
+    previa.rel = 'prefetch';
+    previa.href = url.href;
+    document.head.append(previa);
+    try { sessionStorage.setItem('transicion', String(Date.now())); } catch { /* sin almacenamiento */ }
+    root.classList.add('is-loading', 'is-leaving');
+    setTimeout(() => { location.href = url.href; }, SALIDA_MS);
+  });
+  // Al volver con el botón Atrás el navegador puede restaurar la página tal como quedó
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) root.classList.remove('is-loading', 'is-leaving', 'is-loaded', 'is-transition');
+  });
 })();
 
 // Inicio: una sola línea recorre la página. En el hero se dibuja sola al entrar (después de la pantalla de carga);
@@ -847,24 +882,40 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   window.addEventListener('scroll', () => { if (!running) { running = true; requestAnimationFrame(frame); } }, { passive: true });
 })();
 
-// Inicio: Conversemos (encabezado y tarjeta de ideas) abre un popup con el formulario. El envío va a contacto/guardar.php,
+// Conversemos (encabezado y tarjeta de ideas) abre en la misma página un popup con el formulario. El envío va a contacto/guardar.php,
 // que valida y guarda el mensaje en el servidor. Sin JavaScript, el enlace lleva a #contacto.
 (function initContactForm() {
   const dialog = document.getElementById('pl-conversemos');
   const form = document.getElementById('pl-form');
-  if (!dialog || !form || !dialog.showModal) return;
+  // En las demás páginas no está el popup: Conversemos lleva al inicio y allí se abre solo
+  if (!dialog) {
+    const destino = document.documentElement.lang.startsWith('en') ? 'en/#conversemos' : '#conversemos';
+    document.querySelectorAll('.header-actions a[href$="#contacto"]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('href').replace(/#contacto$/, destino));
+    });
+    return;
+  }
+  if (!form || !dialog.showModal) return;
   const note = document.getElementById('pl-form-note');
   const submit = form.querySelector('button[type="submit"]');
+  const enIngles = document.documentElement.lang.startsWith('en');
   // Con el popup abierto se usa el cursor del sistema (el anillo queda detrás del popup)
+  let teniaCursor = false;
   const abrir = () => {
+    teniaCursor = document.documentElement.classList.contains('has-cursor');
     document.documentElement.classList.remove('has-cursor');
     dialog.showModal();
     form.querySelector('input').focus({ preventScroll: true });
   };
-  dialog.addEventListener('close', () => document.documentElement.classList.add('has-cursor'));
+  dialog.addEventListener('close', () => { if (teniaCursor) document.documentElement.classList.add('has-cursor'); });
   document.querySelectorAll('.header-actions a[href$="#contacto"], .ideas-cta, [data-abrir-contacto]').forEach((link) => {
     link.addEventListener('click', (event) => { event.preventDefault(); abrir(); });
   });
+  if (location.hash === '#conversemos') {
+    history.replaceState(null, '', location.pathname + location.search);
+    if (document.documentElement.classList.contains('is-loading')) document.addEventListener('loader:fin', abrir, { once: true });
+    else abrir();
+  }
   dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
   // Cierra al hacer clic fuera del popup (no al hacer clic en su contenido ni en su barra de desplazamiento)
   dialog.addEventListener('click', (event) => {
@@ -876,14 +927,14 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     event.preventDefault();
     if (!form.reportValidity()) return;
     submit.disabled = true;
-    note.textContent = 'Enviando…';
+    note.textContent = enIngles ? 'Sending…' : 'Enviando…';
     try {
-      const respuesta = await fetch('contacto/guardar.php', { method: 'POST', body: new FormData(form), credentials: 'omit' });
+      const respuesta = await fetch(form.dataset.endpoint || 'contacto/guardar.php', { method: 'POST', body: new FormData(form), credentials: 'omit' });
       const datos = await respuesta.json();
       note.textContent = datos.mensaje;
       if (datos.ok) form.reset();
     } catch (error) {
-      note.textContent = 'No pude enviar tu mensaje. Escríbeme a contacto@luisdesign.cl.';
+      note.textContent = enIngles ? 'I could not send your message. Email me at contacto@luisdesign.cl.' : 'No pude enviar tu mensaje. Escríbeme a contacto@luisdesign.cl.';
     } finally {
       submit.disabled = false;
     }

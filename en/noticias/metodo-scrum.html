@@ -52,7 +52,7 @@
         <span class="brand-tagline">Branding, UX/UI<br>and Product</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Main">
-        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI and product</span></p>
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI and Product</span></p>
         <a href="../../#proyectos">Projects</a>
         <a href="../../#blog" aria-current="page">Blog</a>
         <a href="../../en/sobre-mi">About</a>
@@ -90,13 +90,14 @@
                 <div><dt>Category</dt><dd>Method</dd></div>
               </dl>
             </div>
+            <a class="pl-scroll noticia-bajar" href="#portada" aria-label="Scroll down to the article"><span class="noticia-ovalo" aria-hidden="true"></span></a>
           </div>
-          <figure class="noticia-portada"><img src="../../img/noticias/metodo-scrum.webp" width="1672" height="941" alt="A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow."></figure>
+          <figure class="noticia-portada" id="portada"><img src="../../img/noticias/metodo-scrum.webp" width="1672" height="941" alt="A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow."></figure>
         </div>
       </div>
     </section>
 
-    <section class="panel panel-plain section" aria-label="Content of the article">
+    <section class="panel panel-plain section" id="articulo" aria-label="Content of the article">
       <div class="container">
         <div class="narrow prose">
 <p>When we talk about Scrum, it is common to think of meetings, boards, tasks and weekly deliveries. But after working coordinating development teams and managing digital products, I have learned that none of those things help much if we are not clear about what we are trying to solve.</p><p>You can have a very good team, build features and meet deadlines, but are we building what the business really needs?</p><p>That is where I find the value of working with agile methodologies. It is not about following a meeting calendar or filling a task board. It is about keeping the team connected to an objective, making decisions on time and learning from what we build.</p><p>This is how I approach project management using Scrum.</p><h2>01. Understand the business</h2><p><strong>Before thinking about features, we need to understand the problem.</strong></p><p>Every project starts with a need, but it does not always arrive well defined. Sometimes the client has a fairly clear idea of what they want to build, but we still need to understand why they need it and what they expect to achieve.</p><p>That is why my first step is to talk with the client, the stakeholders and, when appropriate, get close to the users. I need to understand how the business works, where its difficulties are and which opportunities we want to address.</p><p>This lets us avoid something quite common: starting to develop a solution without having truly understood the problem.</p><h2>02. Define what we are going to build</h2><p><strong>Ideas have to become decisions the team can carry out.</strong></p><p>Once we understand the problem, we need to translate it into something concrete. This is where the functional definition work begins: organizing the needs, identifying features, writing user stories and building a roadmap that lets us see where we are heading.</p><p>Not everything can be built at once. That is why, together with the team and the stakeholders, we work on prioritizing what makes the most sense to tackle first, considering the value for the business, the needs of the users and the technical possibilities.</p><p class="destacado">A good backlog is not an endless list of things to do. It is a tool for making decisions.</p><h2>03. Build in sprints</h2><p><strong>Working in short cycles lets us stay focused without losing flexibility.</strong></p><p>With the priorities defined, we organize the work into sprints. The team takes a set of user stories and works to turn them into features we can review.</p><p>My responsibility as Product Owner is to keep that direction. I coordinate the work, help solve blockers, clarify requirements and keep the stakeholders informed about progress and the decisions that come up along the way.</p><p>Things do not always turn out exactly as we planned. Technical difficulties, new needs or changes in priorities can appear. What matters is that we can address them without losing sight of the product’s objective.</p><h2>04. Review what we are building</h2><p><strong>A feature being developed does not necessarily mean it is finished.</strong></p><p>An important part of my work is reviewing that each user story meets what we defined. For that I take part in the QA process, checking the deliverables against the requirements and the expected criteria.</p><p>This lets us detect differences between what was requested and what was actually built, fix problems and keep small errors from piling up as the project advances.</p><p>It is common for a developer to say that something is almost ready, or technically ready. But “ready” means it works and that all of us have reviewed it, not only the person who built it. That detail that does not meet what was expected usually shows up only in the review, and avoiding it takes judgment: the experience to tell apart what looks finished from what really is.</p><p>I prefer to stop and review a feature before calling it finished rather than discovering later that we built something different from what we needed.</p><h2>05. Learn and adjust</h2><p><strong>A plan gives us direction, but it does not have to be set in stone.</strong></p><p>At the end of each cycle we review what was built, talk about progress and assess what we need to adjust.</p><p>Sometimes we find that a feature needs more work. Other times we understand that a priority has changed or that there is a better way to solve something.</p><p>The good thing about working iteratively is exactly that: we do not need to wait until the end of the project to find out whether we are on the right track.</p><p>Each delivery lets us learn something and use that learning to make better decisions in the next cycle.</p><h2>What I took away</h2><p>Over time I learned to recognize some warning signs that can affect a project long before they become a problem.</p><p>Unclear priorities, decisions without defined owners or expectations that were never agreed. They seem small at first, but they can end up generating rework, delays and frustration between teams.</p><p>Today I try to address these situations from day one. I prefer to ask an uncomfortable question at the beginning than to have to explain a problem at the end.</p><p>For me, working with Scrum does not simply mean organizing tasks better. It means building a way of working where the business, the team and technology can move in the same direction.</p><p>Because in the end, it is not about how many features we manage to deliver in a sprint, but about how close we get to solving the problem we set out to address.</p><p class="destacado">Building well also means knowing what is worth building.</p>
@@ -130,6 +131,31 @@
     </div>
   </footer>
 
+      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Let’s talk</mark> <br>about your <br>project!</h2>
+            <p class="pl-dialog-lead-text">Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Close">&times;</button>
+            </div>
+            <form class="pl-form" id="pl-form" data-endpoint="../../contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Name</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Email</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Message</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">Leave this field empty</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>I agree that my name, email and message are stored so I can reply. See the <a href="../../privacidad">privacy policy</a>.</span></label>
+              <div class="pl-form-acciones">
+                <a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (opens in a new tab)"><svg class="icon" aria-hidden="true"><use href="../../img/icons.svg#i-linkedin"/></svg></a>
+                <button class="btn btn-primary" type="submit">Send</button>
+              </div>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
   <section class="cookie-banner" id="cookie-banner" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies and analytics</h2>

@@ -26,7 +26,7 @@ def _ym_text(html):
 _ym_chips = ''.join(f'<li>{t}</li>' for t in _ym['tags'])
 _ym_body = f'''    <section class="lab-head" aria-labelledby="page-title">
       <div class="lab-wide">
-        <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos/index.html">Proyectos</a></li><li aria-current="page">{_ym['title']}</li></ol>
+        {case_ruta(_ym)}
         <h1 class="lab-title" id="page-title">Yo me controlo</h1>
         <p class="lab-lead">Software de medicina preventiva. Para vivir más y mejor.</p>
         <div class="lab-meta">

@@ -50,7 +50,7 @@
         <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
-        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y Producto</span></p>
         <a href="../proyectos/" aria-current="page">Proyectos</a>
         <a href="../#blog">Blog</a>
         <a href="../sobre-mi">Sobre mí</a>
@@ -75,9 +75,9 @@
 
   <main id="contenido">
     <section class="case-intro" aria-labelledby="page-title">
+      <div class="container"><div class="case-ruta"><ol class="breadcrumb" aria-label="Ruta"><li><a href="../">Inicio</a></li><li><a href="../proyectos/">Proyectos</a></li><li aria-current="page">Cerveza Khronos</li></ol><nav class="pl-carrusel-botones" aria-label="Navegar entre proyectos"><a class="btn btn-secondary" href="botes-salvavidas" rel="prev" aria-label="Proyecto anterior: Botes Salvavidas de Valparaíso">&larr;</a><a class="btn btn-secondary" href="fuchi-chao" rel="next" aria-label="Proyecto siguiente: Fuchi Chao">&rarr;</a></nav></div></div>
       <div class="container case-intro-grid">
         <div class="case-aside">
-          <ol class="breadcrumb" aria-label="Ruta"><li><a href="../">Inicio</a></li><li><a href="../proyectos/">Proyectos</a></li><li aria-current="page">Cerveza Khronos</li></ol>
           <h1 class="case-title" id="page-title">Cerveza Khronos</h1>
           <dl class="case-meta"><div><dt>Cliente</dt><dd>Cervecería Khronos</dd></div><div><dt>Año</dt><dd>2023</dd></div><div><dt>Rol</dt><dd>Estrategia, concepto, identidad y packaging</dd></div><div><dt>Estado</dt><dd>Propuesta de rebranding, no implementada</dd></div></dl>
           <ul class="case-chips" aria-label="Disciplinas"><li>Estrategia</li><li>Identidad</li><li>Packaging</li></ul>
@@ -140,6 +140,31 @@
     </div>
   </footer>
 
+      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Hablemos</mark> <br>de tu <br>proyecto!</h2>
+            <p class="pl-dialog-lead-text">Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
+            </div>
+            <form class="pl-form" id="pl-form" data-endpoint="../contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Nombre</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="../privacidad">política de privacidad</a>.</span></label>
+              <div class="pl-form-acciones">
+                <a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="../img/icons.svg#i-linkedin"/></svg></a>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+              </div>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
   <section class="cookie-banner" id="cookie-banner" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies y analítica</h2>

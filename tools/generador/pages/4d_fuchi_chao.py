@@ -30,7 +30,7 @@ def _fc_fig(key, cls='', lazy=True, mitad=False):
 _fc_chips = ''.join(f'<li>{t}</li>' for t in [*_fc['tags'], 'Comunicación'])
 _fc_body = f'''    <section class="lab-head" aria-labelledby="page-title">
       <div class="lab-wide">
-        <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li><a href="{{p}}proyectos/index.html">Proyectos</a></li><li aria-current="page">{_fc['title']}</li></ol>
+        {case_ruta(_fc)}
         <h1 class="lab-title" id="page-title">{_fc['title']}</h1>
         <p class="lab-lead">Branding para una tenencia feliz sin olores molestos.</p>
         <div class="lab-meta">

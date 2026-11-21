@@ -70,7 +70,7 @@ HEAD = '''<!doctype html>
         <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
-        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y producto</span></p>
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y Producto</span></p>
         <a href="{proyectos_href}"{cur_proyectos}>Proyectos</a>
         <a href="{home}#blog"{cur_noticias}>Blog</a>
         <a href="{sobre_href}"{cur_sobre}>Sobre mí</a>
@@ -135,7 +135,7 @@ FOOT = '''  </main>
     </div>
   </footer>
 
-  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" data-ga="{ga_id}" data-clarity="{clarity_id}" aria-labelledby="cookie-title" hidden>
+{dialogo}  <section class="cookie-banner" id="cookie-banner" data-gtm="{gtm_id}" data-ga="{ga_id}" data-clarity="{clarity_id}" aria-labelledby="cookie-title" hidden>
     <div class="cookie-banner-text">
       <h2 id="cookie-title">Cookies y analítica</h2>
       <p>Uso Google Tag Manager, Google Analytics y Microsoft Clarity solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="{p}privacidad.html#cookies">Más información</a>.</p>
@@ -151,7 +151,7 @@ FOOT = '''  </main>
 '''
 
 CTA_TITLE = 'Conversemos sobre <strong>tu proyecto</strong>.'
-CTA_LEAD = 'Cuéntame en qué etapa está tu marca o tu producto y te respondo con una propuesta de alcance, plazos y presupuesto.'
+CTA_LEAD = 'Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.'
 WA_HREF = 'https://wa.me/56958217041'
 OG_DEFAULT = 'img/og/general.jpg'
 OG_ALT = 'Luis Vicencio, diseñador y Product Owner'
@@ -172,7 +172,7 @@ EN_CHROME = [
     ('aria-label="Luis Vicencio, inicio"', 'aria-label="Luis Vicencio, home"'),
     ('Branding, UX/UI<br>y Producto', 'Branding, UX/UI<br>and Product'),
     ('aria-label="Principal"', 'aria-label="Main"'),
-    ('<span>Branding, UX/UI y producto</span>', '<span>Branding, UX/UI and product</span>'),
+    ('<span>Branding, UX/UI y Producto</span>', '<span>Branding, UX/UI and Product</span>'),
     ('>Marcas</a>', '>Brands</a>'),
     ('>Marcas</a></li>', '>Brands</a></li>'),
     ('>Proyectos</a>', '>Projects</a>'),
@@ -181,6 +181,15 @@ EN_CHROME = [
     ('>Contacto</a>', '>Contact</a>'),
     (' (se abre en una pestaña nueva)', ' (opens in a new tab)'),
     ('>Conversemos</a>', '>Let’s talk</a>'),
+    ('<mark class="pl-mark">Hablemos</mark> <br>de tu <br>proyecto!</h2>', '<mark class="pl-mark">Let’s talk</mark> <br>about your <br>project!</h2>'),
+    ('Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.',
+     'Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.'),
+    ('>Nombre</label>', '>Name</label>'), ('>Correo</label>', '>Email</label>'), ('>Mensaje</label>', '>Message</label>'),
+    ('No completes este campo', 'Leave this field empty'),
+    ('Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a', 'I agree that my name, email and message are stored so I can reply. See the <a'),
+    ('>política de privacidad</a>.</span>', '>privacy policy</a>.</span>'),
+    ('>Enviar</button>', '>Send</button>'),
+    ('aria-label="Cerrar"', 'aria-label="Close"'),
     ('alt="Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha."',
      'alt="A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow."'),
     ('alt="Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás."',
@@ -318,6 +327,35 @@ def _lang_switch(path, lang):
             f'<a href="{en_href}" lang="en" hreflang="en"{en_act}>EN</a></nav>')
 
 
+# Popup de contacto (Conversemos): está en todas las páginas que cargan css/inicio.css
+DIALOGO_CONTACTO = '''      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Hablemos</mark> <br>de tu <br>proyecto!</h2>
+            <p class="pl-dialog-lead-text">Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
+            </div>
+            <form class="pl-form" id="pl-form" data-endpoint="{p}contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Nombre</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="{p}privacidad.html">política de privacidad</a>.</span></label>
+              <div class="pl-form-acciones">
+                <a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-linkedin"/></svg></a>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+              </div>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
+'''
+
+
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
          noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None,
          email_first=False, email_label=None, lang='es', alternates=None, og_image=None, og_alt=None, jsonld=None):
@@ -355,6 +393,8 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'jsonld': ''.join('  <script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace('</', '<\\/') + '</script>\n' for d in (jsonld or [])),
         'alternates': ''.join(f'  <link rel="alternate" hreflang="{h}" href="{SITE}{u}">\n' for h, u in (alternates or {}).items()),
     }
+    hojas = [extra_css] if isinstance(extra_css, str) else extra_css or []
+    values['dialogo'] = fill(DIALOGO_CONTACTO, values) if 'css/inicio.css' in hojas else ''
     chrome = [fill(HEAD, values), fill(CONTACT, values) if contact else '', fill(FOOT, values)]
     if lang == 'en':
         for es, en in EN_CHROME:

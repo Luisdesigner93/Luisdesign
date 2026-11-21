@@ -35,12 +35,49 @@ def _pj_over(pr):
             f'<span class="pj-over-tags">{tags}</span></span></span>')
 
 
+# Imágenes que se alternan solas con la portada de cada tarjeta (js/proyectos.js). Son decorativas: alt vacío.
+_PJ_ROTA = {
+    'fuchi-chao': [('caso-12-personajes.jpg', 2000, 1812), ('caso-09-b.jpg', 2000, 2000)],
+    'lab502': ['02-collage', '08-foto'],
+    'bowraps': ['02', '05'],
+    'yomecontrolo': ['02-portada:izq', '17-letrero'],  # «:izq» alinea el recorte a la izquierda
+    'temporis-pro': ['06-tarjetas', '14-tablet'],
+    'khronos': ['02', '04'],
+}
+
+
+# Portada de la tarjeta en esta página cuando difiere de la del caso (nombre de archivo sin extensión)
+_PJ_PORTADA = {'yomecontrolo': '01-logo'}
+
+
+def _pj_portada(pr, lazy):
+    nombre = _PJ_PORTADA.get(pr['slug'])
+    if not nombre:
+        return project_art(pr, lazy=lazy)
+    im = next(x for x in pr['images'] if x['src'].rsplit('/', 1)[1].rsplit('.', 1)[0] == nombre)
+    return img_tag(im, lazy=lazy)
+
+
+def _pj_rota(pr):
+    salida = ''
+    for ref in _PJ_ROTA.get(pr['slug'], []):
+        if isinstance(ref, tuple):
+            im = img(pr['slug'], ref[0], ref[1], ref[2], '', '')
+            clase = 'pj-rota'
+        else:
+            nombre, _, lado = ref.partition(':')
+            clase = 'pj-rota pj-izq' if lado == 'izq' else 'pj-rota'
+            im = next(x for x in pr['images'] if x['src'].rsplit('/', 1)[1].rsplit('.', 1)[0] == nombre)
+        salida += img_tag({**im, 'alt': '', 'fit': False}, clase)
+    return salida
+
+
 def _pj_card(pr, i):
     filtros = ' '.join(pr['cats'] + [_pj_slug(t) for t in pr['tags']])
     return f'''
           <li class="pj-item" data-filtros="{filtros}">
             <a class="pj-card" href="{{p}}proyectos/{pr['slug']}.html">
-              <figure class="pj-media">{project_art(pr, lazy=i > 2)}{_pj_over(pr)}</figure>
+              <figure class="pj-media">{_pj_portada(pr, i > 2)}{_pj_rota(pr)}{_pj_over(pr)}</figure>
               <span class="pj-name">{pr['title']}<svg class="icon" aria-hidden="true"><use href="{{p}}img/icons.svg#i-arrow"/></svg></span>
             </a>
           </li>'''
@@ -53,7 +90,7 @@ _pj_cards = ''.join(_pj_card(pr, i) for i, pr in enumerate(_pj))
 _pj_body = f'''    <section class="pj-head frame-grid" aria-labelledby="page-title">
       <div class="container">
         <ol class="breadcrumb" aria-label="Ruta"><li><a href="{{home}}">Inicio</a></li><li aria-current="page">Proyectos</li></ol>
-        <h1 class="pj-title" id="page-title">Proyectos</h1>
+        <h1 class="pj-title" id="page-title">Conoce mi <br>portafolio</h1>
         <div class="pj-filters">
           <div class="pj-group">
             <p class="pj-group-label" id="pj-cat">Servicio</p>

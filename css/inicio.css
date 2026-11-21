@@ -133,9 +133,9 @@
 .pl-firma-grande { position: relative; z-index: 1; display: block; width: clamp(240px, 40vw, 560px); margin: 0 auto var(--space-8); }
 
 /* 7. Contacto: la línea llega caminando (huellas) hasta el titular */
-.pl-contact { min-height: 720px; padding: 260px 0 clamp(4rem, 9vw, 6rem); }
+.pl-contact { min-height: 720px; padding: 260px 0 clamp(4rem, 9vw, 6rem); overflow-x: clip; }
 /* Formulario de contacto (popup de Conversemos): abre el correo de la persona con el mensaje; no envía datos al servidor */
-.pl-dialog { width: min(52rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); padding: 0; overflow: auto; border: 0; border-radius: var(--radius-lg); background: var(--frame); color: var(--ink); box-shadow: 0 24px 60px rgba(11, 18, 32, .28); }
+.pl-dialog { width: min(52rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); padding: 0; overflow: auto; border: 0; border-radius: var(--radius-lg); background: var(--frame); color: var(--ink); box-shadow: 0 24px 60px rgba(29, 31, 34, .28); }
 .pl-dialog-grid { display: grid; }
 .pl-dialog-head { position: absolute; top: var(--space-4); right: var(--space-4); z-index: 1; }
 .pl-dialog-lead { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: var(--space-6); background: var(--surface-sunken); }
@@ -149,8 +149,9 @@
   .pl-dialog-lead { padding: var(--space-8); }
   .pl-dialog-body { padding: var(--space-8); }
 }
-.pl-dialog::backdrop { background: rgba(7, 9, 13, .55); }
-.pl-dialog[open] { animation: pl-dialog-in .25s var(--ease) both; }
+.pl-dialog::backdrop { background: rgba(29, 31, 34, .55); }
+/* Sin relleno final: una animación retenida aísla el vidrio de la columna y no deja desenfocar la página */
+.pl-dialog[open] { animation: pl-dialog-in .25s var(--ease) backwards; }
 @keyframes pl-dialog-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .pl-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
 .pl-dialog-title { margin: 0; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: clamp(26px, 3vw, 36px); letter-spacing: -0.04em; line-height: 1; }
@@ -184,9 +185,9 @@
 .pl-blog-ceja { margin: 0 0 var(--space-3); }
 /* Resalte con la marca lima del menú: una franja inferior bajo la palabra */
 .pl-resalte { background: linear-gradient(transparent 56%, var(--lima) 56%, var(--lima) 90%, transparent 90%); }
-.pl-blog-principal { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-6); align-items: stretch; margin: var(--space-10) 0 var(--space-6); --r-outer: var(--radius-xl); --r-pad: var(--space-2); padding: var(--r-pad); border-radius: var(--r-outer); }
+.pl-blog-principal { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-6); align-items: stretch; margin: var(--space-10) 0 var(--space-6); --r-outer: var(--radius-xl); --r-pad: var(--space-1); padding: calc(var(--r-pad) - 1px); border-radius: var(--r-outer); }
 .pl-blog-foto { margin: 0; }
-.pl-blog-foto img { display: block; width: 100%; height: 100%; min-height: 20rem; object-fit: cover; border-radius: max(var(--radius-sm), calc(var(--r-outer, var(--radius-xl)) - var(--r-pad, var(--space-2)))); }
+.pl-blog-foto img { display: block; width: 100%; height: 100%; min-height: 20rem; object-fit: cover; border-radius: max(var(--radius-2xs), calc(var(--r-outer, var(--radius-xl)) - var(--r-pad, var(--space-1)))); }
 .pl-blog-texto { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8) var(--space-8) var(--space-6); }
 .pl-chip { display: inline-flex; align-self: flex-start; margin: 0; padding: 6px 14px; border: 0; border-radius: var(--radius-pill); font-family: var(--mono); font-size: 12px; line-height: 1.2; font-weight: 400; letter-spacing: .08em; text-transform: none; background: var(--surface-sunken); color: var(--ink); }
 .pl-blog-titulo { margin: 0; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.1; font-weight: 600; letter-spacing: -.03em; }
@@ -197,10 +198,10 @@
 .pl-carrusel-barra { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
 .pl-carrusel-botones { display: flex; gap: var(--space-2); }
 .pl-carrusel-botones .btn { width: 44px; height: 44px; padding: 0; justify-content: center; }
-.pl-carrusel-pista { display: flex; gap: var(--space-5); margin: var(--space-6) 0 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.pl-carrusel-pista { display: flex; gap: 6px; margin: var(--space-6) 0 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .pl-carrusel-pista::-webkit-scrollbar { display: none; }
-.pl-carrusel-pista > li { --r-pad: var(--space-2); flex: 0 0 min(340px, 82%); display: flex; flex-direction: column; padding: var(--r-pad); border-radius: var(--r-outer, var(--radius-xl)); scroll-snap-align: start; box-shadow: none; }
-.pl-tarjeta-foto { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: max(var(--radius-sm), calc(var(--r-outer, var(--radius-xl)) - var(--r-pad, var(--space-2)))); background: linear-gradient(160deg, #ffffff 0%, var(--canvas-deep) 100%); }
+.pl-carrusel-pista > li { --r-pad: var(--space-1); flex: 0 0 min(340px, 82%); display: flex; flex-direction: column; padding: calc(var(--r-pad) - 1px); border-radius: var(--r-outer, var(--radius-xl)); scroll-snap-align: start; box-shadow: none; }
+.pl-tarjeta-foto { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: max(var(--radius-2xs), calc(var(--r-outer, var(--radius-xl)) - var(--r-pad, var(--space-1)))); background: linear-gradient(160deg, #ffffff 0%, var(--canvas-deep) 100%); }
 .pl-tarjeta-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 .pl-tarjeta-foto .pl-chip { position: absolute; top: var(--space-3); right: var(--space-3); background: var(--surface); }
 .pl-tarjeta-texto { display: grid; gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-4); }
@@ -210,7 +211,7 @@
 .pl-blog-principal, .pl-carrusel-pista .card { position: relative; }
 .pl-blog-titulo a::after, .pl-post-title a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .prose .noticias-otras-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
-.prose .noticias-otras-lista > li.card { position: relative; display: grid; align-content: start; gap: var(--space-3); padding: var(--space-5); border-radius: var(--radius-xl); }
+.prose .noticias-otras-lista > li.card { position: relative; display: grid; align-content: start; gap: var(--space-3); padding: var(--space-5); border-radius: var(--r-outer); }
 @media (max-width: 40em) { .prose .noticias-otras-lista { grid-template-columns: 1fr 1fr; gap: var(--space-3); } }
 /* Sigue leyendo: separado del texto por una línea y con el tamaño del título del artículo */
 .prose .noticias-otras { margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--line); }
@@ -234,7 +235,7 @@
   .prose .noticias-otra-izq .noticias-otras-foto img, .prose .noticias-otra-der .noticias-otras-foto img { -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent); mask-image: linear-gradient(to bottom, #000 50%, transparent); }
 }
 @media (min-width: 61.25em) {
-  .pl-carrusel-pista > li { flex: 0 0 calc((100% - 2 * var(--space-5)) / 3); }
+  .pl-carrusel-pista > li { flex: 0 0 calc((100% - 2 * 6px) / 3); }
 }
 @media (max-width: 53.75em) {
   .pl-blog-principal { grid-template-columns: 1fr; gap: var(--space-4); }
@@ -283,13 +284,21 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* Hero: flecha que invita a bajar (del tamaño del texto de apoyo), con un leve movimiento hacia abajo */
 .pl-scroll { position: absolute; z-index: 3; right: var(--gutter); bottom: var(--space-4); display: grid; place-items: center; width: 44px; height: 44px; color: var(--pl-line); }
-.pl-scroll .icon { width: 14px; height: 14px; transform: rotate(90deg); }
-@media (prefers-reduced-motion: no-preference) { .pl-scroll .icon { animation: pl-scroll-hint 1.6s var(--ease) infinite; } }
-@keyframes pl-scroll-hint { 0%, 100% { translate: 0 -3px; } 50% { translate: 0 5px; } }
 
 /* Popup de Conversemos con el mismo lenguaje oscuro del hero: fondo, degradado y textos claros */
-.pl-dialog { background: radial-gradient(60% 70% at 78% 100%, var(--night-glow), transparent), linear-gradient(160deg, var(--ink), var(--night)); color: var(--cream); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
-.pl-dialog-lead, .pl-dialog-body { background: transparent; }
+.pl-dialog { background: transparent; color: var(--cream); box-shadow: 0 24px 60px rgba(29, 31, 34, .45); }
+.pl-dialog-body { background: radial-gradient(60% 70% at 78% 100%, var(--night-glow), transparent), linear-gradient(160deg, var(--ink), var(--night)); }
+/* Columna del título en vidrio acanalado oscuro: deja ver la página detrás y mantiene el texto legible */
+.pl-dialog-lead { background: var(--glass-ribs-dark), rgba(29, 31, 34, .6); backdrop-filter: var(--glass-ribbed-filter); -webkit-backdrop-filter: var(--glass-ribbed-filter); }
+.pl-dialog-lead .pl-dialog-lead-text { color: rgba(241, 238, 230, .92); }
+.pl-dialog-lead { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.pl-dialog-body { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+@media (min-width: 40em) {
+  .pl-dialog-lead { border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+  .pl-dialog-body { border-radius: 0 var(--radius-lg) var(--radius-lg) 0; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .pl-dialog-lead { background: var(--glass-ribs-dark), var(--night); } }
+@media (prefers-reduced-transparency: reduce) { .pl-dialog-lead { background: var(--night); backdrop-filter: none; -webkit-backdrop-filter: none; } }
 .pl-dialog-lead .pl-dialog-title, .pl-dialog-title { color: var(--cream); }
 .pl-dialog-close { border-color: rgba(241, 238, 230, .35); color: var(--cream); }
 /* Formulario: versión clara (por defecto) y oscura (dentro de .on-dark, .pl-dark o del popup de contacto).
@@ -345,7 +354,7 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 
 /* Sistemas: la misma cuadrícula de fondo del hero, en versión clara (líneas oscuras y suaves, desvanecidas) */
 .inicio .pl-caps::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image: linear-gradient(rgba(7, 9, 13, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(7, 9, 13, .06) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(29, 31, 34, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(29, 31, 34, .06) 1px, transparent 1px);
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); mask-image: radial-gradient(ellipse 60% 60% at 30% 30%, #000, transparent 75%); }
 
@@ -553,7 +562,6 @@ html.has-cursor, html.has-cursor * { cursor: none !important; }
 @media (max-width: 47.99em) {
   .lab-split { grid-template-columns: minmax(0, 1fr); }
   .lab-text p { text-align: left; }
-  .lab-fig img, .pj-media { border-radius: var(--radius-md); }
 }
 .lab-pair { display: grid; grid-template-columns: 1149fr 662fr; gap: 0; align-items: stretch; }
 @media (max-width: 47.99em) { .lab-pair { grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3.6vw, 4.375rem); } }
@@ -773,7 +781,17 @@ img.img-arriba { object-position: 50% 0; }
 /* Títulos de artículo: más interlineado y movimiento horizontal con el scroll, como el título del hero (js/main.js).
    El recorte evita que las líneas desplazadas generen scroll lateral */
 :root .noticia-h1 { line-height: 1.05; }
-.noticia-cabecera { overflow-x: clip; }
+.noticia-cabecera { position: relative; align-self: stretch; overflow-x: clip; }
+/* Escritorio: el bloque de título, bajada y datos ocupa el 66% del contenedor */
+@media (min-width: 53.76em) { .noticia-cabecera { grid-template-columns: minmax(0, 1fr) 66%; } }
+/* Indicador de scroll: óvalo centrado sobre la línea de la cabecera, con un punto que baja */
+.noticia-bajar { left: 50%; right: auto; bottom: 0; transform: translate(-50%, 50%); color: var(--line); }
+.noticia-bajar .noticia-ovalo { background: #fff; }
+.noticia-ovalo { position: relative; display: block; width: 24px; height: 38px; border: 1.5px solid currentColor; border-radius: 999px; box-sizing: border-box; }
+.noticia-ovalo::after { content: ""; position: absolute; left: 50%; top: 7px; width: 4px; height: 7px; margin-left: -2px; border-radius: 999px; background: currentColor; }
+@media (prefers-reduced-motion: no-preference) { .noticia-ovalo::after { animation: noticia-ovalo 1.6s var(--ease) infinite; } }
+@keyframes noticia-ovalo { 0% { opacity: 0; transform: translateY(-3px); } 25% { opacity: 1; } 75% { opacity: 1; transform: translateY(11px); } 100% { opacity: 0; transform: translateY(14px); } }
+#portada, #articulo { scroll-margin-top: 6rem; }
 .noticia-h1 .pl-line { display: block; }
 .noticia-h1 .pl-line-in { display: inline-block; will-change: transform; }
 /* Página 404: número grande con el resaltado flúor, título H2, bajada en Texto y dos botones (primario y secundario) */
@@ -784,3 +802,67 @@ img.img-arriba { object-position: 50% 0; }
 .not-found.panel::before { content: none; }
 /* Preguntas frecuentes: tarjetas planas, solo con borde (sin sombra) */
 .faq details.card { box-shadow: none; }
+
+/* Jerarquía de radios: 12 px en el contenedor exterior y cada nivel interno se achica.
+   --r-pad es la distancia real al borde exterior: relleno + 1 px de borde de .card. */
+.panel .card, .shell-body .card { --r-outer: var(--radius-md); border-radius: var(--r-outer); }
+.shell-body .noticia-portada img { border-radius: var(--radius-md); }
+
+/* Popup de contacto: 50 px entre el título y la bajada */
+.pl-dialog-lead .pl-dialog-title { margin-bottom: 50px; }
+.pl-dialog-lead .pl-dialog-lead-text { margin-top: 0; }
+/* Popup de contacto: en una columna, el título deja espacio al botón de cerrar */
+@media (max-width: 39.99em) { #pl-conversemos .pl-dialog-lead .pl-dialog-title { padding-right: 2.25rem; font-size: clamp(28px, 9.2vw, 56px); } }
+/* En móvil, Mensaje parte con tres líneas para que el popup quepa sin scroll; se puede estirar */
+@media (max-width: 39.99em) { #pl-conversemos .pl-field textarea { height: 109px; min-height: 109px; } }
+@media (min-width: 40em) { #pl-conversemos .pl-dialog-lead .pl-dialog-title { font-size: clamp(36px, 5vw, 58px); } }
+
+/* Popup de contacto: LinkedIn a la izquierda y Enviar a la derecha */
+.pl-form-acciones { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.pl-linkedin { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 1px solid rgba(241, 238, 230, .35); border-radius: 50%; color: var(--cream); transition: color .2s var(--ease), border-color .2s var(--ease); }
+.pl-linkedin .icon { width: 18px; height: 18px; }
+.pl-linkedin:hover { color: var(--lima); border-color: var(--lima); }
+.pl-linkedin:focus-visible { outline: 2px solid var(--pl-line); outline-offset: 2px; }
+@media (max-width: 39.99em) { #pl-conversemos .pl-form { gap: var(--space-3); } }
+
+/* Casos: ruta a 30 px del encabezado y flechas entre proyectos en el extremo derecho */
+.case-ruta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.case-ruta .breadcrumb { flex-wrap: nowrap; min-width: 0; margin: 0; }
+.case-ruta .breadcrumb li { flex: none; white-space: nowrap; }
+.case-ruta .breadcrumb li:last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.case-ruta .pl-carrusel-botones { flex: none; }
+.lab-head, .case-intro, .pj-head { padding-top: 30px; }
+.lab-head .case-ruta, .case-intro .case-ruta { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+
+/* Los títulos de sección separan sus palabras en elementos: deben poder bajar de línea en móvil */
+.caso .case-sec-title { flex-wrap: wrap; }
+/* En pantallas muy angostas el logo se reduce sin deformarse */
+.site-header .brand-logo { object-fit: contain; object-position: left center; }
+
+/* Proyectos: 18 px entre filas y 6 px entre columnas, como las tarjetas del blog */
+.pj-grid { gap: 18px 6px; }
+
+/* Proyectos: dos imágenes más se alternan sobre la portada (js/proyectos.js) */
+.pj-media > img.pj-rota { position: absolute; inset: 0; opacity: 0; transition: opacity .9s var(--ease), transform .6s var(--ease); }
+.pj-media > img.pj-rota.is-activa { opacity: 1; }
+.pj-media > img.pj-izq { object-position: left center; }
+.pj-media > .pj-over { z-index: 3; }
+@media (prefers-reduced-motion: reduce) { .pj-media > img.pj-rota { display: none; } }
+
+/* Proyectos: la capa de hover usa el vidrio liso; año y etiquetas van en cápsula para leerse sobre cualquier imagen */
+.pj-media > .pj-over { background: var(--glass-bg); -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter); box-shadow: var(--glass-edge); }
+.pj-over-year { padding: 6px 14px; border-radius: var(--radius-pill); background: var(--surface); color: var(--ink); line-height: 1.2; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .pj-media > .pj-over { background: color-mix(in srgb, var(--surface) 96%, transparent); } }
+@media (prefers-reduced-transparency: reduce) { .pj-media > .pj-over { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+
+/* Proyectos en escritorio: la lista ocupa la pantalla visible bajo el encabezado y las dos filas la rellenan; lo que se estira es la imagen */
+@media (min-width: 64em) {
+  .pj-list { box-sizing: border-box; height: calc(100svh - var(--header-h, 4.5rem)); min-height: 34rem; padding-block: 0 18px; }
+  .pj-list > .container { display: flex; flex-direction: column; height: 100%; }
+  .pj-grid { flex: 1; min-height: 0; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  .pj-item { display: flex; min-height: 0; }
+  .pj-card { flex: 1; min-width: 0; min-height: 0; }
+  .pj-media { flex: 1; min-height: 0; aspect-ratio: auto; }
+  .pj-media > img { position: absolute; inset: 0; }
+  .pj-name { flex: none; }
+}
