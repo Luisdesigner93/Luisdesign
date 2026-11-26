@@ -182,6 +182,26 @@ function limites(array $semanas): array
     return [$semanas[0]['lunes'], $ultima['lunes']->modify('+7 days')];
 }
 
+// Aviso por correo a Luis con los datos de la reunión recién agendada (asunto y cuerpo en español)
+function avisoReserva(string $nombre, string $correo, string $mensaje, DateTimeImmutable $inicio, int $duracion, bool $ingles, array $evento): array
+{
+    $dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    $meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    $fecha = $dias[(int) $inicio->format('w')] . ' ' . $inicio->format('j') . ' de ' . $meses[(int) $inicio->format('n') - 1] . ' de ' . $inicio->format('Y');
+    $asunto = 'Nueva reunión agendada: ' . $nombre . ' · ' . $inicio->format('d/m H:i');
+    $cuerpo = "Se agendó una reunión desde luisdesign.cl.\n\n"
+        . "Nombre: {$nombre}\n"
+        . "Correo: {$correo}\n"
+        . "Fecha: {$fecha}\n"
+        . 'Hora: ' . $inicio->format('H:i') . ' (' . $inicio->getTimezone()->getName() . ")\n"
+        . "Duración: {$duracion} minutos\n"
+        . 'Idioma del sitio: ' . ($ingles ? 'inglés' : 'español') . "\n"
+        . (!empty($evento['hangoutLink']) ? 'Google Meet: ' . $evento['hangoutLink'] . "\n" : '')
+        . (!empty($evento['htmlLink']) ? 'Evento en Google Calendar: ' . $evento['htmlLink'] . "\n" : '')
+        . "\nMensaje:\n" . ($mensaje !== '' ? $mensaje : '(sin mensaje)') . "\n";
+    return [$asunto, $cuerpo];
+}
+
 function configurada(array $config): ?array
 {
     $agenda = $config['agenda'] ?? null;
@@ -349,6 +369,17 @@ try {
     $pdo->prepare('UPDATE reservas SET google_evento_id = ? WHERE id = ?')->execute([(string) ($evento['id'] ?? ''), $idReserva]);
     @unlink(dirCache() . '/disponibilidad.json');
     flock($candado, LOCK_UN);
+
+    // Aviso por correo a Luis (el mismo destino que las copias del formulario). Si falla, la reunión ya quedó agendada.
+    if (($config['copia_email'] ?? '') !== '') {
+        try {
+            require_once __DIR__ . '/correo.php';
+            [$asunto, $cuerpo] = avisoReserva($nombre, $correo, $mensaje, $inicio, (int) $agenda['duracion'], $ingles, $evento);
+            enviarCopiaSmtp($config['smtp'] ?? [], $config['remitente'], $config['copia_email'], $asunto, $cuerpo, $correo);
+        } catch (Throwable $falla) {
+            error_log('agenda: no se pudo enviar el aviso por correo (' . $falla->getMessage() . ')');
+        }
+    }
 
     salir(200, ['ok' => true, 'mensaje' => $ingles ? 'Meeting scheduled.' : 'Reunión agendada.']);
 } catch (Throwable $error) {
