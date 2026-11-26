@@ -29,6 +29,10 @@ Pega el ID y el secreto, abre el enlace y autoriza. La terminal mostrará el `re
 3. Completa `cliente_id`, `cliente_secreto` y `refresh_token`, revisa días, horas y feriados, y deja `'activa' => true`.
 4. Agrega una tarea mensual con `tools/db/purga_12_meses.sql`, que ya incluye las reservas.
 
+## Aviso por correo
+
+Cada reserva te envía un correo a `copia_email` (la misma casilla que recibe las copias del formulario), con nombre, correo, fecha, hora, enlace de Google Meet, enlace al evento y mensaje. Usa la configuración `smtp` que ya existe; si `copia_email` está vacío no se envía. Si el envío falla, la reunión igual queda agendada y el error se anota en el registro de PHP.
+
 ## 4. Probar
 
 Abre el popup, agenda con un correo tuyo y confirma que llegue la invitación con Google Meet. Luego borra ese evento del calendario.
