@@ -31,7 +31,7 @@ _bw_body = f'''    <section class="lab-head" aria-labelledby="page-title">
       </div>
     </section>
 
-    <article class="lab-case lab-wide" aria-label="Detalle del caso">''' + _bw_fig('01', lazy=False) + _bw_fig('02') + _bw_fig('04') + _bw_fig('06') + _bw_par('07', '08', 'lab-bw-c') + _bw_fig('09') + _bw_fig('10') + _bw_par('13', '05', 'lab-bw-a') + _bw_par('11', '12', 'lab-bw-d') + _bw_text(
+    <article class="lab-case lab-wide" aria-label="Detalle del caso">''' + _bw_fig('01-uniformes', lazy=False) + _bw_fig('02-logotipo') + _bw_fig('04-sistema-identidad') + _bw_fig('06-campana-team') + _bw_par('07-menu-stickers', '08-menu-bowls', 'lab-bw-c') + _bw_fig('09-ingredientes') + _bw_fig('10-menus-digitales') + _bw_par('13-letrero', '05-aplicaciones-local', 'lab-bw-a') + _bw_par('11-pantallas-local', '12-fachada', 'lab-bw-d') + _bw_text(
     '<p>La marca está en uso y sigue en funcionamiento en Viña del Mar.</p>'
     '<p>El proyecto fue en colaboración con el diseñador gráfico Claudio Almeyda Godoy. Fue uno de mis primeros procesos liderando a otro diseñador.</p>'
     ) + '''
@@ -39,6 +39,6 @@ _bw_body = f'''    <section class="lab-head" aria-labelledby="page-title">
 '''
 
 _bw_desc = 'Caso de estudio: naming, logotipo, identidad visual y aplicaciones de Bowraps, una marca de wraps y bowls frescos de la región de Valparaíso.'
-page('proyectos/bowraps.html', 'Bowraps: naming e identidad visual para una marca de wraps y bowls · Luis Vicencio',
+page('proyectos/bowraps.html', 'Bowraps: naming e identidad para wraps y bowls · Luis Vicencio',
      _bw_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
      **case_seo(_bw, _bw_desc), body=_bw_body + case_nav(_bw))

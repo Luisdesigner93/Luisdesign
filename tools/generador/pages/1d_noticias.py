@@ -72,7 +72,14 @@ def _otros_articulos(slug, idioma):
             f'<ul class="noticias-otras-lista">{tarjeta(etiquetas[0], anterior, "izq")}{tarjeta(etiquetas[1], siguiente, "der")}</ul></section>')
 
 
-_ARTICULOS = {'es': {}, 'en': {}}  # Se completa al generar cada noticia y alimenta la página del blog
+_ARTICULOS = {'es': {}, 'en': {}}
+# Descripciones para buscadores (máx. ~160 caracteres) cuando la bajada visible es más larga
+_DESC_SEO = {
+    ('ley-21719-prepara-tu-web', 'es'): 'La Ley 21.719 rige desde el 1 de diciembre de 2026 (hay un proyecto para postergarla). Revisa formularios, cookies y avisos de privacidad de tu web.',
+    ('ley-21719-prepara-tu-web', 'en'): 'Law 21.719 takes effect on December 1, 2026 (a bill seeks to postpone it). Review the forms, cookies and privacy notices on your website.',
+    ('metodo-scrum', 'es'): 'Un equipo puede avanzar a toda máquina sin acercarse a lo que necesita el negocio. Por eso, trabajar con metodologías ágiles empieza antes del sprint.',
+    ('metodo-scrum', 'en'): 'A team can move at full speed and still miss what the business needs. That is why agile work starts well before organizing a sprint.',
+}  # Se completa al generar cada noticia y alimenta la página del blog
 
 
 def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
@@ -121,7 +128,9 @@ def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
     alternos = {'es-CL': f'noticias/{slug}.html', 'en': f'en/noticias/{slug}.html', 'x-default': f'noticias/{slug}.html'}
     cta = dict(cta_title='Let’s talk about <strong>your project</strong>.',
                cta_lead='Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.') if en else {}
-    page(path, f'{titulo} · Luis Vicencio', bajada, body=body, current='noticias', contact=False, html_class='motion inicio', extra_css=['css/inicio.css'],
+    # Título para buscadores: con la firma solo si cabe en 70 caracteres; descripción propia si la bajada es muy larga
+    titulo_seo = f'{titulo} · Luis Vicencio' if len(titulo) + 16 <= 70 else titulo
+    page(path, titulo_seo, _DESC_SEO.get((slug, idioma['lang']), bajada), body=body, current='noticias', contact=False, html_class='motion inicio', extra_css=['css/inicio.css'],
          lang=idioma['lang'], alternates=alternos if en else {'es-CL': f'noticias/{slug}.html', 'en': f'en/noticias/{slug}.html', 'x-default': f'noticias/{slug}.html'}, **cta)
 
 

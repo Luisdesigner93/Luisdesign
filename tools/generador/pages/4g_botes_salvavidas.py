@@ -1,7 +1,7 @@
 # Caso Botes Salvavidas de Valparaíso (2023). Texto basado en tools/narrativa/01-narrativa-y-casos.md y en el borrador de Luis.
 # EDITAR: imágenes de la web.
 _bs = next(pr for pr in PROJECTS if pr['slug'] == 'botes-salvavidas')
-case_page(_bs, 'Botes Salvavidas de Valparaíso: estrategia de comunicación, sitio web y redes sociales · Luis Vicencio',
+case_page(_bs, 'Botes Salvavidas: comunicación, web y redes · Luis Vicencio',
     'Caso de estudio: estrategia de comunicación, sitio web con donaciones, redes sociales y logo del centenario de los Botes Salvavidas de Valparaíso.',
     _bs['summary'],
     'Botes Salvavidas de Valparaíso: <strong>estrategia de comunicación</strong>, sitio web y redes sociales.', [

@@ -283,7 +283,7 @@ def _card_titles(html):
 
 # ---- Imágenes WebP con srcset (las genera tools/generador/webp.py en img/webp/; los JPG/PNG quedan como fuente) ----
 SRC_ROOT = HERE.parent.parent
-_IMG = re.compile(r'<img\b([^>]*?)\ssrc="((?:\.\./)*|/)?img/((?:proyectos|marca|collage)/[^"]+)\.(?:jpe?g|png)"([^>]*)>')
+_IMG = re.compile(r'<img\b([^>]*?)\ssrc="((?:\.\./)*|/)?img/((?:proyectos|marca|collage|metodo)/[^"]+)\.(?:jpe?g|png|gif)"([^>]*)>')
 # Ancho con que se muestra cada imagen según su clase (el resto: media pantalla en escritorio, ancho completo en móvil)
 _SIZES = [('lab-img-half', '(max-width: 47.99em) 92vw, min(46vw, 45.75rem)'), ('lab-img', '(max-width: 91.5rem) 96vw, 91.5rem'), ('v2-hero-bg', '100vw'), ('pl-hero-bg', '100vw'), ('ideas-item', '(max-width: 40em) 45vw, 22vw'), ('brand-logo', '120px'),
           ('svc-card-img', '(max-width: 53.75em) 92vw, 46vw'), ('folio-photo', '(max-width: 40em) 150vw, 50vw')]

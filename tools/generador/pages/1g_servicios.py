@@ -71,7 +71,7 @@ _lb_body = ('''    <section class="lb-sec lb-desafio frame-grid" id="desafio" ar
         </div>
         <div class="lb-propuesta-der">
           <div class="lb-tarjetas">
-            <article class="card"><div class="pl-tarjeta-foto"><img class="pl-tarjeta-img" src="{p}img/webp/proyectos/khronos/02-960.webp" srcset="{p}img/webp/proyectos/khronos/02-480.webp 480w, {p}img/webp/proyectos/khronos/02-960.webp 960w, {p}img/webp/proyectos/khronos/02-1254.webp 1254w" sizes="(min-width: 70em) 45vw, (min-width: 40em) 60vw, 115vw" width="1254" height="1254" alt="Fila de botellas de Cerveza Khronos con etiquetas de colores para cada variedad." loading="lazy"></div><div class="pl-tarjeta-texto glass"><h3 class="pl-post-title">Construir valor <br>y diferenciación.</h3><p class="pl-post-lead">Desarrollar marcas capaces de expresar lo que hace única a una empresa, fortalecer su posicionamiento y conectar con sus audiencias.</p></div></article>
+            <article class="card"><div class="pl-tarjeta-foto"><img class="pl-tarjeta-img" src="{p}img/webp/proyectos/khronos/02-colores-variedades-960.webp" srcset="{p}img/webp/proyectos/khronos/02-colores-variedades-480.webp 480w, {p}img/webp/proyectos/khronos/02-colores-variedades-960.webp 960w, {p}img/webp/proyectos/khronos/02-colores-variedades-1254.webp 1254w" sizes="(min-width: 70em) 45vw, (min-width: 40em) 60vw, 115vw" width="1254" height="1254" alt="Fila de botellas de Cerveza Khronos con etiquetas de colores para cada variedad." loading="lazy"></div><div class="pl-tarjeta-texto glass"><h3 class="pl-post-title">Construir valor <br>y diferenciación.</h3><p class="pl-post-lead">Desarrollar marcas capaces de expresar lo que hace única a una empresa, fortalecer su posicionamiento y conectar con sus audiencias.</p></div></article>
             <article class="card"><div class="pl-tarjeta-foto"><img class="pl-tarjeta-img" src="{p}img/webp/proyectos/yomecontrolo/11-indicadores-669.webp" srcset="{p}img/webp/proyectos/yomecontrolo/11-indicadores-480.webp 480w, {p}img/webp/proyectos/yomecontrolo/11-indicadores-669.webp 669w" sizes="(min-width: 70em) 50vw, (min-width: 40em) 50vw, 92vw" width="669" height="1046" alt="Mano sosteniendo un teléfono con la pantalla «Controla tus indicadores de salud» de Yo Me Controlo." loading="lazy"></div><div class="pl-tarjeta-texto glass"><h3 class="pl-post-title">Diseñar mejores <br>experiencias y soluciones.</h3><p class="pl-post-lead">Crear o evolucionar productos digitales que respondan a necesidades reales, mejoren experiencias y generen nuevas oportunidades para el negocio.</p></div></article>
           </div>
         </div>
@@ -142,7 +142,7 @@ _lb_body = ('''    <section class="lb-sec lb-desafio frame-grid" id="desafio" ar
     </section>
 ''')
 
-page('servicios.html', 'Servicios de branding, identidad, producto digital y páginas web · Luis Vicencio',
+page('servicios.html', 'Servicios de branding, producto digital y web · Luis Vicencio',
      'Branding estratégico y diseño de productos digitales para empresas y equipos en crecimiento. Más de 8 años de experiencia. Agendemos una conversación.',
      body=_lb_body, current='servicios', contact=False, html_class='motion inicio lb', extra_css=['css/inicio.css', 'css/landing-b.css'],
      og_image='img/og/inicio.jpg', og_alt='Línea de productos Fuchi Chao: detergente, eliminador de olores y jabón anti olores')

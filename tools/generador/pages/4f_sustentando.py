@@ -46,7 +46,7 @@ _su_body = f'''    <section class="lab-head" aria-labelledby="page-title">
     '<p>Todo partió por entender qué necesitaba Sustentando en ese momento, no por lo que podía ofrecerle.</p>'
     '<p>Sustentando es una consultora chilena que acompaña a empresas en calidad e inocuidad. En 2022 su prioridad era presentarse de forma '
     'profesional: un logotipo, presentaciones comerciales y un sitio web. Diseñé una identidad simple y sólida, pensada como base para lo que vendría.</p>'
-    ) + _su_par('13-sello', '14-paleta', 'lab-pair-su-a') + _su_fig('01') + _su_text(
+    ) + _su_par('13-sello', '14-paleta', 'lab-pair-su-a') + _su_fig('01-piezas-servicios') + _su_text(
     '<p>A medida que la empresa crecía, fuimos sumando capas de trabajo según lo que su equipo necesitaba.</p>'
     '<p>Primero, una estrategia de comunicación B2B para LinkedIn, con plantillas por nivel para que el equipo publicara de forma constante y consistente. '
     'Luego, el diseño de los materiales que acompañan sus propios servicios: presentaciones, brochures y señalética de seguridad y calidad para sus clientes.</p>'
@@ -63,6 +63,6 @@ _su_body = f'''    <section class="lab-head" aria-labelledby="page-title">
 '''
 
 _su_desc = 'Caso de estudio: identidad de marca, sitio web, comunicación B2B y diseño gráfico para Sustentando, desde 2022.'
-page('proyectos/sustentando.html', 'Sustentando: identidad, sitio web y comunicación B2B para una consultora · Luis Vicencio',
+page('proyectos/sustentando.html', 'Sustentando: identidad, web y comunicación B2B · Luis Vicencio',
      _su_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
      **case_seo(_su, _su_desc), body=_su_body + case_nav(_su))

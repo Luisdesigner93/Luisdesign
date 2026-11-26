@@ -65,6 +65,6 @@ _ym_body = f'''    <section class="lab-head" aria-labelledby="page-title">
 '''
 
 _ym_desc = 'Caso de estudio: estrategia de marca, nueva identidad y UX/UI del MVP de Yomecontrolo, una startup chilena de salud preventiva.'
-page('proyectos/yomecontrolo.html', 'Yomecontrolo: estrategia de marca, identidad y UX/UI para una startup de salud · Luis Vicencio',
+page('proyectos/yomecontrolo.html', 'Yomecontrolo: marca y UX/UI para salud preventiva · Luis Vicencio',
      _ym_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
      **case_seo(_ym, _ym_desc), body=_ym_body + case_nav(_ym))
