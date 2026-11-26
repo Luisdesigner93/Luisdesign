@@ -2,10 +2,10 @@
 # Cada tarjeta: (enlace, nombre, línea bajo el nombre, etiquetas, imagen o None si falta). Textos de tools/narrativa/02-landing-marcas.md
 _more_cases = [
     ('proyectos/lab502.html', 'LAB*502', 'De una tienda de insumos a un laboratorio fotográfico con propósito, que ganó un fondo cultural con su estrategia.', ['Estrategia', 'Identidad'], None),
-    ('proyectos/sustentando.html', 'Sustentando', 'Cuatro años como aliado: de un logotipo a una consultora que consigue clientes por LinkedIn.', ['Identidad', 'Web', 'Comunicación B2B'], ('sustentando/02.jpg', 1200, 1200)),
+    ('proyectos/sustentando.html', 'Sustentando', 'Cuatro años como aliado: de un logotipo a una consultora que consigue clientes por LinkedIn.', ['Identidad', 'Web', 'Comunicación B2B'], ('sustentando/02-identidad-movil.jpg', 1200, 1200)),
     ('proyectos/uvenergy.html', 'Uvenergy', 'Una pyme de energía renovable que nació con marca en 2023 y la hizo crecer en 2025.', ['Identidad', 'Web'], ('uvenergy/01.jpg', 1600, 899)),
-    ('proyectos/botes-salvavidas.html', 'Botes Salvavidas de Valparaíso', 'Una comunicación que pone al centro su labor de rescate.', ['Comunicación', 'Web', 'Redes'], ('botes-salvavidas/01.jpg', 864, 1080)),
-    ('proyectos/khronos.html', 'Cerveza Khronos', 'Propuesta de rebranding: un nombre que encontró su sentido en "Tómate el tiempo".', ['Propuesta', 'Estrategia', 'Packaging'], ('khronos/04.jpg', 1254, 1254)),
+    ('proyectos/botes-salvavidas.html', 'Botes Salvavidas de Valparaíso', 'Una comunicación que pone al centro su labor de rescate.', ['Comunicación', 'Web', 'Redes'], ('botes-salvavidas/01-emergencias-en-el-mar.jpg', 864, 1080)),
+    ('proyectos/khronos.html', 'Cerveza Khronos', 'Propuesta de rebranding: un nombre que encontró su sentido en "Tómate el tiempo".', ['Propuesta', 'Estrategia', 'Packaging'], ('khronos/04-botella-american-pale-ale.jpg', 1254, 1254)),
 ]
 
 
@@ -29,7 +29,7 @@ HOME_MORE = f'''
       </div>
       <div class="container">
         <article class="feat-case">
-          <img src="img/proyectos/fuchi-chao/01.jpg" width="1397" height="1400" alt="Línea de productos Fuchi Chao" loading="lazy" decoding="async">
+          <img src="img/proyectos/fuchi-chao/01-linea-productos.jpg" width="1397" height="1400" alt="Línea de productos Fuchi Chao" loading="lazy" decoding="async">
           <div class="feat-case-text">
             <span class="tag">Caso destacado</span>
             <h3 class="card-title">Fuchi Chao</h3>
@@ -94,7 +94,7 @@ HOME_IDEAS = f'''
         </div>
         <a class="ideas-pill" href="#proyectos">
           <span class="ideas-pill-btn"><span class="ideas-pill-label">Ver portafolio</span><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></span>
-          <img src="img/proyectos/khronos/02.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
+          <img src="img/proyectos/khronos/02-colores-variedades.jpg" width="1254" height="1254" alt="" loading="lazy" decoding="async">
         </a>
       </div>
     </section>
@@ -147,13 +147,13 @@ HOME_MOMENTOS = '''
 
 # 4. Servicios: dos niveles con imagen y el detalle debajo (opción B elegida; el diseño se trabajará después)
 _servicios = [
-    dict(t='Identidad visual', img=('fuchi-chao/02.jpg', 2000, 1132), tags=['Naming', 'Identidad'],
+    dict(t='Identidad visual', img=('fuchi-chao/02-redes-sociales.jpg', 2000, 1132), tags=['Naming', 'Identidad'],
          para='Tu negocio ya sabe quién es y necesita verse a la altura.',
          si='estás por abrir, tienes un producto que llega a góndola o tu imagen actual quedó atrás.',
          no='solo buscas un logo rápido y barato.',
          inc='conversación inicial, naming si hace falta, logotipo, paleta, tipografía, aplicaciones (etiquetas, packaging, papelería, redes) y manual de uso.',
          casos=['Bowraps', 'Fuchi Chao (2021)'], btn='Quiero mi identidad visual'),
-    dict(t='Branding estratégico', img=('sustentando/02.jpg', 1200, 1200), tags=['Estrategia', 'Brand Compass'],
+    dict(t='Branding estratégico', img=('sustentando/02-identidad-movil.jpg', 1200, 1200), tags=['Estrategia', 'Brand Compass'],
          para='Tu negocio necesita diferenciarse, crecer o cambiar de rumbo, y tu marca tiene que mostrar el camino.',
          si='te comparan por precio, sumaste líneas de negocio o tu equipo explica la empresa de formas distintas.',
          no='necesitas resultados para mañana: la estrategia toma tiempo y tu participación.',

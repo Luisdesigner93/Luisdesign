@@ -63,6 +63,6 @@ _fc_body = f'''    <section class="lab-head" aria-labelledby="page-title">
 '''
 
 _fc_desc = 'Caso de estudio: naming, identidad, etiquetas y estrategia de marca de Fuchi Chao, la línea de productos para mascotas de Citrex.'
-page('proyectos/fuchi-chao.html', 'Fuchi Chao: naming, identidad y estrategia de marca para productos de mascotas · Luis Vicencio',
+page('proyectos/fuchi-chao.html', 'Fuchi Chao: naming y marca para mascotas · Luis Vicencio',
      _fc_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
      **case_seo(_fc, _fc_desc), body=_fc_body + case_nav(_fc))

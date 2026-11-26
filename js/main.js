@@ -420,6 +420,53 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     });
   }
 
+  // Servicios del inicio: la línea rodea el título, cruza los números en orden y, si hay más filas, vuelve por el espacio
+  // entre tarjetas para seguir de izquierda a derecha. Se calcula con la posición real de cada número.
+  function rutaServicios(sec, svgs, box) {
+    const stage = sec.querySelector('.pl-stage-servicios');
+    const nums = stage ? [...stage.querySelectorAll('.lb-servicio-num')] : [];
+    if (!nums.length) return;
+    const grid = stage.querySelector('.lb-servicios-grid').getBoundingClientRect();
+    const zona = stage.getBoundingClientRect();
+    const margen = Math.max(6, (box.right - grid.right) / 2);
+    const xI = Math.max(6, (grid.left - box.left) / 2);
+    const xD = box.width - margen;
+    const filas = [];
+    nums.forEach((n) => {
+      const r = n.getBoundingClientRect();
+      const y = r.top + r.height / 2 - box.top;
+      const carta = n.closest('.lb-servicio').getBoundingClientRect();
+      const fila = filas.find((f) => Math.abs(f.y - y) < 4);
+      if (fila) fila.fin = carta.bottom - box.top; else filas.push({ y, ini: carta.top - box.top, fin: carta.bottom - box.top });
+    });
+    filas.sort((a, b) => a.y - b.y);
+    svgs.forEach((svg) => {
+      const path = svg.querySelector('path');
+      const ini = path.getPointAtLength(0);
+      const fin = path.getPointAtLength(path.getTotalLength());
+      const yTitulo = parseFloat(getComputedStyle(sec).paddingTop) / 2;
+      const yUnion = (zona.top + (grid.top - zona.top) / 2) - box.top;
+      const ySalida = box.height - Math.min(36, (zona.bottom - stage.querySelector('.pl-servicios-cta').getBoundingClientRect().bottom) / 2);
+      const pts = [[ini.x, 0], [ini.x, yTitulo], [xD, yTitulo], [xD, yUnion], [xI, yUnion]];
+      filas.forEach((f, i) => {
+        pts.push([xI, f.y], [xD, f.y]);
+        if (i < filas.length - 1) { const entre = (f.fin + filas[i + 1].ini) / 2; pts.push([xD, entre], [xI, entre]); } // por el espacio entre filas
+      });
+      pts.push([xD, ySalida], [fin.x, ySalida], [fin.x, box.height]);
+      const radio = box.width < 640 ? 7 : 16;
+      let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+      for (let i = 1; i < pts.length - 1; i += 1) {
+        const [px, py] = pts[i - 1]; const [cx, cy] = pts[i]; const [nx, ny] = pts[i + 1];
+        const l1 = Math.hypot(cx - px, cy - py); const l2 = Math.hypot(nx - cx, ny - cy);
+        if (!l1 || !l2) continue;
+        const r = Math.min(radio, l1 / 2, l2 / 2);
+        d += ` L${(cx + ((px - cx) * r) / l1).toFixed(1)} ${(cy + ((py - cy) * r) / l1).toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${(cx + ((nx - cx) * r) / l2).toFixed(1)} ${(cy + ((ny - cy) * r) / l2).toFixed(1)}`;
+      }
+      const u = pts[pts.length - 1];
+      path.setAttribute('d', `${d} L${u[0].toFixed(1)} ${u[1].toFixed(1)}`);
+    });
+  }
+
   // Línea del hero construida sobre el titular (boceto de Luis): baja con una curva amplia, pasa por dentro de la O de
   // "DISEÑO", sale por arriba y da la vuelta, subraya "DESEAN" con una recta limpia bajo su línea base, hace un lazo
   // abajo a la derecha y sale por abajo hacia la sección siguiente. Se suaviza (smooth) y se recalcula si el titular se mueve.
@@ -528,7 +575,16 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       const hp = heroSeg.path; const fin = hp.getPointAtLength(hp.getTotalLength()); const m = hp.getScreenCTM();
       if (m) { const xPantalla = m.a * fin.x + m.c * fin.y + m.e; if (xPantalla > box.left && xPantalla < box.right) xs = xPantalla - box.left; }
     }
-    const xr = w * (mob ? 0.82 : 0.75); // la salida baja por la derecha (lejos del texto) y vuelve al centro al final
+    let xr = w * (mob ? 0.82 : 0.75); // la salida baja por la derecha (lejos del texto) y vuelve al centro al final
+    // Sale exactamente donde empieza la línea de la sección siguiente: las dos secciones pueden tener anchos distintos
+    const siguiente = sec.nextElementSibling && visible(sec.nextElementSibling).find((svg) => !svg.classList.contains('pl-thread-front'));
+    const trazoSig = siguiente && siguiente.querySelector('path');
+    const mSig = trazoSig && trazoSig.getScreenCTM();
+    if (mSig) {
+      const ini = trazoSig.getPointAtLength(0);
+      const xPantalla = mSig.a * ini.x + mSig.c * ini.y + mSig.e;
+      if (xPantalla > box.left && xPantalla < box.right) xr = xPantalla - box.left;
+    }
     const bt = r.top - box.top + r.height * 0.36; const bb = r.bottom - box.top - r.height * 0.04; const bh = bb - bt;
     const cx = r.left - box.left + r.width / 2; const bw = r.width * 0.78;
     const R = r.width * 0.95; // radio horizontal del resorte: cada vuelta sobresale a ambos lados de la botella
@@ -588,7 +644,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       const svgs = visible(sec);
       // Con .pl-stage, el dibujo (y entre 0 y 1000 del viewBox) se ajusta a ese bloque; las y negativas (de -500 a 0)
       // ocupan lo que hay encima de él (el título) y y = 1000 queda en el borde inferior de la sección
-      const stage = sec.querySelector('.pl-stage');
+      const stage = sec.querySelector('.pl-stage, .alt-stage');
       let mapY;
       if (stage) {
         const r = stage.getBoundingClientRect(); const top = r.top - box.top;
@@ -604,6 +660,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
         const delta = finAnteriorX - (mBack.a * ini.x + mBack.c * ini.y + mBack.e);
         if (Math.abs(delta) > 0.5 && Math.abs(delta) < 20) svgs.forEach((svg) => fitSvg(svg, box.width, box.height, mapY, delta));
       }
+      rutaServicios(sec, svgs, box);
       const trazoFin = (svgs.find((svg) => !svg.classList.contains('pl-thread-front')) || svgs[0]).querySelector('path');
       const fin = trazoFin.getPointAtLength(trazoFin.getTotalLength()); const mFin = trazoFin.getScreenCTM();
       if (mFin) finAnteriorX = mFin.a * fin.x + mFin.c * fin.y + mFin.e;
@@ -621,7 +678,7 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
       // Elementos que aparecen cuando la línea pasa por ellos (Sistemas: disciplinas por su punto; el título, al entrar al óvalo)
       const items = [...sec.querySelectorAll('.pl-cap .pl-dot')].map((dot) => [dot.closest('.pl-cap'), dot.getBoundingClientRect()]);
       // Marca práctica (Marca y producto): cada cartel y su icono aparecen cuando la línea pasa por su flecha
-      sec.querySelectorAll('.pl-cartel, .pl-icono').forEach((el) => items.push([el, el.getBoundingClientRect()]));
+      sec.querySelectorAll('.pl-cartel, .pl-icono, .pl-stage-servicios .lb-servicio-num').forEach((el) => items.push([el, el.getBoundingClientRect()]));
       const title = sec.querySelector('.pl-caps-title');
       if (title) { const r = title.getBoundingClientRect(); items.push([title, { left: r.left + r.width / 2, top: r.top, width: 0, height: 0 }]); }
       items.forEach(([el, r]) => {
@@ -905,10 +962,12 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
     teniaCursor = document.documentElement.classList.contains('has-cursor');
     document.documentElement.classList.remove('has-cursor');
     dialog.showModal();
-    form.querySelector('input').focus({ preventScroll: true });
+    dialog.dispatchEvent(new Event('pl:abierto'));
+    if (!form.hidden) form.querySelector('input').focus({ preventScroll: true });
   };
   dialog.addEventListener('close', () => { if (teniaCursor) document.documentElement.classList.add('has-cursor'); });
-  document.querySelectorAll('.header-actions a[href$="#contacto"], .ideas-cta, [data-abrir-contacto]').forEach((link) => {
+  // Todo enlace de contacto de la página abre el popup: encabezado, menú de celular, artículos y llamados a la acción
+  document.querySelectorAll('a[href$="#contacto"], .ideas-cta, [data-abrir-contacto]').forEach((link) => {
     link.addEventListener('click', (event) => { event.preventDefault(); abrir(); });
   });
   if (location.hash === '#conversemos') {
@@ -919,33 +978,918 @@ document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = 
   dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
   // Cierra al hacer clic fuera del popup (no al hacer clic en su contenido ni en su barra de desplazamiento)
   dialog.addEventListener('click', (event) => {
+    // Un clic en el contenido nunca cierra, aunque el popup cambie de alto al pasar de un paso a otro
+    if (event.target !== dialog) return;
     const r = dialog.getBoundingClientRect();
     const fuera = event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom;
     if (fuera) dialog.close();
   });
+  // Validación en el navegador, con los mismos límites de contacto/guardar.php.
+  // Cada error aparece bajo su campo; el mensaje muestra un contador que se va cumpliendo mientras se escribe.
+  const MIN_MENSAJE = 10;
+  const MAX_MENSAJE = 2000;
+  const textos = enIngles ? {
+    nombre: 'Enter your name (at least 2 characters).',
+    correo: 'Enter a valid email, for example name@company.com.',
+    consentimiento: 'Please accept the use of your data so I can reply.',
+    revisar: 'Please check the fields marked in red.',
+    minimo: `At least ${MIN_MENSAJE} characters`,
+    faltan: (n) => `${n} more character${n === 1 ? '' : 's'} needed · minimum ${MIN_MENSAJE}`,
+    enviando: 'Sending…',
+    fallo: 'I could not send your message. Email me at contacto@luisdesign.cl.',
+  } : {
+    nombre: 'Escribe tu nombre (mínimo 2 caracteres).',
+    correo: 'Escribe un correo válido, por ejemplo nombre@empresa.cl.',
+    consentimiento: 'Acepta el uso de tus datos para poder responderte.',
+    revisar: 'Revisa los campos marcados en rojo.',
+    minimo: `Mínimo ${MIN_MENSAJE} caracteres`,
+    faltan: (n) => `Falta${n === 1 ? '' : 'n'} ${n} caracter${n === 1 ? '' : 'es'} · mínimo ${MIN_MENSAJE}`,
+    enviando: 'Enviando…',
+    fallo: 'No pude enviar tu mensaje. Escríbeme a contacto@luisdesign.cl.',
+  };
+  form.noValidate = true;
+  const largo = (campo) => [...campo.value.trim()].length;
+  const { nombre, correo, mensaje, consentimiento } = form.elements;
+
+  // Texto de ayuda o error debajo de un campo, enlazado para lectores de pantalla
+  function crearAyuda(campo, despuesDe, clase) {
+    const ayuda = document.createElement('p');
+    ayuda.id = `${campo.id || campo.name}-ayuda`;
+    ayuda.className = clase;
+    despuesDe.after(ayuda);
+    campo.setAttribute('aria-describedby', ayuda.id);
+    return ayuda;
+  }
+  const ayudas = {
+    nombre: crearAyuda(nombre, nombre.closest('.pl-field'), 'pl-field-error'),
+    correo: crearAyuda(correo, correo.closest('.pl-field'), 'pl-field-error'),
+    consentimiento: crearAyuda(consentimiento, consentimiento.closest('.pl-check'), 'pl-field-error'),
+  };
+  ayudas.nombre.hidden = ayudas.correo.hidden = ayudas.consentimiento.hidden = true;
+  const contador = crearAyuda(mensaje, mensaje.closest('.pl-field'), 'pl-contador');
+
+  function marcar(campo, error) {
+    campo.setAttribute('aria-invalid', error ? 'true' : 'false');
+    const ayuda = ayudas[campo.name];
+    if (ayuda) { ayuda.textContent = error || ''; ayuda.hidden = !error; }
+    if (campo === consentimiento) campo.closest('.pl-check').classList.toggle('is-error', Boolean(error));
+  }
+  function pintarContador(conError) {
+    const n = largo(mensaje);
+    const cumple = n >= MIN_MENSAJE;
+    contador.textContent = cumple ? `✓ ${n} / ${MAX_MENSAJE}` : (n === 0 ? textos.minimo : textos.faltan(MIN_MENSAJE - n));
+    contador.classList.toggle('is-ok', cumple);
+    contador.classList.toggle('is-error', !cumple && conError);
+    mensaje.setAttribute('aria-invalid', !cumple && conError ? 'true' : 'false');
+    return cumple;
+  }
+  const errorDe = {
+    nombre: () => (largo(nombre) < 2 ? textos.nombre : ''),
+    correo: () => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.value.trim()) ? '' : textos.correo),
+    consentimiento: () => (consentimiento.checked ? '' : textos.consentimiento),
+  };
+  function limpiarAviso() { note.textContent = ''; note.classList.remove('is-error'); }
+
+  // El contador se actualiza siempre; un error ya mostrado desaparece apenas se corrige
+  mensaje.addEventListener('input', () => {
+    pintarContador(mensaje.getAttribute('aria-invalid') === 'true');
+    if (note.classList.contains('is-error')) limpiarAviso();
+  });
+  [nombre, correo, consentimiento].forEach((campo) => {
+    campo.addEventListener(campo === consentimiento ? 'change' : 'input', () => {
+      if (campo.getAttribute('aria-invalid') === 'true') marcar(campo, errorDe[campo.name]());
+      if (note.classList.contains('is-error')) limpiarAviso();
+    });
+  });
+  pintarContador(false);
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (!form.reportValidity()) return;
+    limpiarAviso();
+    [nombre, correo].forEach((campo) => marcar(campo, errorDe[campo.name]()));
+    const mensajeOk = pintarContador(true);
+    marcar(consentimiento, errorDe.consentimiento());
+    const primero = [nombre, correo, mensaje, consentimiento].find((campo) => campo.getAttribute('aria-invalid') === 'true');
+    if (primero || !mensajeOk) {
+      note.textContent = textos.revisar;
+      note.classList.add('is-error');
+      primero.focus();
+      return;
+    }
     submit.disabled = true;
-    note.textContent = enIngles ? 'Sending…' : 'Enviando…';
+    note.textContent = textos.enviando;
     try {
       const respuesta = await fetch(form.dataset.endpoint || 'contacto/guardar.php', { method: 'POST', body: new FormData(form), credentials: 'omit' });
       const datos = await respuesta.json();
       note.textContent = datos.mensaje;
-      if (datos.ok) form.reset();
+      note.classList.toggle('is-error', !datos.ok);
+      if (datos.ok) { form.reset(); pintarContador(false); }
     } catch (error) {
-      note.textContent = enIngles ? 'I could not send your message. Email me at contacto@luisdesign.cl.' : 'No pude enviar tu mensaje. Escríbeme a contacto@luisdesign.cl.';
+      note.textContent = textos.fallo;
+      note.classList.add('is-error');
     } finally {
       submit.disabled = false;
     }
   });
 })();
 
+// Agenda del popup, en tres pasos: día, horario y datos. Pide las horas libres a contacto/agenda.php y reserva allí.
+// Si Google no está conectado o falla, el popup muestra el formulario como respaldo. El navegador no carga nada de Google.
+(function initAgenda() {
+  const dialog = document.getElementById('pl-conversemos');
+  const raiz = document.getElementById('pl-agenda');
+  const contacto = document.getElementById('pl-form');
+  if (!dialog || !raiz || !contacto) return;
+  const en = document.documentElement.lang.startsWith('en');
+  const locale = en ? 'en-US' : 'es-CL';
+  const t = en ? {
+    cargando: '…', pasos: { semana: 'Step 1 of 3', horas: 'Step 2 of 3', datos: 'Step 3 of 3' },
+    atras: { horas: 'Back to days', datos: 'Back to times' }, conector: 'on', aLas: 'at',
+    titulos: { semana: 'Pick a day', horas: 'What time?', datos: 'Under what name?' }, iniciales: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    sinHoras: 'no times available', revisar: 'Please check the fields marked in red.',
+    nombre: 'Enter your name (at least 2 characters).', correo: 'Enter a valid email, for example name@company.com.',
+    consentimiento: 'Please accept the use of your data to schedule.', enviando: 'Scheduling…',
+    fallo: 'I could not schedule this. Please try again.', listo: (f) => `${f}, Chile time. The invitation with the Google Meet link is on its way to your email.`,
+  } : {
+    cargando: '…', pasos: { semana: 'Paso 1 de 3', horas: 'Paso 2 de 3', datos: 'Paso 3 de 3' },
+    atras: { horas: 'Volver a los días', datos: 'Volver a los horarios' }, conector: 'el', aLas: 'a las',
+    titulos: { semana: 'Elige un día', horas: '¿A qué hora?', datos: '¿A nombre de quién?' }, iniciales: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
+    sinHoras: 'sin horas disponibles', revisar: 'Revisa los campos marcados en rojo.',
+    nombre: 'Escribe tu nombre (mínimo 2 caracteres).', correo: 'Escribe un correo válido, por ejemplo nombre@empresa.cl.',
+    consentimiento: 'Acepta el uso de tus datos para poder agendar.', enviando: 'Agendando…',
+    fallo: 'No pude agendar. Inténtalo de nuevo.', listo: (f) => `${f}, hora de Chile. La invitación con el enlace de Google Meet va en camino a tu correo.`,
+  };
+  const vistas = {
+    semana: raiz.querySelector('[data-vista="semana"]'), horas: raiz.querySelector('[data-vista="horas"]'),
+    datos: raiz.querySelector('[data-vista="datos"]'), listo: raiz.querySelector('[data-vista="listo"]'),
+  };
+  const form = vistas.datos;
+  const grid = raiz.querySelector('[data-grid]');
+  const listaHoras = raiz.querySelector('[data-horas]');
+  const titulo = raiz.querySelector('.ag-titulo');
+  const paso = raiz.querySelector('[data-paso]');
+  const tituloPaso = raiz.querySelector('[data-titulo]');
+  const tituloFijo = raiz.querySelector('.ag-cab-fijo');
+  const textoFijo = tituloFijo.textContent;
+  const cabecera = raiz.querySelector('[data-cab]');
+  const nota = raiz.querySelector('[data-nota]');
+  const atras = raiz.querySelector('[data-atras]');
+  const aFormulario = raiz.querySelector('[data-a-form]');
+  const aAgenda = contacto.querySelector('[data-a-agenda]');
+  const aviso = raiz.querySelector('[data-aviso]');
+  const enviar = form.querySelector('button[type="submit"]');
+  const { nombre, correo, consentimiento } = form.elements;
+  let dias = new Map();
+  let meses = [];
+  let indice = 0;
+  let diaActivo = null;
+  let elegido = null;
+  let iniciada = false;
+  let vistaActual = 'semana';
+  let fechaElegida = '';
+
+  const fecha = (texto) => new Date(`${texto}T12:00:00Z`);
+  const fmt = (texto, opciones) => new Intl.DateTimeFormat(locale, { timeZone: 'UTC', ...opciones }).format(fecha(texto));
+  const diaLargo = (texto) => fmt(texto, { weekday: 'long', day: 'numeric', month: 'long' });
+  function verVista(nombreVista) {
+    Object.entries(vistas).forEach(([clave, el]) => { el.hidden = clave !== nombreVista; });
+    cabecera.hidden = nombreVista === 'listo';
+    vistaActual = nombreVista;
+    atras.hidden = !t.atras[nombreVista];
+    if (t.atras[nombreVista]) atras.setAttribute('aria-label', t.atras[nombreVista]);
+    const actual = ['semana', 'horas', 'datos'].indexOf(nombreVista);
+    if (actual > -1) {
+      paso.setAttribute('aria-label', t.pasos[nombreVista]);
+      [...paso.children].forEach((punto, i) => {
+        punto.classList.toggle('is-hecho', i < actual);
+        punto.classList.toggle('is-actual', i === actual);
+      });
+    }
+    aFormulario.hidden = nombreVista !== 'semana';
+    // La frase se completa en cada paso: «Agendemos meet el viernes 27 de nov a las 19:00»
+    const conFecha = nombreVista === 'horas' || nombreVista === 'datos';
+    const frase = conFecha ? `${textoFijo} ${t.conector} ${fechaElegida}` : textoFijo;
+    tituloFijo.textContent = nombreVista === 'datos' ? `${frase} ${t.aLas} ${elegido.hora}` : frase;
+    tituloFijo.classList.toggle('is-fecha', conFecha);
+    if (t.titulos[nombreVista]) tituloPaso.textContent = t.titulos[nombreVista];
+  }
+  function soloFormulario() {
+    raiz.hidden = true;
+    contacto.hidden = false;
+    aAgenda.hidden = true;
+    contacto.style.minHeight = '';
+  }
+  function volverAgenda() {
+    contacto.hidden = true;
+    raiz.hidden = false;
+  }
+  function elegirDia(dia) {
+    diaActivo = dia.fecha;
+    nota.hidden = true;
+    pintarMes();
+    const largo = diaLargo(dia.fecha);
+    const diaSemana = fmt(dia.fecha, { weekday: 'long' });
+    const numero = fmt(dia.fecha, { day: 'numeric' });
+    const mesCorto = fmt(dia.fecha, { month: 'short' }).replace('.', '');
+    fechaElegida = en ? `${diaSemana}, ${mesCorto} ${numero}` : `${diaSemana} ${numero} de ${mesCorto}`;
+    listaHoras.replaceChildren(...dia.horas.map((h) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ag-hora';
+      b.textContent = h.hora;
+      b.setAttribute('aria-label', `${largo}, ${h.hora}`);
+      b.addEventListener('click', () => {
+        elegido = { inicio: h.inicio, texto: `${largo}, ${h.hora}`, hora: h.hora };
+        aviso.textContent = '';
+        aviso.classList.remove('is-error');
+        verVista('datos');
+        nombre.focus({ preventScroll: true });
+      });
+      return b;
+    }));
+    verVista('horas');
+    listaHoras.querySelector('button').focus({ preventScroll: true });
+  }
+  // Mes completo, de lunes a domingo: solo los días con horas libres se pueden elegir
+  function pintarMes() {
+    const [anio, mes] = meses[indice].split('-').map(Number);
+    const primero = new Date(Date.UTC(anio, mes - 1, 1));
+    const total = new Date(Date.UTC(anio, mes, 0)).getUTCDate();
+    const vacios = (primero.getUTCDay() + 6) % 7;
+    titulo.textContent = new Intl.DateTimeFormat(locale, { timeZone: 'UTC', month: 'long' }).format(primero);
+    raiz.querySelector('[data-mes="-1"]').disabled = indice === 0;
+    raiz.querySelector('[data-mes="1"]').disabled = indice === meses.length - 1;
+    const celdas = Array.from({ length: vacios }, () => document.createElement('span'));
+    for (let n = 1; n <= total; n++) {
+      const clave = `${meses[indice]}-${String(n).padStart(2, '0')}`;
+      const dia = dias.get(clave);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ag-dia';
+      b.textContent = n;
+      b.disabled = !dia;
+      b.setAttribute('aria-label', dia ? diaLargo(clave) : `${diaLargo(clave)}, ${t.sinHoras}`);
+      if (clave === diaActivo) { b.classList.add('is-activo'); b.setAttribute('aria-pressed', 'true'); }
+      if (dia) b.addEventListener('click', () => elegirDia(dia));
+      celdas.push(b);
+    }
+    grid.replaceChildren(...celdas);
+  }
+  async function cargar() {
+    titulo.textContent = t.cargando;
+    grid.replaceChildren();
+    try {
+      const idioma = en ? '?idioma=en' : '';
+      const r = await fetch(raiz.dataset.endpoint + idioma, { credentials: 'omit' });
+      const datos = await r.json();
+      const libres = datos.disponible ? datos.semanas.flatMap((s) => s.dias).filter((d) => d.horas.length) : [];
+      if (!libres.length) { soloFormulario(); return false; }
+      dias = new Map(libres.map((d) => [d.fecha, d]));
+      meses = [...new Set(libres.map((d) => d.fecha.slice(0, 7)))].sort();
+      indice = 0;
+      diaActivo = null;
+      pintarMes();
+      return true;
+    } catch (error) {
+      soloFormulario();
+      return false;
+    }
+  }
+  dialog.addEventListener('pl:abierto', () => {
+    if (iniciada) return;
+    iniciada = true;
+    raiz.hidden = false;
+    contacto.hidden = true;
+    verVista('semana');
+    cargar();
+  });
+  dialog.addEventListener('close', () => {
+    if (!aAgenda.hidden) volverAgenda();
+    if (!raiz.hidden && !vistas.listo.hidden) { form.reset(); verVista('semana'); cargar(); }
+  });
+  // «O solo envíame un mensaje»: abre el formulario con la misma altura del calendario
+  aFormulario.addEventListener('click', () => {
+    contacto.style.minHeight = `${raiz.offsetHeight}px`;
+    raiz.hidden = true;
+    contacto.hidden = false;
+    aAgenda.hidden = false;
+    contacto.querySelector('input').focus({ preventScroll: true });
+  });
+  aAgenda.addEventListener('click', () => {
+    volverAgenda();
+    aAgenda.hidden = true;
+    const foco = grid.querySelector('.is-activo, .ag-dia:not(:disabled)');
+    if (foco) foco.focus({ preventScroll: true });
+  });
+  raiz.querySelector('[data-sem]').replaceChildren(...t.iniciales.map((letra) => {
+    const span = document.createElement('span');
+    span.textContent = letra;
+    return span;
+  }));
+  // Botón de servicios: abre el popup con el servicio escrito en el mensaje, sin borrar lo que la persona ya haya escrito
+  let mensajeServicio = '';
+  document.querySelectorAll('[data-servicio]').forEach((boton) => boton.addEventListener('click', () => {
+    const texto = `${en ? 'I am interested in' : 'Me interesa'}: ${boton.dataset.servicio}`;
+    [form.elements.mensaje, contacto.elements.mensaje].forEach((campo) => {
+      if (campo.value.trim() && campo.value !== mensajeServicio) return;
+      campo.value = texto;
+      campo.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    mensajeServicio = texto;
+  }));
+  raiz.querySelectorAll('[data-mes]').forEach((b) => b.addEventListener('click', () => {
+    indice += Number(b.dataset.mes);
+    pintarMes();
+  }));
+  // Al volver, el foco pasa a la opción elegida antes, porque la flecha puede desaparecer
+  atras.addEventListener('click', () => {
+    const destino = vistaActual === 'datos' ? 'horas' : 'semana';
+    verVista(destino);
+    const foco = destino === 'horas' ? listaHoras.querySelector('button') : grid.querySelector('.is-activo, .ag-dia:not(:disabled)');
+    if (foco) foco.focus({ preventScroll: true });
+  });
+
+  form.noValidate = true;
+  const errores = {};
+  [nombre, correo, consentimiento].forEach((campo) => {
+    const p = document.createElement('p');
+    p.id = `${campo.id || 'ag-consentimiento'}-ayuda`;
+    p.className = 'pl-field-error';
+    p.hidden = true;
+    (campo === consentimiento ? campo.closest('.pl-check') : campo.closest('.pl-field')).after(p);
+    campo.setAttribute('aria-describedby', p.id);
+    errores[campo.name] = p;
+    campo.addEventListener(campo === consentimiento ? 'change' : 'input', () => {
+      if (campo.getAttribute('aria-invalid') === 'true') marcar(campo);
+    });
+  });
+  const reglas = {
+    nombre: () => ([...nombre.value.trim()].length < 2 ? t.nombre : ''),
+    correo: () => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.value.trim()) ? '' : t.correo),
+    consentimiento: () => (consentimiento.checked ? '' : t.consentimiento),
+  };
+  function marcar(campo) {
+    const error = reglas[campo.name]();
+    campo.setAttribute('aria-invalid', error ? 'true' : 'false');
+    errores[campo.name].textContent = error;
+    errores[campo.name].hidden = !error;
+    if (campo === consentimiento) campo.closest('.pl-check').classList.toggle('is-error', Boolean(error));
+    return !error;
+  }
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const invalidos = [nombre, correo, consentimiento].filter((campo) => !marcar(campo));
+    if (invalidos.length) {
+      aviso.textContent = t.revisar;
+      aviso.classList.add('is-error');
+      invalidos[0].focus();
+      return;
+    }
+    aviso.textContent = t.enviando;
+    aviso.classList.remove('is-error');
+    enviar.disabled = true;
+    enviar.setAttribute('aria-busy', 'true');
+    try {
+      const cuerpo = new FormData(form);
+      cuerpo.set('inicio', elegido.inicio);
+      cuerpo.set('idioma', en ? 'en' : 'es');
+      const r = await fetch(raiz.dataset.endpoint, { method: 'POST', body: cuerpo, credentials: 'omit' });
+      const datos = await r.json();
+      if (datos.ok) {
+        raiz.querySelector('[data-listo]').textContent = t.listo(elegido.texto);
+        verVista('listo');
+        vistas.listo.focus({ preventScroll: true });
+      } else if (datos.actualizar) {
+        const hayHoras = await cargar();
+        if (hayHoras) {
+          verVista('semana');
+          nota.textContent = datos.mensaje;
+          nota.hidden = false;
+        }
+      } else if (datos.usarFormulario) {
+        soloFormulario();
+        const nota = document.getElementById('pl-form-note');
+        nota.textContent = datos.mensaje;
+        nota.classList.add('is-error');
+      } else {
+        aviso.textContent = datos.mensaje;
+        aviso.classList.add('is-error');
+      }
+    } catch (error) {
+      aviso.textContent = t.fallo;
+      aviso.classList.add('is-error');
+    } finally {
+      enviar.disabled = false;
+      enviar.removeAttribute('aria-busy');
+    }
+  });
+})();
+
+// Servicios: la persona arma su proyecto con uno o varios servicios y la barra lleva esa selección al popup de contacto
+(function initArmaProyecto() {
+  const seccion = document.getElementById('servicios');
+  const barra = seccion && seccion.querySelector('[data-proyecto]');
+  if (!barra) return;
+  const botones = [...seccion.querySelectorAll('[data-agregar]')];
+  const combos = [...seccion.querySelectorAll('[data-combo]')];
+  const nombres = barra.querySelector('[data-proyecto-nombres]');
+  const enlace = barra.querySelector('[data-servicio]');
+  const aviso = seccion.querySelector('[data-proyecto-aviso]');
+  const elegidos = new Set();
+  const piezas = new Map();
+  const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const curva = 'cubic-bezier(.2, .8, .2, 1)';
+  const esMovil = window.matchMedia('(max-width: 39.99em)');
+  const centro = () => (esMovil.matches ? 'translateX(-50%)' : 'translateX(0)');
+  // En móvil entra desde arriba, bajo el header. Desde tablet entra desde la derecha
+  const fuera = () => (esMovil.matches ? 'translateX(-50%) translateY(-24px)' : 'translateX(24px)');
+  let salidaBarra = null;
+  let pulso = null;
+
+  // Cada servicio es una pieza: la nueva entra, la quitada sale y las demás se deslizan a su nuevo lugar
+  function moverPiezas(lista) {
+    const animar = !sinMovimiento.matches && !barra.hidden;
+    const caja = nombres.getBoundingClientRect();
+    const antes = new Map([...piezas].map(([nombre, el]) => [nombre, el.getBoundingClientRect()]));
+    const nuevas = new Set();
+    [...piezas].forEach(([nombre, el]) => {
+      if (lista.includes(nombre)) return;
+      piezas.delete(nombre);
+      if (!animar) { el.remove(); return; }
+      const r = antes.get(nombre);
+      el.getAnimations().forEach((a) => a.cancel());
+      el.classList.add('is-sale');
+      el.style.left = `${r.left - caja.left}px`;
+      el.style.top = `${r.top - caja.top}px`;
+      nombres.append(el);
+      el.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-10px) scale(.96)' }], { duration: 220, easing: 'ease-in', fill: 'forwards' })
+        .finished.then(() => el.remove(), () => el.remove());
+    });
+    lista.forEach((nombre, i) => {
+      let el = piezas.get(nombre);
+      if (!el) {
+        el = document.createElement('span');
+        el.className = 'lb-pieza';
+        const boton = botones.find((b) => b.dataset.agregar === nombre);
+        const icono = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const uso = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        uso.setAttribute('href', boton.querySelector('use').getAttribute('href').replace('i-check', boton.dataset.icono));
+        icono.setAttribute('class', 'icon');
+        icono.setAttribute('aria-hidden', 'true');
+        icono.append(uso);
+        el.append(icono, nombre);
+        piezas.set(nombre, el);
+        nuevas.add(el);
+      }
+      el.classList.toggle('con-mas', i > 0);
+      if (nombres.children[i] !== el) nombres.insertBefore(el, nombres.children[i] || null);
+    });
+    if (!animar) return;
+    piezas.forEach((el, nombre) => {
+      if (nuevas.has(el)) {
+        el.animate([
+          { opacity: 0, transform: 'translateY(12px)', color: 'var(--lima-deep)' },
+          { opacity: 1, transform: 'none', color: 'var(--lima-deep)', offset: 0.45 },
+          { opacity: 1, transform: 'none' },
+        ], { duration: 620, easing: curva });
+        return;
+      }
+      const previo = antes.get(nombre);
+      el.getAnimations().forEach((a) => a.cancel());
+      const ahora = el.getBoundingClientRect();
+      const dx = previo.left - ahora.left;
+      const dy = previo.top - ahora.top;
+      if (dx || dy) el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 340, easing: curva });
+    });
+  }
+
+  function latido(agrega) {
+    if (sinMovimiento.matches) return;
+    if (pulso) pulso.cancel();
+    const medio = agrega ? { transform: `${centro()} scale(1.015)`, offset: 0.35 } : { transform: `${centro()} scale(.988)`, offset: 0.35 };
+    pulso = barra.animate([{ transform: `${centro()} scale(1)` }, medio, { transform: `${centro()} scale(1)` }], { duration: 420, easing: curva });
+  }
+
+  function mostrarBarra(lista) {
+    const cantidadAntes = piezas.size;
+    if (salidaBarra) { salidaBarra.cancel(); salidaBarra = null; }
+    if (lista.length) {
+      const estabaOculta = barra.hidden;
+      barra.hidden = false;
+      moverPiezas(lista);
+      if (estabaOculta && !sinMovimiento.matches) {
+        barra.animate([{ opacity: 0, transform: fuera() }, { opacity: 1, transform: centro() }], { duration: 380, easing: curva });
+      } else if (lista.length !== cantidadAntes || !estabaOculta) {
+        latido(lista.length >= cantidadAntes);
+      }
+      return;
+    }
+    moverPiezas(lista);
+    if (barra.hidden || sinMovimiento.matches) { barra.hidden = true; return; }
+    salidaBarra = barra.animate([{ opacity: 1, transform: centro() }, { opacity: 0, transform: fuera() }], { duration: 260, easing: 'ease-in', fill: 'forwards' });
+    salidaBarra.onfinish = () => {
+      barra.hidden = true;
+      salidaBarra.cancel();
+      salidaBarra = null;
+    };
+  }
+
+  function pintar() {
+    const lista = botones.map((b) => b.dataset.agregar).filter((n) => elegidos.has(n));
+    const texto = lista.join(' + ');
+    botones.forEach((b) => {
+      const activo = elegidos.has(b.dataset.agregar);
+      b.closest('.lb-servicio').classList.toggle('is-elegido', activo);
+      b.querySelector('[data-agregar-txt]').textContent = activo ? 'Agregado' : 'Agregar';
+    });
+    combos.forEach((c) => {
+      const partes = c.dataset.combo.split('|');
+      c.setAttribute('aria-pressed', String(partes.length === elegidos.size && partes.every((n) => elegidos.has(n))));
+    });
+    enlace.dataset.servicio = texto;
+    mostrarBarra(lista);
+    document.documentElement.classList.toggle('lb-con-proyecto', lista.length > 0);
+    aviso.textContent = lista.length ? `Tu proyecto: ${texto}` : 'Selección vacía';
+  }
+
+  botones.forEach((b) => b.addEventListener('click', () => {
+    const nombre = b.dataset.agregar;
+    if (!elegidos.delete(nombre)) elegidos.add(nombre);
+    pintar();
+  }));
+  combos.forEach((c) => c.addEventListener('click', () => {
+    const quitar = c.getAttribute('aria-pressed') === 'true';
+    elegidos.clear();
+    if (!quitar) c.dataset.combo.split('|').forEach((n) => elegidos.add(n));
+    pintar();
+  }));
+  // Desde tablet el panel acompaña solo mientras la sección de servicios ocupa el centro de la pantalla
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entrada]) => barra.classList.toggle('is-fuera', !entrada.isIntersecting), { rootMargin: '-45% 0px -45% 0px' }).observe(seccion);
+  }
+  barra.querySelector('[data-proyecto-vaciar]').addEventListener('click', () => {
+    elegidos.clear();
+    pintar();
+    botones[0].focus({ preventScroll: true });
+  });
+})();
+
+// Servicios: en móvil y tablet cada lista de entregables parte plegada en dos puntos y medio. Con cuatro columnas se ve completa
+(function initEntregables() {
+  const items = [...document.querySelectorAll('.lb-incluye')].map((caja) => ({ lista: caja.querySelector('ul'), boton: caja.querySelector('.lb-incluye-btn'), abierto: false }));
+  if (!items.length) return;
+  const plegable = window.matchMedia('(max-width: 74.99em)');
+  const dosColumnas = window.matchMedia('(min-width: 40em)');
+  const altoPlegado = (lista) => {
+    const tercero = lista.children[2];
+    return tercero.offsetTop + tercero.offsetHeight / 2;
+  };
+  function poner(item, abierto) {
+    const { lista, boton } = item;
+    item.abierto = abierto;
+    lista.classList.toggle('is-plegado', !abierto);
+    lista.style.maxHeight = `${abierto ? lista.scrollHeight : altoPlegado(lista)}px`;
+    boton.setAttribute('aria-expanded', String(abierto));
+    const enIngles = document.documentElement.lang.startsWith('en');
+    boton.querySelector('[data-incluye-txt]').textContent = abierto ? (enIngles ? 'Show less' : 'Ver menos') : (enIngles ? `See all ${lista.children.length} deliverables` : `Ver los ${lista.children.length} entregables`);
+  }
+  function aplicar() {
+    items.forEach((item) => {
+      item.boton.hidden = !plegable.matches;
+      if (plegable.matches) {
+        poner(item, item.abierto);
+      } else {
+        item.lista.classList.remove('is-plegado');
+        item.lista.style.removeProperty('max-height');
+      }
+    });
+  }
+  items.forEach((item) => item.boton.addEventListener('click', () => {
+    const abrir = !item.abierto;
+    // En dos columnas se abre la fila completa para que las tarjetas sigan parejas
+    const indice = items.indexOf(item);
+    const fila = dosColumnas.matches ? items.slice(indice - (indice % 2), indice - (indice % 2) + 2) : [item];
+    fila.forEach((i) => poner(i, abrir));
+  }));
+  const reiniciar = () => {
+    items.forEach((item) => { item.abierto = false; });
+    aplicar();
+  };
+  plegable.addEventListener('change', reiniciar);
+  dosColumnas.addEventListener('change', reiniciar);
+  window.addEventListener('resize', aplicar, { passive: true });
+  aplicar();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(aplicar);
+})();
+
+// Servicios: la propuesta se fija y sus dos tarjetas pasan de 80/20 a 20/80 con el scroll
+(function initPropuesta() {
+  const seccion = document.querySelector('.lb-propuesta');
+  if (!seccion || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fijo = seccion.querySelector('.lb-propuesta-grid');
+  const titulo = seccion.querySelector('h2');
+  const tarjetas = [...seccion.querySelectorAll('.lb-tarjetas .card')];
+  if (tarjetas.length !== 2) return;
+  const escritorio = window.matchMedia('(min-width: 70em)');
+  let activo = false;
+  let agendado = false;
+
+  const datos = () => ({
+    recorrido: seccion.offsetHeight - fijo.offsetHeight,
+    inicio: seccion.getBoundingClientRect().top + window.scrollY - parseFloat(getComputedStyle(fijo).top),
+  });
+  function pintar() {
+    agendado = false;
+    if (!activo) return;
+    const { recorrido, inicio } = datos();
+    const segunda = recorrido > 0 && (window.scrollY - inicio) / recorrido >= 0.5;
+    tarjetas[0].classList.toggle('is-abierta', !segunda);
+    tarjetas[1].classList.toggle('is-abierta', segunda);
+  }
+  function agendar() {
+    if (agendado) return;
+    agendado = true;
+    window.requestAnimationFrame(pintar);
+  }
+  function ajustar() {
+    seccion.classList.add('is-dos');
+    const estilo = getComputedStyle(fijo);
+    const libre = fijo.clientHeight - parseFloat(estilo.paddingTop) - parseFloat(estilo.paddingBottom);
+    // En columnas el título va al lado; apilado, deben caber título, tarjetas y botón
+    activo = escritorio.matches ? titulo.offsetHeight + 76 <= libre && libre >= 360 : titulo.offsetHeight + 40 + 24 + 340 <= libre;
+    seccion.classList.toggle('is-dos', activo);
+    if (!activo) tarjetas.forEach((t) => t.classList.remove('is-abierta'));
+    agendar();
+  }
+  // Un toque de flecha pasa de A a B, y el siguiente continúa a la sección de servicios
+  function tecla(e) {
+    if (!activo || e.altKey || e.ctrlKey || e.metaKey || document.querySelector('dialog[open]')) return;
+    if (e.target.closest && e.target.closest(e.key === ' ' ? 'a, button, input, textarea, select, [contenteditable]' : 'input, textarea, select, [contenteditable]')) return;
+    const baja = e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey);
+    const sube = e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey);
+    if (!baja && !sube) return;
+    const { recorrido, inicio } = datos();
+    const y = window.scrollY;
+    if (baja ? (y < inicio - 1 || y >= inicio + recorrido - 1) : (y <= inicio + 1 || y > inicio + recorrido + 1)) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    const enSegunda = (y - inicio) / recorrido >= 0.5;
+    let top;
+    if (baja) top = enSegunda ? inicio + recorrido + fijo.offsetHeight : inicio + recorrido * 0.52;
+    else top = enSegunda ? inicio : inicio - 160;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+  window.addEventListener('keydown', tecla);
+  window.addEventListener('scroll', agendar, { passive: true });
+  window.addEventListener('resize', ajustar, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
+  ajustar();
+})();
+
+// Servicios: «Cómo trabajo» se fija en pantalla y cada tramo de scroll revela una tarjeta. Si no cabe, aparecen en secuencia al bajar
+(function initPasos() {
+  const seccion = document.querySelector('.lb-proceso');
+  const lista = seccion && seccion.querySelector('.lb-pasos');
+  if (!lista || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fijo = seccion.querySelector('.lb-proceso-fijo');
+  const cabecera = seccion.querySelector('.lb-proceso-top');
+  const tarjetas = [...lista.children];
+  lista.classList.add('anima');
+  let fijado = false;
+  let agendado = false;
+
+  // Trazo flúor decorativo: un tramo por tarjeta, de un número al siguiente, y el último sale por la derecha
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const vector = document.createElementNS(svgNS, 'svg');
+  vector.setAttribute('class', 'lb-proceso-vector');
+  vector.setAttribute('aria-hidden', 'true');
+  vector.setAttribute('focusable', 'false');
+  const tramos = tarjetas.map(() => {
+    const tramo = document.createElementNS(svgNS, 'path');
+    tramo.setAttribute('pathLength', '1');
+    tramo.setAttribute('stroke-dasharray', '1 1');
+    vector.append(tramo);
+    return tramo;
+  });
+  fijo.prepend(vector);
+  const escritorio = window.matchMedia('(min-width: 70em)');
+
+  function posicion(el) {
+    let x = 0;
+    let y = 0;
+    for (let n = el; n && n !== fijo; n = n.offsetParent) {
+      x += n.offsetLeft;
+      y += n.offsetTop;
+    }
+    return { x, y };
+  }
+  function trazar() {
+    if (!fijado || !escritorio.matches) return;
+    const titulo = posicion(cabecera.querySelector('h2')).y;
+    const puntos = tarjetas.map((tarjeta) => {
+      const numero = tarjeta.querySelector('.lb-paso-num');
+      const p = posicion(numero);
+      const em = parseFloat(getComputedStyle(numero).fontSize);
+      return { x: p.x + em * 0.385, y: p.y + numero.offsetHeight / 2 };
+    });
+    const alturas = [1, 1.14, 0.94];
+    const base = Math.max(90, Math.min(200, (puntos[0].y - titulo) * 0.62));
+    tramos.forEach((tramo, i) => {
+      const a = puntos[i];
+      const b = puntos[i + 1];
+      if (b) {
+        const dx = b.x - a.x;
+        const h = base * alturas[i];
+        tramo.setAttribute('d', `M${a.x} ${a.y}C${a.x + dx * 0.3} ${a.y - h * 0.62} ${a.x + dx * 0.6} ${a.y - h} ${a.x + dx * 0.78} ${a.y - h}C${a.x + dx * 0.93} ${a.y - h} ${b.x} ${a.y - h * 0.45} ${b.x} ${b.y}`);
+      } else {
+        const finX = fijo.clientWidth + parseFloat(getComputedStyle(seccion).paddingRight) + 24;
+        const finY = Math.max(12, a.y - base * 2.1);
+        const dx = finX - a.x;
+        const dy = a.y - finY;
+        tramo.setAttribute('d', `M${a.x} ${a.y}C${a.x + dx * 0.3} ${a.y - dy * 0.42} ${a.x + dx * 0.62} ${a.y - dy * 0.96} ${finX} ${finY}`);
+      }
+    });
+  }
+
+  function medir() {
+    seccion.classList.add('is-fijo');
+    // En móvil y tablet, desde la tercera tarjeta el título sale y la pila sube hasta 8 px bajo el header
+    seccion.style.setProperty('--alto-cab', `${escritorio.matches ? 0 : Math.max(0, posicion(lista).y - 8)}px`);
+    const estilo = getComputedStyle(fijo);
+    const libre = fijo.clientHeight - parseFloat(estilo.paddingTop) - parseFloat(estilo.paddingBottom);
+    if (escritorio.matches) {
+      fijado = cabecera.offsetHeight + parseFloat(getComputedStyle(cabecera).marginBottom) + lista.offsetHeight <= libre;
+    } else {
+      // Deben caber el título con dos tarjetas y, sin título, la pila completa
+      const base = fijo.clientHeight - parseFloat(estilo.paddingBottom);
+      const pestana = parseFloat(getComputedStyle(lista).getPropertyValue('--pestana')) || 0;
+      fijado = posicion(lista).y + pestana + tarjetas[1].offsetHeight <= base && 8 + lista.offsetHeight <= base;
+    }
+    seccion.classList.toggle('is-fijo', fijado);
+  }
+  function pintarFijo() {
+    const caja = seccion.getBoundingClientRect();
+    const recorrido = caja.height - fijo.offsetHeight;
+    const avance = recorrido > 0 ? (parseFloat(getComputedStyle(fijo).top) - caja.top) / recorrido : 1;
+    const actual = avance < (escritorio.matches ? -0.04 : -0.2) ? -1 : Math.max(0, Math.min(tarjetas.length - 1, Math.floor(avance * tarjetas.length)));
+    tarjetas.forEach((tarjeta, i) => {
+      tarjeta.classList.toggle('is-visible', i <= actual);
+      tarjeta.classList.toggle('is-pasada', i < actual);
+      tarjeta.toggleAttribute('aria-current', i === actual);
+    });
+    seccion.classList.toggle('pila-arriba', !escritorio.matches && actual >= 2);
+    // El trazo llega al número siguiente justo cuando se abre su tarjeta
+    const tramoActual = avance * tramos.length;
+    tramos.forEach((tramo, i) => {
+      const lleno = Math.max(0, Math.min(1, tramoActual - i));
+      tramo.style.strokeDashoffset = String(1 - lleno);
+      tramo.style.visibility = lleno > 0 ? 'visible' : 'hidden';
+    });
+  }
+  function pintarSecuencia() {
+    const alto = window.innerHeight;
+    tarjetas.forEach((tarjeta) => {
+      tarjeta.classList.remove('is-pasada');
+      tarjeta.removeAttribute('aria-current');
+      const columna = tarjetas.filter((t) => t.offsetTop === tarjeta.offsetTop).indexOf(tarjeta);
+      if (tarjeta.getBoundingClientRect().top < alto * (0.9 - columna * 0.1)) tarjeta.classList.add('is-visible');
+    });
+  }
+  function pintar() {
+    agendado = false;
+    if (fijado) pintarFijo();
+    else pintarSecuencia();
+  }
+  function agendar() {
+    if (agendado) return;
+    agendado = true;
+    window.requestAnimationFrame(pintar);
+  }
+  function ajustar() {
+    medir();
+    trazar();
+    agendar();
+  }
+  // Con la sección fijada, cada toque de flecha, Avanzar/Retroceder página o espacio mueve exactamente una tarjeta
+  let destino = null;
+  let soltar = 0;
+  function teclaPaso(e) {
+    if (!fijado || e.altKey || e.ctrlKey || e.metaKey || document.querySelector('dialog[open]') || document.documentElement.classList.contains('has-drawer')) return;
+    if (e.target.closest && e.target.closest(e.key === ' ' ? 'a, button, input, textarea, select, [contenteditable]' : 'input, textarea, select, [contenteditable]')) return;
+    const baja = e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey);
+    const sube = e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey);
+    if (!baja && !sube) return;
+    const recorrido = seccion.offsetHeight - fijo.offsetHeight;
+    const inicio = seccion.getBoundingClientRect().top + window.scrollY - parseFloat(getComputedStyle(fijo).top);
+    const y = window.scrollY;
+    if (destino === null && (baja ? (y < inicio - 1 || y >= inicio + recorrido - 1) : (y <= inicio + 1 || y > inicio + recorrido + 1))) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    const total = tarjetas.length;
+    const actual = destino !== null ? destino : Math.max(0, Math.min(total - 1, Math.floor(((y - inicio) / recorrido) * total)));
+    const siguiente = actual + (baja ? 1 : -1);
+    let top;
+    if (siguiente >= total) {
+      const proxima = seccion.nextElementSibling;
+      top = proxima.getBoundingClientRect().top + window.scrollY - document.querySelector('.site-header').offsetHeight;
+      destino = null;
+    } else if (siguiente < 0) {
+      top = inicio - 160;
+      destino = null;
+    } else {
+      top = inicio + (recorrido * (siguiente + 0.04)) / total;
+      destino = siguiente;
+    }
+    window.scrollTo({ top, behavior: 'smooth' });
+    clearTimeout(soltar);
+    soltar = setTimeout(() => { destino = null; }, 700);
+  }
+  window.addEventListener('keydown', teclaPaso);
+  window.addEventListener('scroll', agendar, { passive: true });
+  window.addEventListener('resize', ajustar, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
+  ajustar();
+})();
+
+// Servicios: cada bloque entra al aparecer en pantalla, en secuencia con los que llegan junto a él, y las imágenes tienen un parallax suave
+(function initScrollLanding() {
+  const raiz = document.documentElement;
+  if (!raiz.classList.contains('lb') || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  raiz.classList.add('lb-anima');
+  const bloques = document.querySelectorAll('.lb-propuesta h2, .lb-tarjetas .card, .lb-servicios-cab > *, .lb-servicio, .lb-proceso-top > *, .lb-exp h2, .lb-exp-pie > *, .lb-casos > li, .lb-contacto h2, .lb-contacto-cta, .lb-contacto-pie > div, .lb-retrato');
+  const contador = document.querySelector('.lb-anios strong');
+
+  function contar() {
+    const inicio = performance.now();
+    const paso = (ahora) => {
+      const avance = Math.min((ahora - inicio) / 900, 1);
+      contador.textContent = `+${Math.round(8 * (1 - (1 - avance) ** 3))}`;
+      if (avance < 1) requestAnimationFrame(paso);
+    };
+    requestAnimationFrame(paso);
+  }
+  function mostrar(el, turno) {
+    el.style.setProperty('--rv-i', turno);
+    el.classList.add('is-visto');
+    if (el.querySelector('.lb-subraya')) el.classList.add('lb-marcado');
+    if (contador && el.contains(contador)) contar();
+    // Al terminar se retiran las clases para devolverle al elemento sus propias transiciones
+    setTimeout(() => {
+      el.classList.remove('lb-rv', 'is-visto');
+      el.style.removeProperty('--rv-i');
+    }, 900 + turno * 110);
+  }
+  const observador = new IntersectionObserver((entradas) => {
+    let turno = 0;
+    entradas.forEach((entrada) => {
+      const yaPaso = entrada.boundingClientRect.bottom < 0;
+      if (!entrada.isIntersecting && !yaPaso) return;
+      observador.unobserve(entrada.target);
+      mostrar(entrada.target, yaPaso ? 0 : turno);
+      if (!yaPaso) turno += 1;
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.04 });
+  bloques.forEach((el) => {
+    el.classList.add('lb-rv');
+    observador.observe(el);
+  });
+
+  const conParallax = [
+    ...[...document.querySelectorAll('.lb-tarjetas .pl-tarjeta-img')].map((el) => ({ el, ref: el.closest('.card'), v: 0.06, tope: 0.04 })),
+    { el: document.querySelector('.lb-desafio-img > img:first-child'), ref: document.querySelector('.lb-desafio-img'), v: 0.05, tope: 0.05 },
+    { el: document.querySelector('.lb-desafio-img i'), ref: document.querySelector('.lb-desafio-img'), v: -0.05, tope: 0.08 },
+    { el: document.querySelector('.lb-contacto-logo'), ref: document.querySelector('.lb-contacto-top'), v: 0.06, tope: 0.08 },
+  ].filter((p) => p.el && p.ref);
+  const amplio = window.matchMedia('(min-width: 40em)');
+  let agendado = false;
+  function moverParallax() {
+    agendado = false;
+    const alto = window.innerHeight;
+    conParallax.forEach(({ el, ref, v, tope }) => {
+      if (!amplio.matches) { el.style.removeProperty('translate'); return; }
+      const r = ref.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > alto + 80) return;
+      const limite = r.height * tope;
+      const y = Math.max(-limite, Math.min(limite, (r.top + r.height / 2 - alto / 2) * v));
+      el.style.translate = `0 ${y.toFixed(1)}px`;
+    });
+  }
+  function agendarParallax() {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(moverParallax);
+  }
+  window.addEventListener('scroll', agendarParallax, { passive: true });
+  window.addEventListener('resize', agendarParallax, { passive: true });
+  agendarParallax();
+})();
+
 // Inicio: los títulos de sección se mueven como el del hero. Cada palabra se separa en su propio elemento; las palabras
 // se agrupan por línea y cada línea entra desde abajo y se desplaza en horizontal con el scroll (una a la izquierda y la
 // siguiente a la derecha). Solo en la home (html.inicio); el hero y el titular de contacto tienen su propio código.
 (function initSectionTitles() {
-  if (!document.documentElement.classList.contains('inicio') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // La landing B (html.lb) usa títulos estáticos
+  if (!document.documentElement.classList.contains('inicio') || document.documentElement.classList.contains('lb') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const titulos = [...document.querySelectorAll('main h2[id]')]
     .filter((h) => !h.classList.contains('pl-anim-title') && !h.classList.contains('ideas-title') && !h.closest('dialog'));
   if (!titulos.length) return;

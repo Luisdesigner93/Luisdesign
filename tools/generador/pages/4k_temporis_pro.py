@@ -68,6 +68,6 @@ _tp_body = f'''    <section class="lab-head" aria-labelledby="page-title">
 '''
 
 _tp_desc = 'Caso de estudio: rebranding y definición de producto de Temporis Pro, una plataforma B2B de inteligencia operacional industrial de Bytequest.'
-page('proyectos/temporis-pro.html', 'Temporis Pro: marca y producto para una plataforma industrial · Luis Vicencio',
+page('proyectos/temporis-pro.html', 'Temporis Pro: marca y producto industrial · Luis Vicencio',
      _tp_desc, current='proyectos', ogtype='article', contact=False, html_class='motion inicio caso', extra_css=['css/inicio.css'],
      **case_seo(_tp, _tp_desc), body=_tp_body + case_nav(_tp))

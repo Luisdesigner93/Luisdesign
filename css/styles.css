@@ -51,6 +51,9 @@
   --glow: var(--lima-soft);
   --success: #1f7a55;
   --success-soft: #ddf3e9;
+  /* Error: rojo legible sobre blanco (6.5:1) y su versión para fondo oscuro */
+  --error: #b3261e;
+  --error-on-dark: #ff9c8f;
   /* Foco del teclado: negro, porque el flúor no se ve sobre blanco */
   --focus: var(--ink);
 
@@ -174,23 +177,23 @@ p { margin: 0; }
 .btn-outline { background: var(--surface); color: var(--ink); border-color: var(--line-control); }
 .btn:is(.btn-primary, .btn-secondary, .btn-outline):active { background: var(--night); color: var(--on-night); border-color: var(--night); box-shadow: none; }
 /* Sobre fondo oscuro (secciones oscuras del inicio, aviso de cookies, formulario de contacto o .on-dark) */
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn:focus-visible { box-shadow: 0 0 0 2px var(--night), 0 0 0 4px var(--lima-deep); }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn-primary { background: var(--on-night); color: var(--ink); box-shadow: none; }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn-secondary { background: color-mix(in srgb, var(--cream) 10%, transparent); color: var(--cream); border-color: transparent; }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn:is(.btn-primary, .btn-secondary, .btn-outline):hover { background: var(--lima); color: var(--ink); border-color: var(--lima); }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn-outline { background: transparent; color: var(--cream); border-color: color-mix(in srgb, var(--cream) 40%, transparent); }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn:focus-visible { box-shadow: 0 0 0 2px var(--night), 0 0 0 4px var(--lima-deep); }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn-primary { background: var(--on-night); color: var(--ink); box-shadow: none; }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn-secondary { background: color-mix(in srgb, var(--cream) 10%, transparent); color: var(--cream); border-color: transparent; }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn:is(.btn-primary, .btn-secondary, .btn-outline):hover { background: var(--lima); color: var(--ink); border-color: var(--lima); }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn-outline { background: transparent; color: var(--cream); border-color: color-mix(in srgb, var(--cream) 40%, transparent); }
 /* Sobre oscuro el click también es negro; un borde crema lo separa del fondo */
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn:is(.btn-primary, .btn-secondary, .btn-outline):active { background: var(--night); color: var(--cream); border-color: color-mix(in srgb, var(--cream) 50%, transparent); }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn:is(.btn-primary, .btn-secondary, .btn-outline):active { background: var(--night); color: var(--cream); border-color: color-mix(in srgb, var(--cream) 50%, transparent); }
 /* Inactivo (deshabilitado): :disabled o aria-disabled="true" */
 .btn:is(:disabled, [aria-disabled="true"]), .btn:is(:disabled, [aria-disabled="true"]):is(:hover, :active) {
   background: var(--surface-sunken); color: var(--ink-subtle); border-color: transparent; box-shadow: none; transform: none; cursor: not-allowed; }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn:is(:disabled, [aria-disabled="true"]), :is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn:is(:disabled, [aria-disabled="true"]):is(:hover, :active) {
+:is(.on-dark, .pl-dark, .cookie-banner) .btn:is(:disabled, [aria-disabled="true"]), :is(.on-dark, .pl-dark, .cookie-banner) .btn:is(:disabled, [aria-disabled="true"]):is(:hover, :active) {
   background: color-mix(in srgb, var(--cream) 6%, transparent); color: color-mix(in srgb, var(--cream) 45%, transparent); }
 /* Cargando: aria-busy="true". El texto se oculta (el botón conserva su ancho) y aparece un indicador giratorio */
 .btn[aria-busy="true"] { position: relative; color: transparent; pointer-events: none; --btn-spin: var(--ink); }
 .btn-primary[aria-busy="true"] { --btn-spin: var(--on-night); }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn-primary[aria-busy="true"] { --btn-spin: var(--ink); }
-:is(.on-dark, .pl-dark, .cookie-banner, .pl-dialog) .btn:is(.btn-secondary, .btn-outline)[aria-busy="true"] { --btn-spin: var(--cream); }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn-primary[aria-busy="true"] { --btn-spin: var(--ink); }
+:is(.on-dark, .pl-dark, .cookie-banner) .btn:is(.btn-secondary, .btn-outline)[aria-busy="true"] { --btn-spin: var(--cream); }
 .btn[aria-busy="true"] > * { visibility: hidden; }
 .btn[aria-busy="true"]::after { content: ""; position: absolute; inset: 0; width: 16px; height: 16px; margin: auto; border: 2px solid var(--btn-spin); border-right-color: transparent; border-radius: 50%; animation: btn-giro .7s linear infinite; }
 @keyframes btn-giro { to { transform: rotate(360deg); } }
@@ -302,8 +305,13 @@ button.link-arrow { padding: 0; border: 0; background: none; font: inherit; font
   .main-nav .lang-switch a:not([aria-current]), .main-nav .lang-switch span { color: #3d3d3d; }
   .nav-foot { display: grid; gap: var(--space-4); margin-top: auto; padding-top: var(--space-8); }
   .nav-foot-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
-  .main-nav .nav-social { padding: var(--space-2) var(--space-2); border-radius: var(--radius-pill); font-size: 14px; color: var(--ink); }
-  .main-nav .nav-social:hover { color: var(--ink); background: var(--surface-sunken); }
+  /* Redes en el pie del menú: íconos en cápsula a la derecha, con los estados de los botones */
+  .nav-social-row { display: flex; gap: var(--space-2); margin-left: auto; }
+  .main-nav .nav-social { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--ink); transition: background-color .2s var(--ease), color .2s var(--ease), transform .12s var(--ease); }
+  .main-nav .nav-social .icon { width: 20px; height: 20px; }
+  .main-nav .nav-social:hover { color: var(--ink); background: var(--lima); }
+  .main-nav .nav-social:active { color: var(--on-night); background: var(--night); transform: scale(.97); }
+  .main-nav .nav-social:focus-visible { outline: 0; box-shadow: 0 0 0 2px var(--frame), 0 0 0 4px var(--lima-deep); }
 
   /* Entrada escalonada de cada elemento */
   .main-nav > * { opacity: 0; transform: translateY(14px); transition: opacity .4s var(--ease), transform .5s var(--ease); }
@@ -939,12 +947,17 @@ html.has-drawer { overflow: hidden; }
 .site-footer { padding-block: var(--space-10) var(--space-10); font-size: 13px; line-height: 20px; color: var(--ink-muted); }
 .footer-grid { display: grid; grid-template-columns: 1.4fr repeat(2, 1fr); gap: var(--space-8); padding-bottom: var(--space-8); border-bottom: 1px solid var(--line); }
 .footer-grid .brand { font-size: 14px; margin-bottom: var(--space-3); }
+.footer-intro { max-width: 46ch; }
 .footer-grid h2 { font-size: 11px; line-height: 16px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-subtle); font-weight: 500; margin-bottom: var(--space-3); }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
 /* Área táctil de al menos 44 px en los enlaces del pie */
 .footer-grid a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; }
 .footer-grid a:hover { color: var(--accent-ink); }
 .footer-grid .footer-social { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); margin-top: var(--space-1); }
+/* Redes del footer como iconos: área táctil de 44 px; el icono se alinea con el texto de arriba */
+.footer-grid .footer-redes { gap: 0; margin-left: -12px; }
+.footer-grid .footer-redes a { justify-content: center; width: 44px; }
+.footer-grid .footer-redes .icon { width: 20px; height: 20px; }
 .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3) var(--space-6); padding-top: var(--space-6); }
 @media (max-width: 45em) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }
 

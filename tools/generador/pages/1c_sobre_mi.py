@@ -68,7 +68,7 @@ def _sobre_cuerpo(t):
       <div class="pl-inner">
         <div class="narrow">
           <figure class="sobre-foto">
-            <img src="img/marca/luis-vicencio-escena.png" width="1536" height="1024" alt="{foto_alt}" loading="lazy" decoding="async">
+            <img src="{{p}}img/marca/luis-vicencio-escena.png" width="1536" height="1024" alt="{foto_alt}" loading="lazy" decoding="async">
           </figure>
         </div>
       </div>

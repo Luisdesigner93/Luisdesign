@@ -3,7 +3,7 @@
 # y una grilla de tarjetas (imagen, nombre y flecha). Estilos en css/inicio.css (prefijo pj-).
 
 # Casos ocultos en esta página (sus páginas siguen publicadas). Para mostrar uno, quítalo de la lista.
-_pj_ocultos = {'bytequest', 'uvenergy', 'auditorweb', 'sustentando', 'botes-salvavidas'}
+_pj_ocultos = {'bytequest', 'uvenergy', 'auditorweb', 'botes-salvavidas'}
 _pj = [pr for pr in PROJECTS if pr['slug'] not in _pj_ocultos]
 _pj_cats = [('marcas', 'Marcas'), ('producto', 'Producto digital')]
 
@@ -39,15 +39,16 @@ def _pj_over(pr):
 _PJ_ROTA = {
     'fuchi-chao': [('caso-12-personajes.jpg', 2000, 1812), ('caso-09-b.jpg', 2000, 2000)],
     'lab502': ['02-collage', '08-foto'],
-    'bowraps': ['02', '05'],
+    'bowraps': ['02-logotipo', '05-aplicaciones-local'],
     'yomecontrolo': ['02-portada:izq', '17-letrero'],  # «:izq» alinea el recorte a la izquierda
     'temporis-pro': ['06-tarjetas', '14-tablet'],
-    'khronos': ['02', '04'],
+    'khronos': ['02-colores-variedades', '04-botella-american-pale-ale'],
+    'sustentando': ['10-web-monitor', '12-llaveros'],
 }
 
 
 # Portada de la tarjeta en esta página cuando difiere de la del caso (nombre de archivo sin extensión)
-_PJ_PORTADA = {'yomecontrolo': '01-logo'}
+_PJ_PORTADA = {'yomecontrolo': '01-logo', 'sustentando': '07-stand'}
 
 
 def _pj_portada(pr, lazy):

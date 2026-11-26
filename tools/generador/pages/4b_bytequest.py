@@ -2,7 +2,7 @@
 # Texto de tools/narrativa/01-narrativa-y-casos.md ("Caso redactado: Bytequest").
 # No se nombra a la institución de justicia ni al cliente de emergencias, ni el nombre interno del asistente.
 _bq = next(pr for pr in PROJECTS if pr['slug'] == 'bytequest')
-case_page(_bq, 'Bytequest: marca y liderazgo de producto para soluciones de IA · Luis Vicencio',
+case_page(_bq, 'Bytequest: marca y producto para soluciones de IA · Luis Vicencio',
     'Caso de estudio: la marca de Bytequest y el liderazgo de producto de Legisnova, un auditor de llamadas con IA y un asistente virtual multiagente.',
     _bq['summary'],
     'Bytequest: <strong>marca y liderazgo de producto</strong> para soluciones de IA.', [

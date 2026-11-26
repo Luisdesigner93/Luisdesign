@@ -43,7 +43,7 @@ HEAD = '''<!doctype html>
   <link rel="apple-touch-icon" href="{p}apple-touch-icon.png">
   <link rel="preload" href="{p}fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{p}css/styles.css">
-{extra_css}  <script src="{p}js/intro.js"></script>
+{extra_css}{ab_script}  <script src="{p}js/intro.js"></script>
   <script src="{p}js/main.js" defer></script>
 </head>
 <body>
@@ -57,8 +57,8 @@ HEAD = '''<!doctype html>
         </mask>
         <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
       </defs>
-      <image href="{p}img/webp/marca/logo-luy-design-500.webp" width="500" height="265" mask="url(#loader-ink)"/>
-      <image class="loader-design" href="{p}img/webp/marca/logo-luy-design-500.webp" width="500" height="265" clip-path="url(#loader-word)"/>
+      <image href="{p}img/webp/marca/logo-luis-design-500.webp" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="{p}img/webp/marca/logo-luis-design-500.webp" width="500" height="265" clip-path="url(#loader-word)"/>
     </svg>
   </div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -66,19 +66,21 @@ HEAD = '''<!doctype html>
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio">
-        <img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt="">
+        <img class="brand-logo" src="{p}img/marca/logo-luis-design.png" width="500" height="265" alt="">
         <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Principal">
         <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y Producto</span></p>
-        <a href="{proyectos_href}"{cur_proyectos}>Proyectos</a>
-        <a href="{home}#blog"{cur_noticias}>Blog</a>
+{nav_servicios}        <a href="{proyectos_href}"{cur_proyectos}>Proyectos</a>
+        <a href="{blog_href}"{cur_noticias}>Blog</a>
         <a href="{sobre_href}"{cur_sobre}>Sobre mí</a>
         <div class="nav-foot">
           <div class="nav-foot-row">
             {lang_switch}
-            <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
-            <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <div class="nav-social-row">
+              <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-linkedin"/></svg><span class="sr-only">LinkedIn (se abre en una pestaña nueva)</span></a>
+              <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-whatsapp"/></svg><span class="sr-only">WhatsApp (se abre en una pestaña nueva)</span></a>
+            </div>
           </div>
         </div>
       </nav>
@@ -115,14 +117,14 @@ FOOT = '''  </main>
   <footer class="site-footer container">
     <div class="footer-grid">
       <div>
-        <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio"><img class="brand-logo" src="{p}img/marca/logo-luy-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
-        <p>Analítica solo con tu permiso.</p>
+        <a class="brand" href="{home}" aria-label="Luis Vicencio, inicio"><img class="brand-logo" src="{p}img/marca/logo-luis-design.png" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <p class="footer-intro">Luis Vicencio, diseñador de marca y UX/UI en Chile. Branding estratégico, identidad corporativa, diseño de productos digitales y páginas web para empresas y startups.</p>
         <ul class="footer-social"><li><a href="tel:+56958217041">+56 9 5821 7041</a></li><li><a href="mailto:{email}">{email}</a></li></ul>
-        <ul class="footer-social"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank">LinkedIn</a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank">WhatsApp</a></li></ul>
+        <ul class="footer-social footer-redes"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" title="LinkedIn"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-linkedin"/></svg></a></li><li><a href="https://www.behance.net/LuisHVicencio" rel="noopener noreferrer" target="_blank" aria-label="Behance" title="Behance"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-behance"/></svg></a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp" title="WhatsApp"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-whatsapp"/></svg></a></li></ul>
       </div>
       <nav aria-labelledby="f-sitio">
         <h2 id="f-sitio">Sitio</h2>
-        <ul><li><a href="{proyectos_href}">Proyectos</a></li><li><a href="{home}#blog">Blog</a></li><li><a href="{sobre_href}">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
+        <ul><li><a href="{proyectos_href}">Proyectos</a></li><li><a href="{blog_href}">Blog</a></li><li><a href="{sobre_href}">Sobre mí</a></li><li><a href="{contact_href}">Contacto</a></li></ul>
       </nav>
       <nav aria-labelledby="f-legal">
         <h2 id="f-legal">Legal</h2>
@@ -131,7 +133,7 @@ FOOT = '''  </main>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year>2026</span> Luis Vicencio · luisdesign.cl</span>
-      <span>Branding, UX/UI y producto digital · Chile</span>
+      <span>Branding, UX/UI y Producto Digital · Chile</span>
     </div>
   </footer>
 
@@ -181,7 +183,7 @@ EN_CHROME = [
     ('>Contacto</a>', '>Contact</a>'),
     (' (se abre en una pestaña nueva)', ' (opens in a new tab)'),
     ('>Conversemos</a>', '>Let’s talk</a>'),
-    ('<mark class="pl-mark">Hablemos</mark> <br>de tu <br>proyecto!</h2>', '<mark class="pl-mark">Let’s talk</mark> <br>about your <br>project!</h2>'),
+    ('<mark class="pl-mark">¡Hablemos</mark> <br>de tu <br>proyecto!</h2>', '<mark class="pl-mark">Let’s talk</mark> <br>about your <br>project!</h2>'),
     ('Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.',
      'Let’s schedule a meeting to talk about what is happening with your brand and where you want to take it. The budget comes after we talk.'),
     ('>Nombre</label>', '>Name</label>'), ('>Correo</label>', '>Email</label>'), ('>Mensaje</label>', '>Message</label>'),
@@ -189,6 +191,19 @@ EN_CHROME = [
     ('Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a', 'I agree that my name, email and message are stored so I can reply. See the <a'),
     ('>política de privacidad</a>.</span>', '>privacy policy</a>.</span>'),
     ('>Enviar</button>', '>Send</button>'),
+    ('aria-label="Agendar una reunión"', 'aria-label="Schedule a meeting"'),
+    ('aria-label="Mes anterior"', 'aria-label="Previous month"'), ('aria-label="Mes siguiente"', 'aria-label="Next month"'),
+    ('aria-label="Paso 1 de 3"', 'aria-label="Step 1 of 3"'),
+    ('>Agendemos meet</p>', '>Let’s book a Meet</p>'), ('data-titulo>Elige un día</h3>', 'data-titulo>Pick a day</h3>'),
+    ('20 min · Google Meet · hora de Chile', '20 min · Google Meet · Chile time'),
+    ('aria-label="Volver"', 'aria-label="Back"'),
+    ('aria-label="Volver a la agenda"', 'aria-label="Back to scheduling"'),
+    ('>o solo envíame un mensaje</button>', '>or just send me a message</button>'),
+    ('>Escríbeme</h3>', '>Write to me</h3>'),
+    ('>Cuéntame de tu proyecto (opcional)</label>', '>Tell me about your project (optional)</label>'),
+    ('Acepto que usen mis datos para agendar la reunión en Google Calendar. Lo explico en la <a', 'I agree that my data is used to schedule the meeting in Google Calendar. See the <a'),
+    ('>Confirmar reunión</button>', '>Confirm meeting</button>'),
+    ('>Reunión agendada</p>', '>Meeting scheduled</p>'),
     ('aria-label="Cerrar"', 'aria-label="Close"'),
     ('alt="Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha."',
      'alt="A person climbing a staircase of concrete blocks beside glass panels and a lime green arc with an arrow."'),
@@ -197,11 +212,11 @@ EN_CHROME = [
     ('aria-label="Abrir menú"', 'aria-label="Open menu"'),
     ('Escríbeme por WhatsApp', 'Message me on WhatsApp'),
     ('Respuesta en 1 a 2 días hábiles', 'Reply within 1 to 2 business days'),
-    ('<p>Analítica solo con tu permiso.</p>', '<p>Analytics only with your permission.</p>'),
+    ('<p class="footer-intro">Luis Vicencio, diseñador de marca y UX/UI en Chile. Branding estratégico, identidad corporativa, diseño de productos digitales y páginas web para empresas y startups.</p>', '<p class="footer-intro">Luis Vicencio, brand and UX/UI designer in Chile. Strategic branding, corporate identity, digital product design and websites for companies and startups.</p>'),
     ('<span>Analítica solo con tu permiso</span>', '<span>Analytics only with your permission</span>'),
     ('>Sitio</h2>', '>Site</h2>'),
     ('>Política de privacidad</a>', '>Privacy policy (Spanish)</a>'),
-    ('Branding, UX/UI y producto digital · Chile', 'Branding, UX/UI and digital product · Chile'),
+    ('Branding, UX/UI y Producto Digital · Chile', 'Branding, UX/UI and Digital Product · Chile'),
     ('Cookies y analítica', 'Cookies and analytics'),
     ('Uso Google Tag Manager, Google Analytics y Microsoft Clarity solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica.',
      'I use Google Tag Manager, Google Analytics and Microsoft Clarity only if you accept. If not, no analytics cookies are loaded or stored. Your choice is saved in a technical cookie.'),
@@ -268,7 +283,7 @@ def _card_titles(html):
 
 # ---- Imágenes WebP con srcset (las genera tools/generador/webp.py en img/webp/; los JPG/PNG quedan como fuente) ----
 SRC_ROOT = HERE.parent.parent
-_IMG = re.compile(r'<img\b([^>]*?)\ssrc="((?:\.\./)*|/)?img/((?:proyectos|marca|collage)/[^"]+)\.(?:jpe?g|png)"([^>]*)>')
+_IMG = re.compile(r'<img\b([^>]*?)\ssrc="((?:\.\./)*|/)?img/((?:proyectos|marca|collage|metodo)/[^"]+)\.(?:jpe?g|png|gif)"([^>]*)>')
 # Ancho con que se muestra cada imagen según su clase (el resto: media pantalla en escritorio, ancho completo en móvil)
 _SIZES = [('lab-img-half', '(max-width: 47.99em) 92vw, min(46vw, 45.75rem)'), ('lab-img', '(max-width: 91.5rem) 96vw, 91.5rem'), ('v2-hero-bg', '100vw'), ('pl-hero-bg', '100vw'), ('ideas-item', '(max-width: 40em) 45vw, 22vw'), ('brand-logo', '120px'),
           ('svc-card-img', '(max-width: 53.75em) 92vw, 46vw'), ('folio-photo', '(max-width: 40em) 150vw, 50vw')]
@@ -310,13 +325,13 @@ def _urls_limpias(html):
     return _URL_REL.sub(lambda m: m.group(1) + _sin_html(m.group(2)), html)
 
 
-EN_PAGES = ('index.html', 'noticias/', 'sobre-mi.html')
+EN_PAGES = ('index.html', 'blog.html', 'noticias/', 'sobre-mi.html')
 
 
 def _lang_switch(path, lang):
     """Selector ES / EN del encabezado. La versión en inglés existe para el inicio y las noticias; el resto enlaza al inicio en inglés."""
     es_path = path[3:] if path.startswith('en/') else path
-    en_path = 'en/' + es_path if es_path in ('index.html', 'sobre-mi.html') or es_path.startswith('noticias/') else 'en/index.html'
+    en_path = 'en/' + es_path if es_path in ('index.html', 'blog.html', 'sobre-mi.html') or es_path.startswith('noticias/') else 'en/index.html'
     carpeta = posixpath.dirname(path) or '.'
     es_href = posixpath.relpath(es_path, carpeta)
     en_href = posixpath.relpath(en_path, carpeta)
@@ -331,21 +346,64 @@ def _lang_switch(path, lang):
 DIALOGO_CONTACTO = '''      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
         <div class="pl-dialog-grid">
           <div class="pl-dialog-lead">
-            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">Hablemos</mark> <br>de tu <br>proyecto!</h2>
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">¡Hablemos</mark> <br>de tu <br>proyecto!</h2>
             <p class="pl-dialog-lead-text">Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.</p>
           </div>
           <div class="pl-dialog-body">
             <div class="pl-dialog-head">
               <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
             </div>
+            <section class="ag" id="pl-agenda" data-endpoint="{p}contacto/agenda.php" aria-label="Agendar una reunión" hidden>
+              <div class="ag-cab" data-cab>
+                <div class="ag-barra">
+                  <button class="ag-flecha" type="button" data-atras aria-label="Volver" hidden>&#8249;</button>
+                  <div class="pasos ag-puntos" data-paso role="img" aria-label="Paso 1 de 3"><span class="is-actual"></span><span></span><span></span></div>
+                </div>
+                <p class="ag-cab-fijo">Agendemos meet</p>
+                <h3 class="ag-cab-titulo" data-titulo>Elige un día</h3>
+                <p class="ag-zona">20 min · Google Meet · hora de Chile</p>
+              </div>
+              <div class="ag-mes-vista" data-vista="semana">
+                <p class="ag-nota" data-nota role="status" hidden></p>
+                <div class="ag-nav">
+                  <button class="ag-flecha" type="button" data-mes="-1" aria-label="Mes anterior">&#8249;</button>
+                  <p class="ag-titulo" aria-live="polite"></p>
+                  <button class="ag-flecha" type="button" data-mes="1" aria-label="Mes siguiente">&#8250;</button>
+                </div>
+                <div class="ag-semana-dias" data-sem aria-hidden="true"></div>
+                <div class="ag-grid" data-grid></div>
+              </div>
+              <div class="ag-horas-vista" data-vista="horas" hidden>
+                <div class="ag-horas" data-horas></div>
+              </div>
+              <form class="pl-form ag-form" id="ag-form" data-vista="datos" hidden>
+                <div class="pl-field"><input id="ag-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" "><label for="ag-name">Nombre</label></div>
+                <div class="pl-field"><input id="ag-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="ag-mail">Correo</label></div>
+                <div class="pl-field"><textarea id="ag-msg" name="mensaje" maxlength="2000" rows="2" placeholder=" "></textarea><label for="ag-msg">Cuéntame de tu proyecto (opcional)</label></div>
+                <div class="pl-hp" aria-hidden="true"><label for="ag-web">No completes este campo</label><input id="ag-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+                <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que usen mis datos para agendar la reunión en Google Calendar. Lo explico en la <a href="{p}privacidad.html">política de privacidad</a>.</span></label>
+                <button class="btn btn-primary" type="submit">Confirmar reunión</button>
+                <p class="pl-form-note" data-aviso role="status"></p>
+              </form>
+              <div class="ag-listo" data-vista="listo" tabindex="-1" hidden>
+                <p class="ag-listo-titulo">Reunión agendada</p>
+                <p class="ag-listo-texto" data-listo></p>
+              </div>
+              <div class="ag-pie">
+                <button class="ag-mensaje" type="button" data-a-form>o solo envíame un mensaje</button>
+                <div class="ag-redes"><a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-linkedin"/></svg></a><a class="pl-linkedin" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-whatsapp"/></svg></a></div>
+              </div>
+            </section>
             <form class="pl-form" id="pl-form" data-endpoint="{p}contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <button class="ag-flecha pl-form-atras" type="button" data-a-agenda aria-label="Volver a la agenda" hidden>&#8249;</button>
+              <h3 class="ag-cab-titulo">Escríbeme</h3>
               <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Nombre</label></div>
               <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
               <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
               <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
               <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="{p}privacidad.html">política de privacidad</a>.</span></label>
               <div class="pl-form-acciones">
-                <a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-linkedin"/></svg></a>
+                <div class="ag-redes"><a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-linkedin"/></svg></a><a class="pl-linkedin" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="{p}img/icons.svg#i-whatsapp"/></svg></a></div>
                 <button class="btn btn-primary" type="submit">Enviar</button>
               </div>
               <p class="pl-form-note" id="pl-form-note" role="status"></p>
@@ -358,7 +416,7 @@ DIALOGO_CONTACTO = '''      <dialog class="pl-dialog" id="pl-conversemos" aria-l
 
 def page(path, title, desc, body, current=None, contact=True, cta_title=None, cta_lead=None, ogtype='website',
          noindex=False, absolute=False, html_class='motion', canonical=None, extra_css=None, wa_href=None, email_subject=None,
-         email_first=False, email_label=None, lang='es', alternates=None, og_image=None, og_alt=None, jsonld=None):
+         email_first=False, email_label=None, lang='es', alternates=None, og_image=None, og_alt=None, jsonld=None, ab=None):
     depth = path.count('/')
     if absolute:
         p, home = '/', '/'
@@ -377,15 +435,20 @@ def page(path, title, desc, body, current=None, contact=True, cta_title=None, ct
         'clarity_id': CLARITY_ID,
         'lang_switch': _lang_switch(path, lang),
         'sobre_href': p + ('en/sobre-mi.html' if lang == 'en' else 'sobre-mi.html'),
+        'blog_href': p + ('en/blog.html' if lang == 'en' else 'blog.html'),
         # Página de proyectos (solo en español; en inglés sigue la sección de la home)
         'proyectos_href': home + '#proyectos' if lang == 'en' else p + 'proyectos/index.html',
         'email': EMAIL,
         'cur_noticias': ' aria-current="page"' if current == 'noticias' else '',
+        # Servicios solo existe en español: en las páginas en inglés no aparece en el menú
+        'nav_servicios': '' if lang == 'en' else f'        <a href="{p}servicios.html"' + (' aria-current="page"' if current == 'servicios' else '') + '>Servicios</a>\n',
         'cur_proyectos': ' aria-current="page"' if current == 'proyectos' else '',
         'cur_sobre': ' aria-current="page"' if current == 'sobre' else '',
         'cur_privacidad': ' aria-current="page"' if current == 'privacidad' else '',
         'cta_title': cta_title or CTA_TITLE, 'cta_lead': cta_lead or CTA_LEAD,
         'contact_buttons': _contact_buttons(p, wa_href or WA_HREF, email_subject, email_first, email_label),
+        # Prueba A/B de la landing de inicio (js/ab.js): se carga antes de pintar para evitar parpadeos
+        'ab_script': f'  <script src="{p}js/ab.js" data-variante="{ab}"></script>\n' if ab else '',
         'html_lang': 'en' if lang == 'en' else 'es-CL', 'og_locale': 'en_US' if lang == 'en' else 'es_CL',
         # Versiones en otros idiomas (las páginas de producto y proyectos se eliminaron; ver noticias)
         # Imagen para compartir (1200 × 630, en img/og/) y datos estructurados (JSON-LD, bloque de datos que la CSP no ejecuta)
