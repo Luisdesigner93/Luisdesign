@@ -22,7 +22,7 @@ Sitio de Luis Vicencio, diseñador y Product Owner: branding estratégico, UX/UI
 css/styles.css     Tokens y componentes de Frost Glass + componentes del portafolio
 js/main.js         Header que se oculta al bajar, menú móvil y año del pie
 img/icons.svg      Sprite de íconos de línea (se usa con <use href="img/icons.svg#i-…">)
-img/marca/         Logo "luy design" y retrato
+img/marca/         Logo "luis design" y retrato
 img/proyectos/     Imágenes de cada caso (recuperadas del respaldo del sitio anterior, optimizadas)
 fonts/             Plus Jakarta Sans variable autoalojada (licencia OFL en fonts/OFL.txt)
 .htaccess          HTTPS, cabeceras de seguridad (CSP, HSTS…), caché y 404 para Apache/cPanel

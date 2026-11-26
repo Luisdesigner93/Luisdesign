@@ -9,6 +9,11 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Una sola dirección: www redirige a luisdesign.cl. El formulario solo acepta envíos desde ese origen;
+  # desde www respondía 403 y el mensaje no se guardaba
+  RewriteCond %{HTTP_HOST} ^www\.luisdesign\.cl$ [NC]
+  RewriteRule ^ https://luisdesign.cl%{REQUEST_URI} [L,R=301]
+
   # Forzar HTTPS
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !=https
@@ -18,6 +23,9 @@ ErrorDocument 404 /404.html
   RewriteRule ^proyectos\.html$ /proyectos/ [R=301,L]
   RewriteRule ^producto-digital(\.html)?$ / [R=301,L]
   RewriteRule ^en/digital-product(\.html)?$ / [R=301,L]
+
+  # Archivo de verificación de Google Search Console: se sirve tal cual, sin la redirección a la URL sin .html
+  RewriteRule ^google[0-9a-f]+\.html$ - [L]
 
   # URLs sin .html. Las direcciones antiguas se redirigen (301) a la versión limpia:
   #   /index.html y /carpeta/index.html → / y /carpeta/ ; /pagina.html → /pagina

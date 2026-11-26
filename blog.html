@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es-CL" class="motion inicio">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Blog de marca y producto digital · Luis Vicencio</title>
+  <meta name="description" content="Ideas sobre marca, producto digital, método y regulación, a partir del trabajo con empresas y equipos.">
+  <link rel="canonical" href="https://luisdesign.cl/blog">
+  <link rel="alternate" hreflang="es-CL" href="https://luisdesign.cl/blog">
+  <link rel="alternate" hreflang="en" href="https://luisdesign.cl/en/blog">
+  <link rel="alternate" hreflang="x-default" href="https://luisdesign.cl/blog">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog de marca y producto digital · Luis Vicencio">
+  <meta property="og:description" content="Ideas sobre marca, producto digital, método y regulación, a partir del trabajo con empresas y equipos.">
+  <meta property="og:url" content="https://luisdesign.cl/blog">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:image" content="https://luisdesign.cl/img/og/general.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Luis Vicencio, diseñador y Product Owner">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/inicio.css">
+  <link rel="stylesheet" href="css/blog.css">
+  <script src="js/intro.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Pantalla de carga: la firma "luis" se escribe con un trazo que revela el logo (solo la primera página de cada visita) -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <svg class="loader-logo" viewBox="0 0 500 265" focusable="false">
+      <defs>
+        <mask id="loader-ink" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="265">
+          <path class="loader-stroke" pathLength="1" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"
+            d="M114 30 L104 61 L93 91 L85 121 L80 151 L78 196 C92 160 112 118 130 97 C127 130 122 165 119 197 C132 160 150 118 170 97 C167 130 162 165 159 197 C172 160 190 118 210 97 C207 130 202 165 198 197 C212 160 230 118 251 93 C247 130 241 170 235 206 C231 214 220 214 222 222 C224 230 238 230 244 220 C246 212 243 205 246 198 C256 186 270 172 290 160"/>
+        </mask>
+        <clipPath id="loader-word"><rect x="292" y="140" width="208" height="70"/></clipPath>
+      </defs>
+      <image href="img/webp/marca/logo-luis-design-500.webp" width="500" height="265" mask="url(#loader-ink)"/>
+      <image class="loader-design" href="img/webp/marca/logo-luis-design-500.webp" width="500" height="265" clip-path="url(#loader-word)"/>
+    </svg>
+  </div>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Luis Vicencio, inicio">
+        <img class="brand-logo" src="img/webp/marca/logo-luis-design-500.webp" srcset="img/webp/marca/logo-luis-design-480.webp 480w, img/webp/marca/logo-luis-design-500.webp 500w" sizes="120px" width="500" height="265" alt="">
+        <span class="brand-tagline">Branding, UX/UI<br>y Producto</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Principal">
+        <p class="nav-title" aria-hidden="true">Luis Design<span>Branding, UX/UI y Producto</span></p>
+        <a href="servicios">Servicios</a>
+        <a href="proyectos/">Proyectos</a>
+        <a href="blog" aria-current="page">Blog</a>
+        <a href="sobre-mi">Sobre mí</a>
+        <div class="nav-foot">
+          <div class="nav-foot-row">
+            <nav class="lang-switch" aria-label="Idioma / Language"><a href="blog" lang="es" hreflang="es" aria-current="true">ES</a><span aria-hidden="true">/</span><a href="en/blog" lang="en" hreflang="en">EN</a></nav>
+            <div class="nav-social-row">
+              <a class="nav-social" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-linkedin"/></svg><span class="sr-only">LinkedIn (se abre en una pestaña nueva)</span></a>
+              <a class="nav-social" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"/></svg><span class="sr-only">WhatsApp (se abre en una pestaña nueva)</span></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="header-actions">
+        <nav class="lang-switch" aria-label="Idioma / Language"><a href="blog" lang="es" hreflang="es" aria-current="true">ES</a><span aria-hidden="true">/</span><a href="en/blog" lang="en" hreflang="en">EN</a></nav>
+        <a class="btn btn-primary" href="./#contacto">Conversemos</a>
+        <button class="btn btn-secondary menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
+          <svg class="icon i-open" aria-hidden="true"><use href="img/icons.svg#i-menu"/></svg>
+          <svg class="icon i-close" aria-hidden="true"><use href="img/icons.svg#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <section class="blog-cab frame-grid" aria-labelledby="page-title">
+      <p class="eyebrow-text">Blog</p>
+      <h1 class="blog-h1" id="page-title">Reflexiones para tu negocio</h1>
+      <p class="blog-intro">Ideas sobre marca, producto digital, método y regulación, a partir del trabajo con empresas y equipos.</p>
+    </section>
+
+    <section class="blog-indice" aria-label="Artículos">
+      <ul class="blog-lista">
+          <li class="card blog-card es-destacado">
+            <figure class="blog-foto"><img src="img/noticias/cuando-trabajar-tu-marca.webp" width="1672" height="941" sizes="(min-width: 64em) 62vw, 92vw" alt="Silueta de perfil de una persona entre paneles de vidrio translúcido y esmerilado, con un panel verde lima detrás." loading="eager"><span class="blog-insignia">Destacado</span></figure>
+            <div class="blog-texto">
+              <p class="blog-meta">Luis Vicencio <span aria-hidden="true">·</span> 4 min de lectura</p>
+              <h2 class="pl-post-title"><a href="noticias/cuando-trabajar-tu-marca">¿Cuándo es momento de trabajar tu marca?</a><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></h2>
+              <p class="pl-post-lead">Cuando nace tu negocio, cuando crece, cuando te comparan por precio, cuando cambia el rumbo o cuando la gente no sabe bien qué haces.</p>
+              <p class="pl-mono pl-chip">Marca</p>
+            </div>
+          </li>
+          <li class="card blog-card">
+            <figure class="blog-foto"><img src="img/noticias/un-buen-equipo-no-basta.webp" width="1672" height="941" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 92vw" alt="Cuatro personas reunidas alrededor de un computador sobre bloques de concreto, entre paneles de vidrio y un panel verde lima." loading="eager"></figure>
+            <div class="blog-texto">
+              <p class="blog-meta">Luis Vicencio <span aria-hidden="true">·</span> 3 min de lectura</p>
+              <h2 class="pl-post-title"><a href="noticias/un-buen-equipo-no-basta">Un buen equipo técnico no basta si nadie ordena el camino</a><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></h2>
+              <p class="pl-post-lead">Reunir talento y capacidades técnicas no garantiza que un proyecto llegue a buen puerto.</p>
+              <p class="pl-mono pl-chip">Producto digital</p>
+            </div>
+          </li>
+          <li class="card blog-card">
+            <figure class="blog-foto"><img src="img/noticias/tres-roles-de-producto.webp" width="1672" height="941" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 92vw" alt="Mano sosteniendo un lápiz frente a paneles de vidrio translúcido y uno verde lima." loading="lazy"></figure>
+            <div class="blog-texto">
+              <p class="blog-meta">Luis Vicencio <span aria-hidden="true">·</span> 5 min de lectura</p>
+              <h2 class="pl-post-title"><a href="noticias/tres-roles-de-producto">Diseñar va más allá de diseñar: negocio, marcas y productos digitales</a><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></h2>
+              <p class="pl-post-lead">No se trata de hacer de todo, sino de entender qué necesita cada proyecto y aportar desde el lugar donde puedo generar más valor.</p>
+              <p class="pl-mono pl-chip">Servicios</p>
+            </div>
+          </li>
+          <li class="card blog-card">
+            <figure class="blog-foto"><img src="img/noticias/metodo-scrum.webp" width="1672" height="941" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 92vw" alt="Persona subiendo una escalera de bloques de concreto junto a paneles de vidrio y un arco verde lima con una flecha." loading="lazy"></figure>
+            <div class="blog-texto">
+              <p class="blog-meta">Luis Vicencio <span aria-hidden="true">·</span> 5 min de lectura</p>
+              <h2 class="pl-post-title"><a href="noticias/metodo-scrum">Scrum, con los pies en el negocio</a><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></h2>
+              <p class="pl-post-lead">Un equipo puede estar trabajando a toda máquina y aun así no estar avanzando hacia lo que realmente necesita el negocio. Por eso, para mí, trabajar con metodologías ágiles empieza mucho antes de organizar un sprint.</p>
+              <p class="pl-mono pl-chip">Método</p>
+            </div>
+          </li>
+          <li class="card blog-card">
+            <figure class="blog-foto"><img src="img/noticias/ley-21719-prepara-tu-web.webp" width="1672" height="941" sizes="(min-width: 64em) 30vw, (min-width: 40em) 46vw, 92vw" alt="Balanza de justicia, un computador y un documento sobre bloques de concreto, junto a paneles de vidrio y un panel verde lima." loading="lazy"></figure>
+            <div class="blog-texto">
+              <p class="blog-meta">Luis Vicencio <span aria-hidden="true">·</span> 6 min de lectura</p>
+              <h2 class="pl-post-title"><a href="noticias/ley-21719-prepara-tu-web">Ley 21.719 prepara tu web ante multas</a><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></h2>
+              <p class="pl-post-lead">La Ley 21.719 entra en vigor el 1 de diciembre de 2026, aunque hay un proyecto para postergarla hasta 2027. Revisa formularios, cookies y avisos de privacidad de tu web antes de esa fecha.</p>
+              <p class="pl-mono pl-chip">Normativa</p>
+            </div>
+          </li>
+      </ul>
+    </section>
+
+    <section class="blog-cierre" aria-labelledby="blog-cierre-titulo">
+      <p class="eyebrow-text">Contacto</p>
+      <h2 id="blog-cierre-titulo">¿Tu negocio tiene un desafío parecido?</h2>
+      <p class="blog-intro">Agendemos una conversación para entender qué está pasando y hacia dónde quieres llevarlo.</p>
+      <a class="btn btn-primary" href="#contacto" data-abrir-contacto>Conversemos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="./" aria-label="Luis Vicencio, inicio"><img class="brand-logo" src="img/webp/marca/logo-luis-design-500.webp" srcset="img/webp/marca/logo-luis-design-480.webp 480w, img/webp/marca/logo-luis-design-500.webp 500w" sizes="120px" width="500" height="265" alt=""><span class="brand-tagline">Branding, UX/UI<br>y Producto</span></a>
+        <p class="footer-intro">Luis Vicencio, diseñador de marca y UX/UI en Chile. Branding estratégico, identidad corporativa, diseño de productos digitales y páginas web para empresas y startups.</p>
+        <ul class="footer-social"><li><a href="tel:+56958217041">+56 9 5821 7041</a></li><li><a href="mailto:contacto@luisdesign.cl">contacto@luisdesign.cl</a></li></ul>
+        <ul class="footer-social footer-redes"><li><a href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" title="LinkedIn"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-linkedin"/></svg></a></li><li><a href="https://www.behance.net/LuisHVicencio" rel="noopener noreferrer" target="_blank" aria-label="Behance" title="Behance"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-behance"/></svg></a></li><li><a href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp" title="WhatsApp"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"/></svg></a></li></ul>
+      </div>
+      <nav aria-labelledby="f-sitio">
+        <h2 id="f-sitio">Sitio</h2>
+        <ul><li><a href="proyectos/">Proyectos</a></li><li><a href="blog">Blog</a></li><li><a href="sobre-mi">Sobre mí</a></li><li><a href="./#contacto">Contacto</a></li></ul>
+      </nav>
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal">Legal</h2>
+        <ul><li><a href="privacidad">Política de privacidad</a></li><li><a href="privacidad#cookies">Cookies</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Luis Vicencio · luisdesign.cl</span>
+      <span>Branding, UX/UI y Producto Digital · Chile</span>
+    </div>
+  </footer>
+
+      <dialog class="pl-dialog" id="pl-conversemos" aria-labelledby="pl-dialog-title">
+        <div class="pl-dialog-grid">
+          <div class="pl-dialog-lead">
+            <h2 class="pl-dialog-title" id="pl-dialog-title"><mark class="pl-mark">¡Hablemos</mark> <br>de tu <br>proyecto!</h2>
+            <p class="pl-dialog-lead-text">Agendemos una reunión para que hablemos de lo que está pasando con tu marca y hacia dónde la quieres llevar. El presupuesto viene después de conversar.</p>
+          </div>
+          <div class="pl-dialog-body">
+            <div class="pl-dialog-head">
+              <button class="pl-dialog-close" type="button" data-close aria-label="Cerrar">&times;</button>
+            </div>
+            <section class="ag" id="pl-agenda" data-endpoint="contacto/agenda.php" aria-label="Agendar una reunión" hidden>
+              <div class="ag-cab" data-cab>
+                <div class="ag-barra">
+                  <button class="ag-flecha" type="button" data-atras aria-label="Volver" hidden>&#8249;</button>
+                  <div class="pasos ag-puntos" data-paso role="img" aria-label="Paso 1 de 3"><span class="is-actual"></span><span></span><span></span></div>
+                </div>
+                <p class="ag-cab-fijo">Agendemos meet</p>
+                <h3 class="ag-cab-titulo" data-titulo>Elige un día</h3>
+                <p class="ag-zona">20 min · Google Meet · hora de Chile</p>
+              </div>
+              <div class="ag-mes-vista" data-vista="semana">
+                <p class="ag-nota" data-nota role="status" hidden></p>
+                <div class="ag-nav">
+                  <button class="ag-flecha" type="button" data-mes="-1" aria-label="Mes anterior">&#8249;</button>
+                  <p class="ag-titulo" aria-live="polite"></p>
+                  <button class="ag-flecha" type="button" data-mes="1" aria-label="Mes siguiente">&#8250;</button>
+                </div>
+                <div class="ag-semana-dias" data-sem aria-hidden="true"></div>
+                <div class="ag-grid" data-grid></div>
+              </div>
+              <div class="ag-horas-vista" data-vista="horas" hidden>
+                <div class="ag-horas" data-horas></div>
+              </div>
+              <form class="pl-form ag-form" id="ag-form" data-vista="datos" hidden>
+                <div class="pl-field"><input id="ag-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" "><label for="ag-name">Nombre</label></div>
+                <div class="pl-field"><input id="ag-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="ag-mail">Correo</label></div>
+                <div class="pl-field"><textarea id="ag-msg" name="mensaje" maxlength="2000" rows="2" placeholder=" "></textarea><label for="ag-msg">Cuéntame de tu proyecto (opcional)</label></div>
+                <div class="pl-hp" aria-hidden="true"><label for="ag-web">No completes este campo</label><input id="ag-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+                <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que usen mis datos para agendar la reunión en Google Calendar. Lo explico en la <a href="privacidad">política de privacidad</a>.</span></label>
+                <button class="btn btn-primary" type="submit">Confirmar reunión</button>
+                <p class="pl-form-note" data-aviso role="status"></p>
+              </form>
+              <div class="ag-listo" data-vista="listo" tabindex="-1" hidden>
+                <p class="ag-listo-titulo">Reunión agendada</p>
+                <p class="ag-listo-texto" data-listo></p>
+              </div>
+              <div class="ag-pie">
+                <button class="ag-mensaje" type="button" data-a-form>o solo envíame un mensaje</button>
+                <div class="ag-redes"><a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-linkedin"/></svg></a><a class="pl-linkedin" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"/></svg></a></div>
+              </div>
+            </section>
+            <form class="pl-form" id="pl-form" data-endpoint="contacto/guardar.php" method="dialog" aria-describedby="pl-form-note">
+              <button class="ag-flecha pl-form-atras" type="button" data-a-agenda aria-label="Volver a la agenda" hidden>&#8249;</button>
+              <h3 class="ag-cab-titulo">Escríbeme</h3>
+              <div class="pl-field"><input id="pl-name" name="nombre" type="text" autocomplete="name" required maxlength="100" placeholder=" " autofocus><label for="pl-name">Nombre</label></div>
+              <div class="pl-field"><input id="pl-mail" name="correo" type="email" autocomplete="email" required maxlength="150" placeholder=" "><label for="pl-mail">Correo</label></div>
+              <div class="pl-field"><textarea id="pl-msg" name="mensaje" required maxlength="2000" rows="4" placeholder=" "></textarea><label for="pl-msg">Mensaje</label></div>
+              <div class="pl-hp" aria-hidden="true"><label for="pl-web">No completes este campo</label><input id="pl-web" name="web" type="text" tabindex="-1" autocomplete="off"></div>
+              <label class="pl-check"><input type="checkbox" name="consentimiento" value="1" required><span>Acepto que guarden mi nombre, correo y mensaje para responderme. Lo explico en la <a href="privacidad">política de privacidad</a>.</span></label>
+              <div class="pl-form-acciones">
+                <div class="ag-redes"><a class="pl-linkedin" href="https://www.linkedin.com/in/luisvicenciodesign" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-linkedin"/></svg></a><a class="pl-linkedin" href="https://wa.me/56958217041" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp (se abre en una pestaña nueva)"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"/></svg></a></div>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+              </div>
+              <p class="pl-form-note" id="pl-form-note" role="status"></p>
+            </form>
+          </div>
+        </div>
+      </dialog>
+  <section class="cookie-banner" id="cookie-banner" data-gtm="GTM-M8GHZ2BZ" data-ga="G-42SV1ZZ5S1" data-clarity="zgo49leb9c" aria-labelledby="cookie-title" hidden>
+    <div class="cookie-banner-text">
+      <h2 id="cookie-title">Cookies y analítica</h2>
+      <p>Uso Google Tag Manager, Google Analytics y Microsoft Clarity solo si los aceptas. Si no, no se cargan ni se guardan cookies de analítica. Tu elección queda guardada en una cookie técnica. <a href="privacidad#cookies">Más información</a>.</p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button class="btn btn-secondary" type="button" data-consent="rechazado">Rechazar</button>
+      <button class="btn btn-primary" type="button" data-consent="aceptado">Aceptar</button>
+    </div>
+  </section>
+  <script src="js/consent.js" defer></script>
+</body>
+</html>

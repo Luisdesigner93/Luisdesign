@@ -157,6 +157,8 @@
 .ds .ds-bg-grid { --grid-at: 50% 50%; --grid-size: 120% 120%; }
 /* Componentes: los ejemplos se muestran sueltos, fuera de su página */
 .ds-comp { margin-top: 8px; }
+.ds-pasos { display: flex; flex-wrap: wrap; gap: 40px; }
+.ds-pasos .ds-spec { margin: 8px 0 0; }
 .ds-comp .faq { max-width: 52rem; }
 .ds-card-demo { width: 280px; padding: 24px; }
 .ds .ds-unica { display: block; overflow: visible; padding: 0; margin: 0; }
@@ -198,3 +200,7 @@
 .ds-vidrio-panel { position: absolute; inset: 14% 12% 14% 38%; display: flex; align-items: flex-end; padding: 12px; border-radius: var(--radius-md); }
 .ds-vidrio-panel span { padding: 4px 10px; border-radius: var(--radius-pill); background: var(--surface); font-family: var(--mono); font-size: 11px; color: var(--ink); }
 @media (max-width: 47.99em) { .ds-vidrio-grid { grid-template-columns: minmax(0, 1fr); } }
+.ds .ds-validacion { display: block; }
+.ds .ds-validacion .ds-sample > p { margin: 0; }
+.ds .ds-campo-error { display: grid; gap: 16px; width: 100%; }
+.ds .ds-campo-error .pl-field-error { margin-top: -8px; }

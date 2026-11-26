@@ -1,3 +1,5 @@
+import re
+
 # Noticias: cada tema del inicio (y de la antigua landing de producto digital) es una página propia en noticias/
 # (español) y en en/noticias/ (inglés). Los textos en español vienen de las secciones que se retiraron de la landing
 # de producto digital y de "¿Cuándo es momento de trabajar tu marca?" (_momentos en 1_index.py). Se listan en el bloque
@@ -70,13 +72,16 @@ def _otros_articulos(slug, idioma):
             f'<ul class="noticias-otras-lista">{tarjeta(etiquetas[0], anterior, "izq")}{tarjeta(etiquetas[1], siguiente, "der")}</ul></section>')
 
 
+_ARTICULOS = {'es': {}, 'en': {}}  # Se completa al generar cada noticia y alimenta la página del blog
+
+
 def _noticia(slug, titulo, bajada, cuerpo, etiqueta, idioma=_ES):
     """Página de una noticia con el mismo formato que la política de privacidad: encabezado, índice y texto."""
     en = idioma['lang'] == 'en'
+    palabras = len(re.sub(r'<[^>]+>', ' ', cuerpo).split())
+    _ARTICULOS[idioma['lang']][slug] = dict(titulo=titulo, bajada=bajada, etiqueta=etiqueta, minutos=max(1, -(-palabras // 200)))
     path = f'en/noticias/{slug}.html' if en else f'noticias/{slug}.html'
-    # Desde en/noticias/ el inicio en inglés es {p}en/index.html; desde noticias/ es {p}index.html
-    inicio_href = '{p}en/index.html' if en else '{p}index.html'
-    noticias_href = inicio_href + '#blog'
+    noticias_href = '{p}en/blog.html' if en else '{p}blog.html'
     alt = _IMAGEN_PORTADA.get(slug, {}).get(idioma['lang'])
     figura = (f'\n          <figure class="noticia-portada" id="portada"><img src="{{p}}img/noticias/{slug}.webp" width="1672" height="941" alt="{alt}"></figure>' if alt else '')
     # Óvalo de scroll animado abajo a la derecha de la cabecera: baja a la portada o, si no hay, al texto
@@ -230,3 +235,63 @@ _noticia('ley-21719-prepara-tu-web', 'Law 21.719 prepares your website for fines
          """Law 21.719 takes effect on December 1, 2026, although a bill to postpone it until 2027 has been introduced. Review forms, cookies and privacy notices on your website before that date.""",
          """<p>Your site could be collecting personal data without you noticing. Forms, cookies, analytics tools and external providers: find out what you should review before you expose yourself to legal problems.</p><p>Does your website collect names, emails or phone numbers from your clients? Do you use Google Analytics, contact forms or advertising tools? Do you know where that information is stored and who can access it?</p><p>If you do not have clear answers to these questions, you may have a problem you have not yet detected.</p><p>Law 21.719 changes the rules on how organizations collect, use and protect personal data in Chile. Although it is often discussed in relation to large companies and digital platforms, it can also affect small businesses, online stores and websites that receive information from their visitors.</p><p class="destacado">The problem is that many pages are built with selling, attracting clients or generating traffic in mind, but we rarely stop to review what happens to the information people leave on them.</p><p class="destacado">And that is precisely what you should start looking at.</p><h2>What changes with Law 21.719?</h2><p class="destacado">Law 21.719 modernizes the Chilean regulation on personal data protection, amends Law 19.628 and creates the Personal Data Protection Agency.</p><p>Among other things, it sets new requirements for processing personal information, strengthens people’s rights and establishes a regime of infractions and sanctions.</p><p>The law was published in December 2024 and its entry into force is scheduled for December 1, 2026. A bill submitted to the Senate in September 2026 proposes postponing it until 2027; until it is approved, the effective date remains 2026. Check the status of Bulletin 18.623-07 in the Senate and in the National Congress Library (bcn.cl).</p><p>This means that a generic privacy policy or a cookie notice is no longer enough. Organizations must be able to explain what information they collect, what they use it for, how they protect it and under what conditions they share it.</p><p>And what does this have to do with your website? Practically everything that happens when someone interacts with it can involve personal data.</p><h2>When could your website be at risk?</h2><p>You do not need a complex platform to run into these problems. A few fairly common features are enough.</p><h2>01. Contact forms</h2><p><strong>Are you asking for more information than you really need?</strong></p><p>Name, email, phone and company are data that many pages request without clearly explaining what they will be used for.</p><p>Review what information you are collecting, what its purpose is and how you inform people about its processing. You should also consider how you handle requests from people who want to exercise their rights.</p><h2>02. Cookies and tracking tools</h2><p><strong>Do you know what is happening while people browse your site?</strong></p><p>Google Analytics, Meta Pixel and other tools can collect information about your visitors’ behavior. They may also involve external services that receive or process data.</p><p>It is not simply a matter of installing a banner that says “accept cookies”. You need to identify which tools you use, what information they collect and how you manage consent when it applies.</p><h2>03. Privacy policy</h2><p><strong>Does your site really explain what you do with your users’ information?</strong></p><p>Many websites have privacy policies copied from other pages, outdated documents or texts that are hard to understand.</p><p>Your privacy notice must clearly explain what data you collect, for what purpose, how you use it, who may receive it and how people can exercise their rights.</p><p>Having the link in the footer is not enough. The information must be accessible and understandable.</p><h2>04. User rights</h2><p><strong>Do you know what to do when someone asks you to delete their data?</strong></p><p>The new regulation strengthens rights such as access, rectification, erasure, objection and portability of personal data.</p><p>This means you must have a procedure to receive, manage and respond to these requests.</p><p class="destacado">If someone asks you what information you hold about them or requests its deletion, you need to know who will take care of it and how to respond.</p><h2>05. Providers and external services</h2><p><strong>Who else has access to the data your website collects?</strong></p><p>Your hosting, e-commerce platform, email services, marketing tools and analytics systems may take part in processing the information.</p><p>It is important to identify which providers you use, what data you share with them and what responsibilities correspond to each one.</p><p>Sometimes the problem is not directly on your page, but in the tools you connected to make it work.</p><h2>Where should you start preparing your website?</h2><p>You do not need to rebuild your site from scratch or implement all the changes at once. The first step is to understand what is happening.</p><p>I would start with a diagnosis that identifies where your website collects, stores or shares personal information. This would be my initial list:</p><ul><li><strong>Data inventory:</strong> identify what information you request and where it is stored.</li><li><strong>Forms:</strong> review the fields, the purposes and the mechanisms for information and consent.</li><li><strong>Cookies and analytics:</strong> identify the tools installed and how you manage consent.</li><li><strong>Legal texts:</strong> review the privacy policies and the information available to users.</li><li><strong>Providers:</strong> identify which external services take part in the processing of data.</li></ul><p>With that information you can recognize the gaps, set priorities and plan the necessary improvements.</p><p>That said, a technical review does not replace a legal assessment. To determine your business’s specific obligations, it is important to get specialized advice.</p><p class="destacado">Before a problem turns into a fine, it is better to know where you stand.</p><p>Do not wait until you have a problem to worry about your website.</p><p class="destacado">Your website does not only represent your business: it is also a space where people trust information about themselves with every click.</p><p>Designing a good digital experience means thinking about more than attractive interfaces or forms that convert. It also means building experiences that are transparent, responsible and respectful of the people who use them.</p><p>If you have a website and do not know where to start, let’s talk. We can review how it works, identify opportunities for improvement and define what you need to resolve.</p><p><a class="link-arrow" href="{p}en/index.html#contacto">Talk to me to review it</a></p><p class="muted">This article provides general information and does not constitute legal advice. A technical review of a website does not, by itself, guarantee compliance with Law 21.719.</p><p class="muted">Last updated: October 30, 2026.</p>""",
          'Regulation', _EN)
+
+
+def _pagina_blog(idioma):
+    '''Índice del blog: cabecera centrada, destacado de dos tercios, grilla de artículos y cierre para agendar.'''
+    lang = idioma['lang']
+    en = lang == 'en'
+    ruta = 'en/noticias/' if en else 'noticias/'
+    lectura = 'min read' if en else 'min de lectura'
+    destacado = 'Featured' if en else 'Destacado'
+
+    def tarjeta(i, slug):
+        a = _ARTICULOS[lang][slug]
+        sizes = '(min-width: 64em) 62vw, 92vw' if i == 0 else '(min-width: 64em) 30vw, (min-width: 40em) 46vw, 92vw'
+        carga = 'eager' if i < 2 else 'lazy'
+        insignia = f'<span class="blog-insignia">{destacado}</span>' if i == 0 else ''
+        return f'''
+          <li class="card blog-card{' es-destacado' if i == 0 else ''}">
+            <figure class="blog-foto"><img src="{{p}}img/noticias/{slug}.webp" width="1672" height="941" sizes="{sizes}" alt="{_IMAGEN_PORTADA[slug][lang]}" loading="{carga}">{insignia}</figure>
+            <div class="blog-texto">
+              <p class="blog-meta">Luis Vicencio <span aria-hidden="true">·</span> {a['minutos']} {lectura}</p>
+              <h2 class="pl-post-title"><a href="{{p}}{ruta}{slug}.html">{a['titulo']}</a><svg class="icon" aria-hidden="true"><use href="{{p}}img/icons.svg#i-arrow"/></svg></h2>
+              <p class="pl-post-lead">{a['bajada']}</p>
+              <p class="pl-mono pl-chip">{a['etiqueta']}</p>
+            </div>
+          </li>'''
+
+    tarjetas = ''.join(tarjeta(i, slug) for i, slug in enumerate(_TITULOS))
+    ceja, titulo = ('Our blog', 'Reflections for your business') if en else ('Blog', 'Reflexiones para tu negocio')
+    intro = ('Ideas on brand, digital product, method and regulation, drawn from working with companies and teams.' if en
+             else 'Ideas sobre marca, producto digital, método y regulación, a partir del trabajo con empresas y equipos.')
+    cierre = (('Contact', 'Does your business face a similar challenge?', 'Let’s schedule a conversation to understand what is happening and where you want to take it.', 'Let’s talk') if en else
+              ('Contacto', '¿Tu negocio tiene un desafío parecido?', 'Agendemos una conversación para entender qué está pasando y hacia dónde quieres llevarlo.', 'Conversemos'))
+    body = f'''
+    <section class="blog-cab frame-grid" aria-labelledby="page-title">
+      <p class="eyebrow-text">{ceja}</p>
+      <h1 class="blog-h1" id="page-title">{titulo}</h1>
+      <p class="blog-intro">{intro}</p>
+    </section>
+
+    <section class="blog-indice" aria-label="{'Articles' if en else 'Artículos'}">
+      <ul class="blog-lista">{tarjetas}
+      </ul>
+    </section>
+
+    <section class="blog-cierre" aria-labelledby="blog-cierre-titulo">
+      <p class="eyebrow-text">{cierre[0]}</p>
+      <h2 id="blog-cierre-titulo">{cierre[1]}</h2>
+      <p class="blog-intro">{cierre[2]}</p>
+      <a class="btn btn-primary" href="#contacto" data-abrir-contacto>{cierre[3]} <svg class="icon" aria-hidden="true"><use href="{{p}}img/icons.svg#i-arrow"/></svg></a>
+    </section>
+'''
+    path = 'en/blog.html' if en else 'blog.html'
+    titulo_seo = 'Blog on brand and digital product · Luis Vicencio' if en else 'Blog de marca y producto digital · Luis Vicencio'
+    page(path, titulo_seo, intro, body=body, current='noticias', contact=False, html_class='motion inicio',
+         extra_css=['css/inicio.css', 'css/blog.css'], lang=lang,
+         alternates={'es-CL': 'blog.html', 'en': 'en/blog.html', 'x-default': 'blog.html'})
+
+
+_pagina_blog(_ES)
+_pagina_blog(_EN)

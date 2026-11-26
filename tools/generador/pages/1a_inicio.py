@@ -5,7 +5,7 @@ import math
 # deformar el grosor) y que se dibuja con el scroll (css/inicio.css). Los tramos se unen al centro, en el borde de cada sección.
 # La línea es de color destacador (verde amarillo flúor, --pl-line en css/inicio.css).
 
-# Trazo de la firma "luis" (la "i" va sin punto, por diseño) sobre el logo cuadrado (img/marca/logo-luy-cuadrado.png, 560 × 560):
+# Trazo de la firma "luis" (la "i" va sin punto, por diseño) sobre el logo cuadrado (img/marca/logo-luis-cuadrado.png, 560 × 560):
 # en el orden del boceto de Luis: la l baja; u, u, i son lazos angostos (sube en diagonal hasta la punta y baja casi vertical);
 # la s baja, hace el lazo bajo la línea base y la cola cruza hacia arriba a la derecha (viewBox 55 55 480 420). Grosor: el de la línea, --pl-stroke en css/inicio.css.
 _FIRMA = ('M160 78 L152 90 L141 110 L132 130 L123 150 L115 170 L108 190 L102 210 L97 230 L93 250 L89 270 L86 290 L84 310 L82 330 L82 350 L82 372 L84 388 L90 393 L97 388 L108 368 L119 347 L130 326 L140 306 L151 286 L162 265 L173 244 L184 224 L188 214 L184 232 L180 250 L175 270 L172 290 L170 310 L170 330 L169 350 L169 372 L171 388 L177 393 L184 388 L194 368 L205 347 L216 326 L226 306 L236 286 L247 265 L258 244 L268 224 L272 214 L269 232 L265 250 L260 270 L257 290 L255 310 L255 330 L254 350 L254 372 L256 388 L262 393 L269 388 L280 368 L290 347 L300 326 L311 306 L322 286 L332 265 L342 244 L353 224 L357 214 L353 232 L349 250 L344 270 L341 290 L339 310 L339 330 L338 350 L338 372 L340 388 L346 393 L353 388 L363 369 L373 349 L384 330 L394 311 L404 291 L414 272 L425 253 L435 233 L445 214 L449 203 L443 222 L439 240 L435 260 L432 280 L431 300 L430 330 L430 360 L431 385 L433 405 L434 428 L428 445 L414 452 L400 446 L393 432 L397 418 L410 405 L431 390 L456 371 L470 361 L484 350 L499 340 L509 333')
@@ -157,7 +157,11 @@ INICIO_HERO = f'''
       {_hilo([_hero_desk], [_hero_mob], 'pl-thread-back')}
       <div class="pl-inner">
         <h1 class="pl-display pl-hero-title" id="pl-hero-title"><span class="pl-line"><span class="pl-line-in">Diseñ<span class="pl-o">o</span> <span class="pl-br-m"></span>marcas </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">que <span class="pl-u">desean<span class="pl-base" aria-hidden="true"></span></span> </span></span><span class="pl-line"><span class="pl-line-in">moverse</span></span></h1>
-        <p class="pl-lead">Soy Luis, diseñador especializado en marcas y productos digitales. Trabajo contigo para entender hacia dónde quieres llevar tu negocio y transformar esa dirección en marcas, experiencias y productos que conecten con las personas.</p>
+        <p class="pl-lead">Soy Luis, diseñador de marcas y productos digitales. Te ayudo a llevar tu negocio hacia donde quieres y a conectar con las personas.</p>
+        <div class="pl-hero-acciones">
+          <a class="btn btn-primary" href="{{p}}servicios.html">Ver servicios <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>
+          <a class="btn btn-secondary" href="{{sobre_href}}">Sobre mí</a>
+        </div>
       </div>
       {_hilo([_hero_desk], [_hero_mob], 'pl-thread-front')}
       <span class="pl-head" aria-hidden="true"></span>
@@ -190,6 +194,9 @@ _ideas = _ideas.replace('pl-sec pl-ideas" id="ideas" aria-labelledby="ideas-titl
 _ideas = _ideas.rstrip()
 assert _ideas.endswith('</section>')
 _ideas = _ideas[:-len('</section>')] + '      </div>\n    </section>\n'
+# Botón a proyectos a la derecha del texto final de Ideas
+_ini = _ideas.index('<div class="container ideas-foot">'); _fin = _ideas.index('        </div>\n', _ini) + len('        </div>\n')
+_ideas = _ideas[:_fin] + '        <a class="btn btn-outline ideas-proyectos" href="proyectos/index.html">Ver proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a>\n' + _ideas[_fin:]
 INICIO_IDEAS = _ideas
 
 # 3. SISTEMAS (claro): la línea se abre en un óvalo con un punto por disciplina (en móvil, dos columnas).
@@ -211,20 +218,27 @@ _cap_cls = lambda slot: 'pl-cap-l' if slot <= 4 else 'pl-cap-r'
 # tramo del título, encima del bloque: la línea entra al centro, se abre por el costado derecho del título y vuelve al óvalo.
 # La línea entra desde arriba, rodea el título por la derecha (sin pasar por detrás del texto), vuelve por debajo y entra al aro por arriba
 # Ruta ortogonal con esquinas redondeadas: entra desde arriba, rodea el título por la derecha y vuelve por debajo hasta el aro
-_caps_desk = ['M1080 -500 L1080.0 -371.0 Q1080 -316 1135.0 -316.0 L1275.0 -316.0 Q1330 -316 1330.0 -261.0 L1330.0 -43.0 Q1330 12 1275.0 12.0 L151.5 12.0 Q115 12 115.0 48.5 L115.0 48.5 Q115 85 151.5 85.0 L665.0 85.0 Q720 85 720.0 140.0 L720 200 C885.7 200 1020 338.6 1020 500 C1020 661.4 885.7 800 720 800 V1000', 'M720 200 C554.3 200 420 338.6 420 500 C420 661.4 554.3 800 720 800']
+_caps_desk = ['M1080 -500 L1080 -356 Q1080 -316 1120 -316 L1378 -316 Q1418 -316 1418 -276 L1418 925 Q1418 965 1378 965 L760 965 Q720 965 720 985 L720 1000']
 # En móvil, una sola línea recta por el centro exacto (50 % de 375); los puntos caen sobre ella y los textos quedan a cada lado
-_caps_mob = ['M304 -500 C304 -200 187.5 -200 187.5 0 V1000']
+_caps_mob = ['M304 -500 L304 -480 Q304 -465 320 -465 L351 -465 Q367 -465 367 -450 L367 970 Q367 985 358 990 L358 1000']
+# Los cuatro servicios reemplazan al óvalo de disciplinas: solo informativos, sin selección
+def _inicio_servicios(en=False):
+    return ''.join(f'''
+        <li class="lb-servicio"><span class="lb-servicio-num">0{i}</span><h3>{nombre}</h3><p>{texto}</p></li>'''
+                   for i, (nombre, texto, _entregables) in enumerate(SERVICIOS_EN if en else SERVICIOS, 1))
+
+
 INICIO_SISTEMAS = f'''
     <!-- INICIO · SISTEMAS -->
-    <section class="pl-sec pl-light pl-caps" aria-labelledby="pl-caps-title">
+    <section class="pl-sec pl-light pl-caps" data-thread="fit" aria-labelledby="pl-caps-title">
       {_hilo(_caps_desk, _caps_mob)}
       <div class="pl-inner">
         <h2 class="pl-title pl-caps-title" id="pl-caps-title"><mark class="pl-mark">Diseño el camino</mark> <span class="pl-br-m"></span>para cerrar la <span class="pl-br-m"></span>brecha entre tu <span class="pl-br-m"></span>negocio y <span class="pl-br-m"></span>tu público.</h2>
       </div>
-      <div class="pl-stage">
-      <ul class="pl-caps-list" role="list">''' + ''.join(f'''
-        <li class="pl-cap pl-cap-{_cap_slot[i - 1]} {_cap_cls(_cap_slot[i - 1])}"><span class="pl-dot" aria-hidden="true"></span><span class="pl-cap-txt"><strong class="pl-cap-name">{d}</strong><span class="pl-cap-desc">{x}</span></span></li>''' for i, (d, x) in enumerate(_disciplinas, 1)) + '''
-      </ul>
+      <div class="pl-stage pl-stage-servicios">
+        <ul class="lb-servicios-grid">{_inicio_servicios()}
+        </ul>
+        <div class="pl-servicios-cta"><a class="btn btn-primary" href="{{p}}servicios.html#servicios">Ir a mis servicios <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div>
       </div>
     </section>
 '''
@@ -243,11 +257,12 @@ def _redondeada(pts, radio=55):
     return ' '.join(out)
 
 # Recorrido (unidades 1440 × 1000, desde el borde superior de la sección): entra al centro, rodea el título y los cubos, y sale al centro
-_ruta_portafolio = [(720, 0), (719, 233), (211, 432), (353, 503), (975, 288), (1245, 456), (527, 787), (720, 870), (1190, 870), (1190, 1000)]
+# Las y negativas corresponden a la cabecera (título y botón): la línea la rodea por la derecha y vuelve al centro
+_ruta_portafolio = [(720, -500), (720, -470), (1418, -470), (1418, -24), (720, -24), (719, 233), (211, 432), (353, 503), (975, 288), (1245, 456), (527, 787), (720, 870), (1190, 870), (1190, 1000)]
 _ruta_desk = _redondeada(_ruta_portafolio, 55)
 # En móvil: recorrido isométrico (tramos a 30° como las caras de los cubos, en zigzag entre las dos columnas)
 # y vuelta al centro; las esquinas se redondean. Entra y sale por el centro, como las secciones vecinas.
-_ruta_mob = _redondeada([(358, 0), (358, 40), (67.5, 199), (67.5, 330), (307.5, 468), (307.5, 600), (187.5, 669), (187.5, 1000)], 14)
+_ruta_mob = _redondeada([(358, -500), (358, 40), (67.5, 199), (67.5, 330), (307.5, 468), (307.5, 600), (187.5, 669), (187.5, 1000)], 14)
 
 # Cubos isométricos (x %, y %, escala) y proyectos enlazados
 _pf_cubos = [
@@ -298,10 +313,13 @@ INICIO_PORTAFOLIO = f"""
     <!-- INICIO · PORTAFOLIO (cubos isométricos enlazados a sus proyectos) -->
     <section class="pl-sec pl-light alt-folio" id="proyectos" aria-labelledby="pl-folio-title">
       {_hilo([_a_curvas(_ruta_desk)], [_a_curvas(_ruta_mob)])}
-      <p class="alt-bg" aria-hidden="true">PORTAFOLIO</p>
-      <h2 class="alt-titulo" id="pl-folio-title">Proyectos</h2>
+      <p class="alt-bg" aria-hidden="true" data-texto="PORTAFOLIO">PORTAFOLIO</p>
+      <div class="alt-cab">
+        <h2 class="alt-titulo" id="pl-folio-title">Conoce mi portafolio</h2>
+      </div>
       <ul class="alt-stage" role="list">{_pf_items}
       </ul>
+      <div class="alt-cta"><a class="btn btn-primary" href="proyectos/index.html">Ir a proyectos <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"/></svg></a></div>
     </section>
 """
 
@@ -397,7 +415,7 @@ INICIO_CONTACTO = f'''
         <h2 class="pl-display pl-anim-title" id="pl-contact-title"><span class="pl-line"><span class="pl-line-in">Tu próximo proyecto </span></span><span class="pl-line"><span class="pl-line-in" data-dir="1">empieza acá.</span></span></h2>
         <p class="pl-lead pl-contact-lead">Cada proyecto parte de una necesidad distinta. Podemos trabajar en tu marca, tu presencia web o un producto digital, según lo que tengas entre manos y lo que necesites resolver.</p>
 
-        <a class="btn btn-primary" href="#contacto" data-abrir-contacto>Hablemos {_arrow}</a>
+        <a class="btn btn-primary" href="#contacto" data-abrir-contacto>Conversemos {_arrow}</a>
         
       </div>
       </div>
@@ -473,7 +491,7 @@ INICIO_BLOG = f'''
 
 page('index.html', 'Luis Vicencio · Diseño de marcas, productos digitales y estrategia',
      'Diseño marcas que desean moverse: estrategia, identidad y experiencias para tu servicio. Branding, UX Research y productos digitales para pymes y startups en Chile.',
-     contact=False, canonical='', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css', 'css/portafolio-alt.css', 'css/portafolio-home.css'],
+     contact=False, canonical='', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css', 'css/portafolio-alt.css', 'css/portafolio-home.css', 'css/landing-b.css'],
      og_image='img/og/inicio.jpg', og_alt='Línea de productos Fuchi Chao: detergente, eliminador de olores y jabón anti olores',
      jsonld=[person_ld(),
              {'@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': SITE + '#servicio', 'name': 'Luis Vicencio · Diseño de marcas y productos digitales',
@@ -482,7 +500,7 @@ page('index.html', 'Luis Vicencio · Diseño de marcas, productos digitales y es
               'founder': {'@id': PERSON_ID}, 'areaServed': {'@type': 'Country', 'name': 'Chile'},
               'address': {'@type': 'PostalAddress', 'addressCountry': 'CL'}},
              faq_ld(_preguntas)],
-     body=INICIO_HERO + INICIO_IDEAS + INICIO_SISTEMAS + INICIO_PRODUCTO + INICIO_PORTAFOLIO
+     body=INICIO_HERO + INICIO_IDEAS + INICIO_SISTEMAS + INICIO_PORTAFOLIO
      + INICIO_CONTACTO + INICIO_BLOG + HOME_PREGUNTAS,
      alternates={'es-CL': '', 'en': 'en/', 'x-default': ''})
 
@@ -513,8 +531,8 @@ _EN_BLOQUES = [
 _EN_TEXTOS = [
     # Hero, ideas y sistemas
     ('Bajar a la siguiente sección', 'Scroll down to the next section'),
-    ('Soy Luis, diseñador especializado en marcas y productos digitales. Trabajo contigo para entender hacia dónde quieres llevar tu negocio y transformar esa dirección en marcas, experiencias y productos que conecten con las personas.',
-     "Hi, I'm Luis, a designer specialized in brands and digital products. I work with you to understand where you want to take your business and turn that direction into brands, experiences and products that connect with people."),
+    ('Soy Luis, diseñador de marcas y productos digitales. Te ayudo a llevar tu negocio hacia donde quieres y a conectar con las personas.',
+     "Hi, I'm Luis, a brand and digital product designer. I help you take your business where you want it to go and connect with people."),
     ('Conecto lo conceptual con lo práctico.', 'I connect the conceptual with the practical.'),
     ('Por eso, me involucro desde las primeras preguntas hasta la implementación: ayudo a definir qué vale la pena construir, diseño posibles soluciones, valido las decisiones y acompaño el desarrollo para que esa idea se convierta en algo concreto y útil.',
      "That's why I get involved from the first questions through implementation: I help define what is worth building, design possible solutions, validate decisions and support development so the idea becomes something concrete and useful."),
@@ -568,11 +586,10 @@ _EN_TEXTOS = [
      'alt="A hand holding a pencil in front of translucent glass panels and a lime green one."'),
     ('>Diseñador digital.<', '>Digital designer.<'),
     # Contacto y diálogo
-    ('Hablemos (WhatsApp, se abre en una pestaña nueva)', 'Let’s talk (WhatsApp, opens in a new tab)'),
+    ('Conversemos (WhatsApp, se abre en una pestaña nueva)', 'Let’s talk (WhatsApp, opens in a new tab)'),
     ('(WhatsApp, se abre en una pestaña nueva)', '(WhatsApp, opens in a new tab)'),
     ('(se abre en una pestaña nueva)', '(opens in a new tab)'),
-    ('data-abrir-contacto>Hablemos ', 'data-abrir-contacto>Let’s talk '),
-    # Blog
+    ('data-abrir-contacto>Conversemos ', 'data-abrir-contacto>Let’s talk '), # Blog
     ('<span class="pl-resalte">Lecturas</span> que pueden ser de utilidad <span class="pl-resalte">para tu negocio</span></h2>',
      '<span class="pl-resalte">Reading</span> that may be useful <span class="pl-resalte">for your business</span></h2>'),
     ('>Marca</p>', '>Brand</p>'), ('>Producto digital</p>', '>Digital product</p>'),
@@ -641,11 +658,11 @@ def _en_home(html):
 
 
 _ES_RESP = {q: a for q, a in _preguntas}
-_EN_BODY = _en_home(INICIO_HERO + INICIO_IDEAS + INICIO_SISTEMAS + INICIO_PRODUCTO + INICIO_PORTAFOLIO
+_EN_BODY = _en_home(INICIO_HERO.replace('>Ver servicios <', '>View services <').replace('>Sobre mí</a>', '>About me</a>') + INICIO_IDEAS.replace('Ver proyectos', 'View projects') + INICIO_SISTEMAS.replace(_inicio_servicios(), _inicio_servicios(en=True)).replace('Ir a mis servicios', 'Go to my services') + INICIO_PORTAFOLIO.replace('Conoce mi portafolio', 'Explore my portfolio').replace('Ir a proyectos', 'Go to projects')
                     + INICIO_CONTACTO + INICIO_BLOG + HOME_PREGUNTAS)
 page('en/index.html', 'Luis Vicencio · Brand and digital product strategy',
      'Brands that want to move: strategy, identity and experiences for your business. Branding, UX Research and digital products for SMEs and startups in Chile.',
-     contact=False, canonical='en/', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css', 'css/portafolio-alt.css', 'css/portafolio-home.css'],
+     contact=False, canonical='en/', html_class='home motion v2 inicio', extra_css=['css/home-v2.css', 'css/inicio.css', 'css/portafolio-alt.css', 'css/portafolio-home.css', 'css/landing-b.css'],
      og_image='img/og/inicio.jpg', og_alt='Fuchi Chao product line: detergent, odor eliminator and anti-odor soap',
      jsonld=[person_ld(), faq_ld([(en, resp) for _es, en, resp in _EN_PREGUNTAS])],
      body=_EN_BODY, lang='en', alternates={'es-CL': '', 'en': 'en/', 'x-default': ''})

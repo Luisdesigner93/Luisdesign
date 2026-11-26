@@ -55,7 +55,16 @@ PROJECTS = [
     dict(slug='sustentando', cats=['marcas'], landing='marcas', title='Sustentando', mark='Su', kind='Consultoría en calidad · Branding y web', year='2022 – 2026', featured=True,
          summary='Desde 2022 acompaño a Sustentando como aliado estratégico. Partimos por entender sus necesidades y fuimos escalando el servicio hasta consolidar una comunicación que eleva el valor percibido de su trabajo.',
          tags=['Identidad', 'Web', 'Comunicación'], role='Identidad, web, comunicación B2B y diseño gráfico', client='Sustentando', status='Aliado desde 2022',
-         images=[img('sustentando', '01.jpg', 1600, 899, 'Piezas de Sustentando con los servicios de implementación, cursos, gestión de proveedores y proyectos de cultura y calidad.', 'Sistema de piezas para los servicios de Sustentando.'),
+         # Imágenes del frame «Sustentando» de Figma («Portfolio») y piezas entregadas por Luis; el orden en la página lo fija 4f_sustentando.py.
+         images=[img('sustentando', '07-stand.jpg', 1819, 1020, 'Stand de Sustentando para Inofood 2026: paneles en azul petróleo con fotografías de la industria alimentaria, los servicios de la consultora, códigos QR y un mesón naranja con el logotipo.', 'Stand para Inofood 2026.'),
+                 img('sustentando', '09-otec.jpg', 1819, 1046, 'Carpeta de Sustentando OTEC sobre fondo naranja y credencial con cordón de la marca para el gerente técnico.', 'Carpeta OTEC y credencial.'),
+                 img('sustentando', '11-blog-linkedin.jpg', 2000, 1157, 'Artículo del blog de Sustentando sobre el IFS Focus Day 2023 junto a una publicación en LinkedIn del curso de auditores internos de calidad.', 'Blog y publicación en LinkedIn.'),
+                 img('sustentando', '10-web-monitor.jpg', 2000, 1194, 'Sitio web de Sustentando en un monitor: «Calidad e inocuidad para la industria de alimentos», sobre una foto de carnes, junto a una mano con guante que manipula un filete de salmón con pinzas.', 'Sitio web en escritorio.'),
+                 img('sustentando', '13-sello.jpg', 1808, 1816, 'Sello circular de Sustentando con el isotipo al centro y el texto «Ingeniería, calidad, prevención».', 'Sello de la marca.'),
+                 img('sustentando', '14-paleta.jpg', 1808, 1828, 'Paleta de colores de Sustentando: azul petróleo principal, naranja, un azul petróleo más claro, blanco y gris claro.', 'Paleta de colores.'),
+                 img('sustentando', '15-curso-haccp.jpg', 1808, 1816, 'Publicación del calendario de cursos de mayo 2024 de Sustentando: curso «HACCP modelo Sernapesca», con relator, fecha, modalidad presencial y tópicos.', 'Publicación de curso para LinkedIn.'),
+                 img('sustentando', '12-llaveros.jpg', 2000, 1467, 'Cinco llaveros circulares de Sustentando en azul petróleo, naranja y blanco, con el isotipo y la frase «Más cultura, más calidad».', 'Llaveros «Más cultura, más calidad».'),
+                 img('sustentando', '01.jpg', 1600, 899, 'Piezas de Sustentando con los servicios de implementación, cursos, gestión de proveedores y proyectos de cultura y calidad.', 'Sistema de piezas para los servicios de Sustentando.'),
                  img('sustentando', '02.jpg', 1200, 1200, 'Logotipo de Sustentando sobre piezas gráficas y el sitio web en un teléfono.', 'Identidad y sitio web en móvil.'),
                  img('sustentando', '05.png', 800, 575, 'Llaveros, carpeta y piezas impresas de Sustentando OTEC.', 'Aplicaciones de marca para Sustentando OTEC.', True),
                  img('sustentando', '04.jpg', 1600, 899, 'Página de artículo del sitio web de Sustentando.', 'Página de artículo del sitio web.'),
@@ -121,12 +130,18 @@ PROJECTS = [
     dict(slug='khronos', cats=['marcas'], landing='marcas', title='Cerveza Khronos', mark='Kh', kind='Cerveza artesanal · Rebranding y packaging', year='2023', featured=True,
          summary='Rebranding para una cervecería artesanal nacida en las bierfest. Buscamos el sentido de su nombre en su raíz griega, khronos, tiempo, y lo convertimos en el concepto que guía la marca: tómate el tiempo.',
          tags=['Estrategia', 'Identidad', 'Packaging'], role='Estrategia, concepto, identidad y packaging', client='Cervecería Khronos', status='Propuesta de rebranding, no implementada', proposal=True,
-         # EDITAR: sumar las nuevas imágenes del proyecto a medida que estén listas
+         # El orden en la página del caso lo fija 4c_khronos.py
          images=[img('khronos', '05.jpg', 1672, 941, 'Logotipo de Cerveza Khronos con el tagline “Tómate el tiempo” en blanco sobre un muro naranja.', 'Logotipo.'),
                  img('khronos', '01.jpg', 1672, 941, 'Cuatro botellas de Cerveza Khronos flotando: American Pale Ale, Stout, IPA y Golden Ale.', 'Línea de cervezas.'),
                  img('khronos', '02.jpg', 1254, 1254, 'Fila de botellas Khronos con etiquetas de colores para cada variedad.', 'Un color por variedad.'),
                  img('khronos', '03.jpg', 1254, 1254, 'Botella de Cerveza Khronos Stout sobre un bloque de piedra.', 'Etiqueta Stout.'),
-                 img('khronos', '04.jpg', 1254, 1254, 'Botella de Cerveza Khronos American Pale Ale con el tagline “Tómate el tiempo” sobre fondo naranja.', 'Etiqueta American Pale Ale.')]),
+                 img('khronos', '04.jpg', 1254, 1254, 'Botella de Cerveza Khronos American Pale Ale con el tagline “Tómate el tiempo” sobre fondo naranja.', 'Etiqueta American Pale Ale.'),
+                 img('khronos', '06-logo-vertical.jpg', 1808, 1816, 'Logotipo vertical de Khronos sobre su retícula de construcción: «KHR» sobre «N8S», con el reloj de arena naranja como O y «Cerveza artesanal» arriba y abajo.', 'Logotipo vertical y su construcción.'),
+                 img('khronos', '07-sello.jpg', 1808, 1816, 'Sello circular de Khronos sobre su retícula: «Cerveza artesanal», «Desde 2013», «De la bierfest a tu hogar» y «Tómate el tiempo» alrededor del logotipo.', 'Sello y su construcción.'),
+                 img('khronos', '08-etiqueta-stout.jpg', 2000, 1140, 'Etiqueta de Khronos Stout en café oscuro con un reloj de arena ilustrado en naranja, la descripción de la cerveza, ingredientes, maridajes y nivel de amargor.', 'Etiqueta Stout desplegada.'),
+                 img('khronos', '09-tipografia.jpg', 2000, 970, 'Muestra tipográfica de Khronos: letras serif slab en blanco y amarillo sobre fondo naranja, en versión gruesa y delgada.', 'Tipografía.'),
+                 img('khronos', '10-simbolo.jpg', 2000, 1719, 'Construcción del símbolo de Khronos: un reloj de arena crema sobre naranja trazado con diagonales y ejes, con la nota «Nuestro símbolo es el tiempo, el cual debe ser usado junto al logo a través de los diversos puntos de contacto de la marca».', 'Construcción del símbolo.'),
+                 img('khronos', '11-ilustracion.jpg', 1514, 2000, 'Ilustración en naranja de un reloj de arena con un lúpulo en la parte superior y la arena cayendo, con textura de grabado sobre fondo crema.', 'Ilustración del reloj de arena con lúpulo.')]),
 ]
 
 # LAB*502: si falta alguna imagen en img/proyectos/lab502/, se omite en vez de dejar un enlace roto
@@ -407,3 +422,34 @@ HOME_MARQUEE = '''    <!-- CINTA DE CLIENTES -->
 
 '''.replace('{marquee}', _marquee)
 
+
+# Servicios: los usan la página /servicios y el inicio
+SERVICIOS = [
+    ('Estrategia de marca', 'Para que te elijan por algo más que el precio. Defino qué te diferencia y cómo explicarlo para que tus clientes entiendan por qué comprarte.',
+     ['Diagnóstico de marca', 'Análisis de competencia', 'Definición de audiencias', 'Modelo de negocio', 'Propuesta de valor',
+      'Posicionamiento', 'Personalidad y tono de voz', 'Mensajes clave', 'Experiencia de marca', 'Mapa de puntos de contacto', 'Documento de estrategia']),
+    ('Identidad de marca', 'Para que tu empresa inspire confianza desde el primer vistazo. Tu equipo tendrá un sistema claro y dejará de improvisar cada pieza.',
+     ['Logotipo y variantes', 'Paleta de color', 'Sistema tipográfico', 'Iconografía', 'Elementos gráficos',
+      'Design System', 'Manual de marca', 'Papelería', 'Plantillas para RRSS', 'Packaging']),
+    ('Diseño de producto', 'Creo o evoluciono productos digitales que responden a necesidades reales y mejoran la experiencia.',
+     ['Investigación de usuarios', 'Mapa de experiencia', 'Arquitectura de información', 'Flujos de usuario', 'Wireframes',
+      'Diseño de interfaces', 'Prototipo interactivo', 'Design System', 'Especificaciones para desarrollo', 'Planificación de desarrollo']),
+    ('Páginas web', 'Diseño sitios claros y funcionales que presentan tu negocio y facilitan que te contacten.',
+     ['Estructura del sitio', 'Wireframes', 'Diseño web', 'Versión móvil', 'Prototipo navegable',
+      'Desarrollo del sitio', 'Tienda online', 'WooCommerce', 'Agendamiento online', 'Formulario de contacto', 'SEO inicial', 'Analítica', 'Cumplimiento Ley 21.719', 'Publicación']),
+]
+SERVICIOS_ICONOS = {'Estrategia de marca': 'i-target', 'Identidad de marca': 'i-pen', 'Diseño de producto': 'i-layers', 'Páginas web': 'i-code'}
+SERVICIOS_EN = [
+    ('Brand strategy', 'So people choose you for more than price. I define what sets you apart and how to explain it so your customers understand why to buy from you.',
+     ['Brand diagnosis', 'Competitor analysis', 'Audience definition', 'Business model', 'Value proposition',
+      'Positioning', 'Personality and tone of voice', 'Key messages', 'Brand experience', 'Touchpoint map', 'Strategy document']),
+    ('Brand identity', 'So your company inspires trust at first glance. Your team gets a clear system and stops improvising every piece.',
+     ['Logo and variants', 'Color palette', 'Type system', 'Iconography', 'Graphic elements',
+      'Design System', 'Brand guidelines', 'Stationery', 'Social media templates', 'Packaging']),
+    ('Product design', 'I create or evolve digital products that respond to real needs and improve the experience.',
+     ['User research', 'Experience map', 'Information architecture', 'User flows', 'Wireframes',
+      'Interface design', 'Interactive prototype', 'Design System', 'Development specifications', 'Development planning']),
+    ('Websites', 'I design clear, functional sites that present your business and make it easy to contact you.',
+     ['Site structure', 'Wireframes', 'Web design', 'Mobile version', 'Navigable prototype',
+      'Site development', 'Online store', 'WooCommerce', 'Online booking', 'Contact form', 'Initial SEO', 'Analytics', 'Chilean Law 21.719 compliance', 'Launch']),
+]
